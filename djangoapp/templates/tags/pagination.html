@@ -1,0 +1,20 @@
+{% load i18n %}
+<div class="pagination">
+    <span class="step-links">
+        {% if data.has_previous %}
+            <a href="?page=1{% if params %}&{{params}}{%endif%}">{% trans "<< first" %}</a>
+            <a href="?page={{ data.previous_page_number }}{% if params %}&{{params}}{%endif%}">{% trans "< previous" %}</a>
+        {% endif %}
+        <span class="current">
+            {% with data.number as page_number %}
+            {% with data.paginator.num_pages as num_pages %}
+            {% blocktrans %}Page {{page_number}} of {{num_pages}}{%endblocktrans%}
+            {% endwith %}
+            {% endwith %}
+        </span>
+        {% if data.has_next %}
+            <a href="?page={{ data.next_page_number }}{% if params %}&{{params}}{%endif%}">{% trans "next >" %}</a>
+            <a href="?page={{ data.paginator.num_pages }}{% if params %}&{{params}}{%endif%}">{% trans "last >>" %}</a>
+        {% endif %}
+    </span>
+</div>

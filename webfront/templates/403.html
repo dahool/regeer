@@ -1,0 +1,7 @@
+{% extends 'base_simple.html' %}
+{% load i18n %}
+{% block title %}{{ block.super }} | {% trans "Forbidden" %}{% endblock %}
+{% block main_content %}
+<h2>{% trans "Forbidden" %}</h2>
+<p>{% trans "Sorry, you don't have enough permissions to access here." %}</p>
+{% endblock %} 

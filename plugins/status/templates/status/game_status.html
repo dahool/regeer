@@ -1,0 +1,119 @@
+{% extends "base_layout.html" %}
+{% load i18n media dates urltag %}
+{% block title %}{{ block.super }} | {% trans "Server Status" %}{% endblock %}
+{% block navigation2 %}
+{% include "status/status_menu.html" %}
+{% endblock %}
+{% block main_content %}
+<h3>{% trans "Current Game Status" %}
+<small>
+    &nbsp;|&nbsp;
+    <form style="display:inline;" method="post">
+    {% csrf_token %}
+    {% with request.session.server as current_server %}
+    <select name="server" onchange="this.form.submit()">
+    {% for server in request.server_list %}
+    <option value="{{server.DB}}" {% if current_server == server.DB %}selected="selected"{%endif%}>{{server.NAME}}</option>
+    {% endfor %}
+    </select>
+    {% endwith %}
+    </form>
+    <a href="{% url game_status %}" style="display:inline;">{% trans "refresh"%}</a>
+</small>    
+</h3>
+<div id="game_status">
+<table class="game_status">
+    <thead>
+        <tr class="odd">
+        <th>{% trans "Map" %}</th>
+        <td>{{ status.map }}</td>
+        <th>{% trans "Game Type" %}</th>
+        <td>{{ status.type }}</td>
+        </tr>
+        <tr class="even">
+        <th>{% trans "Info updated" %}</th>
+        <td>{% with status.updated|timesincesec as since%}{% blocktrans %}{{since}} ago {% endblocktrans %}{% endwith %}</td>
+        <!-- td>{{ status.updated|date:"H:i" }} </td-->
+        <th>{% trans "Round" %}</th>
+        <td>{{ status.round }}</td>
+        </tr>
+        <tr class="odd">
+        <th>{% trans "Map started" %}</th>
+        <td>{% with status.mapStart|timesince as since%}{% blocktrans %}{{since}} ago {% endblocktrans %}{% endwith %}</td>
+        <th>{% trans "Time left" %}</th>
+        <td>{{ status.timeleft }}</td>
+        </tr>        
+        <tr class="even">
+        <th>{% trans "Total Players" %}</th>
+        <td>{{ status.totalClients }}</td>
+        {% if user.is_staff %}
+        <th>{% trans "Password" %}</th>
+        <td>{% if status.password %}{{ status.password }}{% else %}-{%endif%}</td>
+        {% endif %}
+        </tr>    
+    </thead>
+    <tbody>
+        <tr>
+        <td colspan="4">
+            <div id="playerlist">
+                {% if status.typeCode != "ffa" %} 
+                <table class="inner_table">
+                        <tr>
+                        <th>{{ status.redTeamName }}</th>
+                        <th class="total">{{ status.redScore }}</th>
+                        </tr>
+                        {% for client in status.clients %}
+                        {% ifequal client.team "2" %}
+                        <tr class="{% cycle "odd" "even" %}">
+                        <td><a {%if client.state == "1" %}style="color: #D1D1D1;"{%endif%} href="{% serverurl client_detail client.id %}">{{client.name}}</a></td>
+                        <td class="total">{{client.score}}</td>
+                        </tr>
+                        {% endifequal %}
+                        {% endfor %}
+                </table>
+                <table class="inner_table">
+                        <tr>
+                        <th>{{ status.blueTeamName }}</th>
+                        <th class="total">{{ status.blueScore }}</th>
+                        </tr>
+                        {% for client in status.clients %}
+                        {% ifequal client.team "3" %}
+                        <tr class="{% cycle "odd" "even" %}">
+                        <td><a {%if client.state == "1" %}style="color: #D1D1D1;"{%endif%} href="{% serverurl client_detail client.id %}">{{client.name}}</a></td>
+                        <td class="total">{{client.score}}</td>
+                        </tr>
+                        {% endifequal %}
+                        {% endfor %}
+                </table>
+                <table class="inner_table">
+                        <tr>
+                        <th colspan="2">{% trans "Specs" %}</th>
+                        </tr>
+                        {% for client in status.clients %}
+                        {% ifequal client.team "1" %}
+                        <tr class="{% cycle "odd" "even" %}">
+                        <td colspan="2"><a href="{% serverurl client_detail client.id %}">{{client.name}}</a></td>
+                        </tr>
+                        {% endifequal %}
+                        {% endfor %}
+                </table>
+                {% else %}
+                <table class="inner_table">
+                        <tr>
+                        <th colspan="2">{% trans "Playing" %}</th>
+                        </tr>                
+                        {% for client in status.clients %}
+                        <tr class="{% cycle "odd" "even" %}">
+                        <td><a href="{% serverurl client_detail client.id %}">{{client.name}}</a></td>
+                        <td class="total">{{client.score}}</td>
+                        </tr>
+                        {% endfor %}
+                </table>                
+                {% endif %}
+            </div>
+        </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+{% endblock %}

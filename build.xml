@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<project name="urtwebadmin" default="build" basedir=".">
+
+	<target name="hudson">
+		<antcall target="build">
+			<param name="dest" value="${env.DEST}"/>
+		</antcall>
+	</target>
+
+    <target name="compile_locale">
+        <exec executable="/usr/bin/python">
+            <arg value="${dest}/manage.py"/>
+            <arg value="compilemessages"/>
+        </exec> 
+    </target>
+        	
+	<target name="build">
+		<antcall target="compile_locale"></antcall>
+		<echo message="Deploying to ${dest}..."/>
+		<sync todir="${dest}" includeemptydirs="false" verbose="true" overwrite="true">
+			<fileset dir=".">
+				<exclude name=".project"/>
+				<exclude name=".pydevproject"/>
+				<exclude name=".svn"/>
+				<exclude name="*.pyc"/>
+				<exclude name="settings_local.py"/>
+			</fileset>
+			<preserveintarget>
+				<include name="**/pygeoip/lib/*.dat"/>
+				<include name="settings_local.py"/>
+				<include name="**/media/**"/>
+				<include name="**/settings/*-local.pyconf"/>
+			</preserveintarget>
+		</sync>
+		<echo message="Setting up environment..."/>
+		<exec executable="/usr/bin/python">
+			<arg value="-mcompileall"/>
+			<arg value="${dest}"/>
+		</exec>
+        <exec executable="/usr/bin/python">
+            <arg value="${dest}/manage.py"/>
+            <arg value="syncdb"/>
+            <arg value="--noinput"/>
+        </exec>		
+		<exec executable="/usr/bin/python">
+			<arg value="${dest}/manage.py"/>
+			<arg value="updategeoip"/>
+			<arg value="http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz"/>
+			<arg value="false"/>
+		</exec>
+		<echo message="Reload"/>
+        <exec executable="/usr/bin/python">
+            <arg value="${dest}/reload.py"/>
+            <arg value="${dest}/../apache/django.wsgi"/>
+        </exec>         
+		<!-- touch file="${dest}/../apache/django.wsgi"/-->
+		<echo message="Finished."/>
+	</target>
+
+</project>

@@ -1,0 +1,7 @@
+{% load i18n gravatar %}
+{% if user %}
+	<span>{% gravatar user.email %}{% with user.nickname as name %}{% blocktrans %}Welcome {{name}}{%endblocktrans%}{% endwith %}</span>
+	<span><a href="{{url}}">{% trans "Sign out" %}</a></span>
+{% else %}
+	<a href="{{url}}">{% trans "Sign in or register" %}</a>
+{% endif %}

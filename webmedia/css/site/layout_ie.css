@@ -1,0 +1,6 @@
+.option span, .option i { float: left; width: auto; background-image: none; cursor: pointer; }
+.option { border: 3px double #aaa; }
+.option.blue { border-color: #2ae; }
+.option.green { border-color: #9d4; }
+.option.pink { border-color: #e1a; }
+.option:hover { border-color: #a00; }

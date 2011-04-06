@@ -1,0 +1,11 @@
+{% load formtags %}
+{% if not field.is_hidden %}
+	<div class="{{field|type}}">
+  	<label for="id_{{ field.name }}">{{ field.label }}</label>
+  	{{ field }}
+  	{% if field.help_text %}<span class="help_text">{{ field.help_text }}</span>{% endif %}
+  	{% error field %}
+	</div>
+{% else %}
+	{{ field }}
+{% endif %}

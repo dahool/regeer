@@ -1,0 +1,27 @@
+{% load i18n %}
+<div id="gravatar_profile">
+{% if profile %}
+<h2>{% trans "This is Your Public Global Profile" %}</h2>
+<div id="gravatar_contact_details">
+<h2>{% trans "Contact Details" %}</h2>
+<ul>
+	<li class="gravatar-detail-name">{{profile.displayName}}</li>
+	<li class="gravatar-detail-email">{{user.email}}</li>
+</ul>
+</div>
+<div id="gravatar_contact_main">
+	<div class="gravatar-profile-photo">
+		<img src="{{profile.photos|first}}?size=420"/>
+	</div>
+</div>
+<div id="ie_clearing"> &#160; </div>
+<div id="gravatar_more_info">
+<p>{% trans "Go to <a href=\"http://en.gravatar.com/site/login\">gravatar.com</a> to edit your public profile." %}</p>
+</div>
+{% else %}
+<div id="gravatar_more_info">
+<p>{% trans "We couldn't find a public profile. Either you don't have one configured or you are not registered with your primary email address." %}</p>
+<p>{% trans "Go to <a href=\"http://en.gravatar.com/site/login\">gravatar.com</a> to edit your public profile." %}</p>
+</div>
+{% endif %}
+</div>

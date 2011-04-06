@@ -1,0 +1,40 @@
+{% extends "base_layout.html" %}
+{% load i18n navigation %}
+{% block title %}{{ block.super }} | {% trans "Banned players around the world" %}{% endblock %}
+{% block extra_header %}
+{{ block.super }}
+<script type='text/javascript' src='http://www.google.com/jsapi'></script>
+<script type='text/javascript'>
+    google.load('visualization', '1', {'packages': ['geomap']});
+    google.setOnLoadCallback(drawMap);
+
+    function drawMap() {
+        var data = new google.visualization.DataTable();
+        data.addRows({{list|length}});
+        data.addColumn('string', '{% trans "Country" %}');
+        data.addColumn('number', '{% trans "Banned players" %}');
+
+        {% for key, value in list.items %}
+        data.setValue({{forloop.counter0}},0,'{{key}}');
+        data.setValue({{forloop.counter0}},1,{{value}});
+        {% endfor %}
+
+        var options = {};
+        options['dataMode'] = 'regions';
+        options['width'] = '800px';
+        options['height'] = '550px';
+
+        var container = document.getElementById('map-box');
+        var geomap = new google.visualization.GeoMap(container);
+        geomap.draw(data, options);
+    };
+
+</script>
+{% endblock %}
+{% block navigation2 %}
+{% include "webfront/ban_list_menu.html" %}
+{% endblock %}
+{% block main_content %}
+<h3>{% trans "Banned players around the world" %}</h3>
+<div id="map-box"></div>
+{% endblock %}

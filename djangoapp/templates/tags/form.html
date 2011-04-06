@@ -1,0 +1,10 @@
+{% load formtags %}
+{% if form.non_field_errors %}
+	{{ form.non_field_errors.as_ul }}
+{% endif %}
+{% for field in form.hidden_fields %}
+	{{ field }}
+{% endfor %}
+{% for field in form.visible_fields %}
+{% formfield field %}
+{% endfor %}

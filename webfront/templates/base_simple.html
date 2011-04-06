@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load i18n settingstag media %}
+{% block main_page %}
+    <div id="page" class="hold_floats">
+      <div id="topnav">
+		  <!-- start: skip link navigation -->
+		  <a class="skip" title="skip link" href="#navigation">Skip to the navigation</a><span class="hideme">.</span>
+		  <a class="skip" title="skip link" href="#content">Skip to the content</a><span class="hideme">.</span>
+		  <!-- end: skip link navigation -->
+		<div class="langMenu">
+		{% block topnav-lang %}
+		{% endblock %}
+		</div>
+        <div class="userMenu">
+        {% block topnav-user %}
+        {% endblock %}
+        </div>
+      </div>
+      <div id="header">
+      <a href="{% url home %}"><img src="{% media 'images/newlogo.jpg' %}"/></a>
+      </div>
+      <div id="nav">
+        <!-- skiplink anchor: navigation -->
+        <a id="navigation" name="navigation"></a>
+        <div id="nav_main">
+		<!-- main navigation: horizontal list -->        
+			{% block navigation %}
+			{% endblock %} 	
+        </div>
+		<div id="nav_main2">
+			<ul>
+			{% block navigation2 %}
+			{% endblock %}
+			</ul>
+		</div>        
+      </div>
+      <div id="teaser">
+      {% block teaser %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}      
+      {% endblock %}
+      </div>
+      <div id="main">
+      	{% block central_content %}
+        <!-- div id="col1">
+          <div id="col1_content" class="clearfix">
+            {% block left_content_header %}{% endblock %}
+            {% block left_content %}{% endblock %}
+          </div>
+        </div -->
+        <div id="col">
+          <div id="col3_content" class="clearfix">
+            {% block main_content_header %}{% endblock %}
+            {% block main_content %}{% endblock %}
+          </div>
+          <!-- IE Column Clearing -->
+          <div id="ie_clearing"> &#160; </div>
+        </div>
+        {% endblock %}
+      </div>
+      <div id="shadow"></div>
+      <!-- begin: #footer -->
+      <div id="footer">
+      <div id="footer-nav">
+		{% block footnav %}
+		{% endblock %}
+      </div>
+      {% block footer %}{% setting "APP_NAME" %} v{% setting "VERSION" %}<br/>Copyright &copy; 2010 SGT Development{% endblock %}
+      </div>
+    </div>
+{% endblock %}																																																																																																																																																						

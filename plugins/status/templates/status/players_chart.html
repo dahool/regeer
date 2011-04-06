@@ -1,0 +1,47 @@
+{% extends "base_layout.html" %}
+{% load i18n navigation %}
+{% block title %}{{ block.super }} | {% trans "Number of Players" %}{% endblock %}
+{% block extra_header %}
+{{ block.super }}
+<script type='text/javascript' src='http://www.google.com/jsapi'></script>
+<script type='text/javascript'>
+    google.load('visualization', '1', {'packages': ['corechart']});
+    google.setOnLoadCallback(drawMap);
+
+    function drawMap() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '{% trans "Hour" %}');
+        data.addColumn('number', '{% trans "Total Players" %}');
+
+        data.addRows([
+        {% for key, value in list.items %}
+        ['{{key}}',{{value}}],
+        {% endfor %}
+        ]);
+
+        var container = document.getElementById('chart_div');
+        var chart = new google.visualization.AreaChart(container);
+        chart.draw(data, {displayAnnotations: true});
+    };
+
+</script>
+{% endblock %}
+{% block navigation2 %}
+{% include "status/status_menu.html" %}
+{% endblock %}
+{% block main_content %}
+<h3>{% trans "Number of Players (last 24 hours)" %}
+<small>
+<form style="display:inline;" method="post">
+{% csrf_token %}
+{% with request.session.server as current_server %}
+<select name="server" onchange="this.form.submit()">
+{% for server in request.server_list %}
+<option value="{{server.DB}}" {% if current_server == server.DB %}selected="selected"{%endif%}>{{server.NAME}}</option>
+{% endfor %}
+</select>
+{% endwith %}
+</form>
+</small></h3>
+<div id="chart_div" style="width: 850px; height: 300px; margin: auto;"></div>
+{% endblock %}

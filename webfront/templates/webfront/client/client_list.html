@@ -1,0 +1,96 @@
+{% extends "base_layout.html" %}
+{% load urltag listtocolumns i18n tagutils settingstag media paginator navigation sorting %}
+{% block title %}{{ block.super }} | {% trans "Client List" %}{% endblock %}
+{% block extra_header %}
+{{ block.super }}
+{% jscript "js/client.js" %}
+{% jscript "js/sortable.js" %}
+{% endblock %}
+{% block navigation2 %}
+{% include "webfront/client/client_menu.html" %}
+{% endblock %}
+{% block main_content %}
+<h3>{% trans "Player List" %}</h3>
+{% with client_list.paginator.count as count %}
+<span>{% blocktrans %}There are {{count}} clients{%endblocktrans%}
+<small>
+<form style="display:inline;" method="post" action="{% url client_list %}">
+{% csrf_token %}
+{% with request.session.server as current_server %}
+<select name="server" onchange="this.form.submit()">
+{% for server in request.server_list %}
+<option value="{{server.DB}}" {% if current_server == server.DB %}selected="selected"{%endif%}>{{server.NAME}}</option>
+{% endfor %}
+</select>
+{% endwith %}
+</form>
+</small>
+</span>
+{% endwith %}
+<form method="get" action="{% url client_list %}">
+<small>
+<input type="hidden" name="server" value="{{request.session.server}}">
+<select name="type">
+<option value="name" {% if filter == 'name' %}selected="selected"{%endif%}>{% trans "Name" %}</option>
+<option value="id" {% if filter == 'id' %}selected="selected"{%endif%}>{% trans "@id" %}</option>
+<option value="ip" {% if filter == 'ip' %}selected="selected"{%endif%}>{% trans "IP" %}</option>
+</select>
+<input type="text" id="data" name="data" value="{{data}}" class="search submit">
+<input type="submit" name="search" value="{% trans "Search" %}">
+<!-- 
+{% if perms.b3connect.client_advanced_search and request.server_list|length > 1 %}
+<input type="submit" name="searchall" value="{% trans "Search across servers" %}">
+{% endif %}
+ -->
+&nbsp;&nbsp;&nbsp;
+</small>
+<a href="{% url client_list %}" style="display:inline;">{% trans "reset"%}</a>
+</form>
+<div id="client_list">
+{% if search %}
+<a href="{% url client_list %}?{{search}}">{% trans "Direct link to this search" %}</a>
+{% endif %}
+<table>
+<thead>
+<tr>
+<th>{% trans "@id" %}{% sortheader order_by 'id' search %}</th>
+<th>{% trans "Name" %}{% sortheader order_by 'name' search %}</th>
+<th>{% trans "Group" %}{% sortheader order_by 'group' search %}</th>
+<th>{% trans "IP Address" %}</th>
+<th>{% trans "First Seen" %}{% sortheader order_by 'time_add' search %}</th>
+<th>{% trans "Last Seen" %}{% sortheader order_by 'time_edit' search %}</th>
+<th>{% trans "Status" %}</th>
+</tr>
+</thead>
+<tbody>
+{% for client in client_list.object_list %}
+<tr class="{% cycle "odd" "even" %}">
+<td><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
+<td name="autofill" alt="name" title="{% trans "Search for other users with this nickname" %}">{{client.name}}</td>
+<td>{% if perms.b3connect.view_group %}<a style="font-weight: normal" href="?level={{client.group.level}}" title="{% trans "Filter users sharing the same group" %}">{{client.displayGroup}}</a>{%else%}-{%endif%}</td>
+<td name="autofill" alt="ip" title="{% trans "Search for other users with this IP address" %}">{{client.ip}}</td>
+<td>{{client.time_add|date:"DATETIME_FORMAT"}}</td>
+<td>{{client.time_edit|date:"DATETIME_FORMAT"}}</td>
+<td>
+{% if client.penalties.active_bans %}
+<span style="color: red; font-weight: bold;">{% trans "Banned" %}</span>
+{% else %}
+-
+{% endif %}
+</td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot>
+<tr>
+<td colspan="7">
+{% with client_list.object_list|length as number %}
+{% blocktrans %}Showing {{number}} records{% endblocktrans %}
+{% endwith %}
+{% paginatepage client_list search %}
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+{% endblock %}

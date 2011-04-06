@@ -1,0 +1,56 @@
+{% extends "base_layout.html" %}
+{% load listtocolumns i18n tagutils settingstag paginator navigation urltag %}
+{% block navigation2 %}
+{% include "webfront/ban_list_menu.html" %}
+{% endblock %}  
+{% block main_content %}
+<h3>{% trans "Notices" %}</h3>
+{% with ban_list.paginator.count as count %}
+<span>{% blocktrans %}There are {{count}} notices{%endblocktrans%}
+<small>
+<form style="display:inline;" method="post">
+{% csrf_token %}
+{% with request.session.server as current_server %}
+<select name="server" onchange="this.form.submit()">
+{% for server in request.server_list %}
+<option value="{{server.DB}}" {% if current_server == server.DB %}selected="selected"{%endif%}>{{server.NAME}}</option>
+{% endfor %}
+</select>
+{% endwith %}
+</form>
+</small>
+</span>
+{% endwith %}
+<div id="ban_list">
+<table>
+<thead>
+<tr>
+<th>{% trans "Player" %}</th>
+<th>{% trans "Added" %}</th>
+<th>{% trans "Reason" %}</th>
+<th>{% trans "Admin" %}</th>
+</tr>
+</thead>
+<tbody>
+{% for ban in ban_list.object_list %}
+<tr class="{% cycle "odd" "even" %}">
+<td><a href="{% serverurl client_detail ban.client.id %}">{{ban.client.name}}</a></td>
+<td>{{ban.time_add|date:"D, d M Y (H:i)"}}</td>
+<td>{{ban.reason|clean_colors}}</td>
+<td>{% if ban.admin %}<a href="{% serverurl client_detail ban.admin.id %}">{{ban.admin.name}}</a>{% else %}B3{% endif %}</td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot>
+<tr>
+<td colspan="4">
+{% with ban_list.object_list|length as number %}
+{% blocktrans %}Showing {{number}} records{% endblocktrans %}
+{% endwith %}
+{% paginatepage ban_list %}
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+{% endblock %}

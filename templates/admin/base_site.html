@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% block extrastyle %}
+{{ block.super }}
+<style type="text/css">
+<!--
+#header {
+    background:none repeat scroll 0 0 #804040;
+    color:#FFFFCC;
+    overflow:hidden;
+}
+-->
+</style>
+{% endblock %}
+{% block title %}{{ title }} | {% trans 'B3 Web Admin' %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% trans 'B3 Web Admin' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

@@ -1,0 +1,125 @@
+#openid {
+/*	
+  background: url(../img/indicator.gif) center center no-repeat;
+  margin: 0 auto;
+  width: 440px;
+  height: 162px;
+  */
+}
+
+#openid_inputarea {
+/*  min-width: 420px;*/
+/*  position: absolute;*/
+  clear: both;
+  display: none;
+/*  background-color: #000; */
+/*  color: white;*/
+/*  text-align: center;*/
+  margin-top: 35px;
+/*  padding: 5px 10px 5px 10px;*/
+  -moz-border-radius-topright: 100%;
+  -moz-border-radius-bottomright: 100%;
+  -moz-border-radius-bottomleft: 100%;
+  -webkit-border-radius-topright: 100%;
+  -webkit-border-radius-bottomright: 100%;
+  -webkit-border-radius-bottomleft: 100%;
+  
+}
+
+#openid_inputarea #openid_username {
+/*  margin: 0 4px 0 8px;*/
+  width: 115px;
+  margin-top: 5px;
+}
+
+#openid_btns, #openid_btns br {
+  clear: both;
+}
+
+#openid_highlight {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  padding: 2px;
+  background-color: #FFFCC9;
+  float: left;
+}
+
+.openid_large_btn, .openid_small_btn {
+  background: url(../img/openid-icons.png) no-repeat;
+  margin: 3px;
+  float: left;
+}
+
+.openid_large_btn {
+  width: 91px;
+  height: 51px;
+}
+
+.openid_small_btn {
+  width: 16px;
+  height: 16px;
+}  
+
+.Google { background-position: 0 0;}
+.Yahoo { background-position: 0 -51px; }
+.AOL { background-position: 0 -102px;}
+.OpenID { background-position: 0 -153px; }
+.MyOpenID { background-position: 0 -204px; }
+.Flickr { background-position: 0 -220px; }
+.Technorati { background-position: -17px -220px; }
+.Wordpress { background-position: -17px -204px; }
+.Blogger { background-position: -34px -204px; }
+.Verisign { background-position: -51px -220px; }
+.Vidoop { background-position: -34px -220px; }
+.ClaimID { background-position: -68px -204px; }
+.LiveJournal { background-position: -51px -204px; }
+.MySpace { background-position: -68px -220px; }
+
+.input_OpenID {
+  background-image: url('../../images/openid-bg.gif') !important; 
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  padding-left: 20px;
+}
+/*
+.openid_large_btn {
+  background: url(../img/bigicons.png) no-repeat;
+  margin: 3px;
+  float: left;
+}
+
+.openid_small_btn {
+  background: url(../img/smallicons.png) no-repeat;
+  margin: 3px;
+  float: left;
+}
+
+.openid_large_btn {
+  width: 42px;
+  height: 24px;
+}
+
+.openid_small_btn {
+  width: 16px;
+  height: 16px;
+}  
+
+.Google { background-position: 0 0; }
+.Yahoo { background-position: 0 -24px; }
+.AOL { background-position: 0 -48px; }
+.OpenID { background-position: 0 -72px; }
+.MyOpenID { background-position: 0 0px; }
+.Flickr { background-position: 0 -16px; }
+.Technorati { background-position: -17px -16px; }
+.Wordpress { background-position: -17px 0px; }
+.Blogger { background-position: -34px 0px; }
+.Verisign { background-position: -51px -16px; }
+.Vidoop { background-position: -34px -16px; }
+.ClaimID { background-position: -68px 0px; }
+.LiveJournal { background-position: -51px 0px; }
+.MySpace { background-position: -68px -16px; }
+*/
+a.openid_large_btn:focus {
+  outline: none;
+  -moz-outline-style: none;
+}

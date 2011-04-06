@@ -1,0 +1,4 @@
+{% load media %}
+{% if data %}
+<img src="{% media data.img %}" alt="[{{data.country_name}}]" title="{% if data.city %}{{data.city}} - {%endif%}{{data.country_name}}">&nbsp;{% if data.city %}{{data.city}}{%endif%}
+{% endif %}

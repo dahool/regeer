@@ -1,0 +1,54 @@
+@media all {
+	#nav_main {
+		width: 100%;
+		float: left;
+		background: #000 url(../../images/black/navigation/bg_hnav1.gif) repeat-x top left;
+		line-height: 0
+	}
+	#nav_main ul {
+		float: left;
+		display: inline;
+		border-left: 1px #000 solid;
+		margin: 0 0 0 20px;
+		padding: 0
+	}
+	#nav_main ul li {
+		float: left;
+		display: inline;
+		font-size: 1em;
+		line-height: 1em;
+		list-style-type: none;
+		border-right: 1px #000 solid;
+		margin: 0;
+		padding: 0
+	}
+	#nav_main ul li a {
+		display: block;
+		width: auto;
+		font-size: 1em;
+		font-weight: 400;
+		background: transparent;
+		text-decoration: none;
+		color: #ccc;
+		margin: 0;
+		padding: 10px 1em
+	}
+	#nav_main ul li a:focus,#nav_main ul li a:hover,#nav_main ul li a:active
+		{
+		color: #f88;
+		text-decoration: none;
+		background: transparent url(../../images/black/navigation/bg_hnav1_hover.gif)
+			repeat-x top right
+	}
+	#nav_main ul li.current {
+		background: transparent url(../../images/black/navigation/bg_hnav1_hover.gif)
+			repeat-x top right
+	}
+	#nav_main ul li.current a,#nav_main ul li.current a:focus,#nav_main ul li.current a:hover,#nav_main ul li.current a:active
+		{
+		color: #fff;
+		font-weight: 700;
+		background: transparent;
+		text-decoration: none
+	}
+}

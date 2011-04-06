@@ -1,0 +1,15 @@
+{% load formtags %}
+{% if form.non_field_errors %}
+	{{ form.non_field_errors.as_ul }}
+{% endif %}
+{% for field in form.hidden_fields %}
+	{{ field }}
+{% endfor %}
+<table class="tabular_form">
+{% for field in form.visible_fields %}
+<!-- {% cycle 'row1' 'row2' as row %} -->
+{% if row == 'row1' %}<tr>{% endif %}
+<td>{% formfield field %}</td>
+{% if row == 'row2' %}</tr>{% endif %}
+{% endfor %}
+</table>

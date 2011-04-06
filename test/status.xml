@@ -1,0 +1,124 @@
+<?xml version="1.0" ?>
+<B3Status Time="Thu Sep 28 10:35:37 2010">
+        <Clients Total="17">
+                <Client CID="11" ColorName="CrixXuS^7" Connections="17" DBID="2259" GUID="8D6C20245C14110893ACBA20199AF950" IP="190.179.206.250" Joined="Sat Mar 20 20:47:12 2010" Level="1" Name="CrixXuS" PBID="" Score="4" State="1" Team="2" Updated="Thu Apr 29 13:58:13 2010">
+                        <Data Name="guid" Value="8D6C20245C14110893ACBA20199AF950"/>
+                </Client>
+                <Client CID="10" ColorName="facundo^7" Connections="7" DBID="3775" GUID="6F840B36364EBD8616AA2F7EBACA9757" IP="190.139.138.201" Joined="Sun Apr 11 22:06:06 2010" Level="0" Name="facundo" PBID="" Score="5" State="1" Team="2" Updated="Thu Apr 29 13:53:31 2010">
+                        <Data Name="guid" Value="6F840B36364EBD8616AA2F7EBACA9757"/>
+                </Client>
+                <Client CID="13" ColorName="Rastrelnikov^7" Connections="48" DBID="4129" GUID="448ADBB2D7B177FDCCA83573D597AE76" IP="190.136.105.88" Joined="Sat Apr 17 18:21:49 2010" Level="0" Name="Rastrelnikov" PBID="" Score="2" State="1" Team="2" Updated="Thu Apr 29 13:57:18 2010">
+                        <Data Name="guid" Value="448ADBB2D7B177FDCCA83573D597AE76"/>
+                </Client>
+                <Client CID="12" ColorName="GE*Aim&amp;Shot^7" Connections="96" DBID="142" GUID="0591A4688AF10DE9017E39E8C6730F01" IP="186.137.26.230" Joined="Sat Dec 19 20:02:57 2009" Level="2" Name="GE*Aim&amp;Shot" PBID="" Score="6" State="1" Team="3" Updated="Thu Apr 29 13:56:48 2010">
+                        <Data Name="guid" Value="0591A4688AF10DE9017E39E8C6730F01"/>
+                </Client>
+                <Client CID="15" ColorName="GreenDay^7" Connections="30" DBID="136" GUID="5340E0B5A4A262B1EA4F3CE10BCFBDF4" IP="190.97.37.111" Joined="Sat Dec 19 19:34:30 2009" Level="1" Name="GreenDay" PBID="" Score="5" State="0" Team="3" Updated="Thu Apr 29 13:59:17 2010">
+                        <Data Name="guid" Value="5340E0B5A4A262B1EA4F3CE10BCFBDF4"/>
+                </Client>
+                <Client CID="14" ColorName="Floper^7" Connections="141" DBID="2061" GUID="89E522B591640EDF45BE1F00D18C1E6C" IP="190.134.137.79" Joined="Tue Mar 16 14:37:15 2010" Level="0" Name="Floper" PBID="" Score="11" State="1" Team="2" Updated="Thu Apr 29 13:35:34 2010">
+                        <Data Name="guid" Value="89E522B591640EDF45BE1F00D18C1E6C"/>
+                </Client>
+                <Client CID="16" ColorName="&gt;WD&gt;Ricky-Martin^7" Connections="395" DBID="335" GUID="FEACF36D7F3C06021C3D4E7EA2FF65AC" IP="190.227.33.65" Joined="Thu Dec 31 20:05:10 2009" Level="40" Name="&gt;WD&gt;Ricky-Martin" PBID="" Score="4" State="1" Team="3" Updated="Thu Apr 29 14:00:52 2010">
+                        <Data Name="guid" Value="FEACF36D7F3C06021C3D4E7EA2FF65AC"/>
+                </Client>
+                <Client CID="18" ColorName="&gt;WD&gt;nog_beto^7" Connections="335" DBID="3" GUID="B6A4986F227215FC469047D4056007C5" IP="190.231.32.5" Joined="Sat Dec 12 15:31:10 2009" Level="80" Name="&gt;WD&gt;nog_beto" PBID="" Score="10" State="1" Team="3" Updated="Thu Apr 29 13:46:11 2010">
+                        <Data Name="guid" Value="B6A4986F227215FC469047D4056007C5"/>
+                </Client>
+                <Client CID="1" ColorName="Z^7" Connections="22" DBID="4261" GUID="3CBBECC67224D4DB4BB13DBE811DFAE8" IP="190.247.94.124" Joined="Mon Apr 19 18:53:15 2010" Level="0" Name="Z" PBID="" Score="7" State="1" Team="3" Updated="Thu Apr 29 13:16:30 2010">
+                        <Data Name="guid" Value="3CBBECC67224D4DB4BB13DBE811DFAE8"/>
+                </Client>
+                <Client CID="0" ColorName="Iegua^7" Connections="396" DBID="13" GUID="5D89330A20EE75EEAB63CA69F90E5616" IP="186.18.222.106" Joined="Sun Dec 13 02:02:29 2009" Level="40" Name="Iegua" PBID="" Score="6" State="0" Team="3" Updated="Thu Apr 29 13:46:50 2010">
+                        <Data Name="guid" Value="5D89330A20EE75EEAB63CA69F90E5616"/>
+                </Client>
+                <Client CID="3" ColorName="Bonio^7" Connections="78" DBID="3690" GUID="3F5F42C56CC8FF52818613EEAB845292" IP="190.192.246.88" Joined="Sat Apr 10 18:23:11 2010" Level="0" Name="Bonio" PBID="" Score="3" State="0" Team="2" Updated="Thu Apr 29 13:23:42 2010">
+                        <Data Name="guid" Value="3F5F42C56CC8FF52818613EEAB845292"/>
+                </Client>
+                <Client CID="2" ColorName="Nahano^7" Connections="34" DBID="4469" GUID="478C8FC516F2AE8307C254AB32C45168" IP="190.135.18.7" Joined="Sat Apr 24 05:16:29 2010" Level="0" Name="Nahano" PBID="" Score="0" State="1" Team="3" Updated="Thu Apr 29 14:08:30 2010">
+                        <Data Name="guid" Value="478C8FC516F2AE8307C254AB32C45168"/>
+                </Client>
+                <Client CID="5" ColorName="AFFIRMATIVE^7" Connections="83" DBID="125" GUID="C4A32676622DC4C8B3385F2BB4EF8B1E" IP="190.227.151.51" Joined="Sat Dec 19 18:03:50 2009" Level="2" Name="AFFIRMATIVE" PBID="" Score="7" State="1" Team="2" Updated="Thu Apr 29 13:15:27 2010">
+                        <Data Name="guid" Value="C4A32676622DC4C8B3385F2BB4EF8B1E"/>
+                </Client>
+                <Client CID="8" ColorName="Renzord^7" Connections="9" DBID="4412" GUID="3642054CD8E7EFB7BA6BC912E2A3725C" IP="190.137.11.184" Joined="Thu Apr 22 22:11:08 2010" Level="0" Name="Renzord" PBID="" Score="1" State="1" Team="2" Updated="Thu Apr 29 13:48:40 2010">
+                        <Data Name="guid" Value="3642054CD8E7EFB7BA6BC912E2A3725C"/>
+                </Client>
+                <Client CID="7" ColorName="dany^7" Connections="20" DBID="4431" GUID="1EC4D90A91484D798F44B09805492307" IP="190.18.177.141" Joined="Fri Apr 23 16:21:11 2010" Level="0" Name="dany" PBID="" Score="4" State="1" Team="3" Updated="Thu Apr 29 13:48:36 2010">
+                        <Data Name="guid" Value="1EC4D90A91484D798F44B09805492307"/>
+                </Client>
+                <Client CID="6" ColorName="lemon^7" Connections="1" DBID="4934" GUID="418F8DDE4F8034AA7260960A4040EBEF" IP="83.247.20.222" Joined="Thu Apr 29 14:06:02 2010" Level="0" Name="lemon" PBID="" Score="1" State="1" Team="3" Updated="Thu Apr 29 14:06:02 2010">
+                        <Data Name="guid" Value="418F8DDE4F8034AA7260960A4040EBEF"/>
+                </Client>
+                <Client CID="9" ColorName="ana^7" Connections="205" DBID="2243" GUID="AEFBF62BB6092EEBA141F7CC4C8B13BF" IP="190.135.206.36" Joined="Sat Mar 20 18:52:16 2010" Level="0" Name="ana" PBID="" Score="0" State="1" Team="2" Updated="Thu Apr 29 13:51:01 2010">
+                        <Data Name="guid" Value="AEFBF62BB6092EEBA141F7CC4C8B13BF"/>
+                </Client>
+                <Client CID="9" ColorName="ana^7" Connections="205" DBID="2243" GUID="AEFBF62BB6092EEBA141F7CC4C8B13BF" IP="190.135.206.36" Joined="Sat Mar 20 18:52:16 2010" Level="0" Name="ana" PBID="" Score="0" State="1" Team="1" Updated="Thu Apr 29 13:51:01 2010">
+                        <Data Name="guid" Value="AEFBF62BB6092EEBA141F7CC4C8B13BF"/>
+                </Client>                
+        </Clients>
+        <Game CaptureLimit="0" FragLimit="" Map="ut4_austria" Name="iourt41" Rounds="8" TimeLimit="15" Type="ts">
+                <Data Name="sv_minPing" Value="0"/>
+                <Data Name="gamename" Value="q3ut4"/>
+                <Data Name="protocol" Value="68"/>
+                <Data Name="g_enableDust" Value="0"/>
+                <Data Name="captureLimit" Value="0"/>
+                <Data Name="gameName" Value="iourt41"/>
+                <Data Name="g_followstrict" Value="1"/>
+                <Data Name="g_respawndelay" Value="6"/>
+                <Data Name="g_swaproles" Value="0"/>
+                <Data Name="g_bombdefusetime" Value="10"/>
+                <Data Name="g_cahtime" Value="60"/>
+                <Data Name="g_teamnameblue" Value="Pagans"/>
+                <Data Name="_mapTimeStart" Value="1272560681"/>
+                <Data Name="rounds" Value="8"/>
+                <Data Name="g_suddendeath" Value="1"/>
+                <Data Name="console" Value="&lt;b3.parsers.iourt41.Iourt41Parser object at 0x8367e8c&gt;"/>
+                <Data Name="g_redwave" Value="13"/>
+                <Data Name="g_armbands" Value="0"/>
+                <Data Name="g_friendlyfire" Value="2"/>
+                <Data Name="sv_minRate" Value="8000"/>
+                <Data Name=" Admin" Value="SGT"/>
+                <Data Name="fs_game" Value="q3ut4"/>
+                <Data Name="mapName" Value="ut4_austria"/>
+                <Data Name="g_maxGameClients" Value="0"/>
+                <Data Name="version" Value="ioq3 1.35urt linux-i386 Oct 10 2009"/>
+                <Data Name="g_gear" Value="0"/>
+                <Data Name="g_modversion" Value="4.1"/>
+                <Data Name="_roundTimeStart" Value="1272561023"/>
+                <Data Name="fragLimit" Value="0"/>
+                <Data Name="g_bluewave" Value="13"/>
+                <Data Name="g_allowvote" Value="536870912"/>
+                <Data Name="g_enableBreath" Value="0"/>
+                <Data Name="g_survivorrule" Value="0"/>
+                <Data Name="fs_homepath" Value="/home/gabriel/.q3a"/>
+                <Data Name="g_teamnamered" Value="Stroggs"/>
+                <Data Name="g_roundtime" Value="3"/>
+                <Data Name="sv_dlURL" Value="maps.clanwd.com.ar"/>
+                <Data Name="g_waverespawns" Value="0"/>
+                <Data Name="timeLimit" Value="15"/>
+                <Data Name="g_deadchat" Value="2"/>
+                <Data Name="g_hotpotato" Value="2"/>
+                <Data Name="g_NextMap" Value="ut4_dville"/>
+                <Data Name="sv_maxclients" Value="19"/>
+                <Data Name="sv_hostname" Value="^2WD ^4Arg^7ent^4ina ^2II"/>
+                <Data Name="g_needpass" Value="0"/>
+                <Data Name="sv_floodprotect" Value="1"/>
+                <Data Name="g_maxrounds" Value="0"/>
+                <Data Name="g_warmup" Value="8"/>
+                <Data Name="g_bombexplodetime" Value="30"/>
+                <Data Name="fs_basepath" Value="/home/gabriel/urbanterror2"/>
+                <Data Name="dmflags" Value="0"/>
+                <Data Name="g_survivor" Value="1"/>
+                <Data Name="g_matchmode" Value="0"/>
+                <Data Name="g_enablePrecip" Value="0"/>
+                <Data Name="sv_privateClients" Value="1"/>
+                <Data Name="gameType" Value="ts"/>
+                <Data Name="sv_allowdownload" Value="0"/>
+                <Data Name="g_antilagvis" Value="0"/>
+                <Data Name="sv_maxRate" Value="0"/>
+                <Data Name="sv_maxPing" Value="500"/>
+                <Data Name=" Email" Value="sgt@clanwd.com.ar"/>
+                <Data Name="g_teamScores" Value="3:4"/>
+                <Data Name="g_password" Value="pepe"/>
+        </Game>
+</B3Status>

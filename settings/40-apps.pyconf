@@ -1,0 +1,58 @@
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.load_template_source',
+    'django.template.loaders.app_directories.load_template_source',
+    #'django.template.loaders.eggs.load_template_source',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+)
+
+TEMPLATE_DIRS = (
+    os.path.join(PROJECT_PATH, 'templates'),
+)
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    #'django.middleware.locale.LocaleMiddleware',
+    'common.middleware.locale.LocaleMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    #'phpbb_auth.middleware.bbRemoteUserMiddleware',
+    'webfront.middleware.ServerDetectMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'common.middleware.http.HttpErrorMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+)
+
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.admin',
+    'django.contrib.messages',
+    'b3connect',
+    'webfront',
+    'djangoapp',
+    'djangogravatar',
+    'common.floodprotection',
+    'plugins.stats',
+    'plugins.follow',
+    'plugins.chatlog',
+    'plugins.status',
+    'plugins.autoslap',
+)
+
+ROOT_URLCONF = 'b3webportal.urls'
+
+AUTH_PROFILE_MODULE = "webfront.models.UserProfile"

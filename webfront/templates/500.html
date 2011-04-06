@@ -1,0 +1,13 @@
+{% extends 'base_simple.html' %}
+{% load i18n %}
+{% block title %}{{ block.super }} | {% trans "Page unavailable" %}{% endblock %}
+{% block main_content %}
+<h2>{% trans "Page unavailable" %}</h2>
+<p>{% trans "The <b>bad news</b> is that we have just encountered an error." %}</p>
+<p>{% trans "The <b>good news</b> is that you've helped us find a bug, which we are now looking into." %}</p>
+<br/>
+<p>{% trans "We're sorry, a server error occurred. Please wait a bit and try again." %}</p>
+<br/>
+<br/>
+<p>{% trans "Sorry, and thanks for your help!" %}</p>
+{% endblock %}

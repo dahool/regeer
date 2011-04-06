@@ -1,0 +1,6 @@
+{% extends 'base_simple.html' %}
+{% load i18n %}
+{% block title %}{{ block.super }} | {% trans "Please wait" %}{% endblock %}
+{% block main_content %}
+<p>{% trans "You have to wait between queries." %}</p>
+{% endblock %}

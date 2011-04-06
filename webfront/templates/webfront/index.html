@@ -1,0 +1,22 @@
+{% extends "base_layout.html" %}
+{% load i18n media %}
+{% block extra_header %}
+{{ block.super }}
+<script type="text/javascript" src="http://dl.dropbox.com/u/9131337/web/script.min.js"></script>
+<script type="text/javascript">
+$(document).ready(
+ function() {
+ 	  $("#tweets-container").twitscroll({username: 'urtserver',media_root: 'http://dl.dropbox.com/u/9131337/web/'});
+}
+);
+</script>
+{% endblock %}
+{% block main_content %}
+<div id="server_banner_3">
+<iframe src="http://cache.www.gametracker.com/components/html0/?host=190.210.25.185:27960&bgColor=666666&fontColor=CCCCCC&titleBgColor=222222&titleColor=FF9900&borderColor=555555&linkColor=FFCC00&borderLinkColor=222222&showMap=1&currentPlayersHeight=100&showCurrPlayers=1&showTopPlayers=0&showBlogs=0&width=240" frameborder="0" scrolling="no" width="240" height="412"></iframe>
+<iframe src="http://cache.www.gametracker.com/components/html0/?host=190.210.25.185:27970&bgColor=666666&fontColor=CCCCCC&titleBgColor=222222&titleColor=FF9900&borderColor=555555&linkColor=FFCC00&borderLinkColor=222222&showMap=1&currentPlayersHeight=100&showCurrPlayers=1&showTopPlayers=0&showBlogs=0&width=240" frameborder="0" scrolling="no" width="240" height="412"></iframe>
+<iframe src="http://cache.www.gametracker.com/components/html0/?host=190.210.25.185:27950&bgColor=666666&fontColor=CCCCCC&titleBgColor=222222&titleColor=FF9900&borderColor=555555&linkColor=FFCC00&borderLinkColor=222222&showMap=1&currentPlayersHeight=100&showCurrPlayers=1&showTopPlayers=0&showBlogs=0&width=240" frameborder="0" scrolling="no" width="240" height="412"></iframe>
+</div><br/>
+<div id="tweets-container" style="width: 376px; height: 350px; margin: auto;">
+</div><br/>
+{% endblock %}

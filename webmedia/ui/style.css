@@ -1,0 +1,9 @@
+.date-select-widget {
+  background: url('img/calendar.png') no-repeat 100% 50%;
+  cursor: pointer;
+  margin-right:5px !important;
+}
+.time-select-widget {
+  background: url('img/clock.png') no-repeat 100% 50%;
+  cursor: pointer;
+}

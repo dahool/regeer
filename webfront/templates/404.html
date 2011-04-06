@@ -1,0 +1,9 @@
+{% extends 'base_simple.html' %}
+{% load i18n %}
+{% block title %}{{ block.super }} | {% trans "Page not found" %}{% endblock %}
+{% block main_content %}
+<h2>{% trans "Page not found" %}</h2>
+<p>{% blocktrans %}Looks like you followed a bad link. If you think it's our fault, please let us know</a>.{% endblocktrans %}</p>
+{% url home as home %}
+<p>{% blocktrans %}Here's a link to the <a href="{{ home }}">homepage</a>. You know, just in case.{% endblocktrans %}</p>
+{% endblock %}

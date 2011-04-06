@@ -1,0 +1,3 @@
+SITE_NAME = 'CodWar Servers'
+VERSION = '0.2.100'
+APP_NAME = 'B3 Web Portal'

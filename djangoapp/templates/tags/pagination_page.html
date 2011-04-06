@@ -1,0 +1,31 @@
+{% spaceless %}
+{% load i18n %}
+<div class="pagination">
+{% if data.has_previous %}<span class="prev"><a href="?page={{ data.previous_page_number }}{% if params %}&{{params}}{%endif%}">{% trans "&laquo; Previous" %}</a></span>{% else %}<span class="prev-na">{% trans "&laquo; Previous" %}</span>{% endif %}
+{% if not in_leading_range %}
+    {% for num in pages_outside_trailing_range %}
+        <span class="page"><a href="?page={{num}}{% if params %}&{{params}}{%endif%}">{{ num }}</a></span>
+    {% endfor %}
+    ...
+{% endif %}
+ 
+{% for num in page_numbers %}
+  {% ifequal num data.number %}
+    <span class="curr">{{ num }}</span>
+  {% else %}
+    <span class="page"><a href="?page={{num}}{% if params %}&{{params}}{%endif%}">{{ num }}</a></span>
+  {% endifequal %}
+{% endfor %}
+ 
+{% if not in_trailing_range %}
+    ...
+    {% for num in pages_outside_leading_range reversed %}
+        <span class="page"><a href="?page={{num}}{% if params %}&{{params}}{%endif%}">{{ num }}</a></span>
+    {% endfor %}
+{% endif %}
+ 
+{% if data.has_next %}<span class="next"><a href="?page={{data.next_page_number}}{% if params %}&{{params}}{%endif%}">{% trans "Next &raquo;" %}</a></span>{% else %}<span class="next-na">{% trans "Next &raquo;" %}</span>{% endif %}
+</div> 
+{% endspaceless %}
+
+

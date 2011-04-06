@@ -1,0 +1,42 @@
+{% extends "base_layout.html" %}
+{% load listtocolumns i18n tagutils urltag %}
+{% block title %}{{ block.super }} | {% trans "Flag Runner Standings" %}{% endblock %}
+{% block main_content %}
+<small>
+<form style="display:inline;" method="post">
+{% csrf_token %}
+{% with request.session.server as current_server %}
+<select name="server" onchange="this.form.submit()">
+{% for server in request.server_list %}
+<option value="{{server.DB}}" {% if current_server == server.DB %}selected="selected"{%endif%}>{{server.NAME}}</option>
+{% endfor %}
+</select>
+{% endwith %}
+</form>
+</small>
+{% if list %}
+<h3>{% trans "Top Flag Runners" %}</h3>
+<table class="stats">
+<tr>
+<th style="width: 70px;">{%trans "Pos."%}</th>
+<th>{%trans "Player"%}</th>
+<th>{%trans "When" %}</th>
+<th>{%trans "Map"%}</th>
+<th>{%trans "Score"%}</th>
+</tr>
+{% for obj in list %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td class="nodecoration_icon medal_{{forloop.counter}}"><a href="{% serverurl client_detail obj.quick_capture_client.id %}">{{obj.quick_capture_client.name}}</a></td>
+        <td>{{obj.quick_capture_timeadd|date:"DATETIME_FORMAT"}}</td>
+        <td>{{obj.mapname}}</td>
+        <td>{{obj.quick_capture_score}}</td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+<ul class="messages">
+    <li class="info">{% trans "Sorry, this server doesn't not save stats." %}</li>
+</ul>
+{% endif %}
+{% endblock %}

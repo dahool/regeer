@@ -1,0 +1,10 @@
+INSTALLED_APPS += ('phpbb_auth',)
+AUTHENTICATION_BACKENDS = ('phpbb_auth.backends.phpbbBackend',)
+DATABASE_ROUTERS = ('phpbb_auth.routers.phpbbRouter',)
+
+PHPBB_DB_ID = 'phpbb'
+PHPBB_TABLES_PREFIX = 'phpbb_'
+
+PHPBB_GROUP_MAPPING =  {'ADMINISTRATORS':'bbAdmin',
+                        'GLOBAL_MODERATORS': 'bbServerAdmin',
+                        'Server Admin':'bbServerAdmin'}
