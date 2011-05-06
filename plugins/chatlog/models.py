@@ -26,6 +26,7 @@ class ChatLog(models.Model):
         return CHAT_TARGETS.get(self.target,self.target)
     
     class Meta:
+        managed = False
         ordering = ('-time_add',)
         db_table = u"chatlog"
         permissions = (

@@ -15,6 +15,7 @@ class KnifeStat(models.Model):
         return "%s - %s" % (self.client.name, self.map_name)
     
     class Meta:
+        managed = False
         db_table = u'plugin_knife_hof'
 
 class NaderStat(models.Model):
@@ -30,6 +31,7 @@ class NaderStat(models.Model):
         return "%s - %s" % (self.client.name, self.map_name)
     
     class Meta:
+        managed = False
         db_table = u'plugin_nader_hef'
         
 class FlagStat(models.Model):
@@ -48,4 +50,5 @@ class FlagStat(models.Model):
         return self.mapname
     
     class Meta:
+        managed = False
         db_table = u'flagstats'        

@@ -19,6 +19,7 @@ class Follow(models.Model):
         return "%s [%s]" % (self.client.name,self.time_add.strftime("%d/%m/%Y %H:%M"))
         
     class Meta:
+        managed = False
         ordering = ('client',)
         verbose_name_plural = "Following"
         db_table = u'following'

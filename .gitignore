@@ -1,0 +1,4 @@
+*.pyc
+local.conf
+settings/60-local.pyconf
+

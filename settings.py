@@ -9,3 +9,6 @@ conffiles.sort()
 
 for f in conffiles:
     execfile(os.path.abspath(f)) 
+    
+if os.path.exists(LOCAL_CONFIG):
+    execfile(LOCAL_CONFIG)

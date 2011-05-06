@@ -24,6 +24,7 @@ class Group(models.Model):
         return "%s (Level %d)" % (self.name, self.level)
     
     class Meta:
+        managed = False
         ordering  = ('id',)
         db_table = u'groups'
         permissions = (
@@ -73,6 +74,7 @@ class Client(models.Model):
         return self.password == hash.md5(password).hexdigest()
         
     class Meta:
+        managed = False
         ordering = ('id',)
         db_table = u'clients'
         permissions = (
@@ -99,6 +101,7 @@ class Alias(models.Model):
         return "%s [%s] - [%s]" % (self.client.name,self.alias, self.ip)
         
     class Meta:
+        managed = False
         ordering = ('-time_edit',)
         verbose_name_plural = "Aliases"
         db_table = u'aliases'
@@ -160,6 +163,7 @@ class Penalty(models.Model):
                                       self.time_add.strftime("%d/%m/%Y %H:%M"))
     
     class Meta:
+        managed = False
         ordering = ('-time_add',)
         verbose_name_plural = "Penalties"
         db_table = u'penalties'
