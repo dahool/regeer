@@ -1,0 +1,16 @@
+Requisites
+========================================
+
+* Python 2.5+
+* Django 1.2.x
+* pycrypto
+* B3 (http://www.bigbrotherbot.com)
+Installation
+========================================
+
+Rename settings/60-local.pyconf.example to settings/60-local.pyconf
+and edit with your database settings (KEEP the name 'default' on it)
+
+Run python manage.py syncdb to setup database.
+Run python manager.py addserver to add a server config (run manager.py help addserver for more info)
+Run python manage.py runserver to start dev server and point browser to http://127.0.0.1:8000/

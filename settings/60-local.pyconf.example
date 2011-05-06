@@ -1,0 +1,9 @@
+DATABASES = {
+    'default': {
+        'NAME': 'dbportal',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'dbuser',
+        'PASSWORD': 'dbpass',
+        'HOST': 'localhost',
+    },
+}
