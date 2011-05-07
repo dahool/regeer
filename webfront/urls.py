@@ -4,7 +4,7 @@ import views
 
 urlpatterns = patterns('',
     url(r'^$', views.home, name='web_home'),
-    url(r'^admin/', include('webfront.rconadmin.urls')),
+    #url(r'^admin/', include('webfront.rconadmin.urls')),
     url(r'^client/', include('webfront.client.urls')),
     url(r'^server/', include('webfront.server.urls')),
     url(r'^login/$', auth_views.login, kwargs={'template_name':'auth/login.html'}, name='user_signin'),

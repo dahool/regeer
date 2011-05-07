@@ -18,13 +18,13 @@ class Command(BaseCommand):
             help=('Specifies the location of the banlist file  (ie: /home/q3ut4/banlist.txt)')),
         make_option('--statusfile', dest='statusfile', default=None,
             help=('Specifies the location of the status file (if you are using the status plugin) (ie: /home/q3ut4/status.xml)')),
-        make_option('--dbname', dest='dbname', default='b3',
+        make_option('--dbname', dest='dbname', default=None,
             help=('Name of the b3 database for this server')),
-        make_option('--dbuser', dest='dbuser', default='b3',
+        make_option('--dbuser', dest='dbuser', default=None,
             help=('Username of the b3 database for this server')),
         make_option('--dbpass', dest='dbpass', default=None,
             help=('Database password')),
-        make_option('--dbhost', dest='dbhost', default='localhost',
+        make_option('--dbhost', dest='dbhost', default=None,
             help=('Database host')),
         make_option('--rconpass', dest='rconpass', default=None,
             help=('RCON Password')),
@@ -55,7 +55,7 @@ class Command(BaseCommand):
         if os.path.exists(settings.LOCAL_CONFIG):
             databases = settings.SERVER_DATABASES
             servers = settings.SERVERS
-            
+        
         if not interactive:
             for k, v in fields.items():
                 if not k in ('rconpass','statusfile'):
@@ -89,7 +89,7 @@ class Command(BaseCommand):
                     default = servers[key_name]['STATUS'] if servers.has_key(key_name) else None
                     fields['statusfile'] = self.ask_input('Location of status.xml (if you use status plugin)', default, allow_none=True)
                 if not plugins_s == 0:
-                    default = servers[key_name]['PLUGINS'] if servers.has_key(key_name) else None
+                    default = ",".join(servers[key_name]['PLUGINS']) if servers.has_key(key_name) else None
                     plugins_s = self.ask_input('List of enabled plugins separated by comma (chatlog,follow,flagstats,hestats,knifestats,status)', default, allow_none=True)
             except KeyboardInterrupt:
                 sys.stderr.write("\nOperation cancelled.\n")
