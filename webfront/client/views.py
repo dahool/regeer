@@ -281,6 +281,7 @@ def editpenalty(request, id):
                 p.duration = time2minutes(str(form.cleaned_data['time'])+form.cleaned_data['time_type'])
                 p.type='TempBan'
             p.reason = form.cleaned_data['reason']
+            p.time_edit=datetime.datetime.now()
             p.save()
             messages.success(request, _('Penalty edited successfully.'))
             return HttpResponseRedirect(reverse("client_detail",kwargs={'id':p.client.id}))
