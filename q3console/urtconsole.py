@@ -85,6 +85,8 @@ class UrtClient(object):
     def get_cvar(self, data):
         try:
             return self._clean_colors(self.console.vars[data])
+        except KeyError:
+            return None
         except IndexError:
             return None
 

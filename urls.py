@@ -3,14 +3,17 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from common.view.i18n import set_language
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'webfront.views.home', name='home'),
-    url('^web/', include('webfront.urls')),
+    url(r'^$', 'b3portal.views.home', name='home'),
     url('^admin/', include(admin.site.urls)),
+    url(r'^login/$', auth_views.login, kwargs={'template_name':'auth/login.html'}, name='user_signin'),
+    url(r'^logout/$', auth_views.logout, {'next_page': '/' }, name='auth_logout'),
+    url('^', include('b3portal.urls')),
     #url(r'^setlang/$', 'django.views.i18n.set_language', name='set_lang'),
 )
 

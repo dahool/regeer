@@ -1,0 +1,17 @@
+{% load i18n navigation %}
+{% if user.is_authenticated %}
+<ul class="subnav">
+{% url banned_world_map as url_nav_map %}
+{% url admin_kicks as url_nav_kicks %}
+{% url penalty_list as url_nav_penalties %}
+{% url notice_list as url_nav_notices %}
+<li id="{% current_nav url_nav_map current2 %}"><a href="{{url_nav_map}}">{% trans "World Map" %}</a></li>
+{% if perms.b3connect.view_penalty %}
+<li id="{% current_nav url_nav_kicks current2 %}"><a href="{{url_nav_kicks}}">{% trans "Admin Kicks" %}</a></li>
+<li id="{% current_nav url_nav_penalties current2 %}"><a href="{{url_nav_penalties}}">{% trans "Warnings" %}</a></li>
+{% endif %}
+{% if perms.b3connect.view_notices %}
+<li id="{% current_nav url_nav_notices current2 %}"><a href="{{url_nav_notices}}">{% trans "Notices" %}</a></li>
+{% endif %}
+</ul>
+{% endif %}

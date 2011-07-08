@@ -26,12 +26,3 @@ SKIP_MAPS = ['ut4_casa','ut4_kingdom','ut4_turnpike','ut4_abbey','ut4_prague','u
              'ut4_algiers','ut4_austria','ut4_maya','ut4_tombs','ut4_elgin','ut4_oildepot','ut4_swim',
              'ut4_harbortown','ut4_ramelle','ut4_toxic','ut4_sanc','ut4_riyadh','ut4_ambush','ut4_eagle',
              'ut4_suburbs','ut4_crossing','ut4_subway','ut4_tunis','ut4_thingley','ut4_dressingroom']
-
-SERVERS = {
-    'default': {
-        'TITLE': 'COD1',
-        'STATUS': os.path.join(PROJECT_PATH,'test','status.xml'),
-        'CFG': os.path.join(PROJECT_PATH,'test','b3.xml'),
-        'BANLIST': os.path.join(PROJECT_PATH,'test','banlist.txt'),
-    },       
-}

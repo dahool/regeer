@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from djangoui.widgets import uiSplitDateTimeWidget
-from webfront.models import Map
+from b3portal.models import Map
 
 MAP_CHOICES = [(m.name, m.display_name) for m in Map.objects.all()]
 MAP_CHOICES.insert(0, ('','-'))

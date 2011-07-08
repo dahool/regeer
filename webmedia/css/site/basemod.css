@@ -157,7 +157,7 @@
 	#main {
 		position: relative;
 		border-top: 2px #fff solid;
-		background: #fff url(../../images/black/bg_main_top.gif) repeat-x top
+		background: #fff url(../../images/black/bg_main_top.gif) repeat-x top;
 	}
 	.first {
 		overflow: hidden;

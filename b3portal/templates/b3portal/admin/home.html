@@ -1,0 +1,42 @@
+{% extends "base_layout.html" %}
+{% load i18n media navigation %}
+{% block extra_header %}
+{{ block.super }}
+{% jscript "js/date.format.js" %}
+<script type="text/javascript">
+var POST_URL = "{% url admin_command %}";
+</script>
+{% jscript "js/admin.js" %}
+{% endblock%}
+{% block navigation2 %}
+{% url admin_ban_list as url_nav_banlist %}
+<li id="{% current_nav url_nav_banlist current2 %}"><a href="{{url_nav_banlist}}">{% trans "Ban List" %}</a></li>
+{% endblock %}
+{% block main_content %}
+<h3>{% trans "Server Administration" %}
+<small>
+    &nbsp;|&nbsp;
+    <form style="display:inline;" method="post">
+    {% csrf_token %}
+    {% with request.session.server as current_server %}
+    <select name="server" onchange="this.form.submit()">
+    {% for server in request.server_list %}
+    <option value="{{server.DB}}" {% if current_server == server.DB %}selected="selected"{%endif%}>{{server.NAME}}</option>
+    {% endfor %}
+    </select>
+    {% endwith %}
+    </form>
+</small>  
+</h3>
+<input type="button" class="red" style="float: right;" onclick="do_call_get('{% url admin_refresh_status %}','status')" value="{% trans "Refresh" %}">
+<div id="status">
+{% include "b3portal/admin/status.html" %} 
+</div>
+<div id="commands">
+{% include "b3portal/admin/commands.html" %}
+</div>
+<input type="button" class="red" style="float: right;" onclick="do_call_get('{% url admin_refresh_clients %}','clients')" value="{% trans "Refresh" %}">
+<div id="clients">
+{% include "b3portal/admin/clients.html" %}
+</div>
+{% endblock %}

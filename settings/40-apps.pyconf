@@ -27,7 +27,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     #'phpbb_auth.middleware.bbRemoteUserMiddleware',
-    'webfront.middleware.ServerDetectMiddleware',
+    'b3portal.middleware.ServerDetectMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'common.middleware.http.HttpErrorMiddleware',
@@ -42,17 +42,18 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.messages',
     'b3connect',
-    'webfront',
     'djangoapp',
     'djangogravatar',
-    'common.floodprotection',
-    'plugins.stats',
-    'plugins.follow',
-    'plugins.chatlog',
-    'plugins.status',
-    'plugins.autoslap',
+    'b3portal',
+    #'b3portal',
+    #'common.floodprotection',
+    #'plugins.stats',
+    #'plugins.follow',
+    #'plugins.chatlog',
+    #'plugins.status',
+    #'plugins.autoslap',
 )
 
 ROOT_URLCONF = 'b3webportal.urls'
 
-AUTH_PROFILE_MODULE = "webfront.models.UserProfile"
+AUTH_PROFILE_MODULE = "b3portal.models.UserProfile"

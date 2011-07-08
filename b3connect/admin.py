@@ -185,6 +185,7 @@ class AuditAdmin(CustomModelAdmin):
     list_filter=('command',)
     list_display=('command', 'client', 'data', 'time_add')
 
+'''
 admin.site.register(Client, ClientAdmin)
 admin.site.register(Alias, AliasAdmin)
 admin.site.register(Group, GroupAdmin)
@@ -192,4 +193,4 @@ admin.site.register(Penalty, PenaltyAdmin)
 admin.site.register(Nick, NickAdmin)
 admin.site.register(DisabledCommand, DisabledCommandAdmin)
 admin.site.register(AuditLog, AuditAdmin)
-
+'''

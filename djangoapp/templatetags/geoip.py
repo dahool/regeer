@@ -7,7 +7,10 @@ geo = GeoLocation()
 
 @register.filter
 def geoip(ip):
-    r = geo.get_city_detail(ip)
+    try:
+        r = geo.get_city_detail(ip)
+    except:
+        r = None
     return r
     
 @register.inclusion_tag('tags/geoip.html')

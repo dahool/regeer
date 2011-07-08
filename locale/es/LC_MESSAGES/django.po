@@ -41,15 +41,15 @@ msgid "Invalid index in mouse move: %(index)s"
 msgstr ""
 
 #: b3/lib/runsnakerun/runsnake.py:317
-#: webfront/templates/webfront/ban_list.html:27
-#: webfront/templates/webfront/admin/clients.html:9
-#: webfront/templates/webfront/client/admin_list.html:30
-#: webfront/templates/webfront/client/client.html:63
-#: webfront/templates/webfront/client/client.html:106
-#: webfront/templates/webfront/client/client_list.html:34
-#: webfront/templates/webfront/client/client_list.html:57
-#: webfront/templates/webfront/client/inactiveadmin_list.html:41
-#: webfront/templates/webfront/client/regular_client_list.html:30
+#: b3portal/templates/b3portal/ban_list.html:27
+#: b3portal/templates/b3portal/admin/clients.html:9
+#: b3portal/templates/b3portal/client/admin_list.html:30
+#: b3portal/templates/b3portal/client/client.html:63
+#: b3portal/templates/b3portal/client/client.html:106
+#: b3portal/templates/b3portal/client/client_list.html:34
+#: b3portal/templates/b3portal/client/client_list.html:57
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:41
+#: b3portal/templates/b3portal/client/regular_client_list.html:30
 msgid "Name"
 msgstr "Nombre"
 
@@ -298,7 +298,7 @@ msgstr "Ban"
 msgid "TempBan"
 msgstr "Ban Temporal"
 
-#: b3connect/models.py:114 webfront/templates/webfront/admin/clients.html:21
+#: b3connect/models.py:114 b3portal/templates/b3portal/admin/clients.html:21
 msgid "Kick"
 msgstr "Kick"
 
@@ -441,13 +441,13 @@ msgid "Sort ascending"
 msgstr "Orden ascendente"
 
 #: djangoapp/templates/tags/userinfo.html:3
-#: webfront/templates/base_layout.html:30
+#: b3portal/templates/base_layout.html:30
 #, python-format
 msgid "Welcome %(name)s"
 msgstr "Bienvenido %(name)s"
 
 #: djangoapp/templates/tags/userinfo.html:4
-#: webfront/templates/base_layout.html:35
+#: b3portal/templates/base_layout.html:35
 msgid "Sign out"
 msgstr "Salir"
 
@@ -500,7 +500,7 @@ msgstr "Hasta"
 #: plugins/stats/templates/stats/stats.html:109
 #: plugins/status/templates/status/client_detail.html:24
 #: plugins/status/templates/status/game_status.html:28
-#: webfront/templates/webfront/admin/commands.html:16
+#: b3portal/templates/b3portal/admin/commands.html:16
 msgid "Map"
 msgstr "Mapa"
 
@@ -518,7 +518,7 @@ msgstr "Equipo Rojo"
 
 #: plugins/chatlog/templates/chatlog/log.html:3
 #: plugins/chatlog/templates/chatlog/log.html:20
-#: webfront/templates/base_layout.html:63
+#: b3portal/templates/base_layout.html:63
 msgid "Chat Logs"
 msgstr "Registro de Chats"
 
@@ -527,30 +527,30 @@ msgid "Search:"
 msgstr "Buscar:"
 
 #: plugins/chatlog/templates/chatlog/log.html:44
-#: webfront/templates/webfront/ban_list.html:28
-#: webfront/templates/webfront/client/client_list.html:39
+#: b3portal/templates/b3portal/ban_list.html:28
+#: b3portal/templates/b3portal/client/client_list.html:39
 msgid "Search"
 msgstr "Buscar"
 
 #: plugins/chatlog/templates/chatlog/log.html:45
-#: webfront/templates/webfront/ban_list.html:30
-#: webfront/templates/webfront/client/client_list.html:47
+#: b3portal/templates/b3portal/ban_list.html:30
+#: b3portal/templates/b3portal/client/client_list.html:47
 msgid "reset"
 msgstr "limpiar"
 
 #: plugins/chatlog/templates/chatlog/log.html:51
-#: webfront/templates/webfront/ban_list.html:34
-#: webfront/templates/webfront/client/client_list.html:51
+#: b3portal/templates/b3portal/ban_list.html:34
+#: b3portal/templates/b3portal/client/client_list.html:51
 msgid "Direct link to this search"
 msgstr "Enlace directo a esta búsqueda"
 
 #: plugins/chatlog/templates/chatlog/log.html:57
-#: webfront/templates/webfront/client/admin_list.html:29
-#: webfront/templates/webfront/client/client.html:64
-#: webfront/templates/webfront/client/client_list.html:35
-#: webfront/templates/webfront/client/client_list.html:56
-#: webfront/templates/webfront/client/inactiveadmin_list.html:40
-#: webfront/templates/webfront/client/regular_client_list.html:29
+#: b3portal/templates/b3portal/client/admin_list.html:29
+#: b3portal/templates/b3portal/client/client.html:64
+#: b3portal/templates/b3portal/client/client_list.html:35
+#: b3portal/templates/b3portal/client/client_list.html:56
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:40
+#: b3portal/templates/b3portal/client/regular_client_list.html:29
 msgid "@id"
 msgstr "@id"
 
@@ -564,11 +564,11 @@ msgstr "@id"
 #: plugins/stats/templates/stats/stats.html:50
 #: plugins/stats/templates/stats/stats.html:78
 #: plugins/stats/templates/stats/stats.html:107
-#: webfront/templates/webfront/ban_list.html:39
-#: webfront/templates/webfront/kick_list.html:28
-#: webfront/templates/webfront/notice_list.html:28
-#: webfront/templates/webfront/penalty_list.html:28
-#: webfront/templates/webfront/client/quick.html:5
+#: b3portal/templates/b3portal/ban_list.html:39
+#: b3portal/templates/b3portal/kick_list.html:28
+#: b3portal/templates/b3portal/notice_list.html:28
+#: b3portal/templates/b3portal/penalty_list.html:28
+#: b3portal/templates/b3portal/client/quick.html:5
 msgid "Player"
 msgstr "Jugador"
 
@@ -593,27 +593,27 @@ msgid "Current Map"
 msgstr "Mapa actual"
 
 #: plugins/chatlog/templates/chatlog/log.html:81
-#: webfront/templates/webfront/ban_list.html:61
-#: webfront/templates/webfront/kick_list.html:48
-#: webfront/templates/webfront/notice_list.html:48
-#: webfront/templates/webfront/penalty_list.html:50
-#: webfront/templates/webfront/client/admin_list.html:51
-#: webfront/templates/webfront/client/client_list.html:88
-#: webfront/templates/webfront/client/inactiveadmin_list.html:64
-#: webfront/templates/webfront/client/regular_client_list.html:51
+#: b3portal/templates/b3portal/ban_list.html:61
+#: b3portal/templates/b3portal/kick_list.html:48
+#: b3portal/templates/b3portal/notice_list.html:48
+#: b3portal/templates/b3portal/penalty_list.html:50
+#: b3portal/templates/b3portal/client/admin_list.html:51
+#: b3portal/templates/b3portal/client/client_list.html:88
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:64
+#: b3portal/templates/b3portal/client/regular_client_list.html:51
 #, python-format
 msgid "Showing %(number)s records"
 msgstr "Mostrando %(number)s registros"
 
 #: plugins/follow/forms.py:6 plugins/follow/templates/follow/list.html:26
-#: webfront/client/forms.py:17 webfront/templates/webfront/ban_list.html:43
-#: webfront/templates/webfront/kick_list.html:30
-#: webfront/templates/webfront/notice_list.html:30
-#: webfront/templates/webfront/penalty_list.html:31
-#: webfront/templates/webfront/client/client.html:140
-#: webfront/templates/webfront/client/client.html:178
-#: webfront/templates/webfront/client/client.html:208
-#: webfront/templates/webfront/client/client.html:237
+#: b3portal/client/forms.py:17 b3portal/templates/b3portal/ban_list.html:43
+#: b3portal/templates/b3portal/kick_list.html:30
+#: b3portal/templates/b3portal/notice_list.html:30
+#: b3portal/templates/b3portal/penalty_list.html:31
+#: b3portal/templates/b3portal/client/client.html:140
+#: b3portal/templates/b3portal/client/client.html:178
+#: b3portal/templates/b3portal/client/client.html:208
+#: b3portal/templates/b3portal/client/client.html:237
 msgid "Reason"
 msgstr "Motivo"
 
@@ -639,30 +639,30 @@ msgid "Add To Watch List"
 msgstr "Añadir a Lista de Seguimiento"
 
 #: plugins/follow/templates/follow/add.html:20 templates/admin/index.html:29
-#: webfront/templates/webfront/client/add_penalty.html:21
-#: webfront/templates/webfront/client/client.html:133
-#: webfront/templates/webfront/client/client.html:174
+#: b3portal/templates/b3portal/client/add_penalty.html:21
+#: b3portal/templates/b3portal/client/client.html:133
+#: b3portal/templates/b3portal/client/client.html:174
 msgid "Add"
 msgstr "Añadir"
 
 #: plugins/follow/templates/follow/add.html:21
-#: webfront/templates/webfront/client/add_penalty.html:22
+#: b3portal/templates/b3portal/client/add_penalty.html:22
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: plugins/follow/templates/follow/list.html:3
 #: plugins/follow/templates/follow/list.html:20
-#: webfront/templates/webfront/client/client_menu.html:15
+#: b3portal/templates/b3portal/client/client_menu.html:15
 msgid "Watched Players"
 msgstr "Usuarios bajo Vigilancia"
 
 #: plugins/follow/templates/follow/list.html:27
-#: webfront/templates/webfront/ban_list.html:40
-#: webfront/templates/webfront/notice_list.html:29
-#: webfront/templates/webfront/client/client.html:137
-#: webfront/templates/webfront/client/client.html:177
-#: webfront/templates/webfront/client/client.html:205
-#: webfront/templates/webfront/client/client.html:234
+#: b3portal/templates/b3portal/ban_list.html:40
+#: b3portal/templates/b3portal/notice_list.html:29
+#: b3portal/templates/b3portal/client/client.html:137
+#: b3portal/templates/b3portal/client/client.html:177
+#: b3portal/templates/b3portal/client/client.html:205
+#: b3portal/templates/b3portal/client/client.html:234
 msgid "Added"
 msgstr "Añadido"
 
@@ -733,7 +733,7 @@ msgid "Top Flag Runners"
 msgstr "Mejores Corredores"
 
 #: plugins/stats/templates/stats/stats.html:3
-#: webfront/templates/base_layout.html:56
+#: b3portal/templates/base_layout.html:56
 msgid "Stats"
 msgstr "Estadísticas"
 
@@ -796,7 +796,7 @@ msgid "refresh"
 msgstr "actualizar"
 
 #: plugins/status/templates/status/game_status.html:30
-#: webfront/templates/webfront/admin/commands.html:36
+#: b3portal/templates/b3portal/admin/commands.html:36
 msgid "Game Type"
 msgstr "Tipo de Juego"
 
@@ -828,7 +828,7 @@ msgid "Total Players"
 msgstr "Jugadores Totales"
 
 #: plugins/status/templates/status/game_status.html:50
-#: webfront/templates/webfront/admin/commands.html:28
+#: b3portal/templates/b3portal/admin/commands.html:28
 msgid "Password"
 msgstr "Contraseña"
 
@@ -837,7 +837,7 @@ msgid "Specs"
 msgstr "Espectadores"
 
 #: plugins/status/templates/status/game_status.html:103
-#: webfront/templates/webfront/client/client.html:95
+#: b3portal/templates/b3portal/client/client.html:95
 msgid "Playing"
 msgstr "Jugando"
 
@@ -895,769 +895,769 @@ msgstr ""
 msgid "Unknown content"
 msgstr ""
 
-#: webfront/models.py:44
+#: b3portal/models.py:44
 msgid "Can Change Password"
 msgstr ""
 
-#: webfront/models.py:45
+#: b3portal/models.py:45
 msgid "Allow the user to change login password"
 msgstr ""
 
-#: webfront/models.py:65
+#: b3portal/models.py:65
 #, fuzzy
 msgid "Server Name"
 msgstr "Estado del Servidor"
 
-#: webfront/models.py:66
+#: b3portal/models.py:66
 #, fuzzy
 msgid "Database Name"
 msgstr "Error de base de datos"
 
-#: webfront/models.py:67
+#: b3portal/models.py:67
 #, fuzzy
 msgid "Database Engine"
 msgstr "Error de base de datos"
 
-#: webfront/models.py:68
+#: b3portal/models.py:68
 #, fuzzy
 msgid "Database User"
 msgstr "Error de base de datos"
 
-#: webfront/models.py:70
+#: b3portal/models.py:70
 #, fuzzy
 msgid "Database Host"
 msgstr "Error de base de datos"
 
-#: webfront/models.py:71
+#: b3portal/models.py:71
 msgid "Status File Abs Path"
 msgstr ""
 
-#: webfront/models.py:71
+#: b3portal/models.py:71
 msgid "For status plugin"
 msgstr ""
 
-#: webfront/models.py:72
+#: b3portal/models.py:72
 msgid "Config File Abs Path"
 msgstr ""
 
-#: webfront/models.py:72
+#: b3portal/models.py:72
 msgid "For RCON access"
 msgstr ""
 
-#: webfront/client/forms.py:7
+#: b3portal/client/forms.py:7
 msgid "Minutes"
 msgstr "Minutos"
 
-#: webfront/client/forms.py:8
+#: b3portal/client/forms.py:8
 msgid "Hours"
 msgstr "Horas"
 
-#: webfront/client/forms.py:9
+#: b3portal/client/forms.py:9
 msgid "Days"
 msgstr "Días"
 
-#: webfront/client/forms.py:10
+#: b3portal/client/forms.py:10
 msgid "Weeks"
 msgstr "Semanas"
 
-#: webfront/client/forms.py:11
+#: b3portal/client/forms.py:11
 msgid "Month"
 msgstr "Mes"
 
-#: webfront/client/forms.py:12
+#: b3portal/client/forms.py:12
 msgid "Years"
 msgstr "Años"
 
-#: webfront/client/forms.py:24 webfront/templates/webfront/ban_list.html:52
-#: webfront/templates/webfront/client/client.html:158
-#: webfront/templates/webfront/client/client_adminactions.html:19
+#: b3portal/client/forms.py:24 b3portal/templates/b3portal/ban_list.html:52
+#: b3portal/templates/b3portal/client/client.html:158
+#: b3portal/templates/b3portal/client/client_adminactions.html:19
 msgid "Permanent"
 msgstr "Permanente"
 
-#: webfront/client/forms.py:25 webfront/templates/webfront/ban_list.html:41
-#: webfront/templates/webfront/client/client.html:138
-#: webfront/templates/webfront/client/client.html:206
-#: webfront/templates/webfront/client/client.html:235
-#: webfront/templates/webfront/client/inactiveadmin_list.html:45
+#: b3portal/client/forms.py:25 b3portal/templates/b3portal/ban_list.html:41
+#: b3portal/templates/b3portal/client/client.html:138
+#: b3portal/templates/b3portal/client/client.html:206
+#: b3portal/templates/b3portal/client/client.html:235
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:45
 msgid "Duration"
 msgstr "Duración"
 
-#: webfront/client/forms.py:26
+#: b3portal/client/forms.py:26
 msgid "Period"
 msgstr "Período"
 
-#: webfront/client/views.py:43
+#: b3portal/client/views.py:43
 msgid "You are not authorized to view details about this player."
 msgstr "No estás autorizado a ver información de este jugador."
 
-#: webfront/client/views.py:256
+#: b3portal/client/views.py:256
 msgid "Penalty added successfully."
 msgstr ""
 
-#: webfront/client/views.py:267
+#: b3portal/client/views.py:267
 msgid "Penalty de-activated successfully."
 msgstr ""
 
-#: webfront/client/views.py:285
+#: b3portal/client/views.py:285
 msgid "Penalty edited successfully."
 msgstr ""
 
-#: webfront/client/views.py:356
+#: b3portal/client/views.py:356
 msgid "You entered an invalid player id."
 msgstr ""
 
-#: webfront/client/views.py:361
+#: b3portal/client/views.py:361
 #, fuzzy, python-format
 msgid "Player with id %d not found."
 msgstr "Página no encontrada"
 
-#: webfront/rconadmin/views.py:76
+#: b3portal/rconadmin/views.py:76
 #, python-format
 msgid "Error: %s"
 msgstr "Error: %s"
 
-#: webfront/rconadmin/views.py:83
+#: b3portal/rconadmin/views.py:83
 msgid "Using alternative players info method"
 msgstr ""
 
-#: webfront/rconadmin/views.py:94
+#: b3portal/rconadmin/views.py:94
 msgid "The information is not accurate"
 msgstr ""
 
-#: webfront/rconadmin/views.py:110
+#: b3portal/rconadmin/views.py:110
 msgid "<span style='color: #F00'>Can't establish RCON link</span>"
 msgstr ""
 
-#: webfront/rconadmin/views.py:118
+#: b3portal/rconadmin/views.py:118
 #, python-format
 msgid "Unknown command %s"
 msgstr ""
 
-#: webfront/rconadmin/views.py:141
+#: b3portal/rconadmin/views.py:141
 msgid "Enter a valid IPv4 address."
 msgstr ""
 
-#: webfront/server/forms.py:8
+#: b3portal/server/forms.py:8
 #, fuzzy
 msgid "Database Password"
 msgstr "Error de base de datos"
 
-#: webfront/server/forms.py:13
+#: b3portal/server/forms.py:13
 msgid "Non ascii chars are forbidden."
 msgstr ""
 
-#: webfront/server/views.py:51
+#: b3portal/server/views.py:51
 #, fuzzy
 msgid "Server changed successfully."
 msgstr "Seguimiento agregado con éxito"
 
-#: webfront/server/views.py:53
+#: b3portal/server/views.py:53
 #, fuzzy
 msgid "Server added successfully."
 msgstr "Seguimiento agregado con éxito"
 
-#: webfront/templates/403.html:3 webfront/templates/403.html.py:5
+#: b3portal/templates/403.html:3 b3portal/templates/403.html.py:5
 msgid "Forbidden"
 msgstr "Prohibido"
 
-#: webfront/templates/403.html:6
+#: b3portal/templates/403.html:6
 msgid "Sorry, you don't have enough permissions to access here."
 msgstr ""
 "Lo lamento, no tienes permisos suficientes para acceder a esta sección."
 
-#: webfront/templates/404.html:3 webfront/templates/404.html.py:5
+#: b3portal/templates/404.html:3 b3portal/templates/404.html.py:5
 msgid "Page not found"
 msgstr "Página no encontrada"
 
-#: webfront/templates/404.html:6
+#: b3portal/templates/404.html:6
 msgid ""
 "Looks like you followed a bad link. If you think it's our fault, please let "
 "us know</a>."
 msgstr ""
 
-#: webfront/templates/404.html:8
+#: b3portal/templates/404.html:8
 #, python-format
 msgid ""
 "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in "
 "case."
 msgstr ""
 
-#: webfront/templates/500.html:3 webfront/templates/500.html.py:5
+#: b3portal/templates/500.html:3 b3portal/templates/500.html.py:5
 msgid "Page unavailable"
 msgstr "Página no disponible"
 
-#: webfront/templates/500.html:6
+#: b3portal/templates/500.html:6
 msgid "The <b>bad news</b> is that we have just encountered an error."
 msgstr ""
 
-#: webfront/templates/500.html:7
+#: b3portal/templates/500.html:7
 msgid ""
 "The <b>good news</b> is that you've helped us find a bug, which we are now "
 "looking into."
 msgstr ""
 
-#: webfront/templates/500.html:9
+#: b3portal/templates/500.html:9
 msgid "We're sorry, a server error occurred. Please wait a bit and try again."
 msgstr ""
 
-#: webfront/templates/500.html:12
+#: b3portal/templates/500.html:12
 msgid "Sorry, and thanks for your help!"
 msgstr ""
 
-#: webfront/templates/base_layout.html:13
+#: b3portal/templates/base_layout.html:13
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: webfront/templates/base_layout.html:33
+#: b3portal/templates/base_layout.html:33
 #, fuzzy
 msgid "Change password"
 msgstr "Contraseña"
 
-#: webfront/templates/base_layout.html:38
-#: webfront/templates/auth/login.html:11
+#: b3portal/templates/base_layout.html:38
+#: b3portal/templates/auth/login.html:11
 msgid "Sign in"
 msgstr "Iniciar sesión"
 
-#: webfront/templates/base_layout.html:50
+#: b3portal/templates/base_layout.html:50
 msgid "Home"
 msgstr "Inicio"
 
-#: webfront/templates/base_layout.html:51
+#: b3portal/templates/base_layout.html:51
 #, fuzzy
 msgid "Forum"
 msgstr "Desde"
 
-#: webfront/templates/base_layout.html:52
+#: b3portal/templates/base_layout.html:52
 msgid "Maps"
 msgstr "Mapas"
 
-#: webfront/templates/base_layout.html:53
-#: webfront/templates/webfront/ban_list.html:7
+#: b3portal/templates/base_layout.html:53
+#: b3portal/templates/b3portal/ban_list.html:7
 msgid "Public Ban List"
 msgstr "Lista Pública de Baneados"
 
-#: webfront/templates/base_layout.html:59
+#: b3portal/templates/base_layout.html:59
 msgid "Players"
 msgstr "Jugadores"
 
-#: webfront/templates/base_layout.html:68
-#: webfront/templates/webfront/client/client_list.html:62
+#: b3portal/templates/base_layout.html:68
+#: b3portal/templates/b3portal/client/client_list.html:62
 msgid "Status"
 msgstr "Estado"
 
-#: webfront/templates/base_layout.html:72
+#: b3portal/templates/base_layout.html:72
 msgid "RCON"
 msgstr ""
 
-#: webfront/templates/flood.html:3
+#: b3portal/templates/flood.html:3
 msgid "Please wait"
 msgstr "Un momento"
 
-#: webfront/templates/flood.html:5
+#: b3portal/templates/flood.html:5
 msgid "You have to wait between queries."
 msgstr "Tienes que esperar entre consultas."
 
-#: webfront/templates/auth/login.html:3
+#: b3portal/templates/auth/login.html:3
 msgid "Login"
 msgstr "Inciar sesión"
 
-#: webfront/templates/auth/login.html:6
+#: b3portal/templates/auth/login.html:6
 msgid "User login"
 msgstr "Inicio de sesión"
 
-#: webfront/templates/auth/login.html:7
+#: b3portal/templates/auth/login.html:7
 msgid ""
 "Enter your username and password here in order to log in on the website:"
 msgstr ""
 
-#: webfront/templates/auth/login.html:13
+#: b3portal/templates/auth/login.html:13
 msgid "Forgot your password?"
 msgstr ""
 
-#: webfront/templates/webfront/ban_list.html:9
+#: b3portal/templates/b3portal/ban_list.html:9
 #, python-format
 msgid "There are %(count)s active bans/tempbans"
 msgstr ""
 
-#: webfront/templates/webfront/ban_list.html:42
-#: webfront/templates/webfront/client/client.html:139
-#: webfront/templates/webfront/client/client.html:207
-#: webfront/templates/webfront/client/client.html:236
+#: b3portal/templates/b3portal/ban_list.html:42
+#: b3portal/templates/b3portal/client/client.html:139
+#: b3portal/templates/b3portal/client/client.html:207
+#: b3portal/templates/b3portal/client/client.html:236
 msgid "Expires"
 msgstr "Expira"
 
-#: webfront/templates/webfront/ban_list_menu.html:7
-#: webfront/templates/webfront/client/client_menu.html:6
-#: webfront/templates/webfront/client/world_map.html:37
+#: b3portal/templates/b3portal/ban_list_menu.html:7
+#: b3portal/templates/b3portal/client/client_menu.html:6
+#: b3portal/templates/b3portal/client/world_map.html:37
 msgid "World Map"
 msgstr "Mapa mundial"
 
-#: webfront/templates/webfront/ban_list_menu.html:9
-#: webfront/templates/webfront/kick_list.html:7
+#: b3portal/templates/b3portal/ban_list_menu.html:9
+#: b3portal/templates/b3portal/kick_list.html:7
 msgid "Admin Kicks"
 msgstr ""
 
-#: webfront/templates/webfront/ban_list_menu.html:10
-#: webfront/templates/webfront/penalty_list.html:7
+#: b3portal/templates/b3portal/ban_list_menu.html:10
+#: b3portal/templates/b3portal/penalty_list.html:7
 msgid "Warnings"
 msgstr "Advertencias"
 
-#: webfront/templates/webfront/ban_list_menu.html:13
-#: webfront/templates/webfront/notice_list.html:7
-#: webfront/templates/webfront/client/client.html:174
+#: b3portal/templates/b3portal/ban_list_menu.html:13
+#: b3portal/templates/b3portal/notice_list.html:7
+#: b3portal/templates/b3portal/client/client.html:174
 #, fuzzy
 msgid "Notices"
 msgstr "Nota"
 
-#: webfront/templates/webfront/kick_list.html:9
+#: b3portal/templates/b3portal/kick_list.html:9
 #, python-format
 msgid "There are %(count)s kicks that have been added by admins"
 msgstr ""
 
-#: webfront/templates/webfront/kick_list.html:29
+#: b3portal/templates/b3portal/kick_list.html:29
 msgid "Kicked At"
 msgstr ""
 
-#: webfront/templates/webfront/kick_list.html:31
-#: webfront/templates/webfront/notice_list.html:31
-#: webfront/templates/webfront/penalty_list.html:32
-#: webfront/templates/webfront/client/client.html:141
-#: webfront/templates/webfront/client/client.html:179
-#: webfront/templates/webfront/client/client.html:209
+#: b3portal/templates/b3portal/kick_list.html:31
+#: b3portal/templates/b3portal/notice_list.html:31
+#: b3portal/templates/b3portal/penalty_list.html:32
+#: b3portal/templates/b3portal/client/client.html:141
+#: b3portal/templates/b3portal/client/client.html:179
+#: b3portal/templates/b3portal/client/client.html:209
 msgid "Admin"
 msgstr "Admin"
 
-#: webfront/templates/webfront/map_list.html:17
+#: b3portal/templates/b3portal/map_list.html:17
 msgid "Map List"
 msgstr "Lista de Mapas"
 
-#: webfront/templates/webfront/map_list.html:19
+#: b3portal/templates/b3portal/map_list.html:19
 msgid "Current map list in server cycle"
 msgstr ""
 
-#: webfront/templates/webfront/map_list.html:34
+#: b3portal/templates/b3portal/map_list.html:34
 msgid "Download"
 msgstr "Descargar"
 
-#: webfront/templates/webfront/notice_list.html:9
+#: b3portal/templates/b3portal/notice_list.html:9
 #, fuzzy, python-format
 msgid "There are %(count)s notices"
 msgstr "Hay %(count)s admins"
 
-#: webfront/templates/webfront/penalty_list.html:9
+#: b3portal/templates/b3portal/penalty_list.html:9
 #, python-format
 msgid "There are %(count)s warnings (including kicks)"
 msgstr ""
 
-#: webfront/templates/webfront/penalty_list.html:29
-#: webfront/templates/webfront/client/client.html:136
-#: webfront/templates/webfront/client/client.html:204
-#: webfront/templates/webfront/client/client.html:233
+#: b3portal/templates/b3portal/penalty_list.html:29
+#: b3portal/templates/b3portal/client/client.html:136
+#: b3portal/templates/b3portal/client/client.html:204
+#: b3portal/templates/b3portal/client/client.html:233
 msgid "Type"
 msgstr "Tipo"
 
-#: webfront/templates/webfront/penalty_list.html:30
+#: b3portal/templates/b3portal/penalty_list.html:30
 msgid "At"
 msgstr "El"
 
-#: webfront/templates/webfront/world_map_banned.html:3
-#: webfront/templates/webfront/world_map_banned.html:38
+#: b3portal/templates/b3portal/world_map_banned.html:3
+#: b3portal/templates/b3portal/world_map_banned.html:38
 msgid "Banned players around the world"
 msgstr ""
 
-#: webfront/templates/webfront/world_map_banned.html:14
-#: webfront/templates/webfront/client/world_map.html:14
+#: b3portal/templates/b3portal/world_map_banned.html:14
+#: b3portal/templates/b3portal/client/world_map.html:14
 msgid "Country"
 msgstr "País"
 
-#: webfront/templates/webfront/world_map_banned.html:15
+#: b3portal/templates/b3portal/world_map_banned.html:15
 msgid "Banned players"
 msgstr "Jugadores baneados"
 
-#: webfront/templates/webfront/admin/banlist.html:5
-#: webfront/templates/webfront/admin/home.html:13
+#: b3portal/templates/b3portal/admin/banlist.html:5
+#: b3portal/templates/b3portal/admin/home.html:13
 msgid "Ban List"
 msgstr "Lista de baneados"
 
-#: webfront/templates/webfront/admin/banlist.html:8
+#: b3portal/templates/b3portal/admin/banlist.html:8
 msgid "Server Ban List"
 msgstr "Lista de baneados del Servidor"
 
-#: webfront/templates/webfront/admin/banlist.html:25
+#: b3portal/templates/b3portal/admin/banlist.html:25
 msgid "Add IP"
 msgstr "Agregar IP"
 
-#: webfront/templates/webfront/admin/banlist.html:27
+#: b3portal/templates/b3portal/admin/banlist.html:27
 msgid "Add/Remove selected"
 msgstr "Agregar/Eliminar seleccionados"
 
-#: webfront/templates/webfront/admin/banlist.html:31
-#: webfront/templates/webfront/admin/clients.html:10
-#: webfront/templates/webfront/client/admin_list.html:32
-#: webfront/templates/webfront/client/client.html:88
-#: webfront/templates/webfront/client/client.html:110
-#: webfront/templates/webfront/client/client_list.html:59
+#: b3portal/templates/b3portal/admin/banlist.html:31
+#: b3portal/templates/b3portal/admin/clients.html:10
+#: b3portal/templates/b3portal/client/admin_list.html:32
+#: b3portal/templates/b3portal/client/client.html:88
+#: b3portal/templates/b3portal/client/client.html:110
+#: b3portal/templates/b3portal/client/client_list.html:59
 msgid "IP Address"
 msgstr "Dirección IP"
 
-#: webfront/templates/webfront/admin/banlist.html:32
+#: b3portal/templates/b3portal/admin/banlist.html:32
 msgid "Select/Un-select All"
 msgstr "Seleccionar/Deseleccionar Todo"
 
-#: webfront/templates/webfront/admin/clients.html:5
+#: b3portal/templates/b3portal/admin/clients.html:5
 msgid "Total Players:"
 msgstr "Total de Jugadores:"
 
-#: webfront/templates/webfront/admin/clients.html:8
+#: b3portal/templates/b3portal/admin/clients.html:8
 msgid "Cid"
 msgstr "Cid"
 
-#: webfront/templates/webfront/admin/clients.html:23
+#: b3portal/templates/b3portal/admin/clients.html:23
 msgid "Slap"
 msgstr "Slap"
 
-#: webfront/templates/webfront/admin/commands.html:4
+#: b3portal/templates/b3portal/admin/commands.html:4
 msgid "Next map"
 msgstr "Mapa siguiente"
 
-#: webfront/templates/webfront/admin/commands.html:11
-#: webfront/templates/webfront/admin/commands.html:23
-#: webfront/templates/webfront/admin/commands.html:31
-#: webfront/templates/webfront/admin/commands.html:47
-#: webfront/templates/webfront/admin/commands.html:82
+#: b3portal/templates/b3portal/admin/commands.html:11
+#: b3portal/templates/b3portal/admin/commands.html:23
+#: b3portal/templates/b3portal/admin/commands.html:31
+#: b3portal/templates/b3portal/admin/commands.html:47
+#: b3portal/templates/b3portal/admin/commands.html:82
 msgid "Get"
 msgstr "Leer"
 
-#: webfront/templates/webfront/admin/commands.html:12
-#: webfront/templates/webfront/admin/commands.html:24
-#: webfront/templates/webfront/admin/commands.html:32
-#: webfront/templates/webfront/admin/commands.html:48
-#: webfront/templates/webfront/admin/commands.html:83
+#: b3portal/templates/b3portal/admin/commands.html:12
+#: b3portal/templates/b3portal/admin/commands.html:24
+#: b3portal/templates/b3portal/admin/commands.html:32
+#: b3portal/templates/b3portal/admin/commands.html:48
+#: b3portal/templates/b3portal/admin/commands.html:83
 msgid "Set"
 msgstr "Guardar"
 
-#: webfront/templates/webfront/admin/commands.html:52
+#: b3portal/templates/b3portal/admin/commands.html:52
 msgid "Say"
 msgstr "Say"
 
-#: webfront/templates/webfront/admin/commands.html:55
-#: webfront/templates/webfront/admin/commands.html:62
+#: b3portal/templates/b3portal/admin/commands.html:55
+#: b3portal/templates/b3portal/admin/commands.html:62
 msgid "Send"
 msgstr "Enviar"
 
-#: webfront/templates/webfront/admin/commands.html:59
+#: b3portal/templates/b3portal/admin/commands.html:59
 msgid "Big Text"
 msgstr "Big Text"
 
-#: webfront/templates/webfront/admin/commands.html:66
+#: b3portal/templates/b3portal/admin/commands.html:66
 msgid "Reload Map"
 msgstr "Recargar Mapa"
 
-#: webfront/templates/webfront/admin/commands.html:68
+#: b3portal/templates/b3portal/admin/commands.html:68
 msgid "Apply"
 msgstr "Aplicar"
 
-#: webfront/templates/webfront/admin/commands.html:72
+#: b3portal/templates/b3portal/admin/commands.html:72
 msgid "Console"
 msgstr "Consola"
 
-#: webfront/templates/webfront/admin/commands.html:75
+#: b3portal/templates/b3portal/admin/commands.html:75
 msgid "Write"
 msgstr "Escribir"
 
-#: webfront/templates/webfront/admin/commands.html:79
+#: b3portal/templates/b3portal/admin/commands.html:79
 msgid "Cvar"
 msgstr "Cvar"
 
-#: webfront/templates/webfront/admin/commands.html:88
+#: b3portal/templates/b3portal/admin/commands.html:88
 msgid "Ready."
 msgstr "Listo."
 
-#: webfront/templates/webfront/admin/home.html:16
+#: b3portal/templates/b3portal/admin/home.html:16
 msgid "Server Administration"
 msgstr "Administración del Servidor"
 
-#: webfront/templates/webfront/admin/home.html:31
-#: webfront/templates/webfront/admin/home.html:38
+#: b3portal/templates/b3portal/admin/home.html:31
+#: b3portal/templates/b3portal/admin/home.html:38
 msgid "Refresh"
 msgstr "Actualizar"
 
-#: webfront/templates/webfront/admin/status.html:4
+#: b3portal/templates/b3portal/admin/status.html:4
 msgid "Map:"
 msgstr "Mapa:"
 
-#: webfront/templates/webfront/admin/status.html:7
+#: b3portal/templates/b3portal/admin/status.html:7
 msgid "Type:"
 msgstr "Tipo:"
 
-#: webfront/templates/webfront/client/add_penalty.html:3
-#: webfront/templates/webfront/client/add_penalty.html:9
+#: b3portal/templates/b3portal/client/add_penalty.html:3
+#: b3portal/templates/b3portal/client/add_penalty.html:9
 msgid "Add Penalty"
 msgstr "Agregar Penalidad"
 
-#: webfront/templates/webfront/client/admin_list.html:3
-#: webfront/templates/webfront/client/admin_list.html:8
-#: webfront/templates/webfront/client/client_menu.html:9
-#: webfront/templates/webfront/client/world_map.html:39
+#: b3portal/templates/b3portal/client/admin_list.html:3
+#: b3portal/templates/b3portal/client/admin_list.html:8
+#: b3portal/templates/b3portal/client/client_menu.html:9
+#: b3portal/templates/b3portal/client/world_map.html:39
 msgid "Admin List"
 msgstr "Lista de Admins"
 
-#: webfront/templates/webfront/client/admin_list.html:10
+#: b3portal/templates/b3portal/client/admin_list.html:10
 #, python-format
 msgid "There are %(count)s admins"
 msgstr "Hay %(count)s admins"
 
-#: webfront/templates/webfront/client/admin_list.html:31
-#: webfront/templates/webfront/client/client_list.html:58
-#: webfront/templates/webfront/client/inactiveadmin_list.html:42
-#: webfront/templates/webfront/client/regular_client_list.html:31
+#: b3portal/templates/b3portal/client/admin_list.html:31
+#: b3portal/templates/b3portal/client/client_list.html:58
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:42
+#: b3portal/templates/b3portal/client/regular_client_list.html:31
 msgid "Group"
 msgstr "Grupo"
 
-#: webfront/templates/webfront/client/admin_list.html:33
-#: webfront/templates/webfront/client/client.html:85
-#: webfront/templates/webfront/client/client_list.html:61
-#: webfront/templates/webfront/client/inactiveadmin_list.html:44
-#: webfront/templates/webfront/client/regular_client_list.html:33
+#: b3portal/templates/b3portal/client/admin_list.html:33
+#: b3portal/templates/b3portal/client/client.html:85
+#: b3portal/templates/b3portal/client/client_list.html:61
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:44
+#: b3portal/templates/b3portal/client/regular_client_list.html:33
 msgid "Last Seen"
 msgstr "Ultima vez Visto"
 
-#: webfront/templates/webfront/client/client.html:14
-#: webfront/templates/webfront/server/form.html:20
+#: b3portal/templates/b3portal/client/client.html:14
+#: b3portal/templates/b3portal/server/form.html:20
 msgid "Save"
 msgstr "Guardar"
 
-#: webfront/templates/webfront/client/client.html:39
+#: b3portal/templates/b3portal/client/client.html:39
 msgid "This user is under suspicion of cheating"
 msgstr "Este usuario está bajo sospecha de cheat"
 
-#: webfront/templates/webfront/client/client.html:50
+#: b3portal/templates/b3portal/client/client.html:50
 msgid "Remove from watch list"
 msgstr "Quitar de la lista de seguimiento"
 
-#: webfront/templates/webfront/client/client.html:54
+#: b3portal/templates/b3portal/client/client.html:54
 msgid "Add to watch list"
 msgstr "Agregar a la lista de seguimiento"
 
-#: webfront/templates/webfront/client/client.html:63
+#: b3portal/templates/b3portal/client/client.html:63
 msgid "See what this player was talking about"
 msgstr ""
 
-#: webfront/templates/webfront/client/client.html:67
+#: b3portal/templates/b3portal/client/client.html:67
 msgid "Level"
 msgstr "Nivel"
 
-#: webfront/templates/webfront/client/client.html:71
-#: webfront/templates/webfront/client/client.html:152
+#: b3portal/templates/b3portal/client/client.html:71
+#: b3portal/templates/b3portal/client/client.html:152
 msgid "Edit"
 msgstr "Editar"
 
-#: webfront/templates/webfront/client/client.html:74
+#: b3portal/templates/b3portal/client/client.html:74
 msgid "Register"
 msgstr "Registrar"
 
-#: webfront/templates/webfront/client/client.html:81
-#: webfront/templates/webfront/client/inactiveadmin_list.html:43
-#: webfront/templates/webfront/client/regular_client_list.html:32
+#: b3portal/templates/b3portal/client/client.html:81
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:43
+#: b3portal/templates/b3portal/client/regular_client_list.html:32
 msgid "Connections"
 msgstr "Conexiones"
 
-#: webfront/templates/webfront/client/client.html:84
-#: webfront/templates/webfront/client/client_list.html:60
+#: b3portal/templates/b3portal/client/client.html:84
+#: b3portal/templates/b3portal/client/client_list.html:60
 msgid "First Seen"
 msgstr "Primera vez Visto"
 
-#: webfront/templates/webfront/client/client.html:85
+#: b3portal/templates/b3portal/client/client.html:85
 #, fuzzy
 msgid "Expand"
 msgstr "Expirado"
 
-#: webfront/templates/webfront/client/client.html:91
+#: b3portal/templates/b3portal/client/client.html:91
 msgid "Whois IP search"
 msgstr ""
 
-#: webfront/templates/webfront/client/client.html:92
-#: webfront/templates/webfront/client/client_aliases.html:10
+#: b3portal/templates/b3portal/client/client.html:92
+#: b3portal/templates/b3portal/client/client_aliases.html:10
 msgid "Show location of IP origin on map"
 msgstr ""
 
-#: webfront/templates/webfront/client/client.html:93
-#: webfront/templates/webfront/client/client_aliases.html:11
+#: b3portal/templates/b3portal/client/client.html:93
+#: b3portal/templates/b3portal/client/client_aliases.html:11
 msgid "This IP is in the banlist"
 msgstr "Esta IP está en la lista de baneados"
 
-#: webfront/templates/webfront/client/client.html:94
-#: webfront/templates/webfront/client/client_aliases.html:13
+#: b3portal/templates/b3portal/client/client.html:94
+#: b3portal/templates/b3portal/client/client_aliases.html:13
 msgid "(No IP address available)"
 msgstr "(Sin dirección IP disponible)"
 
-#: webfront/templates/webfront/client/client.html:95
+#: b3portal/templates/b3portal/client/client.html:95
 msgid "Offline"
 msgstr "Desconectado"
 
-#: webfront/templates/webfront/client/client.html:103
+#: b3portal/templates/b3portal/client/client.html:103
 msgid "Aliases"
 msgstr "Alias"
 
-#: webfront/templates/webfront/client/client.html:107
+#: b3portal/templates/b3portal/client/client.html:107
 msgid "Times Used"
 msgstr "Veces Usado"
 
-#: webfront/templates/webfront/client/client.html:108
+#: b3portal/templates/b3portal/client/client.html:108
 msgid "First Used"
 msgstr "Primera vez Usado"
 
-#: webfront/templates/webfront/client/client.html:109
+#: b3portal/templates/b3portal/client/client.html:109
 msgid "Last Used"
 msgstr "Ultima vez Usado"
 
-#: webfront/templates/webfront/client/client.html:122
-#: webfront/templates/webfront/client/client.html:191
-#: webfront/templates/webfront/client/client.html:221
-#: webfront/templates/webfront/client/client.html:250
+#: b3portal/templates/b3portal/client/client.html:122
+#: b3portal/templates/b3portal/client/client.html:191
+#: b3portal/templates/b3portal/client/client.html:221
+#: b3portal/templates/b3portal/client/client.html:250
 msgid "more ..."
 msgstr "ver más ..."
 
-#: webfront/templates/webfront/client/client.html:133
+#: b3portal/templates/b3portal/client/client.html:133
 msgid "Active Penalties"
 msgstr ""
 
-#: webfront/templates/webfront/client/client.html:149
+#: b3portal/templates/b3portal/client/client.html:149
 msgid "De-active"
 msgstr ""
 
-#: webfront/templates/webfront/client/client.html:158
-#: webfront/templates/webfront/client/client_adminactions.html:10
-#: webfront/templates/webfront/client/client_penalties.html:7
+#: b3portal/templates/b3portal/client/client.html:158
+#: b3portal/templates/b3portal/client/client_adminactions.html:10
+#: b3portal/templates/b3portal/client/client_penalties.html:7
 msgid "De-activated"
 msgstr ""
 
-#: webfront/templates/webfront/client/client.html:164
-#: webfront/templates/webfront/client/client_penalties.html:13
+#: b3portal/templates/b3portal/client/client.html:164
+#: b3portal/templates/b3portal/client/client_penalties.html:13
 msgid "No penalties"
 msgstr "Sin penalidades"
 
-#: webfront/templates/webfront/client/client.html:201
+#: b3portal/templates/b3portal/client/client.html:201
 #, fuzzy
 msgid "Past Penalties"
 msgstr "Sin penalidades"
 
-#: webfront/templates/webfront/client/client.html:230
+#: b3portal/templates/b3portal/client/client.html:230
 msgid "Admin Actions"
 msgstr ""
 
-#: webfront/templates/webfront/client/client.html:238
+#: b3portal/templates/b3portal/client/client.html:238
 msgid "Client"
 msgstr "Cliente"
 
-#: webfront/templates/webfront/client/client_adminactions.html:14
+#: b3portal/templates/b3portal/client/client_adminactions.html:14
 msgid "Expired"
 msgstr "Expirado"
 
-#: webfront/templates/webfront/client/client_adminactions.html:29
+#: b3portal/templates/b3portal/client/client_adminactions.html:29
 msgid "This user has no recorded admin actions"
 msgstr ""
 
-#: webfront/templates/webfront/client/client_aliases.html:17
+#: b3portal/templates/b3portal/client/client_aliases.html:17
 msgid "No aliases"
 msgstr "Sin alias"
 
-#: webfront/templates/webfront/client/client_list.html:3
+#: b3portal/templates/b3portal/client/client_list.html:3
 msgid "Client List"
 msgstr "Lista de Clientes"
 
-#: webfront/templates/webfront/client/client_list.html:13
+#: b3portal/templates/b3portal/client/client_list.html:13
 msgid "Player List"
 msgstr "Lista de Jugadores"
 
-#: webfront/templates/webfront/client/client_list.html:15
+#: b3portal/templates/b3portal/client/client_list.html:15
 #, python-format
 msgid "There are %(count)s clients"
 msgstr ""
 
-#: webfront/templates/webfront/client/client_list.html:36
+#: b3portal/templates/b3portal/client/client_list.html:36
 msgid "IP"
 msgstr "IP"
 
-#: webfront/templates/webfront/client/client_list.html:42
+#: b3portal/templates/b3portal/client/client_list.html:42
 msgid "Search across servers"
 msgstr ""
 
-#: webfront/templates/webfront/client/client_list.html:69
+#: b3portal/templates/b3portal/client/client_list.html:69
 msgid "Search for other users with this nickname"
 msgstr "Buscar otros usuarios con este nombre"
 
-#: webfront/templates/webfront/client/client_list.html:70
+#: b3portal/templates/b3portal/client/client_list.html:70
 msgid "Filter users sharing the same group"
 msgstr ""
 
-#: webfront/templates/webfront/client/client_list.html:71
+#: b3portal/templates/b3portal/client/client_list.html:71
 msgid "Search for other users with this IP address"
 msgstr "Buscar otros usuarios con esta dirección IP"
 
-#: webfront/templates/webfront/client/client_list.html:76
+#: b3portal/templates/b3portal/client/client_list.html:76
 msgid "Banned"
 msgstr "Baneado"
 
-#: webfront/templates/webfront/client/client_menu.html:7
-#: webfront/templates/webfront/client/regular_client_list.html:3
-#: webfront/templates/webfront/client/regular_client_list.html:8
+#: b3portal/templates/b3portal/client/client_menu.html:7
+#: b3portal/templates/b3portal/client/regular_client_list.html:3
+#: b3portal/templates/b3portal/client/regular_client_list.html:8
 msgid "Regular Visitors"
 msgstr "Visitantes Regulares"
 
-#: webfront/templates/webfront/client/client_menu.html:10
-#: webfront/templates/webfront/client/inactiveadmin_list.html:3
-#: webfront/templates/webfront/client/inactiveadmin_list.html:8
+#: b3portal/templates/b3portal/client/client_menu.html:10
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:3
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:8
 msgid "Inactive Admins"
 msgstr "Admins Inactivos"
 
-#: webfront/templates/webfront/client/client_notices.html:10
+#: b3portal/templates/b3portal/client/client_notices.html:10
 #, fuzzy
 msgid "No notices"
 msgstr "Nota"
 
-#: webfront/templates/webfront/client/inactiveadmin_list.html:21
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:21
 #, python-format
 msgid "There are %(count)s admins who have not been seen by B3 for "
 msgstr ""
 
-#: webfront/templates/webfront/client/inactiveadmin_list.html:25
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:25
 msgid "1 day"
 msgstr "1 día"
 
-#: webfront/templates/webfront/client/inactiveadmin_list.html:26
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:26
 msgid "3 days"
 msgstr "3 días"
 
-#: webfront/templates/webfront/client/inactiveadmin_list.html:27
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:27
 msgid "1 week"
 msgstr "1 semana"
 
-#: webfront/templates/webfront/client/inactiveadmin_list.html:28
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:28
 msgid "2 weeks"
 msgstr "2 semanas"
 
-#: webfront/templates/webfront/client/inactiveadmin_list.html:29
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:29
 msgid "1 month"
 msgstr "1 mes"
 
-#: webfront/templates/webfront/client/inactiveadmin_list.html:30
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:30
 msgid "3 months"
 msgstr "3 meses"
 
-#: webfront/templates/webfront/client/inactiveadmin_list.html:31
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:31
 msgid "6 months"
 msgstr "6 meses"
 
-#: webfront/templates/webfront/client/inactiveadmin_list.html:32
+#: b3portal/templates/b3portal/client/inactiveadmin_list.html:32
 msgid "1 year"
 msgstr "1 año"
 
-#: webfront/templates/webfront/client/quick.html:15
+#: b3portal/templates/b3portal/client/quick.html:15
 msgid "Go"
 msgstr ""
 
-#: webfront/templates/webfront/client/regular_client_list.html:10
+#: b3portal/templates/b3portal/client/regular_client_list.html:10
 #, python-format
 msgid ""
 "There are %(count)s regultar visitors. Must have more than <b>50</b> "
@@ -1666,24 +1666,24 @@ msgstr ""
 "Hay %(count)s visitantes regulares. Deben tener más de <b>50</b> conexiones "
 "y haberse conectado dentro de los últimos <b>7</b> días."
 
-#: webfront/templates/webfront/client/world_map.html:3
+#: b3portal/templates/b3portal/client/world_map.html:3
 msgid "World Player Map"
 msgstr "Mapa Mundial de Jugadores"
 
-#: webfront/templates/webfront/client/world_map.html:15
+#: b3portal/templates/b3portal/client/world_map.html:15
 msgid "Player Connections"
 msgstr "Conexiones"
 
-#: webfront/templates/webfront/client/world_map.html:43
+#: b3portal/templates/b3portal/client/world_map.html:43
 msgid "Players around the world"
 msgstr "Jugadores alrededor del mundo"
 
-#: webfront/templates/webfront/server/form.html:13
+#: b3portal/templates/b3portal/server/form.html:13
 #, fuzzy
 msgid "Edit:"
 msgstr "Editar"
 
-#: webfront/templates/webfront/server/form.html:15
+#: b3portal/templates/b3portal/server/form.html:15
 msgid "New Server"
 msgstr ""
 

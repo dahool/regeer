@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n settingstag media %}
+{% block main_page %}
+<div id="topnavigation">
+	{% block navigation %}
+	{% endblock %}
+</div>
+<div id="page_margins">
+      <div id="teaser">
+      {% block teaser %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}      
+      {% endblock %}
+      </div>
+      {% block main_block %}
+      <div id="main">
+      	{% block central_content %}
+        <div id="col">
+          <div id="col3_content" class="clearfix">
+            {% block main_content_header %}{% endblock %}
+            {% block main_content %}{% endblock %}
+          </div>
+          <!-- IE Column Clearing -->
+          <div id="ie_clearing"> &#160; </div>
+        </div>
+        {% endblock %}
+      </div>
+      {% endblock %}
+</div>
+<!-- begin: #footer -->
+<div id="footer">
+{% block footer %}{% setting "APP_NAME" %} v{% setting "VERSION" %} - Copyright &copy; 2010-2011 SGT Development{% endblock %}
+</div>
+{% endblock %}																																																																																																																																																						

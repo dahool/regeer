@@ -1,0 +1,25 @@
+{% extends "base_layout.html" %}
+{% load listtocolumns i18n tagutils settingstag media extendedtags formtags %}
+{% block title %}{{ block.super }} | {{client.name}}{% endblock %}
+{% block navigation2 %}
+{% include "b3portal/client/client_menu.html" %}
+{% endblock %}
+{% block main_content %}
+<div class="centered_form">
+<form method="post">
+<fieldset>
+<legend>
+{% if server %}
+{% trans "Edit:" %}&nbsp;{{server.name}}
+{% else %}
+{% trans "New Server" %}
+{% endif %}
+</legend>
+{% csrf_token %}
+{% as_form form %}
+<input type="submit" name="save" value="{% trans "Save" %}">&nbsp;&nbsp;
+
+</fieldset>
+</form>
+</div>
+{% endblock %}
