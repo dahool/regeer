@@ -1,5 +1,5 @@
 {% extends "base_layout.html" %}
-{% load urltag listtocolumns i18n tagutils settingstag media paginator navigation %}
+{% load urltag listtocolumns i18n tagutils settingstag paginator navigation %}
 {% block title %}{{ block.super }} | {% trans "Admin List" %}{% endblock %}
 {% block navigation2 %}
 {% include "b3portal/client/client_menu.html" %}
@@ -11,10 +11,10 @@
 <small>
 <form style="display:inline;" method="post" action="{% url admin_list %}">
 {% csrf_token %}
-{% with request.session.server as current_server %}
+{% with request.server as current_server %}
 <select name="server" onchange="this.form.submit()">
 {% for server in request.server_list %}
-<option value="{{server.DB}}" {% if current_server == server.DB %}selected="selected"{%endif%}>{{server.NAME}}</option>
+<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
 {% endfor %}
 </select>
 {% endwith %}

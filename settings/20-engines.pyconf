@@ -1,6 +1,6 @@
 DATABASES = {
     'default': {
-        'NAME': 'b3webportal.db.sqlite',
+        'NAME': 'regeer.db.sqlite',
         'ENGINE': 'django.db.backends.sqlite3',
         'USER': '',
         'PASSWORD': '',

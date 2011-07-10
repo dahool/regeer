@@ -2,7 +2,7 @@ from django.contrib.messages import constants as message_constants
 # default message level to show
 MESSAGE_LEVEL = message_constants.INFO
 
-LOGIN_URL = '/web/login/'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 

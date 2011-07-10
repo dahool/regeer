@@ -11,12 +11,12 @@
 		background: #fff
 	}
 	#page_margins {
-		width: 95%;
+		/*width: 95%;*/
+		/*max-width: 90em;*/
 		min-width: 740px;
-		max-width: 90em;
 		text-align: left;
 		position: relative;
-		margin: auto
+		margin: auto 20px;
 	}
 	#topnav {
 		position: static;

@@ -76,7 +76,7 @@ def player_map(request):
     from common.utils.geoip import GeoLocation
     countries = {}
     geo = GeoLocation()
-    for client in Client.objects.filter(id__gt=1):
+    for client in Client.objects.using(request.server).filter(id__gt=1):
         country_name = geo.get_country(client.ip)
         if countries.has_key(country_name):
             count = countries.get(country_name) + 1
@@ -240,10 +240,9 @@ def addpenalty(request, id, notice=False):
         form = frmObj(request.POST)
         if form.is_valid():
             p = Penalty(client=client,
-                                       reason=form.cleaned_data['reason'],
+                                       reason=_("%(reason)s (by %(user)s)") % {'reason': form.cleaned_data['reason'], 'user': request.user.username},
                                        time_edit=datetime.datetime.now(),
-                                       time_add=datetime.datetime.now(),
-                                       admin_id=1)
+                                       time_add=datetime.datetime.now())
             if form.Meta.type == 1:
                 p.duration=0
                 p.type='Notice'

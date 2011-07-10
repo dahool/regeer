@@ -10,10 +10,10 @@
 <small>
 <form style="display:inline;" method="post" action="{% url ban_list %}">
 {% csrf_token %}
-{% with request.session.server as current_server %}
+{% with request.server as current_server %}
 <select name="server" onchange="this.form.submit()">
 {% for server in request.server_list %}
-<option value="{{server.DB}}" {% if current_server == server.DB %}selected="selected"{%endif%}>{{server.NAME}}</option>
+<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
 {% endfor %}
 </select>
 {% endwith %}
@@ -23,7 +23,7 @@
 {% endwith %}
 <form method="get" action="{% url ban_list %}">
 <small>
-<input type="hidden" name="server" value="{{request.session.server}}">
+<input type="hidden" name="server" value="{{request.server}}">
 <label for="name">{% trans "Name" %}</label><input type="text" id="name" name="name" class="search submit">
 <input type="submit" name="search" value="{% trans "Search" %}">&nbsp;&nbsp;&nbsp;
 </small>

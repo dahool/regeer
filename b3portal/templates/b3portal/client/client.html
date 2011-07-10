@@ -1,15 +1,15 @@
 {% extends "base_layout.html" %}
-{% load listtocolumns i18n tagutils settingstag media extendedtags geoip urltag %}
+{% load listtocolumns i18n tagutils settingstag extendedtags geoip urltag %}
 {% block title %}{{ block.super }} | {{client.name}}{% endblock %}
 {% block extra_header %}
 {{ block.super }}
-{% jscript "js/jquery.jeditable.mini.js" %}
-{% jscript "js/client.js" %}
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery.jeditable.mini.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	{% if perms.b3connect.change_client_group %} 	
-    $('#client_group').editable('{% url change_clientgroup client.id %}', {
-    	loadurl  : '{% url group_list_json %}', 
+    $('#client_group').editable('{% serverurl change_clientgroup client.id %}', {
+    	loadurl  : '{% serverurl group_list_json %}', 
         type    : 'select',
         submit  : '{% trans "Save" %}'
     });
@@ -23,9 +23,9 @@ $(document).ready(function() {
 {% block main_content %}
 <table class="cd-table client_detail">
 <caption><h3>{{client.name}}<small>  
-{% with request.session.server as current_server %}
+{% with request.server as current_server %}
 {% for server in request.server_list %}
-{% if current_server == server.DB %}{{server.NAME}}{%endif%}
+{% if current_server == server.uuid %}{{server.name}}{%endif%}
 {% endfor %}
 {% endwith %}
 </small>
@@ -36,7 +36,7 @@ $(document).ready(function() {
 {% endif %}
 {% ifinstalled "plugins.follow" %}
 {% if client.followed.all %}
-<a href="{% url follow_home %}#F{{client.id}}" class="nodecoration_icon icon_watch" title="{% trans "This user is under suspicion of cheating" %}"></span>
+<a href="{% serverurl follow_home %}#F{{client.id}}" class="nodecoration_icon icon_watch" title="{% trans "This user is under suspicion of cheating" %}"></span>
 {% endif %}
 {% endifinstalled %}
 </h3>
@@ -47,11 +47,11 @@ $(document).ready(function() {
 {% ifinstalled "plugins.follow" %}
 {% if client.followed.all %}
 {% if perms.delete_follow %}
-<li><a href="{% url follow_remove client.id %}">{% trans "Remove from watch list" %}</a></li>
+<li><a href="{% serverurl follow_remove client.id %}">{% trans "Remove from watch list" %}</a></li>
 {% endif %}
 {% else %}
 {% if perms.add_follow %}
-<li><a href="{% url follow_add client.id %}">{% trans "Add to watch list" %}</a></li>
+<li><a href="{% serverurl follow_add client.id %}">{% trans "Add to watch list" %}</a></li>
 {% endif %}
 {% endif %}
 {% endifinstalled %}
@@ -60,7 +60,7 @@ $(document).ready(function() {
 </thead>
 <tbody>
 <tr>
-<th>{% trans "Name" %}</th><td>{{client.name}}{% ifinstalled "plugins.chatlog" %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% url chat_list %}?name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endifinstalled %}</td>
+<th>{% trans "Name" %}</th><td>{{client.name}}{% ifinstalled "plugins.chatlog" %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% serverurl chat_list %}&name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endifinstalled %}</td>
 <th>{% trans "@id" %}</th><td>{{client.id}}</td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@ $(document).ready(function() {
 title="{% trans "Edit" %}" class="nodecoration_icon icon_edit"
 {% else %}
 {% if perms.b3connect.register_client and client.group.id < 2%}
-title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="register_user('{% url change_clientgroup client.id %}',2)" 
+title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="register_user('{% serverurl change_clientgroup client.id %}',2)" 
 {% endif %}
 {% endif %}>
 {{client.displayGroup}}</td>
@@ -82,12 +82,12 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 </tr>
 <tr>
 <th>{% trans "First Seen" %}</th><td>{{client.time_add|date:"DATETIME_FORMAT"}}</td>
-<th>{% trans "Last Seen" %}</th><td>{{client.time_edit|date:"DATETIME_FORMAT"}}{% ifinstalled "plugins.status" %}<a href="{% url client_status_log client.id %}" title="{% trans "Expand" %}" class="nodecoration_icon icon_table"></a>{% endifinstalled %}</td>
+<th>{% trans "Last Seen" %}</th><td>{{client.time_edit|date:"DATETIME_FORMAT"}}{% ifinstalled "plugins.status" %}<a href="{% serverurl client_status_log client.id %}" title="{% trans "Expand" %}" class="nodecoration_icon icon_table"></a>{% endifinstalled %}</td>
 </tr>
 <tr>
 <th>{% trans "IP Address" %}</th>
 <td>{% if client.ip %}
-<a href="{% url client_list %}?type=ip&data={{client.ip}}&search=Search">{{client.ip}}</a>
+<a href="{% serverurl client_list %}&type=ip&data={{client.ip}}&search=Search">{{client.ip}}</a>
 <a target="_blank" href="http://whois.domaintools.com/{{client.ip}}" title="{% trans "Whois IP search" %}" class="nodecoration_icon icon_vcard"></a>
 <a target="_blank" href="{% setting 'GEOTOOL' %}{{client.ip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
 {% if client.ip in banlist %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endif %}
@@ -119,7 +119,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <tfoot>
 <tr>
 <td colspan="5">
-<span class="link right" onclick="do_call_get('{% url client_more_alias client.id %}','aliases', '#client_aliases tfoot')">{% trans "more ..." %}</span>
+<span class="link right" onclick="do_call_get('{% serverurl client_more_alias client.id %}','aliases', '#client_aliases tfoot')">{% trans "more ..." %}</span>
 </td>
 </tr>
 </tfoot>
@@ -130,7 +130,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <!-- ************************ PENALTIES ************************ -->
 {% if perms.b3connect.view_penalty %}
 <table class="cd-table client_lists">
-<caption>{% trans "Active Penalties" %}{% if perms.b3connect.add_penalty %}<a title="{% trans "Add" %}" href="{% url add_penalty client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
+<caption>{% trans "Active Penalties" %}{% if perms.b3connect.add_penalty %}<a title="{% trans "Add" %}" href="{% serverurl add_penalty client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
 <thead>
 <tr>
 <th>{% trans "Type" %}</th>
@@ -146,10 +146,10 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <tr class="{% cycle "odd" "even" %}">
 <td>{{penalty.get_type_display}}
 {% if perms.b3connect.delete_penalty and penalty.inactive == 0 %}
-<a href="{% url disable_penalty penalty.id %}" title="{% trans "De-active" %}" class="nodecoration_icon icon_delete"></a>
+<a href="{% serverurl disable_penalty penalty.id %}" title="{% trans "De-active" %}" class="nodecoration_icon icon_delete"></a>
 {% endif %}
 {% if perms.b3connect.change_penalty and penalty.inactive == 0 %}
-<a href="{% url edit_penalty penalty.id %}" title="{% trans "Edit" %}" class="nodecoration_icon icon_edit">&nbsp;</a>
+<a href="{% serverurl edit_penalty penalty.id %}" title="{% trans "Edit" %}" class="nodecoration_icon icon_edit">&nbsp;</a>
 {% endif %}
 &nbsp;
 </td>
@@ -171,7 +171,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <!-- ************************ NOTICES ************************ -->
 {% if perms.b3connect.view_notices %}
 <table id="client_notice" class="cd-table client_lists">
-<caption>{% trans "Notices" %}{% if perms.b3connect.add_notice %}<a title="{% trans "Add" %}" href="{% url add_notice client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
+<caption>{% trans "Notices" %}{% if perms.b3connect.add_notice %}<a title="{% trans "Add" %}" href="{% serverurl add_notice client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
 <thead>
 <tr>
 <th>{% trans "Added" %}</th>
@@ -188,7 +188,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <tfoot>
 <tr>
 <td colspan="5">
-<span class="link right" onclick="do_call_get('{% url client_more_notices client.id %}','notices', '#client_notice tfoot')">{% trans "more ..." %}</span>
+<span class="link right" onclick="do_call_get('{% serverurl client_more_notices client.id %}','notices', '#client_notice tfoot')">{% trans "more ..." %}</span>
 </td>
 </tr>
 </tfoot>
@@ -218,7 +218,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <tfoot>
 <tr>
 <td colspan="6">
-<span class="link right" onclick="do_call_get('{% url client_more_ipenalties client.id %}','pastpenalty', '#past_penalties tfoot')">{% trans "more ..." %}</span>
+<span class="link right" onclick="do_call_get('{% serverurl client_more_ipenalties client.id %}','pastpenalty', '#past_penalties tfoot')">{% trans "more ..." %}</span>
 </td>
 </tr>
 </tfoot>
@@ -247,7 +247,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <tfoot>
 <tr>
 <td colspan="6">
-<span class="link right" onclick="do_call_get('{% url client_more_admactions client.id %}','adminact', '#admin_actions tfoot')">{% trans "more ..." %}</span>
+<span class="link right" onclick="do_call_get('{% serverurl client_more_admactions client.id %}','adminact', '#admin_actions tfoot')">{% trans "more ..." %}</span>
 </td>
 </tr>
 </tfoot>

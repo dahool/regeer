@@ -1,15 +1,15 @@
 {% extends "base_layout.html" %}
-{% load listtocolumns urltag i18n tagutils settingstag formtags media %}
+{% load listtocolumns urltag i18n tagutils settingstag formtags %}
 {% block title %}{{ block.super }} | {{client.name}} | {% trans "Add Penalty" %}{% endblock %}
 {% block extra_header %}
 {{ block.super }}
-{% jscript "js/client.js" %}
+<script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
 {% endblock %}
 {% block main_content %}
 <h3>{% trans "Add Penalty" %}<small>  
-{% with request.session.server as current_server %}
+{% with request.server as current_server %}
 {% for server in request.server_list %}
-{% if current_server == server.DB %}{{server.NAME}}{%endif%}
+{% if current_server == server.uuid %}{{server.name}}{%endif%}
 {% endfor %}
 {% endwith %}</small></h3>
 <div class="centered_form">

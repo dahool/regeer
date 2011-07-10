@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from common.view.i18n import set_language
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 admin.autodiscover()
 
@@ -46,8 +47,10 @@ for app in settings.INSTALLED_APPS:
 #        url('^log/', include('plugins.chatlog.urls')),
 #    )
             
-if settings.STATIC_SERVE:
-    urlpatterns += patterns('',
-        (r'^webmedia/(?P<path>.*)$', 'django.views.static.serve',
-         {'document_root': settings.MEDIA_ROOT}),
-    )
+urlpatterns += staticfiles_urlpatterns()
+
+#if settings.STATIC_SERVE:
+#    urlpatterns += patterns('',
+#        (r'^webmedia/(?P<path>.*)$', 'django.views.static.serve',
+#         {'document_root': settings.MEDIA_ROOT}),
+#    )

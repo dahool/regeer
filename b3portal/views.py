@@ -20,10 +20,14 @@ from django.contrib.auth.decorators import login_required
 from common.floodprotection import flood
 
 import re
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 @cache_page(5*60)
 @render('b3portal/index.html')
 def home(request):
+    if len(request.server_list) == 0:
+        return HttpResponseRedirect(reverse("admin:index"))
     return {}
 
 @cache_page(60*60)

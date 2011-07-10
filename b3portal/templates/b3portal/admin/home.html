@@ -18,10 +18,10 @@ var POST_URL = "{% url admin_command %}";
     &nbsp;|&nbsp;
     <form style="display:inline;" method="post">
     {% csrf_token %}
-    {% with request.session.server as current_server %}
+    {% with request.server as current_server %}
     <select name="server" onchange="this.form.submit()">
     {% for server in request.server_list %}
-    <option value="{{server.DB}}" {% if current_server == server.DB %}selected="selected"{%endif%}>{{server.NAME}}</option>
+    <option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
     {% endfor %}
     </select>
     {% endwith %}

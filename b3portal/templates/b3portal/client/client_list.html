@@ -1,10 +1,10 @@
 {% extends "base_layout.html" %}
-{% load urltag listtocolumns i18n tagutils settingstag media paginator navigation sorting %}
+{% load urltag listtocolumns i18n tagutils settingstag paginator navigation sorting %}
 {% block title %}{{ block.super }} | {% trans "Client List" %}{% endblock %}
 {% block extra_header %}
 {{ block.super }}
-{% jscript "js/client.js" %}
-{% jscript "js/sortable.js" %}
+<script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/sortable.js"></script>
 {% endblock %}
 {% block navigation2 %}
 {% include "b3portal/client/client_menu.html" %}
@@ -29,7 +29,7 @@
 {% endwith %}
 <form method="get" action="{% url client_list %}">
 <small>
-<input type="hidden" name="server" value="{{request.session.server}}">
+<input type="hidden" name="server" value="{{request.server}}">
 <select name="type">
 <option value="name" {% if filter == 'name' %}selected="selected"{%endif%}>{% trans "Name" %}</option>
 <option value="id" {% if filter == 'id' %}selected="selected"{%endif%}>{% trans "@id" %}</option>
@@ -44,7 +44,7 @@
  -->
 &nbsp;&nbsp;&nbsp;
 </small>
-<a href="{% url client_list %}" style="display:inline;">{% trans "reset"%}</a>
+<a href="{% serverurl client_list %}" style="display:inline;">{% trans "reset"%}</a>
 </form>
 <div id="client_list">
 {% if search %}

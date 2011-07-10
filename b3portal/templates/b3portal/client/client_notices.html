@@ -1,4 +1,4 @@
-{% load listtocolumns i18n tagutils settingstag media urltag %}
+{% load listtocolumns i18n tagutils settingstag urltag %}
 {% for penalty in notices %}
 <tr class="{% cycle "odd" "even" %}">
 <td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>

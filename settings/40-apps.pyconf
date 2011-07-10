@@ -10,6 +10,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
+    'django.core.context_processors.static',
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
 )
@@ -41,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.messages',
+    'django.contrib.staticfiles',
     'b3connect',
     'djangoapp',
     'djangogravatar',
@@ -54,6 +56,6 @@ INSTALLED_APPS = (
     #'plugins.autoslap',
 )
 
-ROOT_URLCONF = 'b3webportal.urls'
+ROOT_URLCONF = 'regeer.urls'
 
 AUTH_PROFILE_MODULE = "b3portal.models.UserProfile"

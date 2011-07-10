@@ -1,4 +1,4 @@
-{% load listtocolumns i18n tagutils settingstag media urltag %}
+{% load listtocolumns i18n tagutils settingstag urltag %}
 {% for penalty in penalties %}
 <tr class="{% cycle "odd" "even" %}">
 <td>{{penalty.get_type_display}}</td>
