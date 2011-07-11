@@ -7,7 +7,7 @@
 	{% block navigation %}
 	{% endblock %}
 </div>
-<div id="page_margins">
+<div id="page_margins" {% if not user.is_authenticated %}style="margin-top: 60px;"{% endif %}>
 	{% if messages %}
       <div id="teaser">
         <ul class="messages">
