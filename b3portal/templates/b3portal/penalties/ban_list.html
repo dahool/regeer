@@ -1,14 +1,11 @@
 {% extends "base_layout.html" %}
 {% load listtocolumns i18n tagutils settingstag paginator navigation urltag %}
-{% block navigation2 %}
-{% include "b3portal/ban_list_menu.html" %}
-{% endblock %}  
 {% block main_content %}
-<h3>{% trans "Notices" %}</h3>
+<h3>{% trans "Public Ban List" %}</h3>
 {% with ban_list.paginator.count as count %}
-<span>{% blocktrans %}There are {{count}} notices{%endblocktrans%}
+<span>{% blocktrans %}There are {{count}} active bans/tempbans{%endblocktrans%}
 <small>
-<form style="display:inline;" method="post">
+<form style="display:inline;" method="post" action="{% url ban_list %}">
 {% csrf_token %}
 {% with request.server as current_server %}
 <select name="server" onchange="this.form.submit()">
@@ -21,14 +18,26 @@
 </small>
 </span>
 {% endwith %}
+<form method="get" action="{% url ban_list %}">
+<small>
+<input type="hidden" name="server" value="{{request.server}}">
+<label for="name">{% trans "Name" %}</label><input type="text" id="name" name="name" class="search submit">
+<input type="submit" name="search" value="{% trans "Search" %}">&nbsp;&nbsp;&nbsp;
+</small>
+<a href="{% url ban_list %}" style="display:inline;">{% trans "reset"%}</a>
+</form>
 <div id="ban_list">
+{% if search %}
+<a href="{% url ban_list %}?{{search}}">{% trans "Direct link to this search" %}</a>
+{% endif %}
 <table>
 <thead>
 <tr>
 <th>{% trans "Player" %}</th>
 <th>{% trans "Added" %}</th>
+<!-- th>{% trans "Duration" %}</th -->
+<th>{% trans "Expires" %}</th>
 <th>{% trans "Reason" %}</th>
-<th>{% trans "Admin" %}</th>
 </tr>
 </thead>
 <tbody>
@@ -36,21 +45,23 @@
 <tr class="{% cycle "odd" "even" %}">
 <td><a href="{% serverurl client_detail ban.client.id %}">{{ban.client.name}}</a></td>
 <td>{{ban.time_add|date:"D, d M Y (H:i)"}}</td>
+<!-- td>{% if ban.duration != 0 %}{{ban.display_duration}}{% endif%}</td-->
+<td>{% if ban.duration != 0 %}{{ban.time_expire|date:"D, d M Y (H:i)"}}{%else%}<span style="color:red;">{% trans "Permanent" %}</span>{%endif%}</td>
 <td>{{ban.reason|clean_colors}}</td>
-<td>{% if ban.admin %}<a href="{% serverurl client_detail ban.admin.id %}">{{ban.admin.name}}</a>{% else %}B3{% endif %}</td>
 </tr>
 {% endfor %}
 </tbody>
 <tfoot>
 <tr>
-<td colspan="4">
+<td colspan="5">
 {% with ban_list.object_list|length as number %}
 {% blocktrans %}Showing {{number}} records{% endblocktrans %}
 {% endwith %}
-{% paginatepage ban_list %}
+{% paginatepage ban_list search %}
 </td>
 </tr>
 </tfoot>
 </table>
+
 </div>
 {% endblock %}

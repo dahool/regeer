@@ -13,10 +13,34 @@ var MEDIA_URL='{{STATIC_URL}}';
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/layout_patch.css"/>
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/site/layout_ie.css"/>
 <![endif]-->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery.cookie.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.dropdown.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}menu/menu.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/base.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".topbar-content").width($(".topbar").width()-$(".topbar-button-close-container").width()-10);
+	$(".topbar-button-close").click(function() {
+	  	$(".topbar-container").slideUp('fast', function() {
+	  		$(".topbar-button-open-container").slideDown('fast');
+	  		$.cookie('topbar_status', 'closed', { expires: 365, path: '/' });
+		});
+	})
+	$(".topbar-button-open").click(function() {
+		$(".topbar-button-open-container").slideUp('fast', function() {
+			$(".topbar-container").slideDown('fast');
+			$.cookie('topbar_status', 'open', { expires: 365, path: '/' });
+		});
+	})
+	if ($.cookie('topbar_status') == "open") {
+		$(".topbar-container").show();
+	} else {
+		$(".topbar-button-open-container").show();
+	}
+}); 
+
+</script>
 {% block extra_header %}
 {% endblock %}
 </head>

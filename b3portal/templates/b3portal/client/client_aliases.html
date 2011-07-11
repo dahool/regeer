@@ -1,4 +1,4 @@
-{% load listtocolumns i18n tagutils settingstag %}
+{% load listtocolumns i18n tagutils settingstag urltag %}
 {% for alias in aliases %}
 <tr class="{% cycle "odd" "even" %}">
 <td>{{alias.alias}}</td>
@@ -7,7 +7,7 @@
 <td>{{alias.time_edit|date:"DATETIME_FORMAT"}}</td>
 <td>
 {% if alias.ip %}
-<a href="{% url client_list %}?type=ip&data={{alias.ip}}&search=Search">{{alias.ip}}</a>&nbsp;<a target="_blank" href="{% setting 'GEOTOOL' %}{{alias.ip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
+<a href="{% serverurl client_list %}&type=ip&data={{alias.ip}}&search=Search">{{alias.ip}}</a>&nbsp;<a target="_blank" href="{% setting 'GEOTOOL' %}{{alias.ip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
 {% if alias.ip in banlist %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endif %}
 {% else %}
 {% trans "(No IP address available)" %}{% endif %}</td>

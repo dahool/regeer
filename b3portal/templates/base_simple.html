@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 {% load i18n settingstag %}
 {% block main_page %}
+{% block topbar %}
+{% endblock %}
 <div id="topnavigation">
 	{% block navigation %}
 	{% endblock %}
 </div>
 <div id="page_margins">
+	{% if messages %}
       <div id="teaser">
-      {% block teaser %}
-        {% if messages %}
         <ul class="messages">
             {% for message in messages %}
             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
             {% endfor %}
         </ul>
-        {% endif %}      
-      {% endblock %}
       </div>
+	{% endif %}
       {% block main_block %}
       <div id="main">
       	{% block central_content %}

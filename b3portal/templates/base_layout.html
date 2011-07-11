@@ -23,6 +23,29 @@ $(document).ready(function() {
 <a href="?lang={{code}}" class="nodecoration_icon_2 lang_{{code}}" title="{{name}}"></a> 
 {% endfor %}
 {% endblock %}
+{% block topbar %}
+{% if user.is_authenticated %}
+<div id="topbar" class="clear topbar">&nbsp;
+	<div class="topbar-container" style="display: none;">
+	<div class="topbar-button-close-container">
+		<a class="topbar-button-close" href="#">&nbsp;</a>
+	</div>
+	<div class="topbar-content">
+	{% if perms.b3connect.view_client %}
+	<div style="float: right; margin-right: 10px;">
+	{% include "b3portal/client/quick.html" %}
+	</div>
+	{% endif %}
+	</div>
+	</div>
+	<div class="topbar-single-container">
+		<div class="topbar-button-open-container" style="display: none;">
+			<a class="topbar-button-open" href="#">&nbsp;</a>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endblock %}
 {% block navigation %}
 	<ul class="topnav">
         {% url home as url_nav_home %}    
@@ -36,10 +59,9 @@ $(document).ready(function() {
         <li class="nodecoration_icon icon_config"><a style="font-weight: bold;" href="{% url admin:index %}">{% trans "Administration Panel" %}</a></li>
         {% endif %}		
 		<li class="{% current_nav url_nav_home %}"><a href="{{ url_nav_home }}">{% trans "Home" %}</a></li>
-	    <li><a href="http://foro.codwar.com.ar">{% trans "Forum" %}</a></li>
 	    <li class="{% current_nav url_nav_maps %}"><a href="{{ url_nav_maps }}">{% trans "Maps" %}</a></li>
 	    <li class="{% current_nav url_nav_bans %}"><a href="{{ url_nav_bans }}">{% trans "Penalties" %}</a>
-	    {% include "b3portal/ban_list_menu.html" %}
+	    {% include "b3portal/penalties/ban_list_menu.html" %}
 	    </li>
 	    {% ifinstalled "plugins.stats" %}
 	    {% url stats_home as url_nav_stats %}
@@ -61,26 +83,25 @@ $(document).ready(function() {
 	    {% endif %}
 	    {% endifinstalled %}
 	    {% if user.is_superuser %}
-	    <li class="{% current_nav url_nav_admin %}"><a href="{{ url_nav_admin }}">{% trans "RCON" %}</a></li>
+	    <li class="{% current_nav url_nav_admin %}"><a href="{{ url_nav_admin }}">{% trans "RCon" %}</a></li>
 	    {% endif %}
-	    
-	  {% if user.is_authenticated %}
-	  {% with user.username as name %}
-	  <span class="text2"><a href="http://gravatar.com" target="blank">{% blocktrans %}Welcome {{name}}{% endblocktrans %} {% gravatar user.email "avatar" 18 %}</a></span>
-	  <span class="text2"> | </span>
-	  {% if user.profile.canChangePassword %}
-	  <a class="change_pass" href="{% url auth_logout %}">{% trans "Change password" %}</a>
-	  {% endif %}
-	  <a class="logout" href="{% url auth_logout %}">{% trans "Sign out" %}</a>
-	  {% endwith %}
-	  {% else %}
-	  <a class="login" href="{% url user_signin %}">{% trans "Sign in" %}</a>
-	  {% endif %}
-	  	    
-        <li style="float: right; margin-right: 20px; padding-top: 5px;">
-			{% if perms.b3connect.view_client %}
-			{% include "b3portal/client/quick.html" %}
-			{% endif %}
-        </li>
+        <li style="float: right; margin-right: 20px;">
+		  {% if user.is_authenticated %}
+		  {% with user.username as name %}
+		  <a alt="span">{% blocktrans %}Welcome {{name}}{% endblocktrans %} {% gravatar user.email "avatar" 18 %}</a>
+		  {% endwith %}
+		  <ul class="subnav" style="width: 145px;">
+		  	<li><a class="logout" href="{% url auth_logout %}">{% trans "Sign out" %}</a></li>
+		  </ul>
+		  {% else %}
+		  <ul class="subnav">
+			<form id="login" method="post" accept-charset="utf-8">
+			{% csrf_token %}
+			<input type="text">
+			<input type="submit" value="{% trans "Sign in" %}"/>
+			</form>		  
+		  </ul>		  
+		  {% endif %}
+		</li>
     </ul>
 {% endblock %}																																																																																																																																																

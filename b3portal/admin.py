@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from django.contrib.auth.admin import UserAdmin
 
 from models import Map, UserProfile, Server, Plugins
 
+admin.site.unregister(Site)
 admin.site.unregister(User)
 admin.site.register(Map)
 

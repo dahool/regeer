@@ -1,6 +1,14 @@
 $(document).ready(function(){
 	$("ul.subnav").parent().append('<span class="sub"></span>');
-
+	
+	$("ul.subnav").parent().find("a").each(function() {
+		if ($(this).attr("alt")=="span") {
+			$(this).click(function() {
+				$(this).parent().find("span.sub").click();
+			});
+		}
+	});
+	
 	$("span.sub").each(function() {
     	
 	    $(this).click(function() { //When trigger is clicked...

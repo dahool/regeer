@@ -2,7 +2,7 @@ Requisites
 ========================================
 
 * Python 2.5+
-* Django 1.2.x
+* Django 1.3.x
 * pycrypto
 * B3 (http://www.bigbrotherbot.com)
 Installation
