@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
-from b3portal.models import Map
-from django.conf import settings
+from b3portal.models import Map, MapCycle
+from common.utils.file import getfile
 
 class Command(BaseCommand):
     help = 'Fill maps table'
@@ -12,9 +12,10 @@ class Command(BaseCommand):
             m.delete()
 
         i=0
-        for key, server in settings.SERVERS.items():
-            if server.has_key('MAPCYCLE'):
-                mfile = open(server['MAPCYCLE'])
+        for mapcycle in MapCycle.objects.all():
+            mfile = None
+            try:
+                mfile = open(getfile(mapcycle.location))
                 tmaps = mfile.read().strip().splitlines()
                 if tmaps:
                     _settings = False
@@ -26,7 +27,9 @@ class Command(BaseCommand):
                             _settings = True
                         if not _settings:
                             if m != '':
-                                Map.objects.create(name=m, server=key)
+                                Map.objects.create(name=m, server=mapcycle.server)
                                 i+=1
-            
+            finally:
+                if mfile: mfile.close()
         self.stdout.write('Successfully added "%d" maps\n' % i)
+        

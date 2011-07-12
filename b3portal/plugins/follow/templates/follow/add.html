@@ -1,0 +1,25 @@
+{% extends "base_layout.html" %}
+{% load listtocolumns i18n urltag tagutils settingstag formtags media %}
+{% block title %}{{ block.super }} | {{client.name}} | {% trans "Add To Watch List" %}{% endblock %}
+{% block navigation2 %}
+{% include "b3portal/client/client_menu.html" %}
+{% endblock %}
+{% block main_content %}
+<h3>{% trans "Add To Watch List" %}<small>  
+{% with request.session.server as current_server %}
+{% for server in request.server_list %}
+{% if current_server == server.DB %}{{server.NAME}}{%endif%}
+{% endfor %}
+{% endwith %}</small></h3>
+<div class="centered_form">
+<form method="post">
+<fieldset>
+<legend>{{client.id}} - {{client.name}}</legend>
+{% csrf_token %}
+{% as_form form %}
+<input type="submit" name="save" value="{% trans "Add" %}">&nbsp;&nbsp;
+<a href="{% serverurl client_detail client.id %}">{% trans "Cancel" %}</a>
+</fieldset>
+</form>
+</div>
+{% endblock %}

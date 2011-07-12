@@ -1,12 +1,6 @@
 from common.view.decorators import render
 
-from common.shortcuts import get_object_or_404
-from django.db.models import Q
-
 from b3portal.models import Map
-from django.conf import settings
-
-from django.utils.translation import gettext as _
 
 from django.views.decorators.cache import cache_page
 

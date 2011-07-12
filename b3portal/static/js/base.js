@@ -52,7 +52,7 @@ $(document).ready(
 			}	
 		);
 	    $('ul.messages li').each(function() {
-	        $(this).append("<img class='close_button' src='"+MEDIA_URL+"/images/close.gif'/>");
+	        $(this).append("<img class='close_button' src='"+MEDIA_URL+"images/close.gif'/>");
 	     });
 	     $('.close_button').click(function() {
 	         $(this).parent().remove();

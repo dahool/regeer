@@ -1,4 +1,4 @@
-{% extends "base_simple.html" %}
+{% extends "base_layout.html" %}
 {% load i18n formtags settingstag %}
 {% block title %}{{ block.super }} | {% trans "Login" %}{% endblock %}
 {% block main_content %}
@@ -7,7 +7,7 @@
 <p>{% trans "Enter your username and password here in order to log in on the website:" %}</p>
 <form id="login" method="post" accept-charset="utf-8">
 {% csrf_token %}
-{% as_form form %}
+{% as_form form 'false' %}
 <input type="submit" value="{% trans "Sign in" %}"/>
 </form>
 <!--  p><a href="{-% url auth_password_reset %-}">{% trans "Forgot your password?" %}</a></p-->

@@ -30,3 +30,6 @@ def deltree(topdir):
         rmdir(topdir)
     except OSError, why:
         pass
+
+def getfile(name):
+    return name

@@ -16,8 +16,9 @@ def formfield(field):
     return {'field': field}
 
 @register.inclusion_tag('tags/form.html')
-def as_form(entry):
-    return {'form': entry}
+def as_form(entry, showErrors = True):
+    showErrors = showErrors in ['true', 'True', True]
+    return {'form': entry, 'errors': showErrors}
 
 @register.inclusion_tag('tags/tabform.html')
 def as_tabform(entry):

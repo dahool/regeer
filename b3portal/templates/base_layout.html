@@ -94,13 +94,16 @@ $(document).ready(function() {
 		  	<li><a class="logout" href="{% url auth_logout %}">{% trans "Sign out" %}</a></li>
 		  </ul>
 		  {% else %}
-		  <ul class="subnav">
-			<form id="login" method="post" accept-charset="utf-8">
+		  <div class="loginbar">
+		  	<form id="login" method="post" accept-charset="utf-8" action="{% url user_signin %}">
+		  	<small>
 			{% csrf_token %}
-			<input type="text">
+          	<input type="text" id="id_username" name="username" maxlength="30" placeholder="{% trans "Username" %}" autocomplete="on" title="{% trans "Username" %}" value="">
+          	<input type="password" name="password" id="id_password" title="{% trans "Password" %}" placeholder="{% trans "Password" %}" value="">
 			<input type="submit" value="{% trans "Sign in" %}"/>
-			</form>		  
-		  </ul>		  
+			</small>
+			</form>
+		  </div>
 		  {% endif %}
 		</li>
     </ul>

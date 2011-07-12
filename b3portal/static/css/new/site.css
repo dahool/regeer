@@ -451,3 +451,7 @@ h3 {
 #col3_content {
     margin-bottom: 40px;	
 }
+.loginbar input[type=text],.loginbar input[type=password] {
+	width: 105px;
+	-moz-transition: opacity 1s ease 0s;	
+}

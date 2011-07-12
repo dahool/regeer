@@ -7,7 +7,7 @@
 <script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	{% if perms.b3connect.change_client_group %} 	
+	{% if perms.b3connect.change_client_group or perms.b3connect.regular_client  %} 	
     $('#client_group').editable('{% serverurl change_clientgroup client.id %}', {
     	loadurl  : '{% serverurl group_list_json %}', 
         type    : 'select',
@@ -70,8 +70,12 @@ $(document).ready(function() {
 {% if perms.b3connect.change_client_group %}
 title="{% trans "Edit" %}" class="nodecoration_icon icon_edit"
 {% else %}
-{% if perms.b3connect.register_client and client.group.id < 2%}
-title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="register_user('{% serverurl change_clientgroup client.id %}',2)" 
+{% if perms.b3connect.regular_client and client.group.id < 2%}
+title="{% trans "Edit" %}" class="nodecoration_icon icon_edit"
+{% else %} 
+{% if perms.b3connect.register_client and client.group.id < 1%}
+title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="register_user('{% serverurl change_clientgroup client.id %}',1)" 
+{% endif %}
 {% endif %}
 {% endif %}>
 {{client.displayGroup}}</td>

@@ -39,8 +39,10 @@ class Server(models.Model):
     user = models.CharField(max_length=50, verbose_name=_('Database User'))
     password = models.CharField(max_length=200)
     hostname = models.CharField(max_length=50, verbose_name=_('Database Host'))
-    status_file = models.CharField(max_length=255, verbose_name=_('Status File Abs Path'), help_text=_('For status plugin'), blank=True)
-    config_file = models.CharField(max_length=255, verbose_name=_('Config File Abs Path'), help_text=_('For RCON access'), blank=True)
+    rcon_ip = models.IPAddressField(verbose_name=_('IP'), blank=True)
+    rcon_port = models.IntegerField(verbose_name=_('Port'), blank=True, null=True)
+    rcon_password = models.CharField(max_length=50, verbose_name=_('RCON Password'), blank=True) 
+    default = models.BooleanField(default=False, verbose_name=_('Default'), help_text=_('Set as default server'))
     
     def __repr__(self):
         return self.name
@@ -62,7 +64,17 @@ class Server(models.Model):
     class Meta:
         ordering  = ('name',)
         unique_together = ('database','user','hostname')
-                
+
+class MapCycle(models.Model):
+    server = models.ForeignKey(Server, related_name="mapcycle", unique=True)
+    location = models.CharField(max_length=500)
+
+    def __repr__(self):
+        return self.server
+    
+    def __unicode__(self):
+        return repr(self)
+    
 class Map(models.Model):
     server = models.ForeignKey(Server, related_name="maps")
     name = models.CharField(max_length=50)
@@ -78,7 +90,8 @@ class Map(models.Model):
     @property
     def map_link(self):
         if not self.name in settings.SKIP_MAPS:
-            return settings.MAP_LOCATION % self.name
+            if settings.MAP_LOCATION:
+                return settings.MAP_LOCATION % self.name
         return None
         
     def __unicode__(self):

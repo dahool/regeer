@@ -8,11 +8,14 @@
 	{% endblock %}
 </div>
 <div id="page_margins" {% if not user.is_authenticated %}style="margin-top: 60px;"{% endif %}>
-	{% if messages %}
+	{% if messages or form.non_field_errors %}
       <div id="teaser">
         <ul class="messages">
             {% for message in messages %}
             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            {% for message in form.non_field_errors %}
+            <li class="error">{{ message|escape }}</li>
             {% endfor %}
         </ul>
       </div>

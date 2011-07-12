@@ -4,6 +4,8 @@ from common.shortcuts import get_object_or_404
 from django.db.models import Q
 
 from b3connect.models import Penalty, Client, Group
+from b3portal.models import Server
+
 from django.conf import settings
 
 import time
@@ -24,11 +26,10 @@ from django.contrib import messages
 from common.middleware.exceptions import Http403
 from django.contrib.auth.decorators import login_required
 
-from common.floodprotection import flood
+#from common.floodprotection import flood
 from common.query.functions import get_query_order
 
 from django.core.cache import cache
-from gameutils import load_banlist
 from common.utils.application import is_plugin_installed
 from django.utils.datastructures import MultiValueDictKeyError
 
@@ -49,9 +50,10 @@ def client(request, id):
         raise
     
     online = None
-    if is_plugin_installed('status'):
-        from plugins.status import get_server_status
-        status = get_server_status(request.server)
+    server = Server.objects.get(uuid=request.server)
+    if server.status_plugin.all():
+        from b3portal.plugins.status import get_server_status
+        status = get_server_status(server)
         if status.clients:
             online = [int(c.id) for c in status.clients]
     if request.user.has_perm('b3connect.view_banlist'):
@@ -119,7 +121,7 @@ def adminlist(request, filter=False):
 @permission_required_with_403('b3connect.view_client')
 @cache_page(15*60)
 @render('b3portal/client/client_list.html')
-@flood
+#@flood
 def clientlist(request):
     data = ''
     search = None
@@ -207,7 +209,7 @@ def _getclientlist(request, server, search = True):
 @permission_required_with_403('b3connect.view_client')
 @cache_page(15*60)
 @render('b3portal/client/regular_client_list.html')
-@flood
+#@flood
 def regularclients(request):
     dt = datetime.datetime.now() - datetime.timedelta(days=7)
     clients = Client.objects.using(request.server).filter(id__gt=1, connections__gte=50, time_edit__gte=time.mktime(dt.timetuple()))
@@ -295,18 +297,21 @@ def editpenalty(request, id):
                                         'time_type': 'm'})
     return {'form': form, 'client': p.client}
 
-@permission_required_with_403('b3connect.register_client')
+@login_required
 def change_clientgroup(request, id):
     
     if request.method != 'POST':
         raise Http403
 
-    g = request.POST.get('value')
-    if g > '2':
-        if not request.user.has_perm('change_client_group'):
+    g = int(request.POST.get('value'))
+    if not request.user.has_perm('b3connect.change_client_group'):
+        if g <= 1 and (not request.user.has_perm('b3connect.register_client')
+                       or not request.user.has_perm('b3connect.regular_client')):
             raise Http403
+        if g <= 2 and (not request.user.has_perm('b3connect.regular_client')):
+            raise Http403        
     
-    group = get_object_or_404(Group, id=int(g), using=request.server)
+    group = get_object_or_404(Group, id=g, using=request.server)
     client = get_object_or_404(Client, id=id, using=request.server)
     
     if client.group_id > 0:
