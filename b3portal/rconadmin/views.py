@@ -124,21 +124,6 @@ def execute(request):
                     res = str(e)
     return HttpResponse(res)
 
-@cache_page(180*60)
-@render('json')
-def group_list(request):
-    dict = {}
-    query = Group.objects.using(request.server)
-    if request.user.has_perm('b3connect.change_client_group'):
-        groups = query.all()
-    elif request.user.has_perm('b3connect.regular_client'):
-        groups = query.filter(id__lte=2)
-    else:
-        groups = query.filter(id=0)
-    for group in groups:
-        dict[group.id]=str(group)
-    return dict 
-
 @superuser_required
 @render('b3portal/admin/banlist.html')
 def banlist(request):

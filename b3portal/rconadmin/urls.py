@@ -8,5 +8,4 @@ urlpatterns = patterns('',
     url(r'^ref/clients/$', views.refresh_clients, name='admin_refresh_clients'),
     url(r'^ref/status/$', views.refresh_status, name='admin_refresh_status'),
     url(r'^ban/list/$', views.banlist, name='admin_ban_list'),
-    url(r'^group/list/$', views.group_list, name='group_list_json'),
 )

@@ -96,7 +96,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <a target="_blank" href="{% setting 'GEOTOOL' %}{{client.ip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
 {% if client.ip in banlist %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endif %}
 {% else %}{% trans "(No IP address available)" %}{% endif %}</td>
-<td colspan="2">{% if status %}{%if client.id in status %}<span class="online">{% trans "Playing" %}</span>{%else%}<span class="offline">{% trans "Offline" %}</span>{%endif%}{%endif%}</td>
+<td colspan="2">{% if status != None %}{%if status %}<span class="online">{% trans "Playing" %}</span>{%else%}<span class="offline">{% trans "Offline" %}</span>{%endif%}{%endif%}</td>
 </tr>
 </tbody>
 </table>

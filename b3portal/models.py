@@ -70,7 +70,7 @@ class MapCycle(models.Model):
     location = models.CharField(max_length=500)
 
     def __repr__(self):
-        return self.server
+        return str(self.server)
     
     def __unicode__(self):
         return repr(self)

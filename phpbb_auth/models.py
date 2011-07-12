@@ -62,11 +62,6 @@ class bbUser(models.Model):
         db_table = PHPBB_TABLES_PREFIX + 'users'
         ordering = ['username_clean']
 
-#class UserMapping(models.Model):
-#    """Maps phpBB users to Django users, 1:1."""
-#    user = models.OneToOneField(User)
-#    bbUser = models.ForeignKey(bbUser, unique=True)
-
 class bbGroup(models.Model):
     group_id = models.IntegerField(primary_key=True)
     group_type = models.IntegerField()

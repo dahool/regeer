@@ -1,3 +1,5 @@
 SITE_NAME = 'CodWar Servers'
 VERSION = '0.3.0 Alpha'
 APP_NAME = 'B3 Portal'
+
+ENABLE_PHPBB_AUTH = False

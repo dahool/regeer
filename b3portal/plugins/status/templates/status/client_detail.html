@@ -4,15 +4,12 @@
 {% block extra_header %}
 {{ block.super }}
 {% endblock %}
-{% block navigation2 %}
-{% include "b3portal/client/client_menu.html" %}
-{% endblock %}
 {% block main_content %}
 <table class="cd-table client_lists">
 <caption><h3>{{client.name}}<small>  
-{% with request.session.server as current_server %}
+{% with request.server as current_server %}
 {% for server in request.server_list %}
-{% if current_server == server.DB %}{{server.NAME}}{%endif%}
+{% if current_server == server.uuid %}{{server.NAME}}{%endif%}
 {% endfor %}
 {% endwith %}
 </small>

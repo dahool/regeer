@@ -30,8 +30,9 @@ from django.contrib.auth.decorators import login_required
 from common.query.functions import get_query_order
 
 from django.core.cache import cache
-from common.utils.application import is_plugin_installed
 from django.utils.datastructures import MultiValueDictKeyError
+
+from b3portal.plugins import is_plugin_installed
 
 @permission_required_with_403('b3connect.view_client')
 @cache_page(15*60)
@@ -50,12 +51,15 @@ def client(request, id):
         raise
     
     online = None
-    server = Server.objects.get(uuid=request.server)
-    if server.status_plugin.all():
-        from b3portal.plugins.status import get_server_status
-        status = get_server_status(server)
-        if status.clients:
-            online = [int(c.id) for c in status.clients]
+    if is_plugin_installed('status'):
+        server = Server.objects.get(uuid=request.server)
+        try:
+            from b3portal.plugins.status.models import ServerStatus
+            status = ServerStatus.objects.filter(server=server).latest()
+            online = status.is_online(client.id)
+        except:
+            pass
+        
     if request.user.has_perm('b3connect.view_banlist'):
         list = _get_banlist(request)
     else:
@@ -369,3 +373,18 @@ def direct(request):
         return HttpResponseRedirect(next)
     url = reverse("client_detail",kwargs={'id':player.id})
     return HttpResponseRedirect(url + "?server=%s" % server)
+
+@cache_page(180*60)
+@render('json')
+def group_list(request):
+    dict = {}
+    query = Group.objects.using(request.server)
+    if request.user.has_perm('b3connect.change_client_group'):
+        groups = query.all()
+    elif request.user.has_perm('b3connect.regular_client'):
+        groups = query.filter(id__lte=2)
+    else:
+        groups = query.filter(id=0)
+    for group in groups:
+        dict[group.id]=str(group)
+    return dict 

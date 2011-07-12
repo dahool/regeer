@@ -1,5 +1,5 @@
 {% extends "base_simple.html" %}
-{% load i18n settingstag navigation gravatar extendedtags %}
+{% load i18n settingstag navigation gravatar extendedtags plugintag %}
 {% block extra_header %}
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/jquery.place.css"/>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.measure.js"></script>
@@ -53,7 +53,7 @@ $(document).ready(function() {
 		{% url ban_list as url_nav_bans %}
 		{% url client_list as url_nav_clients %}
 		{% url chat_list as url_nav_chatlog %}
-		{% url game_status as url_nav_status %}
+		{% url plugin:game_status as url_nav_status %}
 		{% url game_admin as url_nav_admin %}
         {% if user.is_staff %}
         <li class="nodecoration_icon icon_config"><a style="font-weight: bold;" href="{% url admin:index %}">{% trans "Administration Panel" %}</a></li>
@@ -63,25 +63,25 @@ $(document).ready(function() {
 	    <li class="{% current_nav url_nav_bans %}"><a href="{{ url_nav_bans }}">{% trans "Penalties" %}</a>
 	    {% include "b3portal/penalties/ban_list_menu.html" %}
 	    </li>
-	    {% ifinstalled "plugins.stats" %}
+	    {% ifplugininstalled "plugins.stats" %}
 	    {% url stats_home as url_nav_stats %}
 	    <li class="{% current_nav url_nav_stats %}"><a href="{{ url_nav_stats }}">{% trans "Stats" %}</a></li>
-	    {% endifinstalled %}
+	    {% endifplugininstalled %}
 	    {% if perms.b3connect.view_client %}
 	    <li class="{% current_nav url_nav_clients %}"><a href="{{ url_nav_clients }}">{% trans "Players" %}</a>
 		{% include "b3portal/client/client_menu.html" %}	    
 	    </li>
 	    {% endif %}
-	    {% ifinstalled "plugins.chatlog" %}
+	    {% ifplugininstalled "plugins.chatlog" %}
 	    {% if perms.chatlog.view_chat %}
 	    <li class="{% current_nav url_nav_chatlog %}"><a href="{{ url_nav_chatlog }}">{% trans "Chat Logs" %}</a></li>
 	    {% endif %}
-	    {% endifinstalled %}
-	    {% ifinstalled "plugins.stats" %}
+	    {% endifplugininstalled %}
+	    {% ifplugininstalled "status" %}
 	    {% if perms.status.view_serverstatus %}
 	    <li class="{% current_nav url_nav_status %}"><a href="{{ url_nav_status }}">{% trans "Status" %}</a></li>
 	    {% endif %}
-	    {% endifinstalled %}
+	    {% endifplugininstalled %}
 	    {% if user.is_superuser %}
 	    <li class="{% current_nav url_nav_admin %}"><a href="{{ url_nav_admin }}">{% trans "RCon" %}</a></li>
 	    {% endif %}

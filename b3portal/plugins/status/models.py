@@ -1,5 +1,5 @@
 from django.db import models
-from b3connect.fields import EpochDateTimeField
+from b3connect.models import Client
 from b3portal.models import Server
 
 class StatusPlugin(models.Model):
@@ -10,26 +10,46 @@ class StatusPlugin(models.Model):
         return repr(self)
         
     def __repr__(self):
-        return self.server
+        return str(self.server)
     
 class ServerStatus(models.Model):
     server = models.ForeignKey(Server)
-    map = models.CharField(max_length=255, db_index=True)
-    totalPlayers = models.IntegerField(default=0)
-    time_add = EpochDateTimeField()
-
+    map = models.CharField(max_length=100, db_index=True)
+    time_add = models.DateTimeField(auto_now_add=True)
+    
     def __unicode__(self):
         return repr(self)
         
     def __repr__(self):
-        return "%s - %s - %d" % (self.server, str(self.time_add), self.totalPlayers)
+        return "%s - %s - %d" % (str(self.server), str(self.time_add), self.totalPlayers)
+    
+    @property
+    def totalPlayers(self):
+        return self.players.count()
+    
+    def is_online(self, client_id):
+        for c in self.players.all():
+            if c.client_id == client_id:
+                return True
+        return False
     
     class Meta:
         ordering = ('-time_add',)
+        get_latest_by = ('time_add',)
         permissions = (
             ("view_serverstatus", "Can view Server Status"),
         )
         
-class ServerStatusPlayers(models.Model):
-    server = models.ForeignKey(ServerStatus, related_name='players')
-    clientid = models.IntegerField(db_index=True)
+class StatusClient(models.Model):
+    status = models.ForeignKey(ServerStatus, related_name='players')
+    client_id = models.IntegerField()
+    
+    def __unicode__(self):
+        return repr(self)
+        
+    def __repr__(self):
+        return "%s - %s" % (str(self.status), self.client_id)
+    
+    @property
+    def client(self):
+        return Client.objects.using(self.status.server.uuid).get(pk=self.client_id)

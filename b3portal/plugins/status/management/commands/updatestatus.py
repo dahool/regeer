@@ -1,7 +1,6 @@
 from django.core.management.base import BaseCommand
 from b3portal.plugins.status.element import Status
-from b3portal.plugins.status.models import ServerStatus, ServerStatusPlayers, StatusPlugin
-from datetime import datetime
+from b3portal.plugins.status.models import ServerStatus, StatusClient, StatusPlugin
 from common.utils.file import getfile
 
 class Command(BaseCommand):
@@ -17,15 +16,12 @@ class Command(BaseCommand):
             else:
                 if status.map:
                     s = ServerStatus.objects.create(map=status.map,
-                                                totalPlayers=status.totalClients,
-                                                server=conf.server,
-                                                time_add=datetime.now())
+                                                    server=conf.server)
                     if status.totalClients > 0:
                         for client in status.clients:
                             if client.id:
-                                s.players.add(ServerStatusPlayers.objects.create(
-                                                                                 server=s,
-                                                                                 clientid=client.id
-                                                                                 ))
+                                StatusClient.objects.create(status=s,
+                                                            client_id=client.id)
+                                
             self.stdout.write("Processed %s ...\n" % conf.server)
         self.stdout.write('Done.\n')
