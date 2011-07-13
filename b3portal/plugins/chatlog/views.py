@@ -8,14 +8,14 @@ from common.floodprotection import flood
 from models import ChatLog
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.conf import settings
-from forms import ChatLogSearch
+from b3portal.plugins.chatlog.forms import ChatLogSearch
 from django.db.models import Q
 
 @permission_required_with_403('chatlog.view_chat')
 @render('chatlog/log.html')
 @flood
 def chatlist(request):
-    chats = ChatLog.objects.using(request.session.get('server')).all()
+    chats = ChatLog.objects.using(request.server).all()
 
     # Make sure page request is an int. If not, deliver first page.   
     try:
@@ -53,7 +53,6 @@ def chatlist(request):
         form = ChatLogSearch()
 
     if search:
-        search['server']=request.session.get('server')        
         search = urllib.urlencode(search)
             
     paginator = Paginator(chats, settings.ITEMS_PER_PAGE)

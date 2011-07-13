@@ -1,8 +1,9 @@
-#Wed Jul 13 12:08:19 ART 2011
+#Wed Jul 13 16:26:41 ART 2011
 eclipse.preferences.version=1
 encoding//b3connect/admin.py=utf-8
 encoding//b3connect/console/client.py=utf-8
 encoding//b3portal/admin.py=utf-8
+encoding//b3portal/plugins/chatlog/admin.py=utf-8
 encoding//phpbb_auth/admin.py=utf-8
 encoding//phpbb_auth/backends.py=UTF-8
 encoding//phpbb_auth/models.py=utf-8

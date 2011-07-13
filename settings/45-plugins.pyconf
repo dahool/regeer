@@ -1,1 +1,2 @@
-INSTALLED_APPS += ('b3portal.plugins.status',)
+INSTALLED_APPS += ('b3portal.plugins.status',
+                   'b3portal.plugins.chatlog',)

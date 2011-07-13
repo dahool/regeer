@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
-import views
+from b3portal.plugins.chatlog import views
 
 urlpatterns = patterns('',
     url(r'^$', views.chatlist, name='chat_list'),

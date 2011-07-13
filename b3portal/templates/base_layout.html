@@ -72,7 +72,7 @@ $(document).ready(function() {
 		{% include "b3portal/client/client_menu.html" %}	    
 	    </li>
 	    {% endif %}
-	    {% ifplugininstalled "plugins.chatlog" %}
+	    {% ifplugininstalled "chatlog" %}
 	    {% if perms.chatlog.view_chat %}
 	    <li class="{% current_nav url_nav_chatlog %}"><a href="{{ url_nav_chatlog }}">{% trans "Chat Logs" %}</a></li>
 	    {% endif %}

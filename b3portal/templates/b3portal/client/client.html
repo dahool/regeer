@@ -1,5 +1,5 @@
 {% extends "base_layout.html" %}
-{% load listtocolumns i18n tagutils settingstag extendedtags geoip urltag %}
+{% load listtocolumns i18n tagutils settingstag extendedtags geoip urltag plugintag %}
 {% block title %}{{ block.super }} | {{client.name}}{% endblock %}
 {% block extra_header %}
 {{ block.super }}
@@ -60,7 +60,7 @@ $(document).ready(function() {
 </thead>
 <tbody>
 <tr>
-<th>{% trans "Name" %}</th><td>{{client.name}}{% ifinstalled "plugins.chatlog" %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% serverurl chat_list %}&name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endifinstalled %}</td>
+<th>{% trans "Name" %}</th><td>{{client.name}}{% ifplugininstalled "chatlog" %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% serverurl plugin:chat_list %}&name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endifplugininstalled %}</td>
 <th>{% trans "@id" %}</th><td>{{client.id}}</td>
 </tr>
 <tr>

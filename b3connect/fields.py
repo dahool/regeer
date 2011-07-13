@@ -24,7 +24,7 @@ class EpochDateTimeField(Field):
         except:
             return ""
 
-    def get_db_prep_value(self, value):
+    def get_db_prep_value(self, value, connection=None, prepared=False):
         if hasattr(value, 'timetuple'):
             return int(time.mktime(value.timetuple()))
         else:
