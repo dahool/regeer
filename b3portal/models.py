@@ -105,7 +105,7 @@ class Map(models.Model):
                         
 class Plugins(models.Model):
     server = models.ForeignKey(Server, related_name="plugins")
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     
     def __repr__(self):
         return "%s [%s]" % (self.name,repr(self.server))
@@ -115,6 +115,17 @@ class Plugins(models.Model):
     
     class Meta:
         verbose_name_plural = "Plugins"
+        
+class PluginConf(models.Model):
+    plugin = models.ForeignKey(Plugins, related_name="config")
+    name = models.CharField(max_length=50)
+    value = models.CharField(max_length=500)
+    
+    def __repr__(self):
+        return "%s [%s: %s]" % (str(self.plugin), self.name, self.value)
+
+    def __unicode__(self):
+        return repr(self)
         
 from b3portal import init_database_config
 init_database_config()

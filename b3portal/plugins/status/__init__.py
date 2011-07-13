@@ -1,3 +1,6 @@
+from django.utils.translation import gettext as _
+
+PLUGIN_CONF = [('file',_('Status File Location'))]
 
 def get_server_status(server):
     from b3portal.models import Server
