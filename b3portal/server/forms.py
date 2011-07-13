@@ -23,8 +23,9 @@ class ServerForm(ModelForm):
         rcon_ip = data['rcon_ip']
         rcon_port = data['rcon_port']
         rcon_pwd = data['rcon_password']
+        parser = data['parser']
         
-        if not (rcon_ip and rcon_port and rcon_pwd) and (rcon_ip or rcon_port or rcon_pwd):
+        if not (rcon_ip and rcon_port and rcon_pwd and parser) and (rcon_ip or rcon_port or rcon_pwd or parser):
             raise forms.ValidationError(_("All fields are required for RCON access"));
         
         return data

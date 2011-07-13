@@ -24,7 +24,7 @@ class ServerAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,               {'fields': ['name','default']}),
         (_('Database settings'), {'fields': ['engine','hostname','database','user','password']}),
-        (_('Game Server'), {'fields': ['rcon_ip','rcon_port', 'rcon_password']}),
+        (_('Game Server'), {'fields': ['rcon_ip','rcon_port', 'rcon_password', 'parser']}),
     ]    
     
  

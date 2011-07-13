@@ -7,7 +7,9 @@ def get_server_status(server):
     from element import Status
     
     s = Server.objects.get(uuid=server)
-    sp = StatusPlugin.objects.get(server=s)
-    if sp:
-        return Status(getfile(sp.location))
+    try:
+        sp = StatusPlugin.objects.get(server=s)
+        if sp: return Status(getfile(sp.location))
+    except:
+        pass
     return None

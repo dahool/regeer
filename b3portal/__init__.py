@@ -25,5 +25,5 @@ def init_database_config():
             }
             # force to recreate the connection
             del connections._connections[server.uuid]
-    except Exception, e:
+    except Exception:
         pass

@@ -82,9 +82,9 @@ $(document).ready(function() {
 	    <li class="{% current_nav url_nav_status %}"><a href="{{ url_nav_status }}">{% trans "Status" %}</a></li>
 	    {% endif %}
 	    {% endifplugininstalled %}
-	    {% if user.is_superuser %}
+	    {% ifsetting "B3_INSTALLED" %}
 	    <li class="{% current_nav url_nav_admin %}"><a href="{{ url_nav_admin }}">{% trans "RCon" %}</a></li>
-	    {% endif %}
+	    {% endifsetting %}
         <li style="float: right; margin-right: 20px;">
 		  {% if user.is_authenticated %}
 		  {% with user.username as name %}

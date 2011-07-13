@@ -30,7 +30,9 @@ DB_ENGINES_CHOICES = (
     ('django.db.backends.sqlite3','sqlite3'),
     ('django.db.backends.oracle','oracle')
 )
-    
+
+PARSER_CHOICES = [(v,v) for v in settings.B3_PARSERS]
+
 class Server(models.Model):
     uuid = AutoSlugField(max_length=50, unique=True, editable=False,prepopulate_from="name", force_update=False)
     name = models.CharField(max_length=40, verbose_name=_('Server Name'))
@@ -41,7 +43,8 @@ class Server(models.Model):
     hostname = models.CharField(max_length=50, verbose_name=_('Database Host'))
     rcon_ip = models.IPAddressField(verbose_name=_('IP'), blank=True)
     rcon_port = models.IntegerField(verbose_name=_('Port'), blank=True, null=True)
-    rcon_password = models.CharField(max_length=50, verbose_name=_('RCON Password'), blank=True) 
+    rcon_password = models.CharField(max_length=50, verbose_name=_('RCON Password'), blank=True)
+    parser = models.CharField(max_length=15, choices=PARSER_CHOICES, verbose_name=_('Game'), blank=True) 
     default = models.BooleanField(default=False, verbose_name=_('Default'), help_text=_('Set as default server'))
     
     def __repr__(self):

@@ -26,31 +26,5 @@ for app in settings.INSTALLED_APPS:
         urlpatterns += patterns('',
             url(pattern, include(urlconf)),
         )
-        
-#if 'plugins.stats' in settings.INSTALLED_APPS:
-#    urlpatterns += patterns('',
-#        url('^stats/', include('plugins.stats.urls')),
-#    )
-#
-#if 'plugins.follow' in settings.INSTALLED_APPS:
-#    urlpatterns += patterns('',
-#        url('^follow/', include('plugins.follow.urls')),
-#    )
-#
-#if 'plugins.chatlog' in settings.INSTALLED_APPS:
-#    urlpatterns += patterns('',
-#        url('^log/', include('plugins.chatlog.urls')),
-#    )
-#        
-#if 'plugins.chatlog' in settings.INSTALLED_APPS:
-#    urlpatterns += patterns('',
-#        url('^log/', include('plugins.chatlog.urls')),
-#    )
-            
+             
 urlpatterns += staticfiles_urlpatterns()
-
-#if settings.STATIC_SERVE:
-#    urlpatterns += patterns('',
-#        (r'^webmedia/(?P<path>.*)$', 'django.views.static.serve',
-#         {'document_root': settings.MEDIA_ROOT}),
-#    )

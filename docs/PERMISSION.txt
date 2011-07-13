@@ -1,0 +1,30 @@
+b3connect.view_client  
+* permite ver información del cliente
+b3connect.view_group
+* permite ver el grupo al que pertence el cliente  
+b3connect.add_penalty  
+* agregar penalty
+b3connect.delete_penalty
+* borrar  
+b3connect.change_penalty
+* cambiar
+b3connect.view_penalty
+* ver los warns, kicks
+b3connect.view_notices
+* ver los notices
+b3connect.view_banlist
+* ver los ban del user
+b3connect.view_high_level_client  
+* permite ver el grupo al que pertenece un cliente, cuando este es mayor al configudaro
+b3connect.change_client_group
+* cambiar de grupo
+b3connect.group_downgrade
+* bajar de grupo
+b3connect.register_client
+* registrar usuario
+b3connect.regular_client
+* hacer regular
+plugins
+status.view_serverstatus
+* ver status
+

@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 import logging
 import time
-import sys
-
-import b3
-import b3.game
-import b3.clients
-from b3.parsers.iourt41 import Iourt41Parser
+from b3.parser import Parser
+from b3.output import OutputHandler
+from b3.game import Game
+from b3.config import XmlConfigParser
+from StringIO import StringIO
 
 class DummyHandler(logging.Handler):
     """
-  A handler class which ignores all.
+      A handler class which ignores all.
     """
     def __init__(self):
         logging.Handler.__init__(self)
@@ -22,32 +21,38 @@ class DummyHandler(logging.Handler):
         logging.Handler.close(self)
 
 def getLoggerInstance():
-    logging.setLoggerClass(b3.output.OutputHandler)
+    logging.setLoggerClass(OutputHandler)
     log = logging.getLogger('output')
     handler = DummyHandler()
     log.addHandler(handler)
     return log
+
+class ConsoleConfig(XmlConfigParser):
     
-class B3Console(Iourt41Parser):
+    def __init__(self, ip, port, password, parser):
+        self.ip = ip
+        self.port = port
+        self.password = password
+        self.parser = parser
+        
+class B3Console(Parser):
 
     def __init__(self, config):
         self.config = config
         self.log = getLoggerInstance()
 
-        #sys.stdout = b3.output.stdoutLogger(self.log)
-        #sys.stderr = b3.output.stderrLogger(self.log)
-
-        bot_prefix = self.config.get('b3', 'bot_prefix')
-        if bot_prefix:
-            self.prefix = bot_prefix
-
-        self.msgPrefix = self.prefix
+        self.prefix = "B3"
+        self.msgPrefix = "B3"
         
-        self._rconIp   = self.config.get('server', 'rcon_ip')
-        self._port     = self.config.getint('server', 'port')
+        self._rconIp   = self.config.ip
+        self._port     = self.config.port
+        self._rconPassword = self.config.password
+        
         self.output = self.OutputClass(self, (self._rconIp, self._port),self.config.get('server', 'rcon_password'))
         
-        self.game = b3.game.Game(self, None)
+        self.input = StringIO()
+        
+        self.game = Game(self, self.gameName)
         map = self.getMap()
         if map:
             self.game.mapName = map

@@ -28,7 +28,7 @@ class Group(models.Model):
         ordering  = ('id',)
         db_table = u'groups'
         permissions = (
-            ("view_group", "Can view group details"),
+            ("view_group", "View User Group"),
         )
                 
 class Client(models.Model):

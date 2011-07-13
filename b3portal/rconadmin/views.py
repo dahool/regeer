@@ -22,10 +22,10 @@ from django.core import validators
 from django.utils.encoding import smart_unicode
 
 from gameutils import load_banlist
-from common.utils.application import is_plugin_installed
+from b3portal.plugins import is_plugin_installed
 
-#from b3connect.console.client import B3Client
-#from b3connect.console.serverinfo import ServerInfo
+from b3connect.console.client import B3Client
+from b3connect.console.serverinfo import ServerInfo
 
 @superuser_required
 @render('b3portal/admin/home.html')
@@ -38,8 +38,7 @@ def home(request):
 
 def _status(request):
     status = {}
-    server = request.session.get('server')
-    cfgfile = settings.SERVERS[server]['CFG']
+    server = request.server
     try:
         c = B3Client(cfgfile)
     except:
@@ -77,14 +76,14 @@ def _client_list(request, m=True):
             messages.error(request, _('Error: %s') % str(e))
         clients=[]
         if is_plugin_installed('status'):
-            from plugins.status import get_server_status
-            status = get_server_status(request.session.get('server'))
+            from b3portal.plugins.status import get_server_status
+            status = get_server_status(request.server)
             if status.clients:
                 if m:
                     messages.info(request, _('Using alternative players info method'))
                 for c in status.clients:
                     try:
-                        ci = Client.objects.using(request.session.get('server')).get(id=c.id)
+                        ci = Client.objects.using(request.server).get(id=c.id)
                     except Client.DoesNotExist:
                         pass
                     else:
@@ -99,8 +98,7 @@ def _client_list(request, m=True):
 def execute(request):
     if request.method != 'POST':
         raise Http403
-    server = request.session.get('server')
-    cfgfile = settings.SERVERS[server]['CFG']
+    server = request.server
     try:
         c = B3Client(cfgfile)
     except Exception, e:

@@ -16,6 +16,7 @@ $(document).ready(
 {% block title %}{{ block.super }} | {% trans "Map List" %}{% endblock %}
 {% block main_content %}
 <h3>{% trans "Current map list in server cycle" %}</h3>
+{% if map_list %}
 <div id="map_list">
 {% regroup maps by server.name as map_list %}
 <div id="tabs">
@@ -44,4 +45,8 @@ $(document).ready(
 </div>
 <div class="clear"></div>
 </div>
+{% else %}
+<br/>
+<p>{% trans "No maps found." %}</p>
+{% endif %}
 {% endblock %}

@@ -2,6 +2,8 @@
 import os
 import glob
 
+LOCAL_CONFIG = None
+
 PROJECT_PATH = os.path.normpath(os.path.abspath(os.path.dirname(__file__)))
 
 conffiles = glob.glob(os.path.join(os.path.dirname(__file__), 'settings','*.pyconf'))
@@ -10,5 +12,14 @@ conffiles.sort()
 for f in conffiles:
     execfile(os.path.abspath(f)) 
     
-if os.path.exists(LOCAL_CONFIG):
+if LOCAL_CONFIG and os.path.exists(LOCAL_CONFIG):
     execfile(LOCAL_CONFIG)
+    
+try:
+    # lets check if b3 is in the python path
+    import b3
+except:
+    B3_INSTALLED = False
+else:
+    B3_INSTALLED = True
+B3_INSTALLED = False    
