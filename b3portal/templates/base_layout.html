@@ -1,5 +1,5 @@
 {% extends "base_simple.html" %}
-{% load i18n settingstag navigation gravatar extendedtags plugintag %}
+{% load i18n settingstag navigation gravatar extendedtags plugintag urltag %}
 {% block extra_header %}
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/jquery.place.css"/>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.measure.js"></script>
@@ -48,41 +48,41 @@ $(document).ready(function() {
 {% endblock %}
 {% block navigation %}
 	<ul class="topnav">
-        {% url home as url_nav_home %}    
-		{% url map_list as url_nav_maps %}
-		{% url ban_list as url_nav_bans %}
-		{% url client_list as url_nav_clients %}
-		{% url chat_list as url_nav_chatlog %}
-		{% url plugin:game_status as url_nav_status %}
-		{% url game_admin as url_nav_admin %}
         {% if user.is_staff %}
         <li class="nodecoration_icon icon_config"><a style="font-weight: bold;" href="{% url admin:index %}">{% trans "Administration Panel" %}</a></li>
         {% endif %}		
+		{% url home as url_nav_home %}        
 		<li class="{% current_nav url_nav_home %}"><a href="{{ url_nav_home }}">{% trans "Home" %}</a></li>
+		{% ifplugininstalled "map" %}
+		{% url map:home as url_nav_maps %}
 	    <li class="{% current_nav url_nav_maps %}"><a href="{{ url_nav_maps }}">{% trans "Maps" %}</a></li>
+	    {% endifplugininstalled %}
+	    {% url ban_list as url_nav_bans %}
 	    <li class="{% current_nav url_nav_bans %}"><a href="{{ url_nav_bans }}">{% trans "Penalties" %}</a>
 	    {% include "b3portal/penalties/ban_list_menu.html" %}
 	    </li>
-	    {% ifplugininstalled "plugins.stats" %}
-	    {% url stats_home as url_nav_stats %}
-	    <li class="{% current_nav url_nav_stats %}"><a href="{{ url_nav_stats }}">{% trans "Stats" %}</a></li>
-	    {% endifplugininstalled %}
 	    {% if perms.b3connect.view_client %}
+	    {% url client_list as url_nav_clients %}
 	    <li class="{% current_nav url_nav_clients %}"><a href="{{ url_nav_clients }}">{% trans "Players" %}</a>
 		{% include "b3portal/client/client_menu.html" %}	    
 	    </li>
 	    {% endif %}
 	    {% ifplugininstalled "chatlog" %}
 	    {% if perms.chatlog.view_chat %}
+	    {% url chatlog:chat_list as url_nav_chatlog %}
 	    <li class="{% current_nav url_nav_chatlog %}"><a href="{{ url_nav_chatlog }}">{% trans "Chat Logs" %}</a></li>
 	    {% endif %}
 	    {% endifplugininstalled %}
 	    {% ifplugininstalled "status" %}
 	    {% if perms.status.view_serverstatus %}
-	    <li class="{% current_nav url_nav_status %}"><a href="{{ url_nav_status }}">{% trans "Status" %}</a></li>
+	    {% serverurl status:home as url_nav_status %}
+	    <li class="{% current_nav url_nav_status %}"><a href="{{ url_nav_status }}">{% trans "Status" %}</a>
+	    {% include "status/status_menu.html" %}
+	    </li>
 	    {% endif %}
 	    {% endifplugininstalled %}
 	    {% ifsetting "B3_INSTALLED" %}
+	    {% url game_admin as url_nav_admin %}
 	    <li class="{% current_nav url_nav_admin %}"><a href="{{ url_nav_admin }}">{% trans "RCon" %}</a></li>
 	    {% endifsetting %}
         <li style="float: right; margin-right: 20px;">

@@ -1,10 +1,13 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from djangoui.widgets import uiSplitDateTimeWidget
-from b3portal.models import Map
 
-MAP_CHOICES = [(m.name, m.display_name) for m in Map.objects.all()]
-MAP_CHOICES.insert(0, ('','-'))
+try:
+    from b3portal.plugins.map.models import Map
+    MAP_CHOICES = [(m.name, m.display_name) for m in Map.objects.all()]
+    MAP_CHOICES.insert(0, ('','-'))
+except:
+    MAP_CHOICES = []
 
 class ChatLogSearch(forms.Form):
     

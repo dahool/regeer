@@ -4,6 +4,8 @@ from b3connect.admin import CustomModelAdmin
 from models import ChatLog
 from django.http import HttpResponseRedirect
 
+from b3portal.plugins.chatlog.models import ChatLogPlugin
+
 class ChatAdmin(CustomModelAdmin):
     search_fields=['=client__id','client__name', 'data']
     list_display=('client', 'data', 'time_add', 'target')
@@ -34,4 +36,5 @@ class ChatAdmin(CustomModelAdmin):
         
         return HttpResponseRedirect(reverse('admin:%s_%s_changelist' % info) + "?%s" % url)
     
-admin.site.register(ChatLog, ChatAdmin)
+#admin.site.register(ChatLog, ChatAdmin)
+admin.site.register(ChatLogPlugin)

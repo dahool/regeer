@@ -1,6 +1,11 @@
-from django.utils.translation import gettext as _
 
-PLUGIN_CONF = [('file',_('Status File Location'))]
+def is_enabled(server):
+    from b3portal.plugins.status.models import StatusPlugin
+    try:
+        StatusPlugin.objects.get(server=server)
+    except StatusPlugin.DoesNotExist:
+        return False
+    return True
 
 def get_server_status(server):
     from b3portal.models import Server

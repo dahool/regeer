@@ -27,8 +27,9 @@ class phpbbBackend(ModelBackend):
     Create local django user if success.
     """
     supports_object_permissions = False
-    supports_anonymous_user = True
-
+    supports_anonymous_user = False
+    supports_inactive_user = False
+    
     def authenticate(self, username=None, password=None):
         try:
             user = bbUser.objects.get(username_clean=username.lower())

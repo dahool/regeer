@@ -33,11 +33,3 @@ class ServerForm(ModelForm):
     class Meta:
         model = Server
         exclude = ("uuid")
-
-    def save(self, commit=True):
-        server = super(ServerForm, self).save(commit)
-        if server.default:
-            q = Server.objects.filter(default=True).exclude(pk=server.pk)
-            if q.count() > 0:
-                q.update(default=False)
-        return server

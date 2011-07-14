@@ -9,7 +9,6 @@ urlpatterns = patterns('',
     url(r'^$', views.home),
     url(r'^client/', include('b3portal.client.urls')),
     url(r'^banned/', include('b3portal.penalties.urls')),
-    url(r'^maps/$', views.maps, name='map_list'),
 )
 
 if settings.B3_INSTALLED:
@@ -19,7 +18,7 @@ if settings.B3_INSTALLED:
 
 for plugin in PLUGINS:
     if is_plugin_installed(plugin[0]):
-        s = "b3portal.plugins.%s.urls" % plugin[0]
+        app = plugin[0]
         urlpatterns += patterns('',
-            url(r'^%s/' % plugin[0], include(s, namespace="plugin"))
+            url(r'^%s/' % app, include("b3portal.plugins.%s.urls" % app, namespace=app))
         )

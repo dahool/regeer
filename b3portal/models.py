@@ -67,68 +67,8 @@ class Server(models.Model):
     class Meta:
         ordering  = ('name',)
         unique_together = ('database','user','hostname')
-
-class MapCycle(models.Model):
-    server = models.ForeignKey(Server, related_name="mapcycle", unique=True)
-    location = models.CharField(max_length=500)
-
-    def __repr__(self):
-        return str(self.server)
-    
-    def __unicode__(self):
-        return repr(self)
-    
-class Map(models.Model):
-    server = models.ForeignKey(Server, related_name="maps")
-    name = models.CharField(max_length=50)
-    
-    @property
-    def display_name(self):
-        return DISPLAY_SUB.sub('',self.name).strip().title() 
-    
-    @property
-    def map_image(self):
-        return settings.MAP_IMAGE_URL % self.name
-    
-    @property
-    def map_link(self):
-        if not self.name in settings.SKIP_MAPS:
-            if settings.MAP_LOCATION:
-                return settings.MAP_LOCATION % self.name
-        return None
-        
-    def __unicode__(self):
-        return self.name
-    
-    class Meta:
-        ordering  = ('server','name')
-                        
-class Plugins(models.Model):
-    server = models.ForeignKey(Server, related_name="plugins")
-    name = models.CharField(max_length=50)
-    
-    def __repr__(self):
-        return "%s [%s]" % (self.name,repr(self.server))
-
-    def __unicode__(self):
-        return repr(self)
-    
-    class Meta:
-        verbose_name_plural = "Plugins"
-        
-class PluginConf(models.Model):
-    plugin = models.ForeignKey(Plugins, related_name="config")
-    name = models.CharField(max_length=50)
-    value = models.CharField(max_length=500)
-    
-    def __repr__(self):
-        return "%s [%s: %s]" % (str(self.plugin), self.name, self.value)
-
-    def __unicode__(self):
-        return repr(self)
         
 from b3portal import init_database_config
-init_database_config()
 
 def update_db_callback(sender, **kwargs):
     init_database_config()

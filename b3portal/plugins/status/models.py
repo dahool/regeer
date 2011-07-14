@@ -1,10 +1,11 @@
 from django.db import models
 from b3connect.models import Client
 from b3portal.models import Server
+from django.utils.translation import gettext_lazy as _
 
 class StatusPlugin(models.Model):
-    server = models.ForeignKey(Server, related_name="status_plugin", unique=True)
-    location = models.CharField(max_length=500)
+    server = models.ForeignKey(Server, related_name="status_plugin", unique=True, verbose_name=_('Server'))
+    location = models.CharField(max_length=500, verbose_name=_('Status File Location'))
 
     def __unicode__(self):
         return repr(self)

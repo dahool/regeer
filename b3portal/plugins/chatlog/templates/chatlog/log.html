@@ -20,12 +20,11 @@ function set_field(field, value) {
 <h3>{% trans "Chat Logs" %}</h3>
 {% with chat_list.paginator.count as count %}
 <small>
-<form style="display:inline;" method="post" action="{% serverurl plugin:chat_list %}">
-{% csrf_token %}
+<form style="display:inline;" method="get">
 {% with request.server as current_server %}
 <select name="server" onchange="this.form.submit()">
 {% for server in request.server_list %}
-<option value="{{server.uuid}}" {% if current_server == server.DB %}selected="selected"{%endif%}>{{server.name}}</option>
+<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
 {% endfor %}
 </select>
 {% endwith %}
@@ -33,7 +32,7 @@ function set_field(field, value) {
 </small>
 </span>
 {% endwith %}
-<form method="get" action="{% serverurl plugin:chat_list %}">
+<form method="get">
 <small>
 <fieldset>
 <legend>{% trans "Search:" %}</legend>
@@ -41,13 +40,13 @@ function set_field(field, value) {
 {% as_tabform form %}
 </div>
 <input type="submit" name="search" value="{% trans "Search" %}">&nbsp;&nbsp;&nbsp;
-<a href="{% serverurl plugin:chat_list %}" style="display:inline;">{% trans "reset"%}</a>
+<a href="{% serverurl chatlog:chat_list %}" style="display:inline;">{% trans "reset"%}</a>
 </fieldset>
 </small>
 </form>
 <div id="client_list">
 {% if search %}
-<a href="{% serverurl plugin:chat_list %}&{{search}}">{% trans "Direct link to this search" %}</a>
+<a href="{% serverurl chatlog:chat_list %}&{{search}}">{% trans "Direct link to this search" %}</a>
 {% endif %}
 <div id="chat_logs">
 <table>

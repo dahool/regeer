@@ -3,3 +3,4 @@ b3
 local.conf
 settings/60-local.pyconf
 *.sqlite
+.settings

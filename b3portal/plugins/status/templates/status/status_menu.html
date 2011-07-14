@@ -1,3 +1,5 @@
 {% load i18n navigation %}
-{% url players_status_chart as url_nav_playerchart %}
+<ul class="subnav">
+{% url status:players_status_chart as url_nav_playerchart %}
 <li id="{% current_nav url_nav_playerchart current2 %}"><a href="{{url_nav_playerchart}}">{% trans "Players Chart" %}</a></li>
+</ul>

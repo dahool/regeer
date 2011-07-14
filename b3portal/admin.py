@@ -8,7 +8,7 @@ from django.conf import settings
 
 from b3portal.server.forms import ServerForm
 
-from models import Map, UserProfile, Server, Plugins, MapCycle
+from models import UserProfile, Server
 
 admin.site.unregister(Site)
 admin.site.unregister(User)
@@ -27,10 +27,19 @@ class ServerAdmin(admin.ModelAdmin):
         (_('Game Server'), {'fields': ['rcon_ip','rcon_port', 'rcon_password', 'parser']}),
     ]    
     
- 
-if (settings.DEBUG):   
-    admin.site.register(Map)
+    def save_model(self, request, obj, form, change):
+        super(ServerAdmin, self).save_model(request, obj, form, change)
+        obj.save()
+        if obj.default:
+            q = Server.objects.filter(default=True).exclude(pk=obj.pk)
+            if q.count() > 0:
+                q.update(default=False)
+                self.message_user(request, _("A new default server has been added."))
+            elif change:
+                self.message_user(request, _("A default server has been added."))
+
+        if hasattr(request, 'session'):
+            del request.session['server_list']
+
 admin.site.register(User, UserProfileAdmin)
 admin.site.register(Server, ServerAdmin)
-admin.site.register(MapCycle)
-admin.site.register(Plugins)

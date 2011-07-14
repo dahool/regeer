@@ -10,6 +10,7 @@ from common.utils.dateutil import datetimeIterator
 from common.shortcuts import get_object_or_404
 
 from b3connect.models import Client
+from b3portal.models import Server
 
 @permission_required_with_403('status.view_serverstatus')    
 @cache_page(15)
@@ -22,8 +23,9 @@ def game_status(request):
 @cache_page(60*60)
 @render('status/client_detail.html')
 def client_detail(request, id):
-    status = ServerStatus.objects.filter(server=request.server,
-                                       players__clientid=id)
+    server = Server.objects.get(uuid=request.server)
+    status = ServerStatus.objects.filter(server=server,
+                                       players__client_id=id)
     client = get_object_or_404(Client, id=id, using=request.server)
     return {"client": client,"status": status}
 
@@ -41,7 +43,8 @@ def player_chart(request):
     for n in datetimeIterator(from_date, to_date, datetime.timedelta(hours=1)):
         key = n.strftime(format).lower()
         data[key]=0
-    list = ServerStatus.objects.filter(server=request.server,
+    server = Server.objects.get(uuid=request.server)
+    list = ServerStatus.objects.filter(server=server,
                                        time_add__gte=from_date,
                                        time_add__lte=to_date) 
     for s in list:

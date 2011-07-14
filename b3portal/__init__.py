@@ -1,11 +1,16 @@
+import logging
 
-def init_database_config():
-    from models import Server
+def init_database_config(request=None):
+    from b3portal.models import Server
     from django.conf import settings
     
     try:
         from django.db import connections
-        for server in Server.objects.all():
+        if request and hasattr(request, 'session'):
+            servers = request.session.get('server_list', None)
+        if not servers:
+            servers = Server.objects.all()
+        for server in servers:
             # we want to ensure some of the database settings
             # were update to avoid recreating an existing connection
             if settings.DATABASES.has_key(server.uuid):
@@ -24,6 +29,10 @@ def init_database_config():
                 'HOST': server.hostname,
             }
             # force to recreate the connection
-            del connections._connections[server.uuid]
-    except Exception:
-        pass
+            try:
+                del connections._connections[server.uuid]
+            except:
+                pass
+        connections.databases = settings.DATABASES
+    except Exception, e:
+        logging.error(e)

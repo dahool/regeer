@@ -1,6 +1,6 @@
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.auth',
+    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
@@ -23,6 +23,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     #'phpbb_auth.middleware.bbRemoteUserMiddleware',
     'b3portal.middleware.ServerDetectMiddleware',
+    'b3portal.middleware.MultiDBMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'common.middleware.http.HttpErrorMiddleware',
@@ -41,15 +42,11 @@ INSTALLED_APPS = (
     'djangoapp',
     'djangogravatar',
     'b3portal',
-    #'b3portal',
-    #'common.floodprotection',
-    #'plugins.stats',
-    #'plugins.follow',
-    #'plugins.chatlog',
-    #'plugins.status',
-    #'plugins.autoslap',
 )
 
 ROOT_URLCONF = 'regeer.urls'
 
 AUTH_PROFILE_MODULE = "b3portal.models.UserProfile"
+
+AUTHENTICATION_BACKENDS = ('djangocommonutils.auth.backends.AnonymousSupportBackend',
+                           'django.contrib.auth.backends.ModelBackend',)

@@ -2,10 +2,20 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from b3connect.models import Client
 from b3connect.fields import EpochDateTimeField
+from b3portal.models import Server
 
 CHAT_TARGETS = {'ALL': _('Everyone'),
                 'TEAM: BLUE': _('Blue Team'),
                 'TEAM: RED': _('Red Team')}
+
+class ChatLogPlugin(models.Model):
+    server = models.ForeignKey(Server, related_name="chatlog_plugin", unique=True, verbose_name=_('Server'))
+
+    def __unicode__(self):
+        return repr(self)
+        
+    def __repr__(self):
+        return str(self.server)
 
 class ChatLog(models.Model):
     id = models.AutoField(primary_key=True)

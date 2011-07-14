@@ -6,8 +6,7 @@
 {% endblock %}
 {% block main_content %}
 <h3>{% trans "Inactive Admins" %}</h3>
-<form style="display:inline;" method="post">
-{% csrf_token %}
+<form style="display:inline;" method="get">
 {% with request.server as current_server %}
 <small>
 <select name="server" onchange="this.form.submit()">

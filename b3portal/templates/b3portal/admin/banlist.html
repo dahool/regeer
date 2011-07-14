@@ -8,8 +8,7 @@
 <h3>{% trans "Server Ban List" %}
 <small>
     &nbsp;|&nbsp;
-    <form style="display:inline;" method="post">
-    {% csrf_token %}
+    <form style="display:inline;" method="get">
     {% with request.server as current_server %}
     <select name="server" onchange="this.form.submit()">
     {% for server in request.server_list %}

@@ -34,17 +34,17 @@ $(document).ready(function() {
 {% geolocation client.ip %}
 </small>
 {% endif %}
-{% ifinstalled "plugins.follow" %}
+{% ifpluginenabled "follow" %}
 {% if client.followed.all %}
 <a href="{% serverurl follow_home %}#F{{client.id}}" class="nodecoration_icon icon_watch" title="{% trans "This user is under suspicion of cheating" %}"></span>
 {% endif %}
-{% endifinstalled %}
+{% endifpluginenabled %}
 </h3>
 </caption>
 <thead class="table_menu">
 <tr><td colspan="4">
 <ul>
-{% ifinstalled "plugins.follow" %}
+{% ifpluginenabled "follow" %}
 {% if client.followed.all %}
 {% if perms.delete_follow %}
 <li><a href="{% serverurl follow_remove client.id %}">{% trans "Remove from watch list" %}</a></li>
@@ -54,13 +54,13 @@ $(document).ready(function() {
 <li><a href="{% serverurl follow_add client.id %}">{% trans "Add to watch list" %}</a></li>
 {% endif %}
 {% endif %}
-{% endifinstalled %}
+{% endifpluginenabled %}
 </ul>
 </td></tr>
 </thead>
 <tbody>
 <tr>
-<th>{% trans "Name" %}</th><td>{{client.name}}{% ifplugininstalled "chatlog" %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% serverurl plugin:chat_list %}&name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endifplugininstalled %}</td>
+<th>{% trans "Name" %}</th><td>{{client.name}}{% ifpluginenabled "chatlog" %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% serverurl chatlog:chat_list %}&name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endifpluginenabled %}</td>
 <th>{% trans "@id" %}</th><td>{{client.id}}</td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 </tr>
 <tr>
 <th>{% trans "First Seen" %}</th><td>{{client.time_add|date:"DATETIME_FORMAT"}}</td>
-<th>{% trans "Last Seen" %}</th><td>{{client.time_edit|date:"DATETIME_FORMAT"}}{% ifinstalled "plugins.status" %}<a href="{% serverurl client_status_log client.id %}" title="{% trans "Expand" %}" class="nodecoration_icon icon_table"></a>{% endifinstalled %}</td>
+<th>{% trans "Last Seen" %}</th><td>{{client.time_edit|date:"DATETIME_FORMAT"}}{% ifpluginenabled "status" %}<a href="{% serverurl status:client_log client.id %}" title="{% trans "Expand" %}" class="nodecoration_icon icon_table"></a>{% endifpluginenabled %}</td>
 </tr>
 <tr>
 <th>{% trans "IP Address" %}</th>

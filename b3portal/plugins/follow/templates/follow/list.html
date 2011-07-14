@@ -6,8 +6,7 @@
 {% endblock %}
 {% block main_content %}
 <small>
-<form style="display:inline;" method="post">
-{% csrf_token %}
+<form style="display:inline;" method="get">
 {% with request.session.server as current_server %}
 <select name="server" onchange="this.form.submit()">
 {% for server in request.server_list %}
