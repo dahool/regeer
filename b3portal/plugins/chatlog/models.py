@@ -45,5 +45,5 @@ class ChatLog(models.Model):
         ordering = ('-time_add',)
         db_table = u"chatlog"
         permissions = (
-            ("view_chat", "Can view chat logs"),
+            ("view_chat", "View chat logs"),
         )

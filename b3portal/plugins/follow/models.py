@@ -40,5 +40,5 @@ class Follow(models.Model):
         verbose_name_plural = "Following"
         db_table = u'following'
         permissions = (
-            ("view_follow", "Can view follows"),
+            ("view_follow", "View follow info"),
         )

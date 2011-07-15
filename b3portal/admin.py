@@ -46,3 +46,7 @@ class ServerAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserProfileAdmin)
 admin.site.register(Server, ServerAdmin)
+
+if settings.DEBUG:
+    from django.contrib.auth.models import Permission
+    admin.site.register(Permission)

@@ -28,3 +28,8 @@ plugins
 status.view_serverstatus
 * ver status
 
+b3connect.view_aliases
+
+chatlog.view_chat
+b3connect.add_notice
+follow.view_follow

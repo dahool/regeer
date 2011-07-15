@@ -234,9 +234,17 @@ def regularclients(request):
         
     return {'client_list': list}
 
-@permission_required_with_403('b3connect.add_penalty')
+@login_required
 @render('b3portal/client/add_penalty.html')
 def addpenalty(request, id, notice=False):
+    
+    if notice:
+        if not request.user.has_perm('b3connect.add_notice') or not request.user.has_perm('b3connect.add_penalty'):
+            raise Http403
+    else:
+        if not request.user.has_perm('b3connect.add_penalty'):
+            raise Http403
+            
     client = get_object_or_404(Client, id=id, using=request.server)
     if notice:
         frmObj = NoticeForm

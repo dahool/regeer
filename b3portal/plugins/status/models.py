@@ -43,7 +43,7 @@ class ServerStatus(models.Model):
         ordering = ('-time_add',)
         get_latest_by = ('time_add',)
         permissions = (
-            ("view_serverstatus", "Can view Server Status"),
+            ("view_serverstatus", "View Server Status"),
         )
         
 class StatusClient(models.Model):
