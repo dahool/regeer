@@ -1,7 +1,18 @@
 from django.db import models
 from b3connect.models import Client
 from b3connect.fields import EpochDateTimeField
+from b3portal.models import Server
+from django.utils.translation import gettext_lazy as _
 
+class FollowPlugin(models.Model):
+    server = models.ForeignKey(Server, related_name="follow_plugin", unique=True, verbose_name=_('Server'))
+
+    def __unicode__(self):
+        return repr(self)
+        
+    def __repr__(self):
+        return str(self.server)
+    
 class Follow(models.Model):
     id = models.AutoField(primary_key=True)
     client = models.ForeignKey(Client,
@@ -25,4 +36,4 @@ class Follow(models.Model):
         db_table = u'following'
         permissions = (
             ("view_follow", "Can view follows"),
-        )        
+        )

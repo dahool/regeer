@@ -1,8 +1,8 @@
 from django.conf.urls.defaults import *
-import views
+from b3portal.plugins.follow import views
 
 urlpatterns = patterns('',
-    url(r'^$', views.home, name='follow_home'),
-    url(r'^add/(?P<id>[0-9]+)/$', views.add, name='follow_add'),
-    url(r'^del/(?P<id>[0-9]+)/$', views.remove, name='follow_remove'),
+    url(r'^$', views.home, name='home'),
+    url(r'^add/(?P<id>[0-9]+)/$', views.add, name='add'),
+    url(r'^del/(?P<id>[0-9]+)/$', views.remove, name='remove'),
 )

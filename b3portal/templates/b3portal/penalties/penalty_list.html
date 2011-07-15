@@ -35,7 +35,7 @@
 <td>{{ban.get_type_display}}</td>
 <td>{{ban.time_add|date:"D, d M Y (H:i)"}}</td>
 <td>{{ban.reason|clean_colors}}</td>
-<td>{% if ban.admin %}<a href="{% serverurl client_detail ban.admin.id %}">{{ban.admin.name}}</a>{% else %}B3{% endif %}</td>
+<td>{% if ban.admin %}<a href="{% serverurl client_detail ban.admin.id %}">{{ban.admin.name}}</a>{% else %}-B3{% endif %}</td>
 </tr>
 {% endfor %}
 </tbody>

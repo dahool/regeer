@@ -248,7 +248,8 @@ def addpenalty(request, id, notice=False):
             p = Penalty(client=client,
                                        reason=_("%(reason)s (by %(user)s)") % {'reason': form.cleaned_data['reason'], 'user': request.user.username},
                                        time_edit=datetime.datetime.now(),
-                                       time_add=datetime.datetime.now())
+                                       time_add=datetime.datetime.now(),
+                                       admin_id=0)
             if form.Meta.type == 1:
                 p.duration=0
                 p.type='Notice'

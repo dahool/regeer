@@ -1,4 +1,5 @@
 INSTALLED_APPS += ('b3portal.plugins.status',
                    'b3portal.plugins.chatlog',
-                   'b3portal.plugins.map',)
+                   'b3portal.plugins.map',
+                   'b3portal.plugins.follow',)
                    

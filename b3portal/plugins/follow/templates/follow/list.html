@@ -1,16 +1,13 @@
 {% extends "base_layout.html" %}
 {% load listtocolumns i18n tagutils urltag %}
 {% block title %}{{ block.super }} | {% trans "Watched Players" %}{% endblock %}
-{% block navigation2 %}
-{% include "b3portal/client/client_menu.html" %}
-{% endblock %}
 {% block main_content %}
 <small>
 <form style="display:inline;" method="get">
-{% with request.session.server as current_server %}
-<select name="server" onchange="this.form.submit()">
+{% with request.server as current_server %}
+<select name="server" onchange="this.form.submit()" method="get">
 {% for server in request.server_list %}
-<option value="{{server.DB}}" {% if current_server == server.DB %}selected="selected"{%endif%}>{{server.NAME}}</option>
+<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
 {% endfor %}
 </select>
 {% endwith %}
@@ -30,11 +27,11 @@
 <tbody>
 {% for info in list %}
     <tr>
-        <td>{% if perms.follow.delete_follow %}<a href="{% url follow_remove info.client.id %}?ls=" class="nodecoration_icon icon_delete" title="{% trans "Remove" %}"></a>{% endif %}</td>
+        <td>{% if perms.follow.delete_follow %}<a href="{% serverurl follow:remove info.client.id %}&ls=" class="nodecoration_icon icon_delete" title="{% trans "Remove" %}"></a>{% endif %}</td>
         <td><a name="F{{info.client.id}}" href="{% serverurl client_detail info.client.id %}">{{info.client.name}}</a></td>
         <td>{{info.reason}}</td>
         <td>{{info.time_add|date:"DATETIME_FORMAT"}}</td>
-        <td><a href="{% serverurl client_detail info.admin.id %}">{{info.admin.name}}</a></td>
+        <td>{% if info.admin %}-B3{% else %}<a href="{% serverurl client_detail info.admin.id %}">{{info.admin.name}}</a>{%endif%}</td>
     </tr>
 {% endfor %}
 </tbody>

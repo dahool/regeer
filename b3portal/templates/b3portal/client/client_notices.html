@@ -3,7 +3,7 @@
 <tr class="{% cycle "odd" "even" %}">
 <td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
 <td>{{penalty.reason|clean_colors}}</td>
-<td>{% if perms.b3connect.view_high_level_client %}{% if penalty.admin %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}B3{%endif%}{% else %}-{%endif%}</td>
+<td>{% if perms.b3connect.view_high_level_client %}{% if penalty.admin %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}-B3{%endif%}{% else %}-{%endif%}</td>
 </tr>
 {% empty %}
 <tr class="odd">

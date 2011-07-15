@@ -14,19 +14,19 @@ from django.core.urlresolvers import reverse
 @permission_required_with_403('follow.view_follow')
 @render('follow/list.html')
 def home(request):
-    return {'list': Follow.objects.using(request.session.get('server')).all().order_by('-time_add')}
+    return {'list': Follow.objects.using(request.server).all().order_by('-time_add')}
 
 @permission_required_with_403('follow.add_follow')
 @render('follow/add.html')
 def add(request, id):
-    client = get_object_or_404(Client, id=id, using=request.session.get('server'))
+    client = get_object_or_404(Client, id=id, using=request.server)
     if request.method == 'POST':
         form = FollowForm(request.POST)
         if form.is_valid():
-            p = Follow.objects.create(client=client,
-                       reason=form.cleaned_data['reason'],
+            p = Follow.objects.using(request.server).create(client=client,
+                       reason=_("%(reason)s (by %(user)s)") % {'reason': form.cleaned_data['reason'], 'user': request.user},
                        time_add=datetime.datetime.now(),
-                       admin_id=1)
+                       admin_id=0)
             messages.success(request, _('Follow added successfully.'))
             return HttpResponseRedirect(reverse("client_detail",kwargs={'id':id}))
     else:
@@ -39,7 +39,7 @@ def add(request, id):
 
 @permission_required_with_403('follow.delete_follow')
 def remove(request, id):
-    client = get_object_or_404(Client, id=id, using=request.session.get('server'))
+    client = get_object_or_404(Client, id=id, using=request.server)
     if client.followed.all():
         for r in client.followed.all():
             r.delete()
@@ -48,6 +48,6 @@ def remove(request, id):
         messages.error(request, _('User is not in the watch list'))
 
     if request.GET.has_key('ls'):
-        return HttpResponseRedirect(reverse("follow_home"))
+        return HttpResponseRedirect(reverse("follow:home"))
     else:
         return HttpResponseRedirect(reverse("client_detail",kwargs={'id': id}))    

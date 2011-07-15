@@ -215,9 +215,6 @@ td a {
     width: 500px;
     margin: auto;
 }
-#teaser {
-    margin-top:60px;
-}
 ul.messages {
     list-style-type: none;
     padding: 5px;
@@ -461,4 +458,15 @@ h3 {
 #page_margins {
 	background: transparent url('../../images/logo.png') no-repeat 50% 50%;
 	min-height: 600px;
+}
+.follow-message {
+	background-color:#FFFFA8;
+    padding: 2px;
+    font-size: 11px;
+    -moz-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;    
 }
