@@ -13,6 +13,11 @@ class StatusPlugin(models.Model):
     def __repr__(self):
         return str(self.server)
     
+    class Meta:
+        verbose_name = _('Status')
+        verbose_name_plural = _('Status')
+        db_table = 'plugin_status'
+        
 class ServerStatus(models.Model):
     server = models.ForeignKey(Server)
     map = models.CharField(max_length=100, db_index=True)

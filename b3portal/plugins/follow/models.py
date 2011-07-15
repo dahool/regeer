@@ -13,6 +13,11 @@ class FollowPlugin(models.Model):
     def __repr__(self):
         return str(self.server)
     
+    class Meta:
+        verbose_name = _('Follow')
+        verbose_name_plural = _('Follow')
+        db_table = 'plugin_follow'   
+            
 class Follow(models.Model):
     id = models.AutoField(primary_key=True)
     client = models.ForeignKey(Client,

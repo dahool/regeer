@@ -17,6 +17,11 @@ class MapPlugin(models.Model):
     def __repr__(self):
         return str(self.server)
     
+    class Meta:
+        verbose_name = _('Map')
+        verbose_name_plural = _('Map')
+        db_table = 'plugin_map'            
+            
 class Map(models.Model):
     server = models.ForeignKey(Server, related_name="maps")
     name = models.CharField(max_length=50)
