@@ -39,7 +39,10 @@ class ServerAdmin(admin.ModelAdmin):
                 self.message_user(request, _("A default server has been added."))
 
         if hasattr(request, 'session'):
-            del request.session['server_list']
+            try:
+                del request.session['server_list']
+            except:
+                pass
 
 admin.site.register(User, UserProfileAdmin)
 admin.site.register(Server, ServerAdmin)

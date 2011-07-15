@@ -11,7 +11,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'b3portal.views.home', name='home'),
-    url('^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^login/$', auth_views.login, kwargs={'template_name':'auth/login.html'}, name='user_signin'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/' }, name='auth_logout'),
     url('^', include('b3portal.urls')),
