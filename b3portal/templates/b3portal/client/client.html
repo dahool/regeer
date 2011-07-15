@@ -134,6 +134,35 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 {% endif %}
 </table>
 <br/>
+{% ifsetting SUPPORT_IP_ALIASES %}
+<table id="client_aliases" class="cd-table client_lists">
+<caption>{% trans "IP Addresses" %}</caption>
+<thead>
+<tr>
+<th>{% trans "IP" %}</th>
+<th>{% trans "Times Used" %}</th>
+<th>{% trans "First Used" %}</th>
+<th>{% trans "Last Used" %}</th>
+</tr>
+</thead>
+<tbody id="aliases">
+{% with client.ip_aliases.all|slice:":5" as aliases %} 
+{% include "b3portal/client/client_ipaliases.html" %}
+{% endwith %}
+</tbody>
+{% if client.ip_aliases.all|length > 5 %}
+<tfoot>
+<tr>
+<td colspan="5">
+<span class="link right" onclick="do_call_get('{% serverurl client_more_ipalias client.id %}','aliases', '#client_aliases tfoot')">{% trans "more ..." %}</span>
+</td>
+</tr>
+</tfoot>
+{% endif %}
+</table>
+<br/>
+{% endifsetting %}
+
 {% endif %}
 <!-- ************************ PENALTIES ************************ -->
 {% if perms.b3connect.view_penalty %}

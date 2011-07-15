@@ -108,6 +108,26 @@ class Alias(models.Model):
         permissions = (
             ("view_aliases", "View Player Aliases"),
         )
+
+class AliasIP(models.Model):
+    id = models.AutoField(primary_key=True)
+    num_used = models.IntegerField()
+    ip = models.CharField(max_length=16, blank=True, null=True)
+    client = models.ForeignKey(Client, db_column="client_id", related_name="ip_aliases", to_field="id")
+    time_edit = EpochDateTimeField()
+    time_add = EpochDateTimeField()
+    
+    def __unicode__(self):
+        return repr(self)
+        
+    def __repr__(self):
+        return "%s [%s] - [%s]" % (self.client.name,self.alias, self.ip)
+        
+    class Meta:
+        managed = False
+        ordering = ('-time_edit',)
+        verbose_name_plural = "IP Aliases"
+        db_table = u'ipaliases'
         
 PENALTY_CHOICES = (
     ('Warning', _('Warning')),
