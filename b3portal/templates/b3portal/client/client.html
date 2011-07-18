@@ -1,5 +1,5 @@
 {% extends "base_layout.html" %}
-{% load listtocolumns i18n tagutils settingstag extendedtags geoip urltag plugintag %}
+{% load i18n tagutils settingstag extendedtags geoip urltag plugintag gametag %}
 {% block title %}{{ block.super }} | {{client.name}}{% endblock %}
 {% block extra_header %}
 {{ block.super }}
@@ -34,6 +34,7 @@ $(document).ready(function() {
 {% geolocation client.ip %}
 </small>
 {% endif %}
+<small>{% ifvalidguid client.guid %}<span class="nodecoration_icon icon_valid" title="{% trans "Guid is valid" %}">{% trans "Guid is valid" %}</span>{% else %}<span class="nodecoration_icon icon_invalid" style="color: red;" title="{% trans "Invalid guid" %}">{% trans "Invalid guid" %}</span>{% endifvalidguid %}</small>
 </h3>
 {% ifpluginenabled "follow" %}
 {% if perms.follow.view_follow %}
@@ -135,7 +136,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 </table>
 <br/>
 {% ifsetting SUPPORT_IP_ALIASES %}
-<table id="client_aliases" class="cd-table client_lists">
+<table id="client_ipaliases" class="cd-table client_lists">
 <caption>{% trans "IP Addresses" %}</caption>
 <thead>
 <tr>
@@ -145,7 +146,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <th>{% trans "Last Used" %}</th>
 </tr>
 </thead>
-<tbody id="aliases">
+<tbody id="ipaliases">
 {% with client.ip_aliases.all|slice:":5" as aliases %} 
 {% include "b3portal/client/client_ipaliases.html" %}
 {% endwith %}
@@ -154,7 +155,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <tfoot>
 <tr>
 <td colspan="5">
-<span class="link right" onclick="do_call_get('{% serverurl client_more_ipalias client.id %}','aliases', '#client_aliases tfoot')">{% trans "more ..." %}</span>
+<span class="link right" onclick="do_call_get('{% serverurl client_more_ipalias client.id %}','ipaliases', '#client_ipaliases tfoot')">{% trans "more ..." %}</span>
 </td>
 </tr>
 </tfoot>
@@ -162,7 +163,6 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 </table>
 <br/>
 {% endifsetting %}
-
 {% endif %}
 <!-- ************************ PENALTIES ************************ -->
 {% if perms.b3connect.view_penalty %}

@@ -343,6 +343,13 @@ def more_alias(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
     return {'aliases': client.aliases.all(), 'banlist': _get_banlist(request)}
 
+@permission_required_with_403('b3connect.view_client')
+@cache_page(15*60)
+@render('b3portal/client/client_ipaliases.html')
+def more_ipalias(request, id):
+    client = get_object_or_404(Client, id=id, using=request.server)
+    return {'aliases': client.ip_aliases.all(), 'banlist': _get_banlist(request)}
+
 @permission_required_with_403('b3connect.view_high_level_client')
 @cache_page(15*60)
 @render('b3portal/client/client_adminactions.html')

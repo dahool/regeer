@@ -22,9 +22,9 @@ class UserProfileAdmin(UserAdmin):
 class ServerAdmin(admin.ModelAdmin):
     form = ServerForm
     fieldsets = [
-        (None,               {'fields': ['name','default']}),
+        (None,               {'fields': ['name','default','game']}),
         (_('Database settings'), {'fields': ['engine','hostname','database','user','password']}),
-        (_('Game Server'), {'fields': ['rcon_ip','rcon_port', 'rcon_password', 'parser']}),
+        (_('Game Server'), {'fields': ['rcon_ip','rcon_port', 'rcon_password']}),
     ]    
     
     def save_model(self, request, obj, form, change):

@@ -150,6 +150,12 @@ label {
 .icon_useradd {
     background-image: url('../../images/icons/user_add.png');
 }
+.icon_valid {
+    background-image: url('../../images/icons/accept.png');
+}
+.icon_invalid {
+    background-image: url('../../images/icons/error.png');
+}
 .icon_userdelete {
     background-image: url('../../images/icons/user_delete.png');
 }
