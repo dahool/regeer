@@ -5,7 +5,6 @@ from django.views.decorators.cache import cache_page
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-@cache_page(5*60)
 @render('b3portal/index.html')
 def home(request):
     if len(request.server_list) == 0:

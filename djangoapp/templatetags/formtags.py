@@ -1,12 +1,23 @@
 from django import template
 from django.utils.encoding import force_unicode
+from django.utils.safestring import mark_for_escaping
 
 register = template.Library()
 
+@register.simple_tag
+def simpleerror(field):
+    if hasattr(field,'errors') and field.errors:
+        message = u','.join([u'%s' % force_unicode(e) for e in field.errors])
+        message = mark_for_escaping(message) 
+    else:
+        return False
+    return message
+    
 @register.inclusion_tag('tags/error.html')
 def error(field):
     if hasattr(field,'errors') and field.errors:
         message = u','.join([u'%s' % force_unicode(e) for e in field.errors])
+        message = mark_for_escaping(message) 
     else:
         return {'message': None}
     return {'message': message}

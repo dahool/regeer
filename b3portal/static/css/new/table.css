@@ -1,19 +1,19 @@
 /* Table Styling */
-table,td {
+table.table-style,table.table-style td {
 	border: 1px solid #CCC;
 	border-collapse: collapse;
 	font: small/ 1.5 "Tahoma", "Bitstream Vera Sans", Verdana, Helvetica,
 		sans-serif;
 }
 
-table {
+table.table-style {
 	width: 100%;
 	border: none;
 	border: 1px solid #CCC;
 	display: table;
 }
 
-thead th,tbody th {
+table.table-style thead th,table.table-style tbody th {
 	/*background: #FFF url(../../images/new/table-header.png) repeat-x;*/
 	background:url("../../images/sprites.gif") repeat-x scroll 0 -1500px #EFEFEF;
 	color: #555;
@@ -31,20 +31,20 @@ thead th,tbody th {
 	opacity: 0.8;
 }
 
-tbody tr td {
+table.table-style tbody tr td {
 	padding: 5px 10px;
 	color: #666;
 }
 
-tbody tr:hover {
+table.table-style tbody tr:hover {
 	background: #FFF url(../../images/new/table-hover.png) repeat;
 }
 
-tbody tr:hover td {
+table.table-style tbody tr:hover td {
 	color: #454545;
 }
 
-tfoot td,tfoot th {
+table.table-style tfoot td,table.table-style tfoot th {
 	border-left: none;
 	border-top: 1px solid #CCC;
 	padding: 6px;
@@ -52,7 +52,7 @@ tfoot td,tfoot th {
 	color: #666;
 }
 
-caption {
+table.table-style caption {
 	text-align: left;
 	font-size: 20px;
 	padding: 0 10px;
@@ -60,7 +60,7 @@ caption {
 	font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-caption small {
+table.table-style caption small {
 	font-size: 11px;
 	color: #666;
 	margin-left: 5px;
@@ -69,7 +69,7 @@ caption small {
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 }
 
-caption .cap-link {
+table.table-style caption .cap-link {
 	float: right;
 	padding: 1px 3px;
 	border: 1px solid #bbb;
@@ -77,21 +77,21 @@ caption .cap-link {
 	font-size: 15px;
 }
 
-table a:link {
+table.table-style a:link {
 	color: #666;
 	border-bottom: 1px dotted #dedede;
 }
 
-table a:visited {
+table.table-style a:visited {
 	color: #777;
 }
 
-table a:hover {
+table.table-style a:hover {
 	color: #036;
 	text-decoration: none;
 }
 
-table a:active {
+table.table-style a:active {
 	color: #036;
 }
 

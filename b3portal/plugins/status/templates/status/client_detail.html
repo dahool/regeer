@@ -5,7 +5,7 @@
 {{ block.super }}
 {% endblock %}
 {% block main_content %}
-<table class="cd-table client_lists">
+<table class="table-style cd-table client_lists">
 <caption><h3>{{client.name}}<small>  
 {% with request.server as current_server %}
 {% for server in request.server_list %}

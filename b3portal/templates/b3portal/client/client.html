@@ -21,7 +21,7 @@ $(document).ready(function() {
 {% include "b3portal/client/client_menu.html" %}
 {% endblock %}
 {% block main_content %}
-<table class="cd-table client_detail">
+<table class="table-style cd-table client_detail">
 <caption><h3>{{client.name}}<small>  
 {% with request.server as current_server %}
 {% for server in request.server_list %}
@@ -108,7 +108,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <br/>
 <!-- ************************ ALIASES ************************ -->
 {% if perms.b3connect.view_aliases %}
-<table id="client_aliases" class="cd-table client_lists">
+<table id="client_aliases" class="table-style cd-table client_lists">
 <caption>{% trans "Aliases" %}</caption>
 <thead>
 <tr>
@@ -136,7 +136,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 </table>
 <br/>
 {% ifsetting SUPPORT_IP_ALIASES %}
-<table id="client_ipaliases" class="cd-table client_lists">
+<table id="client_ipaliases" class="table-style cd-table client_lists">
 <caption>{% trans "IP Addresses" %}</caption>
 <thead>
 <tr>
@@ -166,7 +166,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 {% endif %}
 <!-- ************************ PENALTIES ************************ -->
 {% if perms.b3connect.view_penalty %}
-<table class="cd-table client_lists">
+<table class="table-style cd-table client_lists">
 <caption>{% trans "Active Penalties" %}{% if perms.b3connect.add_penalty %}<a title="{% trans "Add" %}" href="{% serverurl add_penalty client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
 <thead>
 <tr>
@@ -207,7 +207,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 {% endif %}
 <!-- ************************ NOTICES ************************ -->
 {% if perms.b3connect.view_notices %}
-<table id="client_notice" class="cd-table client_lists">
+<table id="client_notice" class="table-style cd-table client_lists">
 <caption>{% trans "Notices" %}{% if perms.b3connect.add_notice %}<a title="{% trans "Add" %}" href="{% serverurl add_notice client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
 <thead>
 <tr>
@@ -234,7 +234,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 {% endif %}
 <br/>
 <!-- ************************ PAST PENALTIES ************************ -->
-<table id="past_penalties" class="cd-table client_lists">
+<table id="past_penalties" class="table-style cd-table client_lists">
 <caption>{% trans "Past Penalties" %}</caption>
 <thead>
 <tr>
@@ -263,7 +263,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 </table>
 <br/>
 {% if perms.b3connect.view_high_level_client %}    
-<table id="admin_actions" class="cd-table client_lists">
+<table id="admin_actions" class="table-style cd-table client_lists">
 <caption>{% trans "Admin Actions" %}</caption>
 <thead>
 <tr>

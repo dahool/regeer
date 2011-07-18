@@ -19,7 +19,7 @@
 </h3>
 {% if status %}
 <div id="game_status">
-<table class="game_status">
+<table class="table-style game_status">
     <thead>
         <tr class="odd">
         <th>{% trans "Map" %}</th>
@@ -54,7 +54,7 @@
         <td colspan="4">
             <div id="playerlist">
                 {% if status.typeCode != "ffa" %} 
-                <table class="inner_table">
+                <table class="table-style inner_table">
                         <tr>
                         <th>{{ status.redTeamName }}</th>
                         <th class="total">{{ status.redScore }}</th>
@@ -68,7 +68,7 @@
                         {% endifequal %}
                         {% endfor %}
                 </table>
-                <table class="inner_table">
+                <table class="table-style inner_table">
                         <tr>
                         <th>{{ status.blueTeamName }}</th>
                         <th class="total">{{ status.blueScore }}</th>
@@ -82,7 +82,7 @@
                         {% endifequal %}
                         {% endfor %}
                 </table>
-                <table class="inner_table">
+                <table class="table-style inner_table">
                         <tr>
                         <th colspan="2">{% trans "Specs" %}</th>
                         </tr>
@@ -95,7 +95,7 @@
                         {% endfor %}
                 </table>
                 {% else %}
-                <table class="inner_table">
+                <table class="table-style inner_table">
                         <tr>
                         <th colspan="2">{% trans "Playing" %}</th>
                         </tr>                

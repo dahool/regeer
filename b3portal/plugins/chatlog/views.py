@@ -13,7 +13,7 @@ from django.db.models import Q
 
 @permission_required_with_403('chatlog.view_chat')
 @render('chatlog/log.html')
-@flood
+#@flood
 def chatlist(request):
     chats = ChatLog.objects.using(request.server).all()
 
