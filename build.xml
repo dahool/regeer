@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="urtwebadmin" default="build" basedir=".">
+<project name="regeer" default="build" basedir=".">
 
 	<target name="hudson">
 		<antcall target="build">
@@ -15,7 +15,6 @@
     </target>
         	
 	<target name="build">
-		<antcall target="compile_locale"></antcall>
 		<echo message="Deploying to ${dest}..."/>
 		<sync todir="${dest}" includeemptydirs="false" verbose="true" overwrite="true">
 			<fileset dir=".">
@@ -30,8 +29,15 @@
 				<include name="settings_local.py"/>
 				<include name="**/media/**"/>
 				<include name="**/settings/*-local.pyconf"/>
+                <include name="apache.wsgi"/>
 			</preserveintarget>
 		</sync>
+        <antcall target="compile_locale"></antcall>
+        <copy todir="${dest}">
+            <fileset dir=".">
+                <include name="**/*.mo"/>
+            </fileset>
+        </copy>        
 		<echo message="Setting up environment..."/>
 		<exec executable="/usr/bin/python">
 			<arg value="-mcompileall"/>
@@ -45,13 +51,11 @@
 		<exec executable="/usr/bin/python">
 			<arg value="${dest}/manage.py"/>
 			<arg value="updategeoip"/>
-			<arg value="http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz"/>
-			<arg value="false"/>
 		</exec>
 		<echo message="Reload"/>
         <exec executable="/usr/bin/python">
             <arg value="${dest}/reload.py"/>
-            <arg value="${dest}/../apache/django.wsgi"/>
+            <arg value="${dest}/apache.wsgi"/>
         </exec>         
 		<!-- touch file="${dest}/../apache/django.wsgi"/-->
 		<echo message="Finished."/>
