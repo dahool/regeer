@@ -24,7 +24,7 @@ else:
     B3_INSTALLED = True
 B3_INSTALLED = False    
 
-if os.path.exists('build.ver'):
+if os.path.exists(os.path.join(PROJECT_PATH,'build.ver')):
     import time
-    st = os.stat('build.ver')
+    st = os.stat(os.path.join(PROJECT_PATH,'build.ver'))
     VERSION += " build %s" % time.strftime("%Y%m%dT%H%M",time.localtime(st.st_mtime))
