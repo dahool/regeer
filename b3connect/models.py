@@ -88,7 +88,6 @@ class Client(models.Model):
 class Alias(models.Model):
     id = models.AutoField(primary_key=True)
     num_used = models.IntegerField()
-    ip = models.CharField(max_length=16, blank=True, null=True)
     alias = models.CharField(unique=True, max_length=96)
     client = models.ForeignKey(Client, db_column="client_id", related_name="aliases", to_field="id")
     time_edit = EpochDateTimeField()

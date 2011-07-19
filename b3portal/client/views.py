@@ -128,18 +128,23 @@ def adminlist(request, filter=False):
 #@flood
 def clientlist(request):
     data = ''
-    search = None
+    search = {}
     filter = 'name'
     
+    if request.GET.has_key('sort'):
+        sort = request.GET.get('sort')
+        order = request.GET.get('order') or 'asc'
+        search['sort'] = sort
+        search['order'] = order
+            
     if request.GET.has_key('searchall') and request.user.has_perm('b3connect.client_advanced_search'):
         field = request.GET['type']
         data = request.GET['data']
         list = {}
         for server in request.server_list:
             list[server.uuid] = _getclientlist(request, server.uuid)
-        return {'list': list, 'field': field, 'data': data}
+        return {'list': list, 'field': field, 'data': data, 'search': urllib.urlencode(search)}
     elif request.GET.has_key('search') or request.GET.has_key('searchall'):
-        search = {}
         for k,v in request.GET.items():
             # there is an odd bug I can't identify
             # sometimes type is passed as ?type
@@ -149,7 +154,6 @@ def clientlist(request):
         search['server']=request.server
         data = search['data']
         filter = search['type']
-        search = urllib.urlencode(search)
         clients = _getclientlist(request, request.server)
     else:
         clients = _getclientlist(request, request.server, False)
@@ -167,7 +171,7 @@ def clientlist(request):
     except (EmptyPage, InvalidPage):
         list = paginator.page(paginator.num_pages)
     
-    return {'client_list': list, 'filter': filter, 'data': data, 'search': search, 'order_by': get_query_order(clients)}
+    return {'client_list': list, 'filter': filter, 'data': data, 'search': urllib.urlencode(search), 'order_by': get_query_order(clients)}
 
 def _getclientlist(request, server, search = True):
 
@@ -191,7 +195,10 @@ def _getclientlist(request, server, search = True):
             except:
                 clients =[]
         elif field == 'ip':
-            clients = clients.filter(Q(ip__startswith=data) | Q(aliases__ip__startswith=data)).distinct()
+            if settings.SUPPORT_IP_ALIASES:
+                clients = clients.filter(Q(ip__startswith=data) | Q(ip_aliases__ip__startswith=data)).distinct()
+            else:
+                clients = clients.filter(ip__startswith=data).distinct()
     
     if request.GET.has_key('sort'):
         sort = request.GET.get('sort')
