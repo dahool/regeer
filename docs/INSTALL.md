@@ -21,5 +21,3 @@ To test your application in a local environment, run python manage.py runserver 
 The first time you run the application, you'll be redirected to the administrative dashboard, here you can setup the game servers.
 
 Just go to the _Server_ tab and click in *Add* 
-
-

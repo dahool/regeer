@@ -2,17 +2,43 @@ from django.db import models
 from b3connect.models import Client
 from b3portal.models import Server
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
+
+from django.core.files.base import ContentFile
+
+from b3portal.plugins.status.element import Status
+
+import datetime
 
 class StatusPlugin(models.Model):
     server = models.ForeignKey(Server, related_name="status_plugin", unique=True, verbose_name=_('Server'))
     location = models.CharField(max_length=500, verbose_name=_('Status File Location'))
-
+    cache = models.FileField(upload_to='status', max_length=500, editable=False, null=True)
+    updated = models.DateTimeField(editable=False, null=True)
+    
     def __unicode__(self):
         return repr(self)
         
     def __repr__(self):
         return str(self.server)
     
+    def get_status(self):
+        d = datetime.timedelta(minutes=getattr(settings, 'PLUGIN_STATUS_EXPIRE', 1))
+        if not self.cache or not self.updated or self.updated + d < datetime.datetime.now():
+            from common.utils.file import getfile
+            f = getfile(self.location)
+            if not f: raise Exception(_('Unable to read status file'))
+            if self.location.startswith("ftp://"):
+                file_content = ContentFile(f.read())
+                f.seek(0)
+                self.updated = datetime.datetime.now()
+                if self.cache: self.cache.delete()
+                self.cache.save(self.server.uuid + ".xml", file_content)
+                self.save()
+            else:
+                return Status(f)
+        return Status(self.cache)
+        
     class Meta:
         verbose_name = _('Status')
         verbose_name_plural = _('Status')

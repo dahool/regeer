@@ -34,7 +34,7 @@
 <option value="ip" {% if filter == 'ip' %}selected="selected"{%endif%}>{% trans "IP" %}</option>
 </select>
 <input type="text" id="data" name="data" value="{{data}}" class="search submit">
-<input type="submit" name="search" value="{% trans "Search" %}">
+<input type="submit" name="search" id="search" value="{% trans "Search" %}">
 <!-- 
 {% if perms.b3connect.client_advanced_search and request.server_list|length > 1 %}
 <input type="submit" name="searchall" value="{% trans "Search across servers" %}">
@@ -64,9 +64,9 @@
 {% for client in client_list.object_list %}
 <tr class="{% cycle "odd" "even" %}">
 <td><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
-<td name="autofill" alt="name" title="{% trans "Search for other users with this nickname" %}">{{client.name}}</td>
+<td name="autofill" alt="name" submit="#search" title="{% trans "Search for other users with this nickname" %}">{{client.name}}</td>
 <td>{% if perms.b3connect.view_group %}<a style="font-weight: normal" href="?level={{client.group.level}}&server={{request.server}}" title="{% trans "Filter users sharing the same group" %}">{{client.displayGroup}}</a>{%else%}-{%endif%}</td>
-<td name="autofill" alt="ip" title="{% trans "Search for other users with this IP address" %}">{{client.ip}}</td>
+<td name="autofill" alt="ip" submit="#search" title="{% trans "Search for other users with this IP address" %}">{{client.ip}}</td>
 <td>{{client.time_add|date:"DATETIME_FORMAT"}}</td>
 <td>{{client.time_edit|date:"DATETIME_FORMAT"}}</td>
 <td>

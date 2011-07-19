@@ -67,7 +67,7 @@ def ifenabled(parser, token):
         
     object = bits[1]
                                 
-    return IfInstalledNode(object, nodelist_true, nodelist_false)
+    return IfEnabledNode(object, nodelist_true, nodelist_false)
 
 class IfEnabledNode(Node):
     def __init__(self, object, nodelist_true, nodelist_false):

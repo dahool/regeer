@@ -1,8 +1,9 @@
 from common.view.decorators import render
 from common.decorators import permission_required_with_403
 from django.views.decorators.cache import cache_page
-from b3portal.plugins.status import get_server_status
-from b3portal.plugins.status.models import ServerStatus
+from b3portal.plugins.status.models import ServerStatus, StatusPlugin
+from django.contrib import messages
+from django.utils.translation import gettext as _
 
 import datetime
 from common.collections import OrderedDict
@@ -13,10 +14,18 @@ from b3connect.models import Client
 from b3portal.models import Server
 
 @permission_required_with_403('status.view_serverstatus')    
-@cache_page(15)
+@cache_page(60)
 @render('status/game_status.html')
 def game_status(request):
-    status = get_server_status(request.server)
+    try:
+        plugin = StatusPlugin.objects.get(server=get_object_or_404(Server,uuid=request.server))
+    except StatusPlugin.DoesNotExist:
+        return {}
+    try:
+        status = plugin.get_status()
+    except Exception, e:
+        messages.error(request, _('Error: %s' % str(e)))
+        return {}
     return {"status": status}
 
 @permission_required_with_403('status.view_serverstatus')    

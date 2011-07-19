@@ -16,6 +16,8 @@ In the doc/dist folder you'll find two files to help you with the server configu
   with your application settings and put it under a directory accesible by apache.
   Have in mind that the path to this script is in the regeer.conf file.
 
+Make sure the user running the wsgi has permission to read/write in the site_store folder.
+
 Edit 60-local.pyconf and add:
 
     DEBUG = False
