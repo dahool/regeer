@@ -23,3 +23,8 @@ except:
 else:
     B3_INSTALLED = True
 B3_INSTALLED = False    
+
+if os.path.exists('build.ver'):
+    import time
+    st = os.stat('build.ver')
+    VERSION += " build %s" % time.strftime("%Y%m%dT%H%M",time.localtime(st.st_mtime))

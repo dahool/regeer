@@ -427,8 +427,6 @@ ul.messages li.warning {
 }
 #footer {
 	background: #E9E9E9;
-	padding: 0 0 0 10px;
-	width: 415px;
 	-webkit-border-top-left-radius: 5px;
 	-webkit-border-bottom-left-radius: 5px;
 	-moz-border-radius-topleft: 5px;
@@ -442,6 +440,8 @@ ul.messages li.warning {
     bottom: 10px;
     right: 0px;
     z-index: 9999;
+	min-width: 415px;
+	padding: 0 10px;
 }
 #col3_content {
     padding-bottom: 10px;
