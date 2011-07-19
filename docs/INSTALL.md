@@ -4,6 +4,7 @@ Prerequisites
 * Python 2.5+
 * Django 1.3.x
 * Rcon Module requires B3 bot
+* PyCrypto
 
 Quick Install
 ==============
