@@ -3,12 +3,13 @@
 
 	<target name="hudson">
 		<antcall target="build">
+			<param name="pythonpath" value="${env.PYTHONPATH}"/>
 			<param name="dest" value="${env.DEST}"/>
 		</antcall>
 	</target>
 
     <target name="compile_locale">
-        <exec executable="/usr/bin/python">
+        <exec executable="${pythonpath}/bin/python">
             <arg value="${dest}/manage.py"/>
             <arg value="compilemessages"/>
         </exec> 
@@ -41,21 +42,21 @@
             </fileset>
         </copy>        
 		<echo message="Setting up environment..."/>
-		<exec executable="/usr/bin/python">
+		<exec executable="${pythonpath}/bin/python">
 			<arg value="-mcompileall"/>
 			<arg value="${dest}"/>
 		</exec>
-        <exec executable="/usr/bin/python">
+        <exec executable="${pythonpath}/bin/python">
             <arg value="${dest}/manage.py"/>
             <arg value="syncdb"/>
             <arg value="--noinput"/>
         </exec>		
-		<exec executable="/usr/bin/python">
+		<exec executable="${pythonpath}/bin/python">
 			<arg value="${dest}/manage.py"/>
 			<arg value="updategeoip"/>
 		</exec>
 		<echo message="Reload"/>
-        <exec executable="/usr/bin/python">
+        <exec executable="${pythonpath}/bin/python">
             <arg value="${dest}/reload.py"/>
             <arg value="${dest}/../server/apache.wsgi"/>
         </exec>         
