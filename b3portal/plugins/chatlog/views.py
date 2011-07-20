@@ -4,17 +4,23 @@ import re
 
 from common.decorators import permission_required_with_403
 from common.view.decorators import render
-from common.floodprotection import flood
+from django.utils.translation import gettext as _
+from django.contrib import messages
 from models import ChatLog
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.conf import settings
 from b3portal.plugins.chatlog.forms import ChatLogSearch
 from django.db.models import Q
+from b3portal.plugins import is_plugin_enabled
 
 @permission_required_with_403('chatlog.view_chat')
 @render('chatlog/log.html')
 #@flood
 def chatlist(request):
+    if not is_plugin_enabled(request.server, 'chatlog'):
+        messages.info(request, _('This function is not enabled for this server.'))
+        return {'chat_list': None}        
+    
     chats = ChatLog.objects.using(request.server).all()
 
     # Make sure page request is an int. If not, deliver first page.   

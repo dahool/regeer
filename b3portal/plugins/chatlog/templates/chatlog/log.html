@@ -18,20 +18,12 @@ function set_field(field, value) {
 {% endblock %}
 {% block main_content %}
 <h3>{% trans "Chat Logs" %}</h3>
-{% with chat_list.paginator.count as count %}
 <small>
-<form style="display:inline;" method="get">
-{% with request.server as current_server %}
-<select name="server" onchange="this.form.submit()">
-{% for server in request.server_list %}
-<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
-{% endfor %}
-</select>
+{% with "chatlog" as pluginname %}
+{% include "b3portal/server_form.html" %}
 {% endwith %}
-</form>
 </small>
-</span>
-{% endwith %}
+{% if chat_list %}
 <form method="get">
 <small>
 <fieldset>
@@ -85,4 +77,5 @@ function set_field(field, value) {
 </table>
 </div>
 </div>
+{% endif %}
 {% endblock %}

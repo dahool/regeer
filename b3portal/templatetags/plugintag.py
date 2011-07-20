@@ -66,21 +66,28 @@ def ifenabled(parser, token):
         nodelist_false = NodeList()
         
     object = bits[1]
-                                
-    return IfEnabledNode(object, nodelist_true, nodelist_false)
+    try:
+        server = bits[2]
+    except:
+        server = None
+        
+    return IfEnabledNode(object, server, nodelist_true, nodelist_false)
 
 class IfEnabledNode(Node):
-    def __init__(self, object, nodelist_true, nodelist_false):
-        self.object, self.nodelist_true, self.nodelist_false = object, nodelist_true, nodelist_false
+    def __init__(self, object, server, nodelist_true, nodelist_false):
+        self.object, self.server, self.nodelist_true, self.nodelist_false = object, server, nodelist_true, nodelist_false
 
     def __repr__(self):
         return "<FfPluginEnabledNone>"
 
     def render(self, context):
         obj = resolve_variable(self.object,context)
-        request = context['request']
-
-        if is_plugin_enabled(request.server, obj):
+        if not self.server:
+            request = context['request']
+            server = request.server
+        else:
+            server = resolve_variable(self.server,context)
+        if is_plugin_enabled(server, obj):
             return self.nodelist_true.render(context)
         else:
             return self.nodelist_false.render(context)     

@@ -10,10 +10,15 @@ from django.utils.translation import gettext as _
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from b3portal.plugins import is_plugin_enabled
 
 @permission_required_with_403('follow.view_follow')
 @render('follow/list.html')
 def home(request):
+    if not is_plugin_enabled(request.server, 'follow'):
+        messages.info(request, _('This function is not enabled for this server.'))
+        return {'list': None}  
+        
     return {'list': Follow.objects.using(request.server).all().order_by('-time_add')}
 
 @permission_required_with_403('follow.add_follow')

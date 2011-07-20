@@ -3,15 +3,9 @@
 {% block title %}{{ block.super }} | {% trans "Watched Players" %}{% endblock %}
 {% block main_content %}
 <small>
-<form style="display:inline;" method="get">
-{% with request.server as current_server %}
-<select name="server" onchange="this.form.submit()" method="get">
-{% for server in request.server_list %}
-<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
-{% endfor %}
-</select>
+{% with "follow" as pluginname %}
+{% include "b3portal/server_form.html" %}
 {% endwith %}
-</form>
 </small>
 <h3>{% trans "Watched Players" %}</h3>
 <table class="table-style">

@@ -9,15 +9,7 @@
 {% with client_list.paginator.count as count %}
 <span>{% blocktrans %}There are {{count}} admins{%endblocktrans%}
 <small>
-<form style="display:inline;" method="get">
-{% with request.server as current_server %}
-<select name="server" onchange="this.form.submit()">
-{% for server in request.server_list %}
-<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
-{% endfor %}
-</select>
-{% endwith %}
-</form>
+{% include "b3portal/server_form.html" %}
 </small>
 </span>
 {% endwith %}

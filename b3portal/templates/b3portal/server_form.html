@@ -1,0 +1,16 @@
+{% load plugintag %}
+<form style="display:inline;" method="get">
+{% with request.server as current_server %}
+<select name="server" onchange="this.form.submit()">
+{% for server in request.server_list %}
+{% if pluginname %}
+{% ifpluginenabled pluginname server %}
+	<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
+{% endifpluginenabled %}
+{% else %}
+	<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
+{% endif %}
+{% endfor %}
+</select>
+{% endwith %}
+</form>
