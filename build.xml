@@ -54,7 +54,12 @@
 		<exec executable="${pythonpath}/bin/python">
 			<arg value="${dest}/manage.py"/>
 			<arg value="updategeoip"/>
+			<arg value="--no-force"/>
 		</exec>
+		<exec executable="${pythonpath}/bin/python">
+			<arg value="${dest}/manage.py"/>
+			<arg value="collectstatic"/>
+		</exec>		
 		<echo message="Reload"/>
         <exec executable="${pythonpath}/bin/python">
             <arg value="${dest}/reload.py"/>
