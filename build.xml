@@ -59,6 +59,7 @@
 		<exec executable="${pythonpath}/bin/python">
 			<arg value="${dest}/manage.py"/>
 			<arg value="collectstatic"/>
+			<arg value="--noinput"/>
 		</exec>		
 		<echo message="Reload"/>
         <exec executable="${pythonpath}/bin/python">
