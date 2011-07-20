@@ -116,7 +116,6 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <th>{% trans "Times Used" %}</th>
 <th>{% trans "First Used" %}</th>
 <th>{% trans "Last Used" %}</th>
-<th>{% trans "IP Address" %}</th>
 </tr>
 </thead>
 <tbody id="aliases">
@@ -127,7 +126,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 {% if client.aliases.all|length > 5 %}
 <tfoot>
 <tr>
-<td colspan="5">
+<td colspan="4">
 <span class="link right" onclick="do_call_get('{% serverurl client_more_alias client.id %}','aliases', '#client_aliases tfoot')">{% trans "more ..." %}</span>
 </td>
 </tr>
@@ -154,7 +153,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 {% if client.ip_aliases.all|length > 5 %}
 <tfoot>
 <tr>
-<td colspan="5">
+<td colspan="4">
 <span class="link right" onclick="do_call_get('{% serverurl client_more_ipalias client.id %}','ipaliases', '#client_ipaliases tfoot')">{% trans "more ..." %}</span>
 </td>
 </tr>

@@ -5,15 +5,9 @@
 <td>{{alias.num_used}}</td>
 <td>{{alias.time_add|date:"DATETIME_FORMAT"}}</td>
 <td>{{alias.time_edit|date:"DATETIME_FORMAT"}}</td>
-<td>
-{% if alias.ip %}
-<a href="{% serverurl client_list %}&type=ip&data={{alias.ip}}&search=Search">{{alias.ip}}</a>&nbsp;<a target="_blank" href="{% setting 'GEOTOOL' %}{{alias.ip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
-{% if alias.ip in banlist %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endif %}
-{% else %}
-{% trans "(No IP address available)" %}{% endif %}</td>
 </tr>
 {% empty %}
 <tr class="odd">
-<td colspan="5">{% trans "No aliases" %}</td>
+<td colspan="4">{% trans "No aliases" %}</td>
 </tr>
 {% endfor %}
