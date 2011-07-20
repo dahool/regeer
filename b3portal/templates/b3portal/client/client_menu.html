@@ -1,4 +1,4 @@
-{% load i18n navigation extendedtags %}
+{% load i18n navigation extendedtags plugintag urltag %}
 <ul class="subnav">
 {% url world_map as url_nav_map %}
 {% url admin_list as url_nav_admin_list %}
@@ -10,10 +10,10 @@
 <li id="{% current_nav url_nav_admin_list current2 %}"><a href="{{ url_nav_admin_list }}">{% trans "Admin List" %}</a></li>
 <li id="{% current_nav url_nav_inadmin_list current2 %}"><a href="{{ url_nav_inadmin_list }}?days=30">{% trans "Inactive Admins" %}</a></li>
 {% endif %}
-{% ifinstalled "plugins.follow" %}
-{% url follow_home as url_nav_follow %}
+{% ifplugininstalled "follow" %}
+{% serverurl follow:home as url_nav_follow %}
 {% if perms.follow.view_follow %}
 <li id="{% current_nav url_nav_follow current2 %}"><a href="{{ url_nav_follow }}">{% trans "Watched Players" %}</a></li>
 {% endif %}
-{% endifinstalled %}
+{% endifplugininstalled %}
 </ul>
