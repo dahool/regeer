@@ -77,6 +77,12 @@ class ServerPermission(models.Model):
     groups = models.ManyToManyField(Group, verbose_name=_('groups'), blank=True)
     permissions = models.ManyToManyField(Permission, verbose_name=_('user permissions'), blank=True)
 
+    def __repr__(self):
+        return "%s - %s" % (self.user.username, self.server.name)
+    
+    def __unicode__(self):
+        return repr(self)
+    
     class Meta:
         unique_together = ('user','server')
         
