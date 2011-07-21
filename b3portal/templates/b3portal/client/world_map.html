@@ -35,7 +35,7 @@
 {% url world_map as url_nav_map %}
 {% url admin_list as url_nav_admin_list %}
 <li id="{% current_nav url_nav_map current2 %}"><a href="{{ url_nav_map }}">{% trans "World Map" %}</a></li>
-{% if perms.b3connect.view_group %}
+{% if obj_perms.b3connect.view_group %}
 <li id="{% current_nav url_nav_admin_list current2 %}"><a href="{{ url_nav_admin_list }}">{% trans "Admin List" %}</a></li>
 {% endif %}
 {% endblock %}

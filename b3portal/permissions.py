@@ -13,6 +13,9 @@ CLIENT_REGULAR = 'b3connect.regular_client'
 VIEW_PENALTY = 'b3connect.view_penalty'
 VIEW_NOTICE = 'b3connect.view_notices'
 
+VIEW_GUID = 'b3connect.view_client_guid'
+VIEW_FULL_IP = 'b3connect.view_full_ip'
+
 STATUS_VIEWSTATUS = 'status.view_serverstatus'
 
 FOLLOW_VIEW = 'follow.view_follow'

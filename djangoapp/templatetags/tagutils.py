@@ -29,3 +29,21 @@ def sort(list, arg=None):
     if arg:
         return sorted(list, key=lambda x: getattr(x, arg))
     return sorted(list)
+
+@register.filter
+@stringfilter
+def maskip(text):
+    from common.utils.validators import is_valid_ip
+    m = is_valid_ip(text)
+    if m: 
+        return ".".join(m.groups()[0:3]+('*',))
+    return "-"
+
+@register.filter
+@stringfilter
+def baseip(text):
+    from common.utils.validators import is_valid_ip
+    m = is_valid_ip(text)
+    if m: 
+        return ".".join(m.groups()[0:3]+('0',))
+    return "-"

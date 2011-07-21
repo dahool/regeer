@@ -83,6 +83,8 @@ class Client(models.Model):
             ("register_client", "Mark player registered (level 1)"),
             ("regular_client", "Mark player regular (level 2)"),
             ("view_high_level_client", "View Admin detail"),
+            ("view_client_guid", "View Player Guid Verification Status"),
+            ("view_full_ip", "View Player Unmasked IP"),
         )
 
 class Alias(models.Model):

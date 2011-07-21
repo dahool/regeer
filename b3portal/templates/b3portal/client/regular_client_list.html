@@ -29,7 +29,7 @@
 <tr class="{% cycle "odd" "even" %}">
 <td><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
 <td>{{client.name}}</td>
-<td>{% if perms.b3connect.view_group %}{{client.displayGroup}}{%else%}-{%endif%}</td>
+<td>{% if obj_perms.b3connect.view_group %}{{client.displayGroup}}{%else%}-{%endif%}</td>
 <td>{{client.connections}}</td>
 <td>{{client.time_edit|date:"DATETIME_FORMAT"}}</td>
 </tr>

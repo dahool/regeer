@@ -203,7 +203,7 @@ def do_setas(parser, token):
     except ValueError, e:
         raise TemplateSyntaxError, "%r takes at least three arguments" % token.split_contents()[0]
 
-    return SetAsNode(object, asvar)    
+    return SetAsNode(parser.compile_filter(object), asvar)    
 
 class SetAsNode(template.Node):
     
@@ -215,7 +215,7 @@ class SetAsNode(template.Node):
 
     def render(self, context):
         try:
-            obj = resolve_variable(self.object, context)
+            obj = self.object.resolve(context)
             context[self.asvar] = obj
         except:
             pass
