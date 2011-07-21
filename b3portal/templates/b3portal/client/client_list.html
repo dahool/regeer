@@ -58,7 +58,13 @@
 <td><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
 <td name="autofill" alt="name" submit="#search" title="{% trans "Search for other users with this nickname" %}">{{client.name}}</td>
 <td>{% if obj_perms.b3connect.view_group %}<a style="font-weight: normal" href="?level={{client.group.level}}&server={{request.server}}" title="{% trans "Filter users sharing the same group" %}">{{client.displayGroup}}</a>{%else%}-{%endif%}</td>
-<td name="autofill" alt="ip" submit="#search" title="{% trans "Search for other users with this IP address" %}">{{client.ip}}</td>
+<td name="autofill" alt="ip" submit="#search" title="{% trans "Search for other users with this IP address" %}">
+{% if obj_perms.b3connect.view_full_ip %}
+{{client.ip}}
+{% else %}
+{{client.ip|maskip}}
+{% endif %}
+</td>
 <td>{{client.time_add|date:"DATETIME_FORMAT"}}</td>
 <td>{{client.time_edit|date:"DATETIME_FORMAT"}}</td>
 <td>
