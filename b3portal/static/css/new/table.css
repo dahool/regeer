@@ -7,7 +7,7 @@ table.table-style,table.table-style td {
 }
 
 table.table-style {
-	width: 100%;
+/*	width: 100%;*/
 	border: none;
 	border: 1px solid #CCC;
 	display: table;

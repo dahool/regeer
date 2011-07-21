@@ -1,6 +1,5 @@
 from models import Follow
 from common.view.decorators import render
-from common.decorators import permission_required_with_403
 from common.shortcuts import get_object_or_404
 from b3connect.models import Client
 from forms import FollowForm
@@ -12,7 +11,11 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from b3portal.plugins import is_plugin_enabled
 
-@permission_required_with_403('follow.view_follow')
+from b3portal.permission.utils import server_permission_required_with_403
+from b3portal import permissions as perm
+
+
+@server_permission_required_with_403(perm.FOLLOW_VIEW)
 @render('follow/list.html')
 def home(request):
     if not is_plugin_enabled(request.server, 'follow'):
@@ -21,7 +24,7 @@ def home(request):
         
     return {'list': Follow.objects.using(request.server).all().order_by('-time_add')}
 
-@permission_required_with_403('follow.add_follow')
+@server_permission_required_with_403(perm.FOLLOW_ADD)
 @render('follow/add.html')
 def add(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
@@ -42,7 +45,7 @@ def add(request, id):
         
     return {'form': form, 'client': client}
 
-@permission_required_with_403('follow.delete_follow')
+@server_permission_required_with_403(perm.FOLLOW_DELETE)
 def remove(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
     if client.followed.all():

@@ -1,5 +1,6 @@
 from b3portal.models import Server
 from b3portal import init_database_config
+from b3portal.permission.utils import has_server
 
 class ServerDetectMiddleware(object):
     
@@ -10,7 +11,10 @@ class ServerDetectMiddleware(object):
             server_list = None
             
         if not server_list:
-            server_list = Server.objects.all()
+            server_list = [] 
+            for s in Server.objects.all():
+                if has_server(request.user, s):
+                    server_list.append(s)
             if hasattr(request, 'session'):
                 if len(server_list)>0:
                     request.session['server_list'] = server_list

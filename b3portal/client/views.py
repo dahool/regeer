@@ -12,7 +12,6 @@ import time
 import datetime
 
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
-from common.decorators import permission_required_with_403
 from django.views.decorators.cache import cache_page
 import urllib
 from b3portal.client.forms import PenaltyForm, NoticeForm
@@ -34,7 +33,10 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 from b3portal.plugins import is_plugin_installed
 
-@permission_required_with_403('b3connect.view_client')
+from b3portal.permission.utils import server_permission_required_with_403, has_server_perm, has_any_server_perms
+from b3portal import permissions as perm
+
+@server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(15*60)
 @render('b3portal/client/client.html')
 def client(request, id):
@@ -42,7 +44,7 @@ def client(request, id):
     
     try:
         if client.group.level >= settings.HIGH_LEVEL_CLIENT:
-            if not request.user.has_perm('b3connect.view_high_level_client'):
+            if not has_server_perm(request.user, perm.VIEW_HIGH_LEVEL_CLIENT, request.server):
                 messages.warning(request, _('You are not authorized to view details about this player.'))
                 raise Http403
     except Group.DoesNotExist:
@@ -59,14 +61,13 @@ def client(request, id):
             online = status.is_online(client.id)
         except:
             pass
-        
-    if request.user.has_perm('b3connect.view_banlist'):
-        list = _get_banlist(request)
-    else:
-        list = []
+    
+    list = _get_banlist(request)
     return {'client': client, 'status': online, 'banlist': list}
 
 def _get_banlist(request):
+    if not has_server_perm(request.user, perm.VIEW_BAN_LIST, request.server):
+        return []
     cache_key = "%s_banlist" % request.server
     list = cache.get(cache_key)
     if list is None:
@@ -91,7 +92,7 @@ def player_map(request):
         countries[country_name]=count
     return {'list': countries}
 
-@permission_required_with_403('b3connect.view_group')
+@server_permission_required_with_403(perm.VIEW_GROUP)
 @cache_page(15*60)
 @render('b3portal/client/admin_list.html')
 def adminlist(request, filter=False):
@@ -122,7 +123,7 @@ def adminlist(request, filter=False):
     res['client_list']=list        
     return res
 
-@permission_required_with_403('b3connect.view_client')
+@server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(15*60)
 @render('b3portal/client/client_list.html')
 #@flood
@@ -137,7 +138,7 @@ def clientlist(request):
         search['sort'] = sort
         search['order'] = order
             
-    if request.GET.has_key('searchall') and request.user.has_perm('b3connect.client_advanced_search'):
+    if request.GET.has_key('searchall') and request.user.has_perm(perm.PERFORM_ADV_SEARCH):
         field = request.GET['type']
         data = request.GET['data']
         list = {}
@@ -175,7 +176,7 @@ def clientlist(request):
 
 def _getclientlist(request, server, search = True):
 
-    if request.user.has_perm('b3connect.view_high_level_client'):
+    if has_server_perm(request.user, perm.VIEW_HIGH_LEVEL_CLIENT, server):
         clients = Client.objects.using(server).filter(id__gt=1)
     else:
         clients = Client.objects.using(server).filter(Q(group__level__lt=settings.HIGH_LEVEL_CLIENT) | Q(group__isnull=True), id__gt=1)
@@ -208,7 +209,7 @@ def _getclientlist(request, server, search = True):
         clients = clients.order_by(sort)
         
     if request.GET.has_key('level'):
-        if not request.user.has_perm('b3connect.view_group'):
+        if has_server_perm(request.user, perm.VIEW_GROUP, server):
             raise Http403
         if request.GET.get('level'):
             clients = clients.filter(group__level=request.GET.get('level'))
@@ -217,7 +218,7 @@ def _getclientlist(request, server, search = True):
     
     return clients
 
-@permission_required_with_403('b3connect.view_client')
+@server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(15*60)
 @render('b3portal/client/regular_client_list.html')
 #@flood
@@ -246,10 +247,10 @@ def regularclients(request):
 def addpenalty(request, id, notice=False):
     
     if notice:
-        if not request.user.has_perm('b3connect.add_notice') or not request.user.has_perm('b3connect.add_penalty'):
+        if not has_any_server_perms(request.user, [perm.ADD_NOTICE, perm.ADD_PENALTY], request.server):
             raise Http403
     else:
-        if not request.user.has_perm('b3connect.add_penalty'):
+        if not has_server_perm(request.user, perm.ADD_PENALTY, request.server):
             raise Http403
             
     client = get_object_or_404(Client, id=id, using=request.server)
@@ -276,13 +277,16 @@ def addpenalty(request, id, notice=False):
                     p.duration = time2minutes(str(form.cleaned_data['time'])+form.cleaned_data['time_type'])
                     p.type='TempBan'
             p.save()
-            messages.success(request, _('Penalty added successfully.'))
+            if notice:
+                messages.success(request, _('Notice added successfully.'))
+            else:
+                messages.success(request, _('Penalty added successfully.'))
             return HttpResponseRedirect(reverse("client_detail",kwargs={'id':id}))
     else:
         form = frmObj()
     return {'form': form, 'client': client}
 
-@permission_required_with_403('b3connect.delete_penalty')
+@server_permission_required_with_403(perm.DELETE_PENALTY)
 def disablepenalty(request, id):
     penalty = get_object_or_404(Penalty, id=id, using=request.server)
     penalty.inactive = 1
@@ -290,7 +294,7 @@ def disablepenalty(request, id):
     messages.success(request, _('Penalty de-activated successfully.'))
     return HttpResponseRedirect(reverse("client_detail",kwargs={'id':penalty.client.id}))
 
-@permission_required_with_403('b3connect.change_penalty')
+@server_permission_required_with_403(perm.CHANGE_PENALTY)
 @render('b3portal/client/add_penalty.html')
 def editpenalty(request, id):
     p = get_object_or_404(Penalty, id=id, using=request.server)
@@ -306,7 +310,7 @@ def editpenalty(request, id):
             p.reason = form.cleaned_data['reason']
             p.time_edit=datetime.datetime.now()
             p.save()
-            messages.success(request, _('Penalty edited successfully.'))
+            messages.success(request, _('Penalty updated.'))
             return HttpResponseRedirect(reverse("client_detail",kwargs={'id':p.client.id}))
     else:
         if p.duration==0:
@@ -324,18 +328,17 @@ def change_clientgroup(request, id):
         raise Http403
 
     g = int(request.POST.get('value'))
-    if not request.user.has_perm('b3connect.change_client_group'):
-        if g <= 1 and (not request.user.has_perm('b3connect.register_client')
-                       or not request.user.has_perm('b3connect.regular_client')):
+    if not has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
+        if g <= 1 and not has_any_server_perms(request.user, [perm.CLIENT_REGISTER, perm.CLIENT_REGULAR], request.server):
             raise Http403
-        if g <= 2 and (not request.user.has_perm('b3connect.regular_client')):
+        if g <= 2 and not has_server_perm(request.user, perm.CLIENT_REGULAR, request.server):
             raise Http403        
     
     group = get_object_or_404(Group, id=g, using=request.server)
     client = get_object_or_404(Client, id=id, using=request.server)
     
     if client.group_id > 0:
-        if client.group_id > group.id and not request.user.has_perm('change_client_group'):
+        if client.group_id > group.id and not has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
             raise Http403
     
     client.group = group
@@ -343,35 +346,35 @@ def change_clientgroup(request, id):
     
     return HttpResponse(str(group), mimetype='plain/text')
 
-@permission_required_with_403('b3connect.view_client')
+@server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(15*60)
 @render('b3portal/client/client_aliases.html')
 def more_alias(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
     return {'aliases': client.aliases.all(), 'banlist': _get_banlist(request)}
 
-@permission_required_with_403('b3connect.view_client')
+@server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(15*60)
 @render('b3portal/client/client_ipaliases.html')
 def more_ipalias(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
     return {'aliases': client.ip_aliases.all(), 'banlist': _get_banlist(request)}
 
-@permission_required_with_403('b3connect.view_high_level_client')
+@server_permission_required_with_403(perm.VIEW_HIGH_LEVEL_CLIENT)
 @cache_page(15*60)
 @render('b3portal/client/client_adminactions.html')
 def more_admactions(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
     return {'penalties': client.adminpenalties.all()}
 
-@permission_required_with_403('b3connect.view_client')
+@server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(15*60)
 @render('b3portal/client/client_penalties.html')
 def more_ipenalties(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
     return {'penalties': client.penalties.inactive()[:20]}
 
-@permission_required_with_403('b3connect.view_client')
+@server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(15*60)
 @render('b3portal/client/client_notices.html')
 def more_notices(request, id):
@@ -402,9 +405,9 @@ def direct(request):
 def group_list(request):
     dict = {}
     query = Group.objects.using(request.server)
-    if request.user.has_perm('b3connect.change_client_group'):
+    if has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
         groups = query.all()
-    elif request.user.has_perm('b3connect.regular_client'):
+    elif has_server_perm(request.user, perm.CLIENT_REGULAR, request.server):
         groups = query.filter(id__lte=2)
     else:
         groups = query.filter(id=0)

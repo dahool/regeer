@@ -2,7 +2,6 @@ import urllib
 import time
 import re
 
-from common.decorators import permission_required_with_403
 from common.view.decorators import render
 from django.utils.translation import gettext as _
 from django.contrib import messages
@@ -13,7 +12,10 @@ from b3portal.plugins.chatlog.forms import ChatLogSearch
 from django.db.models import Q
 from b3portal.plugins import is_plugin_enabled
 
-@permission_required_with_403('chatlog.view_chat')
+from b3portal.permission.utils import server_permission_required_with_403
+from b3portal import permissions as perm
+
+@server_permission_required_with_403(perm.CHATLOG_VIEW)
 @render('chatlog/log.html')
 #@flood
 def chatlist(request):

@@ -1,0 +1,22 @@
+VIEW_HIGH_LEVEL_CLIENT = 'b3connect.view_high_level_client'
+VIEW_CLIENT = 'b3connect.view_client'
+VIEW_GROUP = 'b3connect.view_group' 
+VIEW_BAN_LIST = 'b3connect.view_banlist'
+PERFORM_ADV_SEARCH = 'b3connect.client_advanced_search'
+ADD_NOTICE = 'b3connect.add_notice'
+ADD_PENALTY = 'b3connect.add_penalty'
+DELETE_PENALTY = 'b3connect.delete_penalty'
+CHANGE_PENALTY = 'b3connect.change_penalty'
+CLIENT_GROUP_CHANGE = 'b3connect.change_client_group'
+CLIENT_REGISTER = 'b3connect.register_client'
+CLIENT_REGULAR = 'b3connect.regular_client'
+VIEW_PENALTY = 'b3connect.view_penalty'
+VIEW_NOTICE = 'b3connect.view_notices'
+
+STATUS_VIEWSTATUS = 'status.view_serverstatus'
+
+FOLLOW_VIEW = 'follow.view_follow'
+FOLLOW_ADD = 'follow.add_follow'
+FOLLOW_DELETE = 'follow.delete_follow'
+
+CHATLOG_VIEW = 'chatlog.view_chat'

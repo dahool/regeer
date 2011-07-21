@@ -1,10 +1,10 @@
-{% load i18n navigation %}
+{% load i18n navigation urltag %}
 {% if user.is_authenticated %}
 <ul class="subnav">
-{% url banned_world_map as url_nav_map %}
-{% url admin_kicks as url_nav_kicks %}
-{% url penalty_list as url_nav_penalties %}
-{% url notice_list as url_nav_notices %}
+{% serverurl banned_world_map as url_nav_map %}
+{% serverurl admin_kicks as url_nav_kicks %}
+{% serverurl penalty_list as url_nav_penalties %}
+{% serverurl notice_list as url_nav_notices %}
 <li id="{% current_nav url_nav_map current2 %}"><a href="{{url_nav_map}}">{% trans "World Map" %}</a></li>
 {% if perms.b3connect.view_penalty %}
 <li id="{% current_nav url_nav_kicks current2 %}"><a href="{{url_nav_kicks}}">{% trans "Admin Kicks" %}</a></li>

@@ -7,12 +7,15 @@ from django.conf import settings
 
 import time
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
-from common.decorators import permission_required_with_403
 
 from django.views.decorators.cache import cache_page
 
 import urllib
 from django.contrib.auth.decorators import login_required
+
+from b3portal.permission.utils import server_permission_required_with_403
+from b3portal import permissions as perm
+
 #from common.floodprotection import flood
 
 @cache_page(60*60)
@@ -67,7 +70,7 @@ def banned_player_map(request):
         countries[country_name]=count
     return {'list': countries}
 
-@permission_required_with_403('b3connect.view_penalty')
+@server_permission_required_with_403(perm.VIEW_PENALTY)
 @cache_page(30*60)
 @render('b3portal/penalties/kick_list.html')
 def kicklist(request):
@@ -88,7 +91,7 @@ def kicklist(request):
 
     return {'ban_list': list}
 
-@permission_required_with_403('b3connect.view_penalty')
+@server_permission_required_with_403(perm.VIEW_PENALTY)
 @cache_page(30*60)
 @render('b3portal/penalties/penalty_list.html')
 def penalty_list(request):
@@ -109,7 +112,7 @@ def penalty_list(request):
 
     return {'ban_list': list}
 
-@permission_required_with_403('b3connect.view_notices')
+@server_permission_required_with_403(perm.VIEW_NOTICE)
 @cache_page(30*60)
 @render('b3portal/penalties/notice_list.html')
 def notice_list(request):

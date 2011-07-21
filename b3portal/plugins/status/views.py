@@ -1,5 +1,4 @@
 from common.view.decorators import render
-from common.decorators import permission_required_with_403
 from django.views.decorators.cache import cache_page
 from b3portal.plugins.status.models import ServerStatus, StatusPlugin
 from django.contrib import messages
@@ -13,7 +12,10 @@ from common.shortcuts import get_object_or_404
 from b3connect.models import Client
 from b3portal.models import Server
 
-@permission_required_with_403('status.view_serverstatus')    
+from b3portal.permission.utils import server_permission_required_with_403
+from b3portal import permissions as perm
+
+@server_permission_required_with_403(perm.STATUS_VIEWSTATUS)    
 @cache_page(60)
 @render('status/game_status.html')
 def game_status(request):
@@ -28,7 +30,7 @@ def game_status(request):
         return {}
     return {"status": status}
 
-@permission_required_with_403('status.view_serverstatus')    
+@server_permission_required_with_403(perm.STATUS_VIEWSTATUS)    
 @cache_page(60*60)
 @render('status/client_detail.html')
 def client_detail(request, id):
@@ -38,7 +40,7 @@ def client_detail(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
     return {"client": client,"status": status}
 
-@permission_required_with_403('status.view_serverstatus')    
+@server_permission_required_with_403(perm.STATUS_VIEWSTATUS)    
 @cache_page(60*60)
 @render('status/players_chart.html')
 def player_chart(request):
