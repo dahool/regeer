@@ -8,7 +8,7 @@ from django.conf import settings
 
 from b3portal.server.forms import ServerForm
 
-from models import UserProfile, Server
+from models import UserProfile, Server, ServerPermission
 
 admin.site.unregister(Site)
 admin.site.unregister(User)
@@ -46,6 +46,8 @@ class ServerAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserProfileAdmin)
 admin.site.register(Server, ServerAdmin)
+
+admin.site.register(ServerPermission)
 
 if settings.DEBUG:
     from django.contrib.auth.models import Permission

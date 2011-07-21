@@ -22,7 +22,7 @@ class CryptField(models.CharField):
     
     def to_python(self, value):
         value = super(CryptField, self).to_python(value)
-        if value is not None:
+        if value is not None and value != '':
             key = getattr(settings, 'SECRET_KEY')
             bc = BCipher(key)
             return bc.decrypt(value)

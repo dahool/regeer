@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from common.fields import CryptField, AutoSlugField
-
-import re
 from common.crypto import BCipher
+import re
+
+from django.contrib.auth.models import Permission, Group, User
 
 DISPLAY_SUB = re.compile(r'ut4_|ut_|ut42_')
 
@@ -39,12 +40,14 @@ class Server(models.Model):
     database = models.CharField(max_length=50, verbose_name=_('Database Name'))
     engine = models.CharField(max_length=100, choices=DB_ENGINES_CHOICES, verbose_name=_('Database Engine'))
     user = models.CharField(max_length=50, verbose_name=_('Database User'))
-    password = models.CharField(max_length=200)
+    #password = models.CharField(max_length=200)
+    password = CryptField(max_length=200)
     hostname = models.CharField(max_length=50, verbose_name=_('Database Host'))
     game = models.CharField(max_length=15, choices=PARSER_CHOICES, verbose_name=_('Game'))
     rcon_ip = models.IPAddressField(verbose_name=_('IP'), blank=True)
     rcon_port = models.IntegerField(verbose_name=_('Port'), blank=True, null=True)
-    rcon_password = models.CharField(max_length=50, verbose_name=_('RCON Password'), blank=True)
+    #rcon_password = models.CharField(max_length=50, verbose_name=_('RCON Password'), blank=True)
+    rcon_password = CryptField(max_length=50, verbose_name=_('RCON Password'), blank=True)
     default = models.BooleanField(default=False, verbose_name=_('Default'), help_text=_('Set as default server'), db_index=True)
     
     def __repr__(self):
@@ -53,20 +56,29 @@ class Server(models.Model):
     def __unicode__(self):
         return repr(self)
         
-    def set_password(self, clear_text):
-        bc = BCipher()
-        setattr(self, 'password', bc.encrypt(clear_text))
-
-    def get_password(self):
-        value = getattr(self, 'password', None)
-        if value is not None:
-            bc = BCipher()
-            return bc.decrypt(value)
-        return value
+#    def set_password(self, clear_text):
+#        bc = BCipher()
+#        setattr(self, 'password', bc.encrypt(clear_text))
+#
+#    def get_password(self):
+#        value = getattr(self, 'password', None)
+#        if value is not None:
+#            bc = BCipher()
+#            return bc.decrypt(value)
+#        return value
 
     class Meta:
         ordering  = ('name',)
         unique_together = ('database','user','hostname')
+
+class ServerPermission(models.Model):
+    user = models.ForeignKey(User, related_name='server_permissions')
+    server = models.ForeignKey(Server)
+    groups = models.ManyToManyField(Group, verbose_name=_('groups'), blank=True)
+    permissions = models.ManyToManyField(Permission, verbose_name=_('user permissions'), blank=True)
+
+    class Meta:
+        unique_together = ('user','server')
         
 from b3portal import init_database_config
 
