@@ -44,10 +44,10 @@ User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
     
 DB_ENGINES_CHOICES = (
     ('django.db.backends.mysql', 'mysql'),
-    ('django.db.backends.postgresql', 'postgresql'),
-    ('django.db.backends.postgresql_psycopg2','postgresql_psycopg2'),
-    ('django.db.backends.sqlite3','sqlite3'),
-    ('django.db.backends.oracle','oracle')
+#    ('django.db.backends.postgresql', 'postgresql'),
+#    ('django.db.backends.postgresql_psycopg2','postgresql_psycopg2'),
+#    ('django.db.backends.sqlite3','sqlite3'),
+#    ('django.db.backends.oracle','oracle')
 )
 
 PARSER_CHOICES = [(v,v) for v in settings.B3_PARSERS]
@@ -56,7 +56,7 @@ class Server(models.Model):
     uuid = AutoSlugField(max_length=50, unique=True, editable=False,prepopulate_from="name", force_update=False, primary_key=True)
     name = models.CharField(max_length=40, verbose_name=_('Server Name'))
     database = models.CharField(max_length=50, verbose_name=_('Database Name'))
-    engine = models.CharField(max_length=100, choices=DB_ENGINES_CHOICES, verbose_name=_('Database Engine'))
+    engine = models.CharField(max_length=100, choices=DB_ENGINES_CHOICES, verbose_name=_('Database Engine'), editable=False, default='django.db.backends.mysql')
     user = models.CharField(max_length=50, verbose_name=_('Database User'))
     #password = models.CharField(max_length=200)
     password = CryptField(max_length=200)
@@ -68,11 +68,16 @@ class Server(models.Model):
     rcon_password = CryptField(max_length=50, verbose_name=_('RCON Password'), blank=True)
     default = models.BooleanField(default=False, verbose_name=_('Default'), help_text=_('Set as default server'), db_index=True)
     
+    owners = models.ManyToManyField(User, verbose_name=_('Server Owners'), blank=True)
+    
     def __repr__(self):
         return self.name
     
     def __unicode__(self):
         return repr(self)
+        
+    def is_owner(self, user):
+        return user in self.owners.all()
         
 #    def set_password(self, clear_text):
 #        bc = BCipher()

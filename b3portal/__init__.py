@@ -6,6 +6,7 @@ def init_database_config(request=None):
     
     try:
         from django.db import connections
+        servers = None
         if request and hasattr(request, 'session'):
             servers = request.session.get('server_list', None)
         if not servers:

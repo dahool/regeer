@@ -23,30 +23,52 @@ from django.utils.translation import ugettext_lazy as _
 
 class ServerForm(ModelForm):
     
-    password = forms.RegexField(label=_("Database Password"),
+    dbpasswd = forms.RegexField(label=_("Database Password"),
                                 widget=forms.widgets.PasswordInput(attrs={'autocomplete':'off'}),
-                                required=True,
+                                required=False,
                                 max_length=100,
                                 regex=r"^[-!\"#$%&'()*+,./:;<=>?@[\\\]_`{|}~a-zA-Z0-9]+$",
                                 error_message = _("Non ascii chars are forbidden."))
-    rcon_password = forms.RegexField(label=_("RCON Password"),
+    rcon_passwd = forms.RegexField(label=_("RCON Password"),
                                 widget=forms.widgets.PasswordInput(attrs={'autocomplete':'off'}),
                                 required=False,
                                 max_length=100,
                                 regex=r"^[-!\"#$%&'()*+,./:;<=>?@[\\\]_`{|}~a-zA-Z0-9]+$",
                                 error_message = _("Non ascii chars are forbidden."))
             
+    def clean_dbpasswd(self):
+        pwd = self.cleaned_data.get('dbpasswd')
+        if not pwd:
+            if self.instance and self.instance.password:
+                pwd = self.instance.password
+        
+        if not pwd: raise forms.ValidationError(forms.Field.default_error_messages['required'])
+        return pwd
+
     def clean(self):
         data = self.cleaned_data
-        rcon_ip = data['rcon_ip']
-        rcon_port = data['rcon_port']
-        rcon_pwd = data['rcon_password']
+        rcon_ip = data.get('rcon_ip')
+        rcon_port = data.get('rcon_port')
+        rcon_pwd = data.get('rcon_passwd')
+        
+        if self.instance and not rcon_pwd:
+            rcon_pwd = self.instance.rcon_password
         
         if not (rcon_ip and rcon_port and rcon_pwd) and (rcon_ip or rcon_port or rcon_pwd):
             raise forms.ValidationError(_("All fields are required for RCON access"));
         
         return data
     
+    def save(self, commit=False):
+        p = super(ServerForm, self).save(False)
+        data = self.cleaned_data
+        if data.get('dbpasswd'):
+            p.password = data.get('dbpasswd')
+        if data.get('rcon_passwd'):
+            p.rcon_password = data.get('rcon_passwd')
+        p.save()
+        return p
+
     class Meta:
         model = Server
-        exclude = ("uuid")
+        exclude = ("uuid","rcon_password", "password")

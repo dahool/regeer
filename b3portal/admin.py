@@ -39,10 +39,11 @@ class UserProfileAdmin(UserAdmin):
 class ServerAdmin(admin.ModelAdmin):
     form = ServerForm
     fieldsets = [
-        (None,               {'fields': ['name','default','game']}),
-        (_('Database settings'), {'fields': ['engine','hostname','database','user','password']}),
-        (_('Game Server'), {'fields': ['rcon_ip','rcon_port', 'rcon_password']}),
-    ]    
+        (None,               {'fields': [('name','default'),'game','owners']}),
+        (_('Database settings'), {'fields': ['hostname','database',('user','dbpasswd')]}),
+        (_('Game Server'), {'classes': ('collapse',),
+                            'fields': [('rcon_ip','rcon_port'), 'rcon_passwd']}),
+    ]
     
     def save_model(self, request, obj, form, change):
         super(ServerAdmin, self).save_model(request, obj, form, change)

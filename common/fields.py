@@ -2,7 +2,6 @@ from django.db import models
 from django.db.models import fields
 from common.crypto import BCipher
 from common.utils.slug import slugify
-from django.conf import settings
 
 class CryptField(models.CharField):
     __metaclass__ = models.SubfieldBase
@@ -12,19 +11,18 @@ class CryptField(models.CharField):
             kwargs['max_length'] = 100
         super(CryptField, self).__init__(*args, **kwargs)
 
-    def pre_save(self, model_instance, add):
-        cleartext = getattr(model_instance, self.attname)
-        key = getattr(settings, 'SECRET_KEY')
-        bc = BCipher(key)
-        enc = bc.encrypt(cleartext)
-        setattr(model_instance, self.attname, enc)
+    def get_prep_value(self, value):
+        if value is not None and value != '':
+            bc = BCipher()
+            enc = bc.encrypt(value)
+        else:
+            enc = value
         return enc
     
     def to_python(self, value):
         value = super(CryptField, self).to_python(value)
         if value is not None and value != '':
-            key = getattr(settings, 'SECRET_KEY')
-            bc = BCipher(key)
+            bc = BCipher()
             return bc.decrypt(value)
         return value
 
