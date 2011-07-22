@@ -1,4 +1,4 @@
-#Fri Jul 22 09:49:44 ART 2011
+#Fri Jul 22 15:17:41 ART 2011
 eclipse.preferences.version=1
 encoding//b3connect/admin.py=utf-8
 encoding//b3connect/console/client.py=utf-8
@@ -11,6 +11,7 @@ encoding//b3portal/client/urls.py=utf-8
 encoding//b3portal/client/views.py=utf-8
 encoding//b3portal/geoip.py=utf-8
 encoding//b3portal/management/commands/addserver.py=utf-8
+encoding//b3portal/management/commands/dumpdbconf.py=utf-8
 encoding//b3portal/management/commands/initdb.py=utf-8
 encoding//b3portal/management/commands/updategeoip.py=utf-8
 encoding//b3portal/middleware.py=utf-8
