@@ -38,7 +38,7 @@ class ServerDetectMiddleware(object):
                     request.session['server_list'] = server_list
         
         request.__class__.server_list = server_list
- 
+
         server = None
         if request.GET.has_key('server'):
             server = request.GET.get('server')

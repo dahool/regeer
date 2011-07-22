@@ -6,12 +6,7 @@ def init_database_config(request=None):
     
     try:
         from django.db import connections
-        servers = None
-        if request and hasattr(request, 'session'):
-            servers = request.session.get('server_list', None)
-        if not servers:
-            servers = Server.objects.all()
-        for server in servers:
+        for server in Server.objects.all():
             # we want to ensure some of the database settings
             # were update to avoid recreating an existing connection
             if settings.DATABASES.has_key(server.uuid):
