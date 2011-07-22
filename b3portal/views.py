@@ -19,12 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from common.view.decorators import render
 
 from django.views.decorators.cache import cache_page
-
+from b3portal.models import Server
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 @render('b3portal/index.html')
 def home(request):
-    if len(request.server_list) == 0:
+    if Server.objects.count() == 0:
         return HttpResponseRedirect(reverse("admin:index"))
     return {}
