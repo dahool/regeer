@@ -24,7 +24,7 @@ from django.conf import settings
 class BCipher:
     def __init__(self, pwd=None):
         if not pwd:
-            pwd = getattr(settings, 'SECRET_KEY')
+            pwd = getattr(settings, 'CIPHER_KEY', settings.SECRET_KEY)
         self.__cipher = Blowfish.new(pwd)
     def encrypt(self, text):
         ciphertext = self.__cipher.encrypt(self.__pad_file(text))

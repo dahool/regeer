@@ -1,25 +1,43 @@
+# -*- coding: utf-8 -*-
+"""Copyright (c) 2010, 2011 Sergio Gabriel Teves
+All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""
 from django import forms
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
 from djangoui.extras.widgets import SelectTimeWidget
 
-UI_VERSION = getattr(settings, 'UI_VERSION', '1.8.4') 
-UI_PATH = getattr(settings, 'UI_PATH', 'ui/')
+UI_VERSION = getattr(settings, 'UI_VERSION', '1.8.14')
 UI_THEME = getattr(settings, 'UI_THEME', 'dot-luv')
-JQUERY_UI_JS = 'jquery-ui-' + UI_VERSION + '.custom.min.js'
-JQUERY_UI_CSS = 'jquery-ui-' + UI_VERSION + '.custom.css'
+MEDIA_PATH =  getattr(settings, 'MEDIA_PATH', 'http://ajax.googleapis.com/ajax/libs/jqueryui/') 
+JQUERY_UI_JS = 'jquery-ui.min.js'
+JQUERY_UI_CSS = 'jquery-ui.css'
 
 class uiTimeInput(forms.widgets.TimeInput):
     format = '%H:%M' 
     
     class Media:
         css = {
-            'screen': (settings.MEDIA_URL + UI_PATH + UI_THEME + '/' + JQUERY_UI_CSS,
-                       settings.MEDIA_URL + UI_PATH + 'jquery.timemachine.css',)
+            'screen': (MEDIA_PATH + UI_VERSION + '/themes/base/' + JQUERY_UI_CSS,
+                       settings.STATIC_URL + 'css/jquery.timemachine.css',)
         }
-        js = (settings.MEDIA_URL + UI_PATH + JQUERY_UI_JS,
-              settings.MEDIA_URL + UI_PATH + 'jquery.timemachine-1.0.0.min.js',)
+        js = (MEDIA_PATH + UI_VERSION + '/' + JQUERY_UI_JS,
+              settings.STATIC_URL + 'js/jquery.timemachine-1.0.0.min.js',)
 
     def __init__(self, attrs={}):
         super(uiTimeInput, self).__init__(attrs={'class': 'time-select-widget', 'size': '5', 'autocomplete': 'off'}, format=self.format)
@@ -33,10 +51,9 @@ class uiTimeInput(forms.widgets.TimeInput):
 class uiDateInput(forms.widgets.DateInput):
     class Media:
         css = {
-            'screen': (settings.MEDIA_URL + UI_PATH + UI_THEME + '/' + JQUERY_UI_CSS,
-                       settings.MEDIA_URL + UI_PATH + 'style.css',)
+            'screen': (MEDIA_PATH + UI_VERSION + '/themes/base/' + JQUERY_UI_CSS,)
         }
-        js = (settings.MEDIA_URL + UI_PATH + JQUERY_UI_JS,)
+        js = (MEDIA_PATH + UI_VERSION + '/' + JQUERY_UI_JS,)
 
     def __init__(self, attrs=None, format=None):
         self.language = get_language()[:2]

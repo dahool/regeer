@@ -4,7 +4,7 @@
 {% block extra_header %}
 {{ block.super }}
 {{ form.media }}
-{% jscript "js/client.js" %}
+<script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
 <script type="text/javascript">
 function set_field(field, value) {
 	var value1 = value.substring(0,10)

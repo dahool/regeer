@@ -1,3 +1,21 @@
+# -*- coding: utf-8 -*-
+"""Copyright (c) 2011 Sergio Gabriel Teves
+All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""
 from common.view.decorators import render
 
 from django.shortcuts import render_to_response
@@ -5,7 +23,7 @@ from common.shortcuts import get_object_or_404
 from django.template.context import RequestContext
 from django.db.models import Q
 
-from b3portal.models import Map
+from b3portal.plugins.map.models import Map
 from b3connect.models import Penalty, Client, Group
 from django.conf import settings
 from django.utils.translation import gettext as _
