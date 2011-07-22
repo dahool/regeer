@@ -32,7 +32,7 @@ def has_server_perm(user, perm, obj):
     """/
     This fallback to general perms if not object perm is found
     """
-    if user.is_anonymous: return False
+    if user.is_anonymous(): return False
     if user.has_perm(perm, _get_server(obj)):
         return True
     return user.has_perm(perm)
@@ -41,7 +41,7 @@ def has_server_perms(user, perm_list, obj):
     """/
     This fallback to general perms if not object perm is found
     """
-    if user.is_anonymous: return False
+    if user.is_anonymous(): return False
     if user.has_perms(perm_list, _get_server(obj)):
         return True
     return user.has_perms(perm_list)
@@ -50,7 +50,7 @@ def has_any_server_perms(user, perm_list, obj):
     """/
     This fallback to general perms if not object perm is found
     """
-    if user.is_anonymous: return False
+    if user.is_anonymous(): return False
     srv = _get_server(obj)
     for perm in perm_list:
         if has_server_perm(user, perm, srv):
@@ -61,7 +61,7 @@ def has_server(user, obj):
     """/
     Check if the user has any kind of permission in the passed object
     """
-    if user.is_anonymous: return False
+    if user.is_anonymous(): return False
     if user.is_superuser: return True
     if user.server_permissions.filter(server=obj).count() > 0:
         return True
