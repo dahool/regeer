@@ -54,8 +54,7 @@ ROOT_URLCONF = 'regeer.urls'
 
 AUTH_PROFILE_MODULE = "b3portal.models.UserProfile"
 
-AUTHENTICATION_BACKENDS = ('djangocommonutils.auth.backends.AnonymousSupportBackend',
-                           'django.contrib.auth.backends.ModelBackend',
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
                            'b3portal.permission.backend.ServerPermissionBackend')
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'regeer.dashboard.CustomIndexDashboard'
