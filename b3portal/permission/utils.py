@@ -80,7 +80,7 @@ def server_permission_required_with_403(perm, login_url=None):
         
     def _check_permission(view_func):
         def _checklogin(request, *args, **kwargs):
-            if has_server_perm(request.user, perm, request.server):
+            if request.user.is_superuser or has_server_perm(request.user, perm, request.server):
                 return view_func(request, *args, **kwargs)
             elif not request.user.is_authenticated():
                 return HttpResponseRedirect('%s?%s=%s' % (login_url, REDIRECT_FIELD_NAME, quote(request.get_full_path())))

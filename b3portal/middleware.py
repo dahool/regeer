@@ -31,7 +31,7 @@ class ServerDetectMiddleware(object):
         if not server_list:
             server_list = [] 
             for s in Server.objects.all():
-                if has_server(request.user, s):
+                if not request.user.is_authenticated or has_server(request.user, s):
                     server_list.append(s)
             if hasattr(request, 'session'):
                 if len(server_list)>0:
