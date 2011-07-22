@@ -30,7 +30,8 @@ import datetime
 
 class StatusPlugin(models.Model):
     server = models.ForeignKey(Server, related_name="status_plugin", unique=True, verbose_name=_('Server'))
-    location = models.CharField(max_length=500, verbose_name=_('Status File Location'))
+    location = models.CharField(max_length=500, verbose_name=_('Status File Location'),
+                                help_text=_('For ftp access use: ftp://user:password@host:port/file/status.xml'))
     cache = models.FileField(upload_to='status', max_length=500, editable=False, null=True)
     updated = models.DateTimeField(editable=False, null=True)
     

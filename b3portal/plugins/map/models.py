@@ -27,7 +27,8 @@ DISPLAY_SUB = re.compile(r'ut4_|ut_|ut42_')
 
 class MapPlugin(models.Model):
     server = models.ForeignKey(Server, related_name="map_plugin", unique=True, verbose_name=_('Server'))
-    location = models.CharField(max_length=500, verbose_name=_('Mapcycle file location'))
+    location = models.CharField(max_length=500, verbose_name=_('Mapcycle file location'),
+                                help_text=_('For ftp access use: ftp://user:password@host:port/file/mapcycle.txt'))
 
     def __unicode__(self):
         return repr(self)
