@@ -63,7 +63,7 @@ def has_server(user, obj):
     """
     if user.is_anonymous(): return False
     if user.is_superuser: return True
-    if user.server_permissions.filter(server=obj).count() > 0:
+    if user.server_permissions.filter(server=_get_server(obj)).count() > 0:
         return True
     # if we have any kind of global permission, this worth for all servers
     return user.has_module_perms('b3connect')

@@ -29,12 +29,16 @@ class ServerDetectMiddleware(object):
             server_list = None
             
         if not server_list or len(server_list) == 0:
-            server_list = [] 
-            for s in Server.objects.all():
-                if not request.user.is_authenticated() or has_server(request.user, s):
-                    server_list.append(s)
+#            server_list = [] 
+#            for s in Server.objects.all():
+#                if not request.user.is_authenticated() or has_server(request.user, s):
+#                    server_list.append(s)
+#            if hasattr(request, 'session'):
+#                if len(server_list)>0:
+#                    request.session['server_list'] = server_list
+            server_list = Server.objects.all()
             if hasattr(request, 'session'):
-                if len(server_list)>0:
+                if Server.objects.count() > 0:
                     request.session['server_list'] = server_list
         
         request.__class__.server_list = server_list
@@ -46,17 +50,16 @@ class ServerDetectMiddleware(object):
             if request.POST.has_key('server'):
                 server = request.POST.get('server')
         if not server:
-            if len(server_list) > 0:
-                # find default server
-                for s in server_list:
-                    if s.default:
-                        server = s.uuid
-                        break
-                if not server:
-                    server = server_list[0].uuid
+            for s in server_list:
+                if s.default:
+                    server = s.uuid
+                    break
+            if not server and len(server_list) > 0:
+                server = server_list[0].uuid
         request.__class__.server = server
         
 class MultiDBMiddleware(object):
     
     def process_request(self, request):
-        init_database_config(request)
+        from django.conf import settings
+        if settings.RUNTIME_DB_UPDATE: init_database_config(request)

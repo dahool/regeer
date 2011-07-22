@@ -62,10 +62,13 @@ class ServerAdmin(admin.ModelAdmin):
             except:
                 pass
 
+class ServerPermissionAdmin(admin.ModelAdmin):
+    filter_horizontal = ('permissions',)
+    
 admin.site.register(User, UserProfileAdmin)
 admin.site.register(Server, ServerAdmin)
 
-admin.site.register(ServerPermission)
+admin.site.register(ServerPermission, ServerPermissionAdmin)
 
 if settings.DEBUG:
     from django.contrib.auth.models import Permission

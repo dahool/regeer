@@ -31,8 +31,9 @@ from django.views.decorators.cache import cache_page
 import urllib
 from django.contrib.auth.decorators import login_required
 
-from b3portal.permission.utils import server_permission_required_with_403
+from b3portal.permission.utils import server_permission_required_with_403, has_any_server_perms
 from b3portal import permissions as perm
+from common.middleware.exceptions import Http403
 
 #from common.floodprotection import flood
 
@@ -130,10 +131,12 @@ def penalty_list(request):
 
     return {'ban_list': list}
 
-@server_permission_required_with_403(perm.VIEW_NOTICE)
 @cache_page(30*60)
 @render('b3portal/penalties/notice_list.html')
 def notice_list(request):
+    if not has_any_server_perms(request.user, [perm.VIEW_NOTICE, perm.VIEW_PENALTY], request.server):
+        raise Http403
+    
     penalties = Penalty.objects.using(request.server).filter(Q(type='Notice'))
 
     # Make sure page request is an int. If not, deliver first page.

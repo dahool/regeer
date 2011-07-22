@@ -1,4 +1,4 @@
-#Fri Jul 22 15:17:41 ART 2011
+#Fri Jul 22 15:58:05 ART 2011
 eclipse.preferences.version=1
 encoding//b3connect/admin.py=utf-8
 encoding//b3connect/console/client.py=utf-8
@@ -51,6 +51,7 @@ encoding//b3portal/rconadmin/views.py=utf-8
 encoding//b3portal/server/forms.py=utf-8
 encoding//b3portal/templatetags/gametag.py=utf-8
 encoding//b3portal/templatetags/plugintag.py=utf-8
+encoding//b3portal/templatetags/serverpermtag.py=utf-8
 encoding//b3portal/templatetags/urltag.py=utf-8
 encoding//b3portal/urls.py=utf-8
 encoding//b3portal/views.py=utf-8

@@ -7,7 +7,9 @@
 {% block main_content %}
 <h3>{% trans "Inactive Admins" %}</h3>
 <small>
+{% with 'b3connect.view_group' as checkperm %}
 {% include "b3portal/server_form.html" %}
+{% endwith %}
 </small>
 {% with client_list.paginator.count as count %}
 <span>{% blocktrans %}There are {{count}} admins who have not been seen by B3 for {%endblocktrans%}</span>

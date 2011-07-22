@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n serverpermtag %}
 <small>
 <form id="go_client" style="display:inline;" method="post" action="{% url go_player %}">
 {% csrf_token %}
@@ -8,7 +8,9 @@
 {% with request.server as current_server %}
 <select name="server">
 {% for server in request.server_list %}
+{% ifperm user server 'b3connect.view_client' %}
 <option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
+{% endifperm %}
 {% endfor %}
 </select>
 {% endwith %}

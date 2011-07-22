@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 from django.utils.functional import lazy
-from b3portal.permission.utils import has_server_perm
+from b3portal.permission.utils import has_server_perm, has_server
 
 class PermLookupDict(object):
     def __init__(self, user, server, module_name):
@@ -30,8 +30,8 @@ class PermLookupDict(object):
         return has_server_perm(self.user,"%s.%s" % (self.module_name, perm_name), self.server)
 
     def __nonzero__(self):
-        return self.user.has_module_perms(self.module_name)
-
+        return has_server(self.user, self.server)
+        #return self.user.has_module_perms(self.module_name)
 
 class PermWrapper(object):
     def __init__(self, user, server):

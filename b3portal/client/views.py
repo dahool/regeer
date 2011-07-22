@@ -405,6 +405,11 @@ def direct(request):
     pid = request.POST.get('playerid')
     next = request.POST.get('next')
     server = request.POST.get('server')
+    
+    if not has_server_perm(request.user, perm.VIEW_CLIENT, server):
+        messages.error(request, _('You don\'t have enough permissions to search on that server.'))
+        return HttpResponseRedirect(next)
+    
     try:
         pid = int(pid)
     except:
@@ -412,8 +417,8 @@ def direct(request):
         return HttpResponseRedirect(next)
     try:
         player = Client.objects.using(server).get(id=pid)
-    except:
-        messages.warning(request, _('Player with id %d not found.' % pid))
+    except Client.DoesNotExist:
+        messages.warning(request, _('A player with id %d was not found.' % pid))
         return HttpResponseRedirect(next)
     url = reverse("client_detail",kwargs={'id':player.id})
     return HttpResponseRedirect(url + "?server=%s" % server)
