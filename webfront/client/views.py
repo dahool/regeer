@@ -231,7 +231,7 @@ def addpenalty(request, id, notice=False):
     client = get_object_or_404(Client, id=id, using=request.session.get('server'))
     
     if notice:
-        if not request.user.has_perm('b3connect.add_notice') or not request.user.has_perm('b3connect.add_penalty'):
+        if not (request.user.has_perm('b3connect.add_notice') or request.user.has_perm('b3connect.add_penalty')):
             raise Http403 
         frmObj = NoticeForm
     else:
