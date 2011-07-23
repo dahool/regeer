@@ -1,6 +1,6 @@
 if ENABLE_PHPBB_AUTH:
     INSTALLED_APPS += ('phpbb_auth',)
-    AUTHENTICATION_BACKENDS += ('phpbb_auth.backends.phpbbBackend',)
+    AUTHENTICATION_BACKENDS = ('phpbb_auth.backends.phpbbBackend',) + AUTHENTICATION_BACKENDS
     DATABASE_ROUTERS = ('phpbb_auth.routers.phpbbRouter',)
 
     PHPBB_DB_ID = 'phpbb'

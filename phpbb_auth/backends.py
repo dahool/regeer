@@ -42,9 +42,12 @@ class phpbbBackend(ModelBackend):
             except User.DoesNotExist:
                 localuser = User.objects.create(username=username,
                                                 email=user.user_email)
-            localuser.set_password(password)
+                localuser.set_unusable_password()
+                localuser.save()
+            # localuser.set_password(password)
             # cache the phpbb user
-            localuser._phpbb_user_cache = user      
+            localuser._phpbb_user_cache = user
+            localuser.is_phpbb = True
             return localuser
         
         return None

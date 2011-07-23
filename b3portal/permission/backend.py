@@ -15,15 +15,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import Permission
 
-class ServerPermissionBackend(ModelBackend):
-    
+class ServerPermissionBackend(object):
+    """
+    This is not an authentication backend. Is an object permission support backend.
+    """
     supports_object_permissions = True
     supports_anonymous_user = False
     supports_inactive_user = False
     
+    def authenticate(self, username=None, password=None):
+        return None
+            
     def get_group_permissions(self, user_obj, obj=None):
         """
         Returns a set of permission strings that this user has through his/her
