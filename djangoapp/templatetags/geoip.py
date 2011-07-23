@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from django import template
 from common.utils.geoip import GeoLocation
+from django.conf import settings
 
 register = template.Library()
 
@@ -40,4 +41,4 @@ def geolocation(ip):
         except:
             data['city'] = None
         data['img'] = 'images/flag/%s.gif' % data['country_code'].lower()
-    return {'data': data}
+    return {'data': data, 'STATIC_URL': settings.STATIC_URL}
