@@ -31,6 +31,8 @@ urlpatterns = patterns('',
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^login/$', auth_views.login, kwargs={'template_name':'auth/login.html'}, name='user_signin'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/' }, name='auth_logout'),
+    url(r'^account/password/update/$', auth_views.password_change, kwargs={'template_name':'auth/password_change.html'}, name='account_update_password'),
+    url(r'^account/password/ok/$', auth_views.password_change_done, kwargs={'template_name':'auth/password_change_done.html'}, name='password_change_done'),
     url('^', include('b3portal.urls')),
     #url(r'^setlang/$', 'django.views.i18n.set_language', name='set_lang'),
 )

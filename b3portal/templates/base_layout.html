@@ -85,12 +85,13 @@ $(document).ready(function() {
 	    {% serverurl game_admin as url_nav_admin %}
 	    <li class="{% current_nav url_nav_admin %}"><a href="{{ url_nav_admin }}">{% trans "RCon" %}</a></li>
 	    {% endifsetting %}
-        <li style="float: right; margin-right: 20px;">
+        <li style="float: right; margin-right: 45px;">
 		  {% if user.is_authenticated %}
 		  {% with user.username as name %}
 		  <a alt="span">{% blocktrans %}Welcome {{name}}{% endblocktrans %} {% gravatar user.email "avatar" 18 %}</a>
 		  {% endwith %}
-		  <ul class="subnav" style="width: 145px;">
+		  <ul class="subnav">
+		  	<li><a href="{% url account_update_password %}">{% trans "Change password" %}</a></li>
 		  	<li><a class="logout" href="{% url auth_logout %}">{% trans "Sign out" %}</a></li>
 		  </ul>
 		  {% else %}
