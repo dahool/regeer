@@ -12,7 +12,7 @@ GEOIPCITY_DAT = os.path.join(PROJECT_PATH, 'pygeoip','lib','GeoLiteCity.dat')
 GEOTOOL = 'http://ipinfodb.com/ip_locator.php?ip='
 
 # Items per page in list
-ITEMS_PER_PAGE = 50
+ITEMS_PER_PAGE = 25
 
 # Level to hide to unauthorized users 
 HIGH_LEVEL_CLIENT = 20

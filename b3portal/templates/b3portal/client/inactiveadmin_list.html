@@ -1,5 +1,5 @@
 {% extends "base_layout.html" %}
-{% load listtocolumns i18n tagutils settingstag paginator navigation urltag %}
+{% load listtocolumns i18n tagutils settingstag paginator navigation urltag plugintag serverpermtag %}
 {% block title %}{{ block.super }} | {% trans "Inactive Admins" %}{% endblock %}
 {% block navigation2 %}
 {% include "b3portal/client/client_menu.html" %}
@@ -7,8 +7,33 @@
 {% block main_content %}
 <h3>{% trans "Inactive Admins" %}</h3>
 <small>
+<form style="display:inline;" method="get">
 {% with 'b3connect.view_group' as checkperm %}
-{% include "b3portal/server_form.html" %}
+{% with request.server as current_server %}
+<select name="server" onchange="this.form.submit()">
+{% for server in request.server_list %}
+{% if checkperm %}
+{% ifperm user server checkperm checkperm2 %}
+	{% if pluginname %}
+	{% ifpluginenabled pluginname server %}
+		<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
+	{% endifpluginenabled %}
+	{% else %}
+		<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
+	{% endif %}
+{% endifperm %}
+{% else %}
+	{% if pluginname %}
+	{% ifpluginenabled pluginname server %}
+		<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
+	{% endifpluginenabled %}
+	{% else %}
+		<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
+	{% endif %}
+{% endif %}
+{% endfor %}
+</select>
+{% endwith %}
 {% endwith %}
 </small>
 {% with client_list.paginator.count as count %}

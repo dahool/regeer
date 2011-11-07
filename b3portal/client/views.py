@@ -147,7 +147,7 @@ def adminlist(request, filter=False):
 #@flood
 def clientlist(request):
     data = ''
-    search = {}
+    search = {'server': request.server}
     filter = 'name'
     
     if request.GET.has_key('sort'):
@@ -170,7 +170,6 @@ def clientlist(request):
             if k == '?type':
                 k = 'type'
             search[k]=v
-        search['server']=request.server
         data = search['data']
         filter = search['type']
         clients = _getclientlist(request, request.server)

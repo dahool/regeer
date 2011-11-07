@@ -169,9 +169,9 @@ class PenaltyManager(models.Manager):
         return self.filter(type='Notice',inactive=0)
         
     def inactive(self):
-        return self.filter(Q(inactive=1) | Q(time_expire__lt=int(time.time()))).exclude(
-                                    Q(inactive=0) & Q(time_expire='-1')                                                                                        
-                                                                                        )
+        return self.filter(Q(inactive=1) | 
+                           Q(time_expire__lt=int(time.time())) & ~Q(type='Notice')
+                           ).exclude(Q(inactive=0) & Q(time_expire='-1'))
         
     def noexpired(self):
         return self.filter(Q(time_expire='-1') | Q(time_expire__gt=int(time.time())))

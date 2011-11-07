@@ -37,16 +37,17 @@ class URLNode(Node):
         args = [arg.resolve(context) for arg in self.args]
         kwargs = dict([(smart_str(k,'ascii'), v.resolve(context))
                        for k, v in self.kwargs.items()])
-
+        kwargs['server'] = context['request'].server
+        
         url = ''
         try:
-            url = reverse(self.view_name, args=args, kwargs=kwargs, current_app=context.current_app)
+            url = reverse(self.view_name, args=args, kwargs=None, current_app=context.current_app)
         except NoReverseMatch, e:
             if settings.SETTINGS_MODULE:
                 project_name = settings.SETTINGS_MODULE.split('.')[0]
                 try:
                     url = reverse(project_name + '.' + self.view_name,
-                              args=args, kwargs=kwargs, current_app=context.current_app)
+                              args=args, kwargs=None, current_app=context.current_app)
                 except NoReverseMatch:
                     if self.asvar is None:
                         # Re-raise the original exception, not the one with
@@ -57,10 +58,10 @@ class URLNode(Node):
                 if self.asvar is None:
                     raise e
 
-        try:
-            url = url + "?server=" + context['request'].server
-        except:
-            pass
+        urlargs = []
+        for k,v in kwargs.items():
+            urlargs.append("%s=%s" % (k,v))
+        url = url + "?" + "&".join(urlargs)
 
         if self.asvar:
             context[self.asvar] = url
