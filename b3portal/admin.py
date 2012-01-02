@@ -72,4 +72,6 @@ admin.site.register(ServerPermission, ServerPermissionAdmin)
 
 if settings.DEBUG:
     from django.contrib.auth.models import Permission
+    from django.contrib.contenttypes.models import ContentType
     admin.site.register(Permission)
+    admin.site.register(ContentType)

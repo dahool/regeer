@@ -26,6 +26,8 @@ from common.crypto import BCipher
 import re
 
 from django.contrib.auth.models import Permission, Group, User
+from django.contrib.contenttypes.models import ContentType
+from b3portal import appsettings
 
 DISPLAY_SUB = re.compile(r'ut4_|ut_|ut42_')
 
@@ -96,11 +98,13 @@ class Server(models.Model):
         ordering  = ('name',)
         unique_together = ('database','user','hostname')
 
+#serverPermissionChoices = [(p.id,unicode(p)) for p in Permission.objects.filter(content_type__in=ContentType.objects.filter(app_label__in=appsettings.PERMISSION_CHOICES))]
+
 class ServerPermission(models.Model):
     user = models.ForeignKey(User, related_name='server_permissions')
     server = models.ForeignKey(Server)
     groups = models.ManyToManyField(Group, verbose_name=_('groups'), blank=True)
-    permissions = models.ManyToManyField(Permission, verbose_name=_('user permissions'), blank=True)
+    permissions = models.ManyToManyField(Permission, verbose_name=_('user permissions'), blank=True, limit_choices_to={'content_type__in': ContentType.objects.filter(app_label__in=appsettings.PERMISSION_CHOICES)})
 
     def __repr__(self):
         return "%s - %s" % (self.user.username, self.server.name)

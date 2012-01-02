@@ -18,38 +18,47 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group, Permission
-
-GROUPS = [('Moderator',['b3connect.group.view_group',
-                        'b3connect.client.view_client',
-                        'b3connect.client.register_client',
-                        'b3connect.client.regular_client',
-                        'b3connect.client.regular_client',
-                        'b3connect.alias.view_aliases',
-                        'b3connect.penalty.view_penalty',
-                        'b3connect.penalty.view_notices',
-                        'b3connect.penalty.view_banlist',
-                        'b3connect.penalty.add_notice',
-                        'status.serverstatus.view_serverstatus',
-                        'follow.follow.view_follow',
-                        'chatlog.chatlog.view_chat'])]
+from django.contrib.contenttypes.models import ContentType
+from b3portal import appsettings
 
 class Command(BaseCommand):
-    help = 'Init Permission Groups'
+    help = 'Initialize Application Permissions'
 
     def handle(self, *args, **options):
         
-        for name, perms in GROUPS:
-            self.stdout.write("Processing %s...\n" % name)
+        self.stdout.write("Initializing Application Permissions ...\n")
+        
+        for ctypeKey, perms in appsettings.APP_PERMISSION.items():
+            for model, perm, title in perms:
+                ctype, c = ContentType.objects.get_or_create(name=model.title(),
+                                                  app_label=ctypeKey,
+                                                  model=model)
+                try:
+                    Permission.objects.get_or_create(name=title,
+                                              codename=perm,
+                                              content_type=ctype)
+                except Exception, e:
+                    self.stdout.write("Error: %s\n" % str(e))
+        
+        for name, perms in appsettings.APP_GROUP_PERMISSION:
+            self.stdout.write("Updating %s...\n" % name)
             g, c = Group.objects.get_or_create(name=name)
             for perm in perms:
-                app, model, code = perm.split('.')
                 try:
-                    p = Permission.objects.get_by_natural_key(code, app, model)
-                except:
-                    pass
+                    ps = perm.split('.')
+                    if len(ps) == 2:
+                        app, code = ps
+                        p = Permission.objects.get(
+                            codename=code,
+                            content_type=ContentType.objects.get(app_label=app)
+                        )
+                    else:
+                        app, model, code = ps
+                        p = Permission.objects.get_by_natural_key(code, app, model)
+                except Exception, e:
+                    self.stdout.write("Error: %s\n" % str(e))
                 else:
                     g.permissions.add(p)
                     g.save()
             
         self.stdout.write('Success.\n')
-        

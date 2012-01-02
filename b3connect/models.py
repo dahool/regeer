@@ -45,9 +45,6 @@ class Group(models.Model):
         managed = False
         ordering  = ('id',)
         db_table = u'groups'
-        permissions = (
-            ("view_group", "View admin levels and player group"),
-        )
                 
 class Client(models.Model):
     id = models.AutoField(primary_key=True)
@@ -95,15 +92,6 @@ class Client(models.Model):
         managed = False
         ordering = ('id',)
         db_table = u'clients'
-        permissions = (
-            ("view_client", "View Player Detail"),
-            ("change_client_group", "Change Player Group"),
-            ("register_client", "Mark player registered (level 1)"),
-            ("regular_client", "Mark player regular (level 2)"),
-            ("view_high_level_client", "View Admin detail"),
-            ("view_client_guid", "View Player Guid Verification Status"),
-            ("view_full_ip", "View Player Unmasked IP"),
-        )
 
 class Alias(models.Model):
     id = models.AutoField(primary_key=True)
@@ -124,9 +112,6 @@ class Alias(models.Model):
         ordering = ('-time_edit',)
         verbose_name_plural = "Aliases"
         db_table = u'aliases'
-        permissions = (
-            ("view_aliases", "View Player Aliases"),
-        )
 
 class AliasIP(models.Model):
     id = models.AutoField(primary_key=True)
@@ -206,12 +191,6 @@ class Penalty(models.Model):
         ordering = ('-time_add',)
         verbose_name_plural = "Penalties"
         db_table = u'penalties'
-        permissions = (
-            ("view_penalty", "View player penalties"),
-            ("view_notices", "View player notices"),
-            ("view_banlist", "View if player is in server banlist"),
-            ("add_notice", "Add notice"),
-        )
         
     @property
     def display_duration(self):
