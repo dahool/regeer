@@ -1,6 +1,6 @@
 {% load listtocolumns i18n tagutils settingstag urltag extendedtags %}
 {% for alias in aliases %}
-{% if obj_perms.b3connect.view_full_ip %}
+{% if obj_perms.portal.viewfullip %}
 {% set alias.ip as baseip %}
 {% set alias.ip as maskip %}
 {% else %}
@@ -8,14 +8,13 @@
 {% set alias.ip|maskip as maskip %}
 {% endif %}
 <tr class="{% cycle "odd" "even" %}">
-<td>
+<td style="text-align: right;">
 <a href="{% serverurl client_list %}&type=ip&data={{maskip}}&search=Search">{{maskip}}</a>&nbsp;<a target="_blank" href="{% setting 'GEOTOOL' %}{{baseip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
 {% if alias.ip in banlist %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endif %}
 </td>
 <td>{{alias.num_used}}</td>
 <td>{{alias.time_add|date:"DATETIME_FORMAT"}}</td>
 <td>{{alias.time_edit|date:"DATETIME_FORMAT"}}</td>
-<td>
 {% empty %}
 <tr class="odd">
 <td colspan="4">{% trans "No registered ip addresses" %}</td>

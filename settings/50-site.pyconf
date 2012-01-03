@@ -1,4 +1,4 @@
-SITE_NAME = 'CodWar Servers'
+SITE_NAME = 'CODWAR Servers'
 VERSION = '0.3.0 Alpha'
 APP_NAME = 'B3 Portal'
 

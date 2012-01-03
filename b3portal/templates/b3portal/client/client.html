@@ -7,7 +7,7 @@
 <script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	{% if obj_perms.b3connect.change_client_group or obj_perms.b3connect.regular_client  %} 	
+	{% if obj_perms.portal.updatelevel or obj_perms.portal.reglevel  %} 	
     $('#client_group').editable('{% serverurl change_clientgroup client.id %}', {
     	loadurl  : '{% serverurl group_list_json %}', 
         type    : 'select',
@@ -34,10 +34,10 @@ $(document).ready(function() {
 {% geolocation client.ip %}
 </small>
 {% endif %}
-{% if obj_perms.b3connect.view_client_guid %}<small>{% ifvalidguid client.guid %}<span class="nodecoration_icon icon_valid" title="{% trans "Guid is valid" %}">{% trans "Guid is valid" %}</span>{% else %}<span class="nodecoration_icon icon_invalid" style="color: red;" title="{% trans "Invalid guid" %}">{% trans "Invalid guid" %}</span>{% endifvalidguid %}</small>{% endif %}
+{% if obj_perms.portal.viewguid %}<small>{% ifvalidguid client.guid %}<span class="nodecoration_icon icon_valid" title="{% trans "Guid is valid" %}">{% trans "Guid is valid" %}</span>{% else %}<span class="nodecoration_icon icon_invalid" style="color: red;" title="{% trans "Invalid guid" %}">{%blocktrans%}Guid {{client.guid}} is Invalid{%endblocktrans%}</span>{% endifvalidguid %}</small>{% endif %}
 </h3>
 {% ifpluginenabled "follow" %}
-{% if obj_perms.follow.view_follow %}
+{% if obj_perms.plugin.viewfollow %}
 {% if client.followed.all %}
 {% for follow in client.followed.all %}
 <a href="{% serverurl follow:home %}#F{{client.id}}" class="nodecoration_icon icon_watch follow-message">{% with follow.time_add|date:"DATETIME_FORMAT" as since %}{% blocktrans %}Player being followed since {{since}}{% endblocktrans%}{% endwith %}</a>
@@ -51,11 +51,11 @@ $(document).ready(function() {
 <ul>
 {% ifpluginenabled "follow" %}
 {% if client.followed.all %}
-{% if obj_perms.follow.delete_follow %}
+{% if obj_perms.plugin.removefollow %}
 <li><a href="{% serverurl follow:remove client.id %}">{% trans "Remove from watch list" %}</a></li>
 {% endif %}
 {% else %}
-{% if obj_perms.follow.add_follow %}
+{% if obj_perms.plugin.addfollow %}
 <li><a href="{% serverurl follow:add client.id %}">{% trans "Add to watch list" %}</a></li>
 {% endif %}
 {% endif %}
@@ -65,20 +65,20 @@ $(document).ready(function() {
 </thead>
 <tbody>
 <tr>
-<th>{% trans "Name" %}</th><td>{{client.name}}{% ifpluginenabled "chatlog" %}{% if obj_perms.chatlog.view_chat %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% serverurl chatlog:chat_list %}&name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endif %}{% endifpluginenabled %}</td>
+<th>{% trans "Name" %}</th><td>{{client.name}}{% ifpluginenabled "chatlog" %}{% if obj_perms.plugin.chatlog %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% serverurl chatlog:chat_list %}&name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endif %}{% endifpluginenabled %}</td>
 <th>{% trans "@id" %}</th><td>{{client.id}}</td>
 </tr>
 <tr>
 <th>{% trans "Level" %}</th>
-{% if obj_perms.b3connect.view_group %}
+{% if obj_perms.portal.viewclientgroup %}
 <td id="client_group"
-{% if obj_perms.b3connect.change_client_group %}
+{% if obj_perms.portal.updatelevel %}
 title="{% trans "Edit" %}" class="nodecoration_icon icon_edit"
 {% else %}
-{% if obj_perms.b3connect.regular_client and client.group.id < 2%}
+{% if obj_perms.portal.reglevel and client.group.id < 2%}
 title="{% trans "Edit" %}" class="nodecoration_icon icon_edit"
 {% else %} 
-{% if obj_perms.b3connect.register_client and client.group.id < 1%}
+{% if obj_perms.portal.userlevel and client.group.id < 1%}
 title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="register_user('{% serverurl change_clientgroup client.id %}',1)" 
 {% endif %}
 {% endif %}
@@ -91,12 +91,12 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 </tr>
 <tr>
 <th>{% trans "First Seen" %}</th><td>{{client.time_add|date:"DATETIME_FORMAT"}}</td>
-<th>{% trans "Last Seen" %}</th><td>{{client.time_edit|date:"DATETIME_FORMAT"}}{% ifpluginenabled "status" %}{% if obj_perms.status.view_serverstatus %}<a href="{% serverurl status:client_log client.id %}" title="{% trans "Expand" %}" class="nodecoration_icon icon_table"></a>{% endif %}{% endifpluginenabled %}</td>
+<th>{% trans "Last Seen" %}</th><td>{{client.time_edit|date:"DATETIME_FORMAT"}}{% ifpluginenabled "status" %}{% if obj_perms.plugin.viewstatus %}<a href="{% serverurl status:client_log client.id %}" title="{% trans "Expand" %}" class="nodecoration_icon icon_table"></a>{% endif %}{% endifpluginenabled %}</td>
 </tr>
 <tr>
 <th>{% trans "IP Address" %}</th>
 <td>{% if client.ip %}
-{% if obj_perms.b3connect.view_full_ip %}
+{% if obj_perms.portal.viewfullip %}
 {% set client.ip as baseip %}
 {% set client.ip as maskip %}
 {% else %}
@@ -114,7 +114,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 </table>
 <br/>
 <!-- ************************ ALIASES ************************ -->
-{% if obj_perms.b3connect.view_aliases %}
+{% if obj_perms.portal.viewalias %}
 <table id="client_aliases" class="table-style cd-table client_lists">
 <caption>{% trans "Aliases" %}</caption>
 <thead>
@@ -171,9 +171,9 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 {% endifsetting %}
 {% endif %}
 <!-- ************************ PENALTIES ************************ -->
-{% if obj_perms.b3connect.view_penalty %}
+{% if obj_perms.portal.listpenalties %}
 <table class="table-style cd-table client_lists">
-<caption>{% trans "Active Penalties" %}{% if obj_perms.b3connect.add_penalty %}<a title="{% trans "Add" %}" href="{% serverurl add_penalty client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
+<caption>{% trans "Active Penalties" %}{% if obj_perms.portal.addpenalty %}<a title="{% trans "Add" %}" href="{% serverurl add_penalty client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
 <thead>
 <tr>
 <th>{% trans "Type" %}</th>
@@ -188,10 +188,10 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 {% for penalty in client.penalties.active_bans %}
 <tr class="{% cycle "odd" "even" %}">
 <td>{{penalty.get_type_display}}
-{% if obj_perms.b3connect.delete_penalty and penalty.inactive == 0 %}
+{% if obj_perms.portal.removepenalty and penalty.inactive == 0 %}
 <a href="{% serverurl disable_penalty penalty.id %}" title="{% trans "De-active" %}" class="nodecoration_icon icon_delete"></a>
 {% endif %}
-{% if obj_perms.b3connect.change_penalty and penalty.inactive == 0 %}
+{% if obj_perms.portal.editpenalty and penalty.inactive == 0 %}
 <a href="{% serverurl edit_penalty penalty.id %}" title="{% trans "Edit" %}" class="nodecoration_icon icon_edit">&nbsp;</a>
 {% endif %}
 &nbsp;
@@ -200,7 +200,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <td>{% if penalty.inactive == 0 %}{% if penalty.duration != 0 %}{{penalty.display_duration}}{%endif%}{%endif%}</td>
 <td>{% if penalty.inactive == 1 %}<span style="font-weight: bold;">{% trans "De-activated" %}</span>{%else%}{% if penalty.duration != 0 %}{{penalty.time_expire|date:"DATETIME_FORMAT"}}{%else%}<span style="color:red;">{% trans "Permanent" %}</span>{%endif%}{%endif%}</td>
 <td>{{penalty.reason|clean_colors}}</td>
-<td>{% if obj_perms.b3connect.view_high_level_client %}{% if penalty.admin %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}-B3{%endif%}{% else %}-{%endif%}</td>
+<td>{% if obj_perms.portal.viewadminsinfo %}{% if penalty.admin %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}-B3{%endif%}{% else %}-{%endif%}</td>
 </tr>
 {% empty %}
 <tr class="odd">
@@ -212,9 +212,9 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 <br/>
 {% endif %}
 <!-- ************************ NOTICES ************************ -->
-{% if obj_perms.b3connect.view_notices %}
+{% if obj_perms.portal.listpenalties %}
 <table id="client_notice" class="table-style cd-table client_lists">
-<caption>{% trans "Notices" %}{% if obj_perms.b3connect.add_notice %}<a title="{% trans "Add" %}" href="{% serverurl add_notice client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
+<caption>{% trans "Notices" %}{% if obj_perms.portal.addnotice %}<a title="{% trans "Add" %}" href="{% serverurl add_notice client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
 <thead>
 <tr>
 <th>{% trans "Added" %}</th>
@@ -268,7 +268,7 @@ title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="r
 {% endif %}
 </table>
 <br/>
-{% if obj_perms.b3connect.view_high_level_client %}    
+{% if obj_perms.portal.viewadminsinfo %}    
 <table id="admin_actions" class="table-style cd-table client_lists">
 <caption>{% trans "Admin Actions" %}</caption>
 <thead>

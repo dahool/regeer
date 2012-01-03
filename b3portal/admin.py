@@ -32,9 +32,12 @@ admin.site.unregister(User)
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
+    
+class ServerPermissionInline(admin.StackedInline):    
+    model = ServerPermission
 
 class UserProfileAdmin(UserAdmin):
-    inlines = [UserProfileInline]
+    inlines = [ServerPermissionInline]
 
 class ServerAdmin(admin.ModelAdmin):
     form = ServerForm

@@ -9,7 +9,7 @@
 {% with client_list.paginator.count as count %}
 <span>{% blocktrans %}There are {{count}} regultar visitors. Must have more than <b>50</b> connections and been seen in the last <b>7</b> days.{%endblocktrans%}
 <small>
-{% with 'b3connect.view_client' as checkperm %}
+{% with 'portal.viewclientinfo' as checkperm %}
 {% include "b3portal/server_form.html" %}
 {% endwith %}
 </small>
@@ -31,7 +31,7 @@
 <tr class="{% cycle "odd" "even" %}">
 <td><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
 <td>{{client.name}}</td>
-<td>{% if obj_perms.b3connect.view_group %}{{client.displayGroup}}{%else%}-{%endif%}</td>
+<td>{% if obj_perms.portal.viewclientgroup %}{{client.displayGroup}}{%else%}-{%endif%}</td>
 <td>{{client.connections}}</td>
 <td>{{client.time_edit|date:"DATETIME_FORMAT"}}</td>
 </tr>

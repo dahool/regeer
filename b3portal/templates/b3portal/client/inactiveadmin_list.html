@@ -8,7 +8,7 @@
 <h3>{% trans "Inactive Admins" %}</h3>
 <small>
 <form style="display:inline;" method="get">
-{% with 'b3connect.view_group' as checkperm %}
+{% with 'portal.viewclientgroup' as checkperm %}
 {% with request.server as current_server %}
 <select name="server" onchange="this.form.submit()">
 {% for server in request.server_list %}

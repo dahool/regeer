@@ -6,11 +6,9 @@
 {% serverurl penalty_list as url_nav_penalties %}
 {% serverurl notice_list as url_nav_notices %}
 <li id="{% current_nav url_nav_map current2 %}"><a href="{{url_nav_map}}">{% trans "World Map" %}</a></li>
-{% if obj_perms.b3connect.view_penalty %}
+{% if obj_perms.portal.listpenalties %}
 <li id="{% current_nav url_nav_kicks current2 %}"><a href="{{url_nav_kicks}}">{% trans "Admin Kicks" %}</a></li>
 <li id="{% current_nav url_nav_penalties current2 %}"><a href="{{url_nav_penalties}}">{% trans "Warnings" %}</a></li>
-{% endif %}
-{% if obj_perms.b3connect.view_notices or obj_perms.b3connect.view_penalty  %}
 <li id="{% current_nav url_nav_notices current2 %}"><a href="{{url_nav_notices}}">{% trans "Notices" %}</a></li>
 {% endif %}
 </ul>

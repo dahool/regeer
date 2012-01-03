@@ -84,7 +84,7 @@ def client(request, id):
     return {'client': client, 'status': online, 'banlist': list}
 
 def _get_banlist(request):
-    if not has_server_perm(request.user, perm.VIEW_BAN_LIST, request.server):
+    if not has_server_perm(request.user, perm.VIEW_PENALTY, request.server):
         return []
     cache_key = "%s_banlist" % request.server
     list = cache.get(cache_key)
@@ -110,7 +110,7 @@ def player_map(request):
         countries[country_name]=count
     return {'list': countries}
 
-@server_permission_required_with_403(perm.VIEW_GROUP)
+@server_permission_required_with_403(perm.VIEW_HIGH_LEVEL_CLIENT)
 @cache_page(15*60)
 @render('b3portal/client/admin_list.html')
 def adminlist(request, filter=False):
@@ -156,14 +156,15 @@ def clientlist(request):
         search['sort'] = sort
         search['order'] = order
             
-    if request.GET.has_key('searchall') and request.user.has_perm(perm.PERFORM_ADV_SEARCH):
-        field = request.GET['type']
-        data = request.GET['data']
-        list = {}
-        for server in request.server_list:
-            list[server.uuid] = _getclientlist(request, server.uuid)
-        return {'list': list, 'field': field, 'data': data, 'search': urllib.urlencode(search)}
-    elif request.GET.has_key('search') or request.GET.has_key('searchall'):
+#    if request.GET.has_key('searchall') and request.user.has_perm(perm.PERFORM_ADV_SEARCH):
+#        field = request.GET['type']
+#        data = request.GET['data']
+#        list = {}
+#        for server in request.server_list:
+#            list[server.uuid] = _getclientlist(request, server.uuid)
+#        return {'list': list, 'field': field, 'data': data, 'search': urllib.urlencode(search)}
+#    elif
+    if request.GET.has_key('search') or request.GET.has_key('searchall'):
         for k,v in request.GET.items():
             # there is an odd bug I can't identify
             # sometimes type is passed as ?type
@@ -428,7 +429,11 @@ def group_list(request):
     dict = {}
     query = Group.objects.using(request.server)
     if has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
-        groups = query.all()
+        server = Server.objects.get(pk=request.server)
+        if (request.user.is_superuser or server.is_owner(request.user)):
+            groups = query.all()
+        else:
+            groups = query.all().exclude(id=128)
     elif has_server_perm(request.user, perm.CLIENT_REGULAR, request.server):
         groups = query.filter(id__lte=2)
     else:

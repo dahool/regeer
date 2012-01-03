@@ -31,7 +31,8 @@ from django.views.decorators.cache import cache_page
 import urllib
 from django.contrib.auth.decorators import login_required
 
-from b3portal.permission.utils import server_permission_required_with_403, has_any_server_perms
+from b3portal.permission.utils import server_permission_required_with_403, has_any_server_perms,\
+    has_server_perm
 from b3portal import permissions as perm
 from common.middleware.exceptions import Http403
 
@@ -134,7 +135,8 @@ def penalty_list(request):
 @cache_page(30*60)
 @render('b3portal/penalties/notice_list.html')
 def notice_list(request):
-    if not has_any_server_perms(request.user, [perm.VIEW_NOTICE, perm.VIEW_PENALTY], request.server):
+    #if not has_any_server_perms(request.user, [perm.VIEW_NOTICE, perm.VIEW_PENALTY], request.server):
+    if not has_server_perm(request.user, perm.VIEW_PENALTY, request.server):        
         raise Http403
     
     penalties = Penalty.objects.using(request.server).filter(Q(type='Notice'))
@@ -148,8 +150,8 @@ def notice_list(request):
     paginator = Paginator(penalties, settings.ITEMS_PER_PAGE)
     # If page request (9999) is out of range, deliver last page of results.
     try:
-        list = paginator.page(page)
+        plist = paginator.page(page)
     except (EmptyPage, InvalidPage):
-        list = paginator.page(paginator.num_pages)
+        plist = paginator.page(paginator.num_pages)
 
-    return {'ban_list': list}
+    return {'ban_list': plist}

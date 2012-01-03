@@ -21,7 +21,7 @@
 <tbody>
 {% for info in list %}
     <tr>
-        <td>{% if perms.follow.delete_follow %}<a href="{% serverurl follow:remove info.client.id %}&ls=" class="nodecoration_icon icon_delete" title="{% trans "Remove" %}"></a>{% endif %}</td>
+        <td>{% if perms.plugin.removefollow %}<a href="{% serverurl follow:remove info.client.id %}&ls=" class="nodecoration_icon icon_delete" title="{% trans "Remove" %}"></a>{% endif %}</td>
         <td><a name="F{{info.client.id}}" href="{% serverurl client_detail info.client.id %}">{{info.client.name}}</a></td>
         <td>{{info.reason}}</td>
         <td>{{info.time_add|date:"DATETIME_FORMAT"}}</td>

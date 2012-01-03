@@ -16,28 +16,26 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-VIEW_HIGH_LEVEL_CLIENT = 'b3connect.view_high_level_client'
-VIEW_CLIENT = 'b3connect.view_client'
-VIEW_GROUP = 'b3connect.view_group' 
-VIEW_BAN_LIST = 'b3connect.view_banlist'
-PERFORM_ADV_SEARCH = 'b3connect.client_advanced_search'
-ADD_NOTICE = 'b3connect.add_notice'
-ADD_PENALTY = 'b3connect.add_penalty'
-DELETE_PENALTY = 'b3connect.delete_penalty'
-CHANGE_PENALTY = 'b3connect.change_penalty'
-CLIENT_GROUP_CHANGE = 'b3connect.change_client_group'
-CLIENT_REGISTER = 'b3connect.register_client'
-CLIENT_REGULAR = 'b3connect.regular_client'
-VIEW_PENALTY = 'b3connect.view_penalty'
-VIEW_NOTICE = 'b3connect.view_notices'
+VIEW_HIGH_LEVEL_CLIENT = 'portal.viewadminsinfo'
+VIEW_CLIENT = 'portal.viewclientinfo'
+VIEW_GROUP = 'portal.viewclientgroup' 
+ADD_NOTICE = 'portal.addnotice'
+DELETE_NOTICE = 'portal.removenotice' # TODO
+ADD_PENALTY = 'portal.addpenalty'
+DELETE_PENALTY = 'portal.removepenalty'
+CHANGE_PENALTY = 'portal.editpenalty'
+CLIENT_GROUP_CHANGE = 'portal.updatelevel'
+CLIENT_REGISTER = 'portal.userlevel'
+CLIENT_REGULAR = 'portal.reglevel'
+VIEW_GUID = 'portal.viewguid'
+VIEW_FULL_IP = 'portal.viewfullip'
+VIEW_PENALTY = 'portal.listpenalties'
 
-VIEW_GUID = 'b3connect.view_client_guid'
-VIEW_FULL_IP = 'b3connect.view_full_ip'
+#PERFORM_ADV_SEARCH = 'b3connect.client_advanced_search'
 
-STATUS_VIEWSTATUS = 'status.view_serverstatus'
-
-FOLLOW_VIEW = 'follow.view_follow'
-FOLLOW_ADD = 'follow.add_follow'
-FOLLOW_DELETE = 'follow.delete_follow'
-
-CHATLOG_VIEW = 'chatlog.view_chat'
+# PLUGINS
+CHATLOG_VIEW = 'plugin.chatlog'
+STATUS_VIEWSTATUS = 'plugin.viewstatus'
+FOLLOW_VIEW = 'plugin.viewfollow'
+FOLLOW_ADD = 'plugin.addfollow'
+FOLLOW_DELETE = 'plugin.removefollow'

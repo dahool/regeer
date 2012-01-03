@@ -9,7 +9,7 @@
 {% with client_list.paginator.count as count %}
 <span>{% blocktrans %}There are {{count}} admins{%endblocktrans%}
 <small>
-{% with 'b3connect.view_group' as checkperm %}
+{% with 'portal.viewclientgroup' as checkperm %}
 {% include "b3portal/server_form.html" %}
 {% endwith %}
 </small>

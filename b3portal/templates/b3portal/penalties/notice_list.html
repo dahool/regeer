@@ -5,7 +5,7 @@
 {% with ban_list.paginator.count as count %}
 <span>{% blocktrans %}There are {{count}} notices{%endblocktrans%}
 <small>
-{% with checkperm='b3connect.view_penalty' checkperm2='b3connect.view_notices' %}
+{% with checkperm='portal.listpenalties' %}
 {% include "b3portal/server_form.html" %}
 {% endwith %}
 </small>

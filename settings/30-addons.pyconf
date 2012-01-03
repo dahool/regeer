@@ -18,7 +18,7 @@ ITEMS_PER_PAGE = 25
 HIGH_LEVEL_CLIENT = 20
 
 # Set to True for B3 1.7 support, with new table IpAliases
-SUPPORT_IP_ALIASES = False 
+SUPPORT_IP_ALIASES = True 
 
 # Maps
 MAP_IMAGE_URL = "http://image.www.gametracker.com/images/maps/160x120/urbanterror/%s.jpg"

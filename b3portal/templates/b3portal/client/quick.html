@@ -8,7 +8,7 @@
 {% with request.server as current_server %}
 <select name="server">
 {% for server in request.server_list %}
-{% ifperm user server 'b3connect.view_client' %}
+{% ifperm user server 'portal.viewclientinfo' %}
 <option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
 {% endifperm %}
 {% endfor %}

@@ -18,11 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from common.fields import CryptField, AutoSlugField
-from common.crypto import BCipher
+#from common.crypto import BCipher
 import re
 
 from django.contrib.auth.models import Permission, Group, User
@@ -31,19 +30,6 @@ from b3portal import appsettings
 
 DISPLAY_SUB = re.compile(r'ut4_|ut_|ut42_')
 
-class UserProfile(models.Model):
-    user = models.ForeignKey(User, unique=True)
-    canChangePassword = models.BooleanField(_('Can Change Password'), default=True,
-                                            help_text=_('Allow the user to change login password'))
-
-    def __repr__(self):
-        return self.user.username
-    
-    def __unicode__(self):
-        return repr(self)
-    
-User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
-    
 DB_ENGINES_CHOICES = (
     ('django.db.backends.mysql', 'mysql'),
 #    ('django.db.backends.postgresql', 'postgresql'),
@@ -101,7 +87,7 @@ class Server(models.Model):
 #serverPermissionChoices = [(p.id,unicode(p)) for p in Permission.objects.filter(content_type__in=ContentType.objects.filter(app_label__in=appsettings.PERMISSION_CHOICES))]
 
 class ServerPermission(models.Model):
-    user = models.ForeignKey(User, related_name='server_permissions')
+    user = models.ForeignKey(User, related_name='server_permissions',verbose_name=_('Server Permissions'))
     server = models.ForeignKey(Server)
     groups = models.ManyToManyField(Group, verbose_name=_('groups'), blank=True)
     permissions = models.ManyToManyField(Permission, verbose_name=_('user permissions'), blank=True, limit_choices_to={'content_type__in': ContentType.objects.filter(app_label__in=appsettings.PERMISSION_CHOICES)})
@@ -114,6 +100,24 @@ class ServerPermission(models.Model):
     
     class Meta:
         unique_together = ('user','server')
+        
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, unique=True)
+#    canChangePassword = models.BooleanField(_('Can Change Password'), default=True,
+#                                            help_text=_('Allow the user to change login password'))
+
+    def __repr__(self):
+        return self.user.username
+    
+    def __unicode__(self):
+        return repr(self)
+
+    class Meta:
+        permissions = (
+            ("change_password", "Change Login Password"),
+        ) 
+
+User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
         
 from b3portal import init_database_config
 

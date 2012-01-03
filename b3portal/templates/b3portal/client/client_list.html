@@ -13,7 +13,7 @@
 {% with client_list.paginator.count as count %}
 <span>{% blocktrans %}There are {{count}} clients{%endblocktrans%}
 <small>
-{% with 'b3connect.view_client' as checkperm %}
+{% with 'portal.viewclientinfo' as checkperm %}
 {% include "b3portal/server_form.html" %}
 {% endwith %}
 </small>
@@ -30,9 +30,11 @@
 <input type="text" id="data" name="data" value="{{data}}" class="search submit">
 <input type="submit" name="search" id="search" value="{% trans "Search" %}">
 <!-- 
+{% comment %}
 {% if perms.b3connect.client_advanced_search and request.server_list|length > 1 %}
 <input type="submit" name="searchall" value="{% trans "Search across servers" %}">
 {% endif %}
+{% endcomment %}
  -->
 &nbsp;&nbsp;&nbsp;
 </small>
@@ -59,9 +61,9 @@
 <tr class="{% cycle "odd" "even" %}">
 <td><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
 <td name="autofill" alt="name" submit="#search" title="{% trans "Search for other users with this nickname" %}">{{client.name}}</td>
-<td>{% if obj_perms.b3connect.view_group %}<a style="font-weight: normal" href="?level={{client.group.level}}&server={{request.server}}" title="{% trans "Filter users sharing the same group" %}">{{client.displayGroup}}</a>{%else%}-{%endif%}</td>
+<td>{% if obj_perms.portal.viewclientgroup %}<a style="font-weight: normal" href="?level={{client.group.level}}&server={{request.server}}" title="{% trans "Filter users sharing the same group" %}">{{client.displayGroup}}</a>{%else%}-{%endif%}</td>
 <td name="autofill" alt="ip" submit="#search" title="{% trans "Search for other users with this IP address" %}">
-{% if obj_perms.b3connect.view_full_ip %}
+{% if obj_perms.portal.viewfullip %}
 {{client.ip}}
 {% else %}
 {{client.ip|maskip}}
