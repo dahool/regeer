@@ -33,22 +33,22 @@ class Command(BaseCommand):
         output = options.get('output')
         if not output: output = settings.LOCAL_CONFIG
         
-        databases = {}
+        databases = settings.DATABASES
         
         sys.stdout.write("\nReading database.\n")
         
         for server in Server.objects.all():
-            db = {'NAME': server.database,
-                  'ENGINE': server.engine,
-                  'USER': server.user,
-                  'PASSWORD': server.password,
-                  'HOST': server.hostname}
-            databases[server.uuid] = db
+            db = {'NAME': str(server.database),
+                  'ENGINE': str(server.engine),
+                  'USER': str(server.user),
+                  'PASSWORD': str(server.password),
+                  'HOST': str(server.hostname)}
+            databases[str(server.uuid)] = db
         
         sys.stdout.write("\nWriting config file.\n")
         
         out = open(output, 'w')
-        out.write('DATABASES.update(%s)\n' % databases)
+        out.write('DATABASES = %s\n' % databases)
         out.close()
         
         sys.stdout.write("\nDone.\n")

@@ -24,10 +24,12 @@
 				<exclude name=".svn"/>
 				<exclude name="*.pyc"/>
 				<exclude name="settings_local.py"/>
+				<exclude name="local.conf"/>
 			</fileset>
 			<preserveintarget>
 				<include name="**/pygeoip/lib/*.dat"/>
 				<include name="settings_local.py"/>
+				<include name="local.conf"/>
 				<include name="**/media/**"/>
 				<include name="**/django/**"/>
 				<include name="**/site_store/**"/>
@@ -50,12 +52,13 @@
             <arg value="${dest}/manage.py"/>
             <arg value="syncdb"/>
             <arg value="--noinput"/>
-        </exec>		
+        </exec>
+		<!--
 		<exec executable="${pythonpath}/bin/python">
 			<arg value="${dest}/manage.py"/>
 			<arg value="updategeoip"/>
-			<arg value="--no-force"/>
-		</exec>
+			<arg value="- -no-force"/>
+		</exec> -->
 		<exec executable="${pythonpath}/bin/python">
 			<arg value="${dest}/manage.py"/>
 			<arg value="collectstatic"/>

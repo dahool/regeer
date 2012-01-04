@@ -3,6 +3,7 @@ import os
 import glob
 
 LOCAL_CONFIG = None
+VERSION = None
 
 PROJECT_PATH = os.path.normpath(os.path.abspath(os.path.dirname(__file__)))
 
@@ -11,7 +12,7 @@ conffiles.sort()
 
 for f in conffiles:
     execfile(os.path.abspath(f)) 
-    
+
 if LOCAL_CONFIG and os.path.exists(LOCAL_CONFIG):
     execfile(LOCAL_CONFIG)
     

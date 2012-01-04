@@ -55,4 +55,4 @@ RUNTIME_DB_UPDATE = True
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-LOCAL_CONFIG = 'local.conf'
+LOCAL_CONFIG = os.path.join(PROJECT_PATH, 'local.conf')
