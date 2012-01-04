@@ -11,6 +11,11 @@ function do_call_get(url, id, hide) {
 		}
 	})
 }
+function do_get(url, elem) {
+	$.get(url, function(data) {
+		$(elem).html(data);
+	})
+}
 $(document).ready(
 	function() {
 		$('.option').each(

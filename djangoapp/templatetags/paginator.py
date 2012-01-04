@@ -33,6 +33,13 @@ PAGE_RE = re.compile('[\&]?(page=[0-9]+)')
 
 @register.inclusion_tag('tags/pagination.html')
 def paginate(data, params=None):
+    if params:
+        if params.find("?"):
+            params += "&"
+        else:
+            params += "?"
+    else:
+        params += "?"
     return {'data': data, 'params': params}
 
 @register.inclusion_tag('tags/pagination_page.html', takes_context = True)

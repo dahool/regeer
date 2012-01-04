@@ -7,6 +7,11 @@
 <script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	$('#client_aliases').on('click','div.pagination a', function(e) {
+		e.preventDefault();
+		do_get($(this).attr('href'),$('#client_aliases'));
+	});
+	
 	{% if obj_perms.portal.updatelevel or obj_perms.portal.reglevel %}
     $('#client_group').editable('{% serverurl change_clientgroup client.id %}', {
     	//loadurl  : '{% serverurl group_list_json %}',
@@ -118,31 +123,9 @@ title="{% trans "Click to Register Player" %}" class="nodecoration_icon icon_use
 <br/>
 <!-- ************************ ALIASES ************************ -->
 {% if obj_perms.portal.viewalias %}
-<table id="client_aliases" class="table-style cd-table client_lists">
-<caption>{% trans "Aliases" %}</caption>
-<thead>
-<tr>
-<th>{% trans "Name" %}</th>
-<th>{% trans "Times Used" %}</th>
-<th>{% trans "First Used" %}</th>
-<th>{% trans "Last Used" %}</th>
-</tr>
-</thead>
-<tbody id="aliases">
-{% with client.aliases.all|slice:":5" as aliases %} 
+<div id="client_aliases">
 {% include "b3portal/client/client_aliases.html" %}
-{% endwith %}
-</tbody>
-{% if client.aliases.all|length > 5 %}
-<tfoot>
-<tr>
-<td colspan="4">
-<span class="link right" onclick="do_call_get('{% serverurl client_more_alias client.id %}','aliases', '#client_aliases tfoot')">{% trans "more ..." %}</span>
-</td>
-</tr>
-</tfoot>
-{% endif %}
-</table>
+</div>
 <br/>
 {% ifsetting SUPPORT_IP_ALIASES %}
 <table id="client_ipaliases" class="table-style cd-table client_lists">
