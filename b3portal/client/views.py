@@ -22,7 +22,7 @@ from common.shortcuts import get_object_or_404
 from django.db.models import Q
 
 from b3connect.models import Penalty, Client, Group
-from b3portal.models import Server
+from b3portal.models import Server, Auditor
 
 from django.conf import settings
 
@@ -81,8 +81,17 @@ def client(request, id):
         except:
             pass
     
+    if has_server_perm(request.user, perm.VIEW_AUDITLOGS, request.server):
+        audits = Auditor.objects.get_by_client(client.id, request.server)
+    else:
+        audits = None
+        
     list = _get_banlist(request)
-    return {'client': client, 'status': online, 'banlist': list, 'group_data': get_json_value(get_group_list(request))}
+    return {'client': client,
+            'status': online,
+            'auditlogs': audits,
+            'banlist': list,
+            'group_data': get_json_value(get_group_list(request))}
 
 def _get_banlist(request):
     if not has_server_perm(request.user, perm.VIEW_PENALTY, request.server):
@@ -296,6 +305,10 @@ def addpenalty(request, id, notice=False):
                     p.duration = time2minutes(str(form.cleaned_data['time'])+form.cleaned_data['time_type'])
                     p.type='TempBan'
             p.save()
+            Auditor.objects.create(user=request.user,
+                                   server_id=request.server,
+                                   clientid=client.id,
+                                   message=_("Add \"%s\"") % str(p))
             if notice:
                 messages.success(request, _('Notice added successfully.'))
             else:
@@ -310,6 +323,10 @@ def disablepenalty(request, id):
     penalty = get_object_or_404(Penalty, id=id, using=request.server)
     penalty.inactive = 1
     penalty.save()
+    Auditor.objects.create(user=request.user,
+                           server_id=request.server,
+                           clientid=penalty.client.id,
+                           message=_("Disable \"%s\"") % str(penalty))    
     messages.success(request, _('Penalty de-activated successfully.'))
     return HttpResponseRedirect(urlreverse("client_detail",server=request.server, kwargs={'id':penalty.client.id}))
 
@@ -329,6 +346,10 @@ def editpenalty(request, id):
             p.reason = form.cleaned_data['reason']
             p.time_edit=datetime.datetime.now()
             p.save()
+            Auditor.objects.create(user=request.user,
+                                   server_id=request.server,
+                                   clientid=p.client.id,
+                                   message=_("Update \"%s\"") % str(p))            
             messages.success(request, _('Penalty updated.'))
             return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':p.client.id}))
     else:
@@ -362,8 +383,24 @@ def change_clientgroup(request, id):
         if client.group_id > group.id and not has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
             raise Http403
     
+    if group.id > client.group_id:
+        upgrade = True
+    else:
+        upgrade = False
+    
     client.group = group
     client.save()
+
+    if upgrade:
+        Auditor.objects.create(user=request.user,
+                           server_id=request.server,
+                           clientid=client.id,
+                           message=_("Upgrade client to \"%s\"") % group.name)
+    else:
+        Auditor.objects.create(user=request.user,
+                           server_id=request.server,
+                           clientid=client.id,
+                           message=_("Downgrade client to \"%s\"") % group.name)
     
     return HttpResponse(str(group), mimetype='plain/text')
 

@@ -30,6 +30,7 @@ CLIENT_REGULAR = 'portal.reglevel'
 VIEW_GUID = 'portal.viewguid'
 VIEW_FULL_IP = 'portal.viewfullip'
 VIEW_PENALTY = 'portal.listpenalties'
+VIEW_AUDITLOGS = 'portal.viewauditlogs'
 
 #PERFORM_ADV_SEARCH = 'b3connect.client_advanced_search'
 

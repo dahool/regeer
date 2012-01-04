@@ -21,6 +21,7 @@ import time, datetime
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 
 from common.utils.functions import duration_human
 from django.db.models import Q
@@ -178,8 +179,12 @@ class Penalty(models.Model):
     objects = PenaltyManager()
     
     def __unicode__(self):
-        return repr(self)
-        
+        if self.duration == 0:
+            return ugettext(u"%(type)s. Reason %(reason)s" % {'type': self.get_type_display(), 'reason': self.reason})
+        return ugettext(u"%(type)s for %(duration)s. Reason %(reason)s" % {'type': self.get_type_display(),
+                                                                    'duration': self.display_duration,
+                                                                    'reason': self.reason})
+            
     def __repr__(self):
         return "%s - %s [%s] (%s)" % (self.client.name,
                                       self.type,

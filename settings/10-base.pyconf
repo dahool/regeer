@@ -56,3 +56,6 @@ RUNTIME_DB_UPDATE = True
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 LOCAL_CONFIG = os.path.join(PROJECT_PATH, 'local.conf')
+
+UI_VERSION='1.8.16'
+UI_MEDIA_PATH='http://ajax.googleapis.com/ajax/libs/jqueryui/'

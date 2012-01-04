@@ -24,7 +24,7 @@ from djangoui.extras.widgets import SelectTimeWidget
 
 UI_VERSION = getattr(settings, 'UI_VERSION', '1.8.14')
 UI_THEME = getattr(settings, 'UI_THEME', 'dot-luv')
-MEDIA_PATH =  getattr(settings, 'MEDIA_PATH', 'http://ajax.googleapis.com/ajax/libs/jqueryui/') 
+MEDIA_PATH =  getattr(settings, 'UI_MEDIA_PATH', 'http://ajax.googleapis.com/ajax/libs/jqueryui/') 
 JQUERY_UI_JS = 'jquery-ui.min.js'
 JQUERY_UI_CSS = 'jquery-ui.css'
 

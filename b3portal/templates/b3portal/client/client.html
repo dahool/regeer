@@ -271,6 +271,7 @@ title="{% trans "Click to Register Player" %}" class="nodecoration_icon icon_use
 {% endif %}
 </table>
 <br/>
+<!-- ************************ ADMIN ACTIONS ************************ -->
 {% if obj_perms.portal.viewadminsinfo %}    
 <table id="admin_actions" class="table-style cd-table client_lists">
 <caption>{% trans "Admin Actions" %}</caption>
@@ -294,6 +295,36 @@ title="{% trans "Click to Register Player" %}" class="nodecoration_icon icon_use
 <tr>
 <td colspan="6">
 <span class="link right" onclick="do_call_get('{% serverurl client_more_admactions client.id %}','adminact', '#admin_actions tfoot')">{% trans "more ..." %}</span>
+</td>
+</tr>
+</tfoot>
+{% endif %}
+</table>
+<br/>
+{% endif %}
+<!-- ************************ PORTAL ACTIONS ************************ -->
+{% if auditlogs %}    
+<table id="portal_actions" class="table-style cd-table client_lists">
+<caption>{% trans "Portal Actions" %}</caption>
+<thead>
+<tr>
+<th style="width: 125px;">{% trans "Date" %}</th>
+<th>{% trans "User" %}</th>
+<th>{% trans "Action" %}</th>
+</tr>
+</thead>
+<tbody id="portalact">
+{% with auditlogs|slice:":5" as logs %} 
+{% include "b3portal/client/client_audit.html" %}
+{% endwith %}
+</tbody>
+{% if auditlogs.all|length > 5 %}
+<tfoot>
+<tr>
+<td colspan="3">
+<!-- 
+<span class="link right" onclick="do_call_get('{% serverurl client_more_admactions client.id %}','adminact', '#admin_actions tfoot')">{% trans "more ..." %}</span>
+-->
 </td>
 </tr>
 </tfoot>

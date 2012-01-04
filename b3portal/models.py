@@ -42,7 +42,7 @@ PARSER_CHOICES = [(v,v) for v in settings.B3_PARSERS]
 
 class Server(models.Model):
     uuid = AutoSlugField(max_length=50, unique=True, editable=False,prepopulate_from="name", force_update=False, primary_key=True)
-    name = models.CharField(max_length=40, verbose_name=_('Server Name'))
+    name = models.CharField(max_length=40, verbose_name=_('Server Name'), db_index=True)
     game = models.CharField(max_length=15, choices=PARSER_CHOICES, verbose_name=_('Game'))
     default = models.BooleanField(default=False, verbose_name=_('Default'), help_text=_('Set as default server'), db_index=True)
     
@@ -100,7 +100,27 @@ class ServerPermission(models.Model):
     
     class Meta:
         unique_together = ('user','server')
-        
+
+class AuditorManager(models.Manager):
+    
+    def get_by_client(self, clientId, server):
+        return self.filter(clientid=clientId, server=server).order_by('-created')
+    
+class Auditor(models.Model):
+    user = models.ForeignKey(User)
+    server = models.ForeignKey(Server)
+    clientid = models.IntegerField(db_index=True, default=0)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+    message = models.CharField(max_length=765)
+
+    objects = AuditorManager()
+    
+    def __repr__(self):
+        return "%s - %s - %s - %s" % (self.user.username, self.server.name, self.created, self.message)
+            
+    def __unicode__(self):
+        return repr(self)
+            
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
 #    canChangePassword = models.BooleanField(_('Can Change Password'), default=True,
