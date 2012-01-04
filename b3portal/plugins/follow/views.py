@@ -26,12 +26,11 @@ from django.utils.translation import gettext as _
 
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from b3portal.plugins import is_plugin_enabled
 
 from b3portal.permission.utils import server_permission_required_with_403
 from b3portal import permissions as perm
-
+from b3portal.resolver import urlreverse
 
 @server_permission_required_with_403(perm.FOLLOW_VIEW)
 @render('follow/list.html')
@@ -54,11 +53,11 @@ def add(request, id):
                        time_add=datetime.datetime.now(),
                        admin_id=0)
             messages.success(request, _('Follow added successfully.'))
-            return HttpResponseRedirect(reverse("client_detail",kwargs={'id':id}))
+            return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':id}))
     else:
         if client.followed.all():
             messages.error(request, _('User already exists.'))
-            return HttpResponseRedirect(reverse("client_detail",kwargs={'id':id}))            
+            return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':id}))            
         form = FollowForm()
         
     return {'form': form, 'client': client}
@@ -74,6 +73,6 @@ def remove(request, id):
         messages.error(request, _('User is not in the watch list'))
 
     if request.GET.has_key('ls'):
-        return HttpResponseRedirect(reverse("follow:home"))
+        return HttpResponseRedirect(urlreverse("follow:home",server=request.server))
     else:
-        return HttpResponseRedirect(reverse("client_detail",kwargs={'id': id}))    
+        return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id': id}))    

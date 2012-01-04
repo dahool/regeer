@@ -34,7 +34,6 @@ from django.views.decorators.cache import cache_page
 import urllib
 from b3portal.client.forms import PenaltyForm, NoticeForm
 
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.translation import gettext as _
 from common.utils.functions import time2minutes
@@ -53,6 +52,8 @@ from b3portal.plugins import is_plugin_installed
 
 from b3portal.permission.utils import server_permission_required_with_403, has_server_perm, has_any_server_perms
 from b3portal import permissions as perm
+from b3portal.resolver import urlreverse
+from common.view.renders.json import get_json_value
 
 @server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(15*60)
@@ -81,7 +82,7 @@ def client(request, id):
             pass
     
     list = _get_banlist(request)
-    return {'client': client, 'status': online, 'banlist': list}
+    return {'client': client, 'status': online, 'banlist': list, 'group_data': get_json_value(get_group_list(request))}
 
 def _get_banlist(request):
     if not has_server_perm(request.user, perm.VIEW_PENALTY, request.server):
@@ -299,7 +300,7 @@ def addpenalty(request, id, notice=False):
                 messages.success(request, _('Notice added successfully.'))
             else:
                 messages.success(request, _('Penalty added successfully.'))
-            return HttpResponseRedirect(reverse("client_detail",kwargs={'id':id}))
+            return HttpResponseRedirect(urlreverse("client_detail", server=request.server, kwargs={'id':id}))
     else:
         form = frmObj()
     return {'form': form, 'client': client}
@@ -310,7 +311,7 @@ def disablepenalty(request, id):
     penalty.inactive = 1
     penalty.save()
     messages.success(request, _('Penalty de-activated successfully.'))
-    return HttpResponseRedirect(reverse("client_detail",kwargs={'id':penalty.client.id}))
+    return HttpResponseRedirect(urlreverse("client_detail",server=request.server, kwargs={'id':penalty.client.id}))
 
 @server_permission_required_with_403(perm.CHANGE_PENALTY)
 @render('b3portal/client/add_penalty.html')
@@ -329,7 +330,7 @@ def editpenalty(request, id):
             p.time_edit=datetime.datetime.now()
             p.save()
             messages.success(request, _('Penalty updated.'))
-            return HttpResponseRedirect(reverse("client_detail",kwargs={'id':p.client.id}))
+            return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':p.client.id}))
     else:
         if p.duration==0:
             form = PenaltyForm(initial={'permanent': True, 'reason': p.reason})
@@ -347,9 +348,11 @@ def change_clientgroup(request, id):
 
     g = int(request.POST.get('value'))
     if not has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
-        if g <= 1 and not has_any_server_perms(request.user, [perm.CLIENT_REGISTER, perm.CLIENT_REGULAR], request.server):
-            raise Http403
-        if g <= 2 and not has_server_perm(request.user, perm.CLIENT_REGULAR, request.server):
+        if g <= 1 and has_any_server_perms(request.user, [perm.CLIENT_REGISTER, perm.CLIENT_REGULAR], request.server):
+            pass
+        elif g <= 2 and has_server_perm(request.user, perm.CLIENT_REGULAR, request.server):
+            pass
+        else:
             raise Http403        
     
     group = get_object_or_404(Group, id=g, using=request.server)
@@ -420,12 +423,14 @@ def direct(request):
     except Client.DoesNotExist:
         messages.warning(request, _('A player with id %d was not found.' % pid))
         return HttpResponseRedirect(next)
-    url = reverse("client_detail",kwargs={'id':player.id})
-    return HttpResponseRedirect(url + "?server=%s" % server)
+    return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':player.id}))
 
 @cache_page(180*60)
 @render('json')
 def group_list(request):
+    return get_group_list(request)
+
+def get_group_list(request):
     dict = {}
     query = Group.objects.using(request.server)
     if has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
@@ -440,4 +445,4 @@ def group_list(request):
         groups = query.filter(id=0)
     for group in groups:
         dict[group.id]=str(group)
-    return dict 
+    return dict     

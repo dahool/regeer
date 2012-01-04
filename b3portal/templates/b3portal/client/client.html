@@ -7,14 +7,17 @@
 <script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	{% if obj_perms.portal.updatelevel or obj_perms.portal.reglevel  %} 	
+	{% if obj_perms.portal.updatelevel or obj_perms.portal.reglevel %}
     $('#client_group').editable('{% serverurl change_clientgroup client.id %}', {
-    	loadurl  : '{% serverurl group_list_json %}', 
+    	//loadurl  : '{% serverurl group_list_json %}',
+    	data   : '{{group_data|safe}}',
         type    : 'select',
-        submit  : '{% trans "Save" %}'
-    });
+        submit  : '{% trans "Save" %}',
+        indicator : '{% trans "Saving..." %}'
+    });		
     {% endif %}
 });
+
 </script>
 {% endblock %}
 {% block navigation2 %}
@@ -73,13 +76,13 @@ $(document).ready(function() {
 {% if obj_perms.portal.viewclientgroup %}
 <td id="client_group"
 {% if obj_perms.portal.updatelevel %}
-title="{% trans "Edit" %}" class="nodecoration_icon icon_edit"
+title="{% trans "Click to edit..." %}" class="nodecoration_icon icon_edit"
 {% else %}
-{% if obj_perms.portal.reglevel and client.group.id < 2%}
-title="{% trans "Edit" %}" class="nodecoration_icon icon_edit"
+{% if obj_perms.portal.reglevel and client.group_id < 2%}
+title="{% trans "Click to edit..." %}" class="nodecoration_icon icon_edit"
 {% else %} 
-{% if obj_perms.portal.userlevel and client.group.id < 1%}
-title="{% trans "Register" %}" class="nodecoration_icon icon_useradd" onclick="register_user('{% serverurl change_clientgroup client.id %}',1)" 
+{% if obj_perms.portal.userlevel and client.group_id < 1%}
+title="{% trans "Click to Register Player" %}" class="nodecoration_icon icon_useradd" onclick="register_user('{% serverurl change_clientgroup client.id %}',1)" 
 {% endif %}
 {% endif %}
 {% endif %}>
