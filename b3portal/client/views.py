@@ -86,7 +86,8 @@ def client(request, id):
     else:
         audits = None
         
-    client_aliases = _get_client_aliases(request, client)
+    client_aliases = _paginate(request, client.aliases.all())
+    ipaliases = _paginate(request, client.ip_aliases.all())
         
     list = _get_banlist(request)
     
@@ -95,7 +96,7 @@ def client(request, id):
             'auditlogs': audits,
             'banlist': list,
             'client_aliases': client_aliases,
-            #'pageparam': 'server=' + request.server,
+            'client_ipaliases': ipaliases,
             'group_data': get_json_value(get_group_list(request))}
 
 def _get_banlist(request):
@@ -414,17 +415,16 @@ def change_clientgroup(request, id):
 @render('b3portal/client/client_aliases.html')
 def more_alias(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
-    client_aliases = _get_client_aliases(request, client)
-    return {'client_aliases': client_aliases,
-            'banlist': _get_banlist(request),
-            'client': client}
+    client_aliases = _paginate(request, client.aliases.all())
+    return {'client_aliases': client_aliases, 'client': client}
 
 @server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(15*60)
 @render('b3portal/client/client_ipaliases.html')
 def more_ipalias(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
-    return {'aliases': client.ip_aliases.all(),
+    ipaliases = _paginate(request, client.ip_aliases.all())
+    return {'client_ipaliases': ipaliases,
             'banlist': _get_banlist(request),
             'client': client}
 
@@ -494,8 +494,8 @@ def get_group_list(request):
         dict[group.id]=str(group)
     return dict     
 
-def _get_client_aliases(request, client):
-    paginator = Paginator(client.aliases.all(), settings.ITEMS_ON_CLIENT_PAGE)
+def _paginate(request, data):
+    paginator = Paginator(data, settings.ITEMS_ON_CLIENT_PAGE)
 
     try:
         page = int(request.GET.get('page', '1'))

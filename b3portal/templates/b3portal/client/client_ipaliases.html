@@ -1,4 +1,16 @@
-{% load listtocolumns i18n tagutils settingstag urltag extendedtags %}
+{% load listtocolumns i18n tagutils settingstag urltag extendedtags paginator %}
+<table class="table-style cd-table client_lists">
+<caption>{% trans "IP Addresses" %}</caption>
+<thead>
+<tr>
+<th>{% trans "IP" %}</th>
+<th>{% trans "Times Used" %}</th>
+<th>{% trans "First Used" %}</th>
+<th>{% trans "Last Used" %}</th>
+</tr>
+</thead>
+<tbody>
+{% with client_ipaliases.object_list as aliases %}
 {% for alias in aliases %}
 {% if obj_perms.portal.viewfullip %}
 {% set alias.ip as baseip %}
@@ -19,4 +31,18 @@
 <tr class="odd">
 <td colspan="4">{% trans "No registered ip addresses" %}</td>
 </tr>
-{% endfor %}
+{% endfor %} {% endwith %}
+</tbody>
+<tfoot>
+	<tr>
+		<td colspan="4">
+			{% serverurl client_more_ipalias client.id as aliasurl %}
+			{% paginate client_ipaliases aliasurl %}
+		</td>
+	</tr>
+</tfoot>
+</table>
+
+
+
+

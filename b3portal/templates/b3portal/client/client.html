@@ -11,6 +11,10 @@ $(document).ready(function() {
 		e.preventDefault();
 		do_get($(this).attr('href'),$('#client_aliases'));
 	});
+	$('#client_ipaliases').on('click','div.pagination a', function(e) {
+		e.preventDefault();
+		do_get($(this).attr('href'),$('#client_ipaliases'));
+	});	
 	
 	{% if obj_perms.portal.updatelevel or obj_perms.portal.reglevel %}
     $('#client_group').editable('{% serverurl change_clientgroup client.id %}', {
@@ -128,31 +132,9 @@ title="{% trans "Click to Register Player" %}" class="nodecoration_icon icon_use
 </div>
 <br/>
 {% ifsetting SUPPORT_IP_ALIASES %}
-<table id="client_ipaliases" class="table-style cd-table client_lists">
-<caption>{% trans "IP Addresses" %}</caption>
-<thead>
-<tr>
-<th>{% trans "IP" %}</th>
-<th>{% trans "Times Used" %}</th>
-<th>{% trans "First Used" %}</th>
-<th>{% trans "Last Used" %}</th>
-</tr>
-</thead>
-<tbody id="ipaliases">
-{% with client.ip_aliases.all|slice:":5" as aliases %} 
+<div id="client_ipaliases">
 {% include "b3portal/client/client_ipaliases.html" %}
-{% endwith %}
-</tbody>
-{% if client.ip_aliases.all|length > 5 %}
-<tfoot>
-<tr>
-<td colspan="4">
-<span class="link right" onclick="do_call_get('{% serverurl client_more_ipalias client.id %}','ipaliases', '#client_ipaliases tfoot')">{% trans "more ..." %}</span>
-</td>
-</tr>
-</tfoot>
-{% endif %}
-</table>
+</div>
 <br/>
 {% endifsetting %}
 {% endif %}
