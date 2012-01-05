@@ -42,7 +42,7 @@ class phpbbRouter(object):
     def allow_relation(self, obj1, obj2, **hints):
         return None
     
-    def allow_syncdb(self, db, model):
-        if self._is_bb(model):
-            return False
-        return None
+#    def allow_syncdb(self, db, model):
+#        if self._is_bb(model):
+#            return False
+#        return None

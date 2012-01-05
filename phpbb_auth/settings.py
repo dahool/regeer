@@ -16,7 +16,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-# PHPBB GROUP NAME / DJANGO GROUP NAME
 from django.conf import settings
+# PHPBB GROUP NAME / DJANGO GROUP NAME
 DEFAULT_GROUP_MAPPING = {'ADMINISTRATORS':'Admin'}
 GROUP_MAPPING = getattr(settings, 'PHPBB_GROUP_MAPPING', DEFAULT_GROUP_MAPPING)
+SERVERS_MAPPING = getattr(settings, 'PHPBB_SERVERS', [])

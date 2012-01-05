@@ -91,9 +91,11 @@ $(document).ready(function() {
 		  <a alt="span">{% blocktrans %}Welcome {{name}}{% endblocktrans %} {% gravatar user.email "avatar" 18 %}</a>
 		  {% endwith %}
 		  <ul class="subnav">
-		  	{% if perms.b3portal.change_password %}
+		  	<!--  {- % if perms.b3portal.change_password % -} -->
+		  	{% if not request.user.is_external %}
 		  	<li><a href="{% url account_update_password %}">{% trans "Change password" %}</a></li>
 		  	{% endif %}
+		  	<!--  {- % endif % -} -->
 		  	<li><a class="logout" href="{% url auth_logout %}">{% trans "Sign out" %}</a></li>
 		  </ul>
 		  {% else %}

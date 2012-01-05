@@ -44,14 +44,28 @@ class phpbbBackend(ModelBackend):
                                                 email=user.user_email)
                 localuser.set_unusable_password()
                 localuser.save()
-            # localuser.set_password(password)
             # cache the phpbb user
             localuser._phpbb_user_cache = user
             localuser.is_phpbb = True
+            localuser.is_external = True
             return localuser
         
         return None
-    
+
+    def get_user(self, user_id):
+        try:
+            u = User.objects.get(pk=user_id)
+            try:
+                user = bbUser.objects.get(username_clean=u.username.lower())
+                u._phpbb_user_cache = user
+                u.is_phpbb = True
+                u.is_external = True
+            except bbUser.DoesNotExist:
+                return None            
+        except User.DoesNotExist:
+            return None
+        return u
+            
     def get_group_permissions(self, user_obj):
         """
         Returns a set of permission strings that this user has through his/her
