@@ -5,6 +5,8 @@
 <li id="{% current_nav url_nav_map current2 %}"><a href="{{ url_nav_map }}">{% trans "World Map" %}</a></li>
 <li id="{% current_nav url_nav_regular_list current2 %}"><a href="{{ url_nav_regular_list }}">{% trans "Regular Visitors" %}</a></li>
 {% if obj_perms.portal.listadmins %}
+{% serverurl admin_list as url_nav_admin_list %}
+{% serverurl inactive_admin_list as url_nav_inadmin_list %}
 <li id="{% current_nav url_nav_admin_list current2 %}"><a href="{{ url_nav_admin_list }}">{% trans "Admin List" %}</a></li>
 <li id="{% current_nav url_nav_inadmin_list current2 %}"><a href="{{ url_nav_inadmin_list }}">{% trans "Inactive Admins" %}</a></li>
 {% endif %}
