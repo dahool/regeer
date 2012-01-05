@@ -1,0 +1,54 @@
+{% load urltag listtocolumns i18n tagutils settingstag paginator %}
+{% with client_admactions.object_list as admactions %}
+{% if admactions %}
+<table class="table-style cd-table client_lists">
+<caption>{% trans "Admin Actions" %}</caption>
+<thead>
+<tr>
+<th>{% trans "Type" %}</th>
+<th>{% trans "Added" %}</th>
+<th>{% trans "Duration" %}</th>
+<th>{% trans "Expires" %}</th>
+<th>{% trans "Reason" %}</th>
+<th>{% trans "Client" %}</th>
+</tr>
+</thead>
+<tbody>
+{% for penalty in admactions %}
+<tr class="{% cycle "odd" "even" %}">
+<td>{{penalty.get_type_display}}</td>
+<td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
+<td>{% if penalty.inactive == 0 %}{% if penalty.duration != 0 %}{{penalty.display_duration}}{%endif%}{%endif%}</td>
+<td>
+{% if penalty.type == 'Ban' or penalty.type == 'TempBan' %}
+    {% if penalty.inactive == 1 %}
+        <span style="font-weight: bold;">{% trans "De-activated" %}</span>
+    {%else%}
+        {% if penalty.duration != 0 %}
+            {% if penalty.is_expired %}
+                {% trans "Expired" %}
+            {% else %}
+                {{penalty.time_expire|date:"DATETIME_FORMAT"}}
+            {% endif %}
+        {%else%}
+            <span style="color:red;">{% trans "Permanent" %}</span>
+        {%endif%}
+    {%endif%}
+{% endif %}
+</td>
+<td>{{penalty.reason|clean_colors}}</td>
+<td><a href="{% serverurl client_detail penalty.client.id %}">{{penalty.client.name}}</a></td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot>
+	<tr>
+		<td colspan="6">
+			{% serverurl client_more_admactions client.id as admacurl %}
+			{% paginate client_admactions admacurl %}
+		</td>
+	</tr>
+</tfoot>
+</table>
+{% endif %}
+{% endwith %}

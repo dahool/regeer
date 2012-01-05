@@ -1,0 +1,40 @@
+{% load listtocolumns i18n tagutils settingstag urltag %}
+<table class="table-style cd-table client_lists">
+<caption>{% trans "Active Penalties" %}{% if obj_perms.portal.addpenalty %}<a title="{% trans "Add" %}" href="{% serverurl add_penalty client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
+<thead>
+<tr>
+<th>{% trans "Type" %}</th>
+<th>{% trans "Added" %}</th>
+<th>{% trans "Duration" %}</th>
+<th>{% trans "Expires" %}</th>
+<th>{% trans "Reason" %}</th>
+<th>{% trans "Admin" %}</th>
+</tr>
+</thead>
+<tbody>
+{% with client_penalties.object_list as penalties %}
+{% for penalty in penalties %}
+<tr class="{% cycle "odd" "even" %}">
+<td>{{penalty.get_type_display}}
+{% if obj_perms.portal.removepenalty and penalty.inactive == 0 %}
+<a href="{% serverurl disable_penalty penalty.id %}" title="{% trans "De-active" %}" class="nodecoration_icon icon_delete"></a>
+{% endif %}
+{% if obj_perms.portal.editpenalty and penalty.inactive == 0 %}
+<a href="{% serverurl edit_penalty penalty.id %}" title="{% trans "Edit" %}" class="nodecoration_icon icon_edit">&nbsp;</a>
+{% endif %}
+&nbsp;
+</td>
+<td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
+<td>{% if penalty.inactive == 0 %}{% if penalty.duration != 0 %}{{penalty.display_duration}}{%endif%}{%endif%}</td>
+<td>{% if penalty.inactive == 1 %}<span style="font-weight: bold;">{% trans "De-activated" %}</span>{%else%}{% if penalty.duration != 0 %}{{penalty.time_expire|date:"DATETIME_FORMAT"}}{%else%}<span style="color:red;">{% trans "Permanent" %}</span>{%endif%}{%endif%}</td>
+<td>{{penalty.reason|clean_colors}}</td>
+<td>{% if obj_perms.portal.viewadminsinfo %}{% if penalty.admin %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}-B3{%endif%}{% else %}-{%endif%}</td>
+</tr>
+{% empty %}
+<tr class="odd">
+<td colspan="6">{% trans "No penalties" %}</td>
+</tr>
+{% endfor %}
+{% endwith %}
+</tbody>
+</table>

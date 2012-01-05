@@ -2,7 +2,7 @@ from django.contrib.messages import constants as message_constants
 # default message level to show
 MESSAGE_LEVEL = message_constants.INFO
 
-LOGIN_URL = '/web/login/'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
@@ -12,10 +12,16 @@ GEOIPCITY_DAT = os.path.join(PROJECT_PATH, 'pygeoip','lib','GeoLiteCity.dat')
 GEOTOOL = 'http://ipinfodb.com/ip_locator.php?ip='
 
 # Items per page in list
-ITEMS_PER_PAGE = 50
+ITEMS_PER_PAGE = 25
+
+# Items to show on client detail
+ITEMS_ON_CLIENT_PAGE = 5
 
 # Level to hide to unauthorized users 
 HIGH_LEVEL_CLIENT = 20
+
+# Set to True for B3 1.7 support, with new table IpAliases
+SUPPORT_IP_ALIASES = True 
 
 # Maps
 MAP_IMAGE_URL = "http://image.www.gametracker.com/images/maps/160x120/urbanterror/%s.jpg"
@@ -26,12 +32,3 @@ SKIP_MAPS = ['ut4_casa','ut4_kingdom','ut4_turnpike','ut4_abbey','ut4_prague','u
              'ut4_algiers','ut4_austria','ut4_maya','ut4_tombs','ut4_elgin','ut4_oildepot','ut4_swim',
              'ut4_harbortown','ut4_ramelle','ut4_toxic','ut4_sanc','ut4_riyadh','ut4_ambush','ut4_eagle',
              'ut4_suburbs','ut4_crossing','ut4_subway','ut4_tunis','ut4_thingley','ut4_dressingroom']
-
-SERVERS = {
-    'default': {
-        'TITLE': 'COD1',
-        'STATUS': os.path.join(PROJECT_PATH,'test','status.xml'),
-        'CFG': os.path.join(PROJECT_PATH,'test','b3.xml'),
-        'BANLIST': os.path.join(PROJECT_PATH,'test','banlist.txt'),
-    },       
-}

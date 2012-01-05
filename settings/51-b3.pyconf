@@ -1,0 +1,12 @@
+B3_PARSERS = ['cod',
+           'cod2',
+           'cod4',
+           'cod5',
+           'cod6',
+           'cod7',
+           'iourt41',
+           'etpro',
+           'wop',
+           'smg',
+           'smg11',
+           'oa081']

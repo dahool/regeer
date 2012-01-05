@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
-<project name="urtwebadmin" default="build" basedir=".">
+<project name="regeer" default="build" basedir=".">
 
 	<target name="hudson">
 		<antcall target="build">
+			<param name="pythonpath" value="${env.PYTHONPATH}"/>
 			<param name="dest" value="${env.DEST}"/>
 		</antcall>
 	</target>
 
     <target name="compile_locale">
-        <exec executable="/usr/bin/python">
+        <exec executable="${pythonpath}/bin/python">
             <arg value="${dest}/manage.py"/>
             <arg value="compilemessages"/>
         </exec> 
     </target>
         	
 	<target name="build">
-		<antcall target="compile_locale"></antcall>
 		<echo message="Deploying to ${dest}..."/>
 		<sync todir="${dest}" includeemptydirs="false" verbose="true" overwrite="true">
 			<fileset dir=".">
@@ -24,36 +24,52 @@
 				<exclude name=".svn"/>
 				<exclude name="*.pyc"/>
 				<exclude name="settings_local.py"/>
+				<exclude name="local.conf"/>
 			</fileset>
 			<preserveintarget>
 				<include name="**/pygeoip/lib/*.dat"/>
 				<include name="settings_local.py"/>
+				<include name="local.conf"/>
 				<include name="**/media/**"/>
+				<include name="**/django/**"/>
+				<include name="**/site_store/**"/>
 				<include name="**/settings/*-local.pyconf"/>
+                <include name="apache.wsgi"/>
 			</preserveintarget>
 		</sync>
+        <antcall target="compile_locale"></antcall>
+        <copy todir="${dest}">
+            <fileset dir=".">
+                <include name="**/*.mo"/>
+            </fileset>
+        </copy>        
 		<echo message="Setting up environment..."/>
-		<exec executable="/usr/bin/python">
+		<exec executable="${pythonpath}/bin/python">
 			<arg value="-mcompileall"/>
 			<arg value="${dest}"/>
 		</exec>
-        <exec executable="/usr/bin/python">
+        <exec executable="${pythonpath}/bin/python">
             <arg value="${dest}/manage.py"/>
             <arg value="syncdb"/>
             <arg value="--noinput"/>
-        </exec>		
-		<exec executable="/usr/bin/python">
+        </exec>
+		<!--
+		<exec executable="${pythonpath}/bin/python">
 			<arg value="${dest}/manage.py"/>
 			<arg value="updategeoip"/>
-			<arg value="http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz"/>
-			<arg value="false"/>
-		</exec>
+			<arg value="- -no-force"/>
+		</exec> -->
+		<exec executable="${pythonpath}/bin/python">
+			<arg value="${dest}/manage.py"/>
+			<arg value="collectstatic"/>
+			<arg value="--noinput"/>
+		</exec>		
 		<echo message="Reload"/>
-        <exec executable="/usr/bin/python">
+        <exec executable="${pythonpath}/bin/python">
             <arg value="${dest}/reload.py"/>
-            <arg value="${dest}/../apache/django.wsgi"/>
+            <arg value="${dest}/../server/apache.wsgi"/>
         </exec>         
-		<!-- touch file="${dest}/../apache/django.wsgi"/-->
+		<touch file="${dest}/build.ver"/>
 		<echo message="Finished."/>
 	</target>
 

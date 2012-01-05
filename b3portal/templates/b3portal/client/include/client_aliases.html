@@ -1,0 +1,38 @@
+{% load listtocolumns i18n tagutils settingstag urltag paginator %}
+<table class="table-style cd-table client_lists">
+	<caption>{% trans "Aliases" %}</caption>
+	<thead>
+		<tr>
+			<th>{% trans "Name" %}</th>
+			<th>{% trans "Times Used" %}</th>
+			<th>{% trans "First Used" %}</th>
+			<th>{% trans "Last Used" %}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% with client_aliases.object_list as aliases %}
+		{% for alias in	aliases %}
+		<tr class="{% cycle "odd" "even" %}">
+			<td>{{alias.alias}}</td>
+			<td>{{alias.num_used}}</td>
+			<td>{{alias.time_add|date:"DATETIME_FORMAT"}}</td>
+			<td>{{alias.time_edit|date:"DATETIME_FORMAT"}}</td>
+		</tr>
+		{% empty %}
+		<tr class="odd">
+			<td colspan="4">{% trans "No aliases" %}</td>
+		</tr>
+		{% endfor %} 
+	</tbody>
+	{% if aliases %}
+	<tfoot>
+		<tr>
+			<td colspan="4">
+				{% serverurl client_more_alias client.id as	aliasurl %}
+				{% paginate client_aliases aliasurl %}
+			</td>
+		</tr>
+	</tfoot>
+	{% endif %}
+	{% endwith %}
+</table>

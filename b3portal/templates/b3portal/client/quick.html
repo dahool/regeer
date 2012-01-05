@@ -1,0 +1,19 @@
+{% load i18n serverpermtag %}
+<small>
+<form id="go_client" style="display:inline;" method="post" action="{% url go_player %}">
+{% csrf_token %}
+<label style="color: white; padding-right: 0px;" for="id_playerid">{% trans "Player" %} @</label>
+<input type="text" name="playerid" id="id_playerid" class="default" style="width:50px;" placeholder="{% trans "id" %}">
+<input type="hidden" name="next" value="{{request.path}}">
+{% with request.server as current_server %}
+<select name="server">
+{% for server in request.server_list %}
+{% ifperm user server 'portal.viewclientinfo' %}
+<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
+{% endifperm %}
+{% endfor %}
+</select>
+{% endwith %}
+<span title="{% trans "Go" %}" onclick="$('#go_client').submit()" class="nodecoration_icon icon_go">&nbsp;</span>
+</form>
+</small>

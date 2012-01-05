@@ -1,0 +1,92 @@
+{% load i18n tagutils settingstag extendedtags geoip urltag plugintag gametag %}
+<table class="table-style cd-table client_detail">
+<caption><h3>{{client.name}}<small>  
+{% with request.server as current_server %}
+{% for server in request.server_list %}
+{% if current_server == server.uuid %}{{server.name}}{%endif%}
+{% endfor %}
+{% endwith %}
+</small>
+{% if client.ip %}
+<small>
+{% geolocation client.ip %}
+</small>
+{% endif %}
+{% if obj_perms.portal.viewguid %}<small>{% ifvalidguid client.guid %}<span class="nodecoration_icon icon_valid" title="{% trans "Guid is valid" %}">{% trans "Guid is valid" %}</span>{% else %}<span class="nodecoration_icon icon_invalid" style="color: red;" title="{% trans "Invalid guid" %}">{% with client.guid as guid %}{%blocktrans%}Guid {{guid}} is Invalid{%endblocktrans%}{% endwith %}</span>{% endifvalidguid %}</small>{% endif %}
+</h3>
+{% ifpluginenabled "follow" %}
+{% if obj_perms.plugin.viewfollow %}
+{% if client.followed.all %}
+{% for follow in client.followed.all %}
+<a href="{% serverurl follow:home %}#F{{client.id}}" class="nodecoration_icon icon_watch follow-message">{% with follow.time_add|date:"DATETIME_FORMAT" as since %}{% if follow.reason %}{%with follow.reason as reason %}{% blocktrans %}Player being followed since {{since}} because {{reason}}{% endblocktrans%}{%endwith%}{%else%}{% blocktrans %}Player being followed since {{since}}{% endblocktrans%}{%endif%}{% endwith %}</a>
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endifpluginenabled %}
+</caption>
+<thead class="table_menu">
+<tr><td colspan="4">
+<ul>
+{% ifpluginenabled "follow" %}
+{% if client.followed.all %}
+{% if obj_perms.plugin.removefollow %}
+<li><a href="{% serverurl follow:remove client.id %}">{% trans "Remove from watch list" %}</a></li>
+{% endif %}
+{% else %}
+{% if obj_perms.plugin.addfollow %}
+<li><a href="{% serverurl follow:add client.id %}">{% trans "Add to watch list" %}</a></li>
+{% endif %}
+{% endif %}
+{% endifpluginenabled %}
+</ul>
+</td></tr>
+</thead>
+<tbody>
+<tr>
+<th>{% trans "Name" %}</th><td>{{client.name}}{% ifpluginenabled "chatlog" %}{% if obj_perms.plugin.chatlog %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% serverurl chatlog:chat_list %}&name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endif %}{% endifpluginenabled %}</td>
+<th>{% trans "@id" %}</th><td>{{client.id}}</td>
+</tr>
+<tr>
+<th>{% trans "Level" %}</th>
+{% if obj_perms.portal.viewclientgroup %}
+<td id="client_group"
+{% if obj_perms.portal.updatelevel %}
+title="{% trans "Click to edit..." %}" class="nodecoration_icon icon_edit"
+{% else %}
+{% if obj_perms.portal.reglevel and client.group_id < 2 %}
+title="{% trans "Click to edit..." %}" class="nodecoration_icon icon_edit"
+{% else %} 
+{% if obj_perms.portal.userlevel and client.group_id < 1 %}
+title="{% trans "Click to Register Player" %}" class="nodecoration_icon icon_useradd" onclick="register_user('{% serverurl change_clientgroup client.id %}',1)" 
+{% endif %}
+{% endif %}
+{% endif %}>
+{{client.displayGroup}}</td>
+{% else %}
+<td>-</td>
+{% endif %}
+<th>{% trans "Connections" %}</th><td>{{client.connections}}</td>
+</tr>
+<tr>
+<th>{% trans "First Seen" %}</th><td>{{client.time_add|date:"DATETIME_FORMAT"}}</td>
+<th>{% trans "Last Seen" %}</th><td>{{client.time_edit|date:"DATETIME_FORMAT"}}{% ifpluginenabled "status" %}{% if obj_perms.plugin.viewstatus %}<a href="{% serverurl status:client_log client.id %}" title="{% trans "Expand" %}" class="nodecoration_icon icon_table"></a>{% endif %}{% endifpluginenabled %}</td>
+</tr>
+<tr>
+<th>{% trans "IP Address" %}</th>
+<td>{% if client.ip %}
+{% if obj_perms.portal.viewfullip %}
+{% set client.ip as baseip %}
+{% set client.ip as maskip %}
+{% else %}
+{% set client.ip|baseip as baseip %}
+{% set client.ip|maskip as maskip %}
+{% endif %}
+<a href="{% serverurl client_list %}&type=ip&data={{maskip}}&search=Search">{{maskip}}</a>
+<a target="_blank" href="http://whois.domaintools.com/{{baseip}}" title="{% trans "Whois IP search" %}" class="nodecoration_icon icon_vcard"></a>
+<a target="_blank" href="{% setting 'GEOTOOL' %}{{baseip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
+{% if client.ip in banlist %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endif %}
+{% else %}{% trans "(No IP address available)" %}{% endif %}</td>
+<td colspan="2">{% if status != None %}{%if status %}<span class="online">{% trans "Playing" %}</span>{%else%}<span class="offline">{% trans "Offline" %}</span>{%endif%}{%endif%}</td>
+</tr>
+</tbody>
+</table>

@@ -8,12 +8,14 @@ from django.utils import simplejson as json
 from django.core.serializers.json import DateTimeAwareJSONEncoder
 from django.http import HttpResponse
 
-def render_to_json(context):
+def get_json_value(context):
     resp = []
     for k in sorted(context.iterkeys()):
         resp.append('"%s": %s' % (k, parse(context[k])))
-    data = '{%s}' % ','.join(resp)
-    return HttpResponse(data, mimetype='application/json')    
+    return '{%s}' % ','.join(resp)
+    
+def render_to_json(context):
+    return HttpResponse(get_json_value(context), mimetype='application/json')    
     
 def parse(data):
     """

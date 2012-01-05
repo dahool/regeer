@@ -1,17 +1,13 @@
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-    #'django.template.loaders.eggs.load_template_source',
-)
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.auth',
+    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
+    'django.core.context_processors.static',
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
+    'b3portal.permission.context_processors.perm'
 )
 
 TEMPLATE_DIRS = (
@@ -27,7 +23,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     #'phpbb_auth.middleware.bbRemoteUserMiddleware',
-    'webfront.middleware.ServerDetectMiddleware',
+    'b3portal.middleware.ServerDetectMiddleware',
+    'b3portal.middleware.MultiDBMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'common.middleware.http.HttpErrorMiddleware',
@@ -35,24 +32,30 @@ MIDDLEWARE_CLASSES = (
 )
 
 INSTALLED_APPS = (
+    'admin_tools',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
+    #'admin_tools.theming',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'djangoui',
     'b3connect',
-    'webfront',
     'djangoapp',
     'djangogravatar',
-    'common.floodprotection',
-    'plugins.stats',
-    'plugins.follow',
-    'plugins.chatlog',
-    'plugins.status',
-    'plugins.autoslap',
+    'b3portal',
 )
 
-ROOT_URLCONF = 'b3webportal.urls'
+ROOT_URLCONF = 'regeer.urls'
 
-AUTH_PROFILE_MODULE = "webfront.models.UserProfile"
+AUTH_PROFILE_MODULE = "b3portal.models.UserProfile"
+
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
+                           'b3portal.permission.backend.ServerPermissionBackend')
+
+ADMIN_TOOLS_INDEX_DASHBOARD = 'regeer.dashboard.CustomIndexDashboard'
+ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'regeer.dashboard.CustomAppIndexDashboard'

@@ -22,21 +22,30 @@ from Crypto.Cipher import Blowfish
 from django.conf import settings
 
 class BCipher:
-    def __init__(self, pwd=None):
-        if not pwd:
-            pwd = getattr(settings, 'SECRET_KEY')
-        self.__cipher = Blowfish.new(pwd)
+    
+    prefix = 'CRYP='
+    
+    def __init__(self, key=None):
+        if not key:
+            key = getattr(settings, 'CIPHER_KEY', settings.SECRET_KEY)
+        self.__cipher = Blowfish.new(key)
+
     def encrypt(self, text):
         ciphertext = self.__cipher.encrypt(self.__pad_file(text))
-        return base64.b64encode(ciphertext)
+        return self.prefix + base64.b64encode(ciphertext)
+    
     def decrypt(self, b64text):
+        if not b64text.startswith(self.prefix):
+            return b64text
+        enctext = b64text[len(self.prefix):]
         try:
-            ciphertext = base64.b64decode(b64text)
+            ciphertext = base64.b64decode(enctext)
         except TypeError:
             # text is not encrypted
-            return b64text
+            return enctext
         cleartext = self.__depad_file(self.__cipher.decrypt(ciphertext))
         return cleartext
+
     # Blowfish cipher needs 8 byte blocks to work with
     def __pad_file(self, text):
         pad_bytes = 8 - (len(text) % 8)
@@ -48,6 +57,7 @@ class BCipher:
         bflag = randrange(6, 248); bflag -= bflag % 8 - pad_bytes
         asc_text += chr(bflag)
         return asc_text
+
     def __depad_file(self, text):
         pad_bytes = ord(text[-1]) % 8
         if not pad_bytes: pad_bytes = 8

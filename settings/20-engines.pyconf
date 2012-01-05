@@ -1,17 +1,12 @@
 DATABASES = {
     'default': {
-        'NAME': 'b3webportal.db.sqlite',
+        'NAME': 'regeer.db.sqlite',
         'ENGINE': 'django.db.backends.sqlite3',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
     },
 }
-
-CACHE_BACKEND ="dummy://"
-CACHE_MIDDLEWARE_SECONDS = 60 * 15
-CACHE_MIDDLEWARE_KEY_PREFIX = 'b3admin'
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587

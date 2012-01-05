@@ -1,0 +1,48 @@
+{% extends "base_layout.html" %}
+{% load listtocolumns i18n tagutils settingstag paginator navigation urltag %}
+{% block main_content %}
+<h3>{% trans "Warnings" %}</h3>
+{% with ban_list.paginator.count as count %}
+<span>{% blocktrans %}There are {{count}} warnings (including kicks){%endblocktrans%}
+<small>
+{% with 'portal.listpenalties' as checkperm %}
+{% include "b3portal/server_form.html" %}
+{% endwith %}
+</small>
+</span>
+{% endwith %}
+<div id="ban_list">
+<table class="table-style">
+<thead>
+<tr>
+<th>{% trans "Player" %}</th>
+<th>{% trans "Type" %}</th>
+<th>{% trans "At" %}</th>
+<th>{% trans "Reason" %}</th>
+<th>{% trans "Admin" %}</th>
+</tr>
+</thead>
+<tbody>
+{% for ban in ban_list.object_list %}
+<tr class="{% cycle "odd" "even" %}">
+<td><a href="{% serverurl client_detail ban.client.id %}">{{ban.client.name}}</a></td>
+<td>{{ban.get_type_display}}</td>
+<td>{{ban.time_add|date:"D, d M Y (H:i)"}}</td>
+<td>{{ban.reason|clean_colors}}</td>
+<td>{% if ban.admin %}<a href="{% serverurl client_detail ban.admin.id %}">{{ban.admin.name}}</a>{% else %}-B3{% endif %}</td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot>
+<tr>
+<td colspan="5">
+{% with ban_list.object_list|length as number %}
+{% blocktrans %}Showing {{number}} records{% endblocktrans %}
+{% endwith %}
+{% paginatepage ban_list %}
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base_layout.html" %}
+{% load i18n formtags settingstag %}
+{% block title %}{{ block.super }} | {% trans "Login" %}{% endblock %}
+{% block extra_header %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/simpletooltip.css"/>
+<script type="text/javascript" src="{{STATIC_URL}}js/simpletooltip.js"></script>
+<script type="text/javascript">
+<!--
+$(function(){
+	$(".field-error").tooltip({className:'error-tip'});
+});
+//-->
+</script>
+{% endblock %}
+{% block main_content %}
+<div id="login_box">
+<h3>{% trans "User login" %}</h3>
+<p>{% trans "Enter your username and password here in order to log in on the website:" %}</p>
+<form id="login" method="post" accept-charset="utf-8">
+{% csrf_token %}
+<table class="type-text" style="border: none;">
+<tr {% if form.username.errors %}class="row-error"{% endif %}>
+<td>
+<label for="id_username">{% trans "Username" %}</label>
+</td>
+<td {% if form.username.errors %}class="field-error" alt="{% simpleerror form.username %}"{% endif %}> 
+<input id="id_username" type="text" name="username" maxlength="30"/>
+</td>
+</tr>
+<tr {% if form.password.errors %}class="row-error"{% endif %}>
+<td>
+<label for="id_password">{% trans "Password" %}</label>
+</td>
+<td {% if form.password.errors %}class="field-error" alt="{% simpleerror form.password %}"{% endif %}> 
+<input type="password" name="password" id="id_password" /> 
+</td>
+</tr>
+<tr>
+<td colspan="2"><input style="float: right;" type="submit" value="{% trans "Sign in" %}"/></td>
+</tr>
+</table>
+</form>
+<!--  p><a href="{-% url auth_password_reset %-}">{% trans "Forgot your password?" %}</a></p-->
+</div>
+{% endblock %}

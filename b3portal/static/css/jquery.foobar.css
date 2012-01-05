@@ -1,0 +1,40 @@
+﻿body { margin:0 !important; }
+
+.foobar-wrapper { width: 100%; height:35px; z-index:100;}
+.foobar-container { width:100%; height:30px; overflow:hidden; z-index:100;} 
+.foobar-shadow { width:100%; height:5px; background:url('images/foobar-shadow.png') repeat-x left top; }
+.foobar-container-left, .foobar-container-right { width:20%; height:30px; display:inline-block; line-height:30px; float:left; }
+.foobar-container-center { width:50%; height:30px; display:inline-block; line-height:30px; text-align:center; float:left; overflow:hidden; }
+.foobar-message { display:block; white-space:nowrap; position:relative; }
+.foobar-close-button-container { width:5%; height:30px; display:inline-block; }
+.foobar-open-button-container { width:5%; height:0px; display:block; position:absolute; top:0; overflow:hidden; }
+.foobar-open-button-container.shadow { background:url('images/foobar-button-shadow.png') no-repeat center bottom; }
+.foobar-open-button, .foobar-close-button { width:28px; height:30px; display:block; margin:0 auto; outline:none; border:none; }
+.foobar-open-button {
+  -moz-border-radius-topleft: 0px;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.foobar-open-button.triangle-arrow { background:url('images/triangle-arrow/foobar-open-arrow.png') no-repeat center center; }
+.foobar-open-button.triangle-arrow:hover { background:url('images/triangle-arrow/foobar-open-arrow-over.png') no-repeat center center; }
+.foobar-close-button.triangle-arrow { background:url('images/triangle-arrow/foobar-close-arrow.png') no-repeat center center; }
+.foobar-close-button.triangle-arrow:hover { background:url('images/triangle-arrow/foobar-close-arrow-over.png') no-repeat center center; }
+
+.foobar-open-button.long-arrow { background:url('images/long-arrow/foobar-open-arrow.png') no-repeat center center; }
+.foobar-open-button.long-arrow:hover { background:url('images/long-arrow/foobar-open-arrow-over.png') no-repeat center center; }
+.foobar-close-button.long-arrow { background:url('images/long-arrow/foobar-close-arrow.png') no-repeat center center; }
+.foobar-close-button.long-arrow:hover { background:url('images/long-arrow/foobar-close-arrow-over.png') no-repeat center center; }
+
+.foobar-open-button.small-white-arrow { background:url('images/small-white-arrow/foobar-open-arrow.png') no-repeat center center; }
+.foobar-open-button.small-white-arrow:hover { background:url('images/small-white-arrow/foobar-open-arrow-over.png') no-repeat center center; }
+.foobar-close-button.small-white-arrow { background:url('images/small-white-arrow/foobar-close-arrow.png') no-repeat center center; }
+.foobar-close-button.small-white-arrow:hover { background:url('images/small-white-arrow/foobar-close-arrow-over.png') no-repeat center center; }
+
+.foobar-social { list-style-type:none; height:30px; margin:0; padding:0; }
+.foobar-social li { height:30px; float:left; text-align:left; line-height:30px; }
+.foobar-social li a { width:30px; height:30px; display:inline-block; }

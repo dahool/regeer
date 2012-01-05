@@ -1,6 +1,8 @@
 {% load formtags %}
-{% if form.non_field_errors %}
-	{{ form.non_field_errors.as_ul }}
+{% if errors %}
+	{% if form.non_field_errors %}
+		{{ form.non_field_errors.as_ul }}
+	{% endif %}
 {% endif %}
 {% for field in form.hidden_fields %}
 	{{ field }}

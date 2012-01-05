@@ -1,0 +1,51 @@
+{% load listtocolumns i18n tagutils settingstag urltag extendedtags paginator %}
+<table class="table-style cd-table client_lists">
+<caption>{% trans "IP Addresses" %}</caption>
+<thead>
+<tr>
+<th>{% trans "IP" %}</th>
+<th>{% trans "Times Used" %}</th>
+<th>{% trans "First Used" %}</th>
+<th>{% trans "Last Used" %}</th>
+</tr>
+</thead>
+<tbody>
+{% with client_ipaliases.object_list as aliases %}
+{% for alias in aliases %}
+{% if obj_perms.portal.viewfullip %}
+{% set alias.ip as baseip %}
+{% set alias.ip as maskip %}
+{% else %}
+{% set alias.ip|baseip as baseip %}
+{% set alias.ip|maskip as maskip %}
+{% endif %}
+<tr class="{% cycle "odd" "even" %}">
+<td style="text-align: right;">
+<a href="{% serverurl client_list %}&type=ip&data={{maskip}}&search=Search">{{maskip}}</a>&nbsp;<a target="_blank" href="{% setting 'GEOTOOL' %}{{baseip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
+{% if alias.ip in banlist %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endif %}
+</td>
+<td>{{alias.num_used}}</td>
+<td>{{alias.time_add|date:"DATETIME_FORMAT"}}</td>
+<td>{{alias.time_edit|date:"DATETIME_FORMAT"}}</td>
+{% empty %}
+<tr class="odd">
+<td colspan="4">{% trans "No registered ip addresses" %}</td>
+</tr>
+{% endfor %}
+</tbody>
+{% if aliases %}
+<tfoot>
+	<tr>
+		<td colspan="4">
+			{% serverurl client_more_ipalias client.id as aliasurl %}
+			{% paginate client_ipaliases aliasurl %}
+		</td>
+	</tr>
+</tfoot>
+{% endif %}
+{% endwith %}
+</table>
+
+
+
+

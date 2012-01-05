@@ -1,16 +1,44 @@
 # -*- coding: utf-8 -*-
+"""Copyright (c) 2011 Sergio Gabriel Teves
+All rights reserved.
 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""
 from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from common.view.i18n import set_language
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from common.decorators import permission_required_with_403
 
 admin.autodiscover()
 
+permission_required_with_403('b3portal.change_password')
+def change_password_view(*args, **kwargs):
+    return auth_views.password_change(*args, **kwargs)
+
 urlpatterns = patterns('',
-    url(r'^$', 'webfront.views.home', name='home'),
-    url('^web/', include('webfront.urls')),
-    url('^admin/', include(admin.site.urls)),
+    url(r'^$', 'b3portal.views.home', name='home'),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin_tools/', include('admin_tools.urls')),
+    url(r'^login/$', auth_views.login, kwargs={'template_name':'auth/login.html'}, name='user_signin'),
+    url(r'^logout/$', auth_views.logout, {'next_page': '/' }, name='auth_logout'),
+    url(r'^account/password/update/$', change_password_view, kwargs={'template_name':'auth/password_change.html'}, name='account_update_password'),
+    url(r'^account/password/ok/$', auth_views.password_change_done, kwargs={'template_name':'auth/password_change_done.html'}, name='password_change_done'),
+    url('^', include('b3portal.urls')),
     #url(r'^setlang/$', 'django.views.i18n.set_language', name='set_lang'),
 )
 
@@ -22,29 +50,5 @@ for app in settings.INSTALLED_APPS:
         urlpatterns += patterns('',
             url(pattern, include(urlconf)),
         )
-        
-#if 'plugins.stats' in settings.INSTALLED_APPS:
-#    urlpatterns += patterns('',
-#        url('^stats/', include('plugins.stats.urls')),
-#    )
-#
-#if 'plugins.follow' in settings.INSTALLED_APPS:
-#    urlpatterns += patterns('',
-#        url('^follow/', include('plugins.follow.urls')),
-#    )
-#
-#if 'plugins.chatlog' in settings.INSTALLED_APPS:
-#    urlpatterns += patterns('',
-#        url('^log/', include('plugins.chatlog.urls')),
-#    )
-#        
-#if 'plugins.chatlog' in settings.INSTALLED_APPS:
-#    urlpatterns += patterns('',
-#        url('^log/', include('plugins.chatlog.urls')),
-#    )
-            
-if settings.STATIC_SERVE:
-    urlpatterns += patterns('',
-        (r'^webmedia/(?P<path>.*)$', 'django.views.static.serve',
-         {'document_root': settings.MEDIA_ROOT}),
-    )
+             
+urlpatterns += staticfiles_urlpatterns()

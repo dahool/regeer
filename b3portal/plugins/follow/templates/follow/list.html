@@ -1,0 +1,33 @@
+{% extends "base_layout.html" %}
+{% load listtocolumns i18n tagutils urltag %}
+{% block title %}{{ block.super }} | {% trans "Watched Players" %}{% endblock %}
+{% block main_content %}
+<small>
+{% with "follow" as pluginname %}
+{% include "b3portal/server_form.html" %}
+{% endwith %}
+</small>
+<h3>{% trans "Watched Players" %}</h3>
+<table class="table-style">
+<thead>
+<tr>
+<th>&nbsp;</th>
+<th>{%trans "Player"%}</th>
+<th>{%trans "Reason" %}</th>
+<th>{%trans "Added"%}</th>
+<th>{%trans "Added by"%}</th>
+</tr>
+</thead>
+<tbody>
+{% for info in list %}
+    <tr>
+        <td>{% if perms.plugin.removefollow %}<a href="{% serverurl follow:remove info.client.id %}&ls=" class="nodecoration_icon icon_delete" title="{% trans "Remove" %}"></a>{% endif %}</td>
+        <td><a name="F{{info.client.id}}" href="{% serverurl client_detail info.client.id %}">{{info.client.name}}</a></td>
+        <td>{{info.reason}}</td>
+        <td>{{info.time_add|date:"DATETIME_FORMAT"}}</td>
+        <td>{% if info.admin %}<a href="{% serverurl client_detail info.admin.id %}">{{info.admin.name}}</a>{% else %}-B3{%endif%}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

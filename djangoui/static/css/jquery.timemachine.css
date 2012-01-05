@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+.floatTimeMachine {  
+    position:absolute;
+    margin-left:0px;
+    background-color:yellow;
+}
+.container-bkg {background-color: #3F3F3F;}
+.header-bkg {
+	background-color: #3F3F3F;
+}
+.header-div {
+	width: 60px;
+	float: left;
+	background-color: inherit;
+	text-align: center;
+}
+.header-text {
+	
+	color:#FFFFFF;
+	font-size: 12;
+		
+}

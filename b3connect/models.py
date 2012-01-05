@@ -1,8 +1,27 @@
+# -*- coding: utf-8 -*-
+"""Copyright (c) 2010,2011 Sergio Gabriel Teves
+All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""
 import hashlib as hash
 import time, datetime
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 
 from common.utils.functions import duration_human
 from django.db.models import Q
@@ -27,9 +46,6 @@ class Group(models.Model):
         managed = False
         ordering  = ('id',)
         db_table = u'groups'
-        permissions = (
-            ("view_group", "Can view groups"),
-        )
                 
 class Client(models.Model):
     id = models.AutoField(primary_key=True)
@@ -77,18 +93,10 @@ class Client(models.Model):
         managed = False
         ordering = ('id',)
         db_table = u'clients'
-        permissions = (
-            ("view_client", "Can view clients"),
-            ("change_client_group", "Can change client group"),
-            ("register_client", "Can register client"),
-            ("view_high_level_client", "Can view high level clients"),
-            ("client_advanced_search", "Can run advanced search"),
-        )
 
 class Alias(models.Model):
     id = models.AutoField(primary_key=True)
     num_used = models.IntegerField()
-    ip = models.CharField(max_length=16, blank=True, null=True)
     alias = models.CharField(unique=True, max_length=96)
     client = models.ForeignKey(Client, db_column="client_id", related_name="aliases", to_field="id")
     time_edit = EpochDateTimeField()
@@ -105,9 +113,26 @@ class Alias(models.Model):
         ordering = ('-time_edit',)
         verbose_name_plural = "Aliases"
         db_table = u'aliases'
-        permissions = (
-            ("view_aliases", "Can view aliases"),
-        )
+
+class AliasIP(models.Model):
+    id = models.AutoField(primary_key=True)
+    num_used = models.IntegerField()
+    ip = models.CharField(max_length=16, blank=True, null=True)
+    client = models.ForeignKey(Client, db_column="client_id", related_name="ip_aliases", to_field="id")
+    time_edit = EpochDateTimeField()
+    time_add = EpochDateTimeField()
+    
+    def __unicode__(self):
+        return repr(self)
+        
+    def __repr__(self):
+        return "%s [%s] - [%s]" % (self.client.name,self.alias, self.ip)
+        
+    class Meta:
+        managed = False
+        ordering = ('-time_edit',)
+        verbose_name_plural = "IP Aliases"
+        db_table = u'ipaliases'
         
 PENALTY_CHOICES = (
     ('Warning', _('Warning')),
@@ -130,9 +155,9 @@ class PenaltyManager(models.Manager):
         return self.filter(type='Notice',inactive=0)
         
     def inactive(self):
-        return self.filter(Q(inactive=1) | Q(time_expire__lt=int(time.time()))).exclude(
-                                    Q(inactive=0) & Q(time_expire='-1')                                                                                        
-                                                                                        )
+        return self.filter(Q(inactive=1) | 
+                           Q(time_expire__lt=int(time.time())) & ~Q(type='Notice')
+                           ).exclude(Q(inactive=0) & Q(time_expire='-1'))
         
     def noexpired(self):
         return self.filter(Q(time_expire='-1') | Q(time_expire__gt=int(time.time())))
@@ -154,8 +179,12 @@ class Penalty(models.Model):
     objects = PenaltyManager()
     
     def __unicode__(self):
-        return repr(self)
-        
+        if self.duration == 0:
+            return ugettext(u"%(type)s. Reason %(reason)s" % {'type': self.get_type_display(), 'reason': self.reason})
+        return ugettext(u"%(type)s for %(duration)s. Reason %(reason)s" % {'type': self.get_type_display(),
+                                                                    'duration': self.display_duration,
+                                                                    'reason': self.reason})
+            
     def __repr__(self):
         return "%s - %s [%s] (%s)" % (self.client.name,
                                       self.type,
@@ -167,12 +196,6 @@ class Penalty(models.Model):
         ordering = ('-time_add',)
         verbose_name_plural = "Penalties"
         db_table = u'penalties'
-        permissions = (
-            ("view_penalty", "Can view penalties"),
-            ("view_notices", "Can view notices"),
-            ("view_banlist", "Can view ban list"),
-            ("add_notice", "Add notice"),
-        )
         
     @property
     def display_duration(self):
@@ -191,50 +214,50 @@ class Penalty(models.Model):
             self.time_expire =  int(time.mktime(self.time_add.timetuple())) + (self.duration * 60)
         super(Penalty, self).save(force_insert, force_update)
         
-class Nick(models.Model):
-    nickid = models.IntegerField(db_index=True)
-    name = models.CharField(unique=True, max_length=32)
-    client = models.ForeignKey(Client, db_column="clientid", related_name="nicks", to_field="id")
-    time_add = EpochDateTimeField()
-    
-    def __unicode__(self):
-        return repr(self)
-        
-    def __repr__(self):
-        return "%s [%s]" % (self.client.name,self.name)
-        
-    class Meta:
-        ordering = ('client',)
-        verbose_name_plural = "Nicks"
-        db_table = u'nicks'
-        
-class DisabledCommand(models.Model):
-    id = models.AutoField(primary_key=True)
-    cmd = models.CharField(unique=True, max_length=50)
-    until = EpochDateTimeField()
-    
-    def __unicode__(self):
-        return repr(self)
-        
-    def __repr__(self):
-        return "%s [%s]" % (self.cmd,self.until)
-        
-    class Meta:
-        db_table = u'disabledcmd'
-        
-class AuditLog(models.Model):
-    id = models.AutoField(primary_key=True)
-    client = models.ForeignKey(Client, db_column="client_id", to_field="id", related_name="commands")
-    command = models.CharField(max_length=20, db_index=True)
-    data = models.CharField(max_length=50, blank=True, null=True)
-    time_add = EpochDateTimeField(db_index=True)
-    
-    def __unicode__(self):
-        return repr(self)
-    
-    def __repr__(self):
-        return "%s: %s" % (self.client.name, self.command)
-    
-    class Meta:
-        ordering = ('-time_add',)
-        db_table = u"auditlog"
+#class Nick(models.Model):
+#    nickid = models.IntegerField(db_index=True)
+#    name = models.CharField(unique=True, max_length=32)
+#    client = models.ForeignKey(Client, db_column="clientid", related_name="nicks", to_field="id")
+#    time_add = EpochDateTimeField()
+#    
+#    def __unicode__(self):
+#        return repr(self)
+#        
+#    def __repr__(self):
+#        return "%s [%s]" % (self.client.name,self.name)
+#        
+#    class Meta:
+#        ordering = ('client',)
+#        verbose_name_plural = "Nicks"
+#        db_table = u'nicks'
+#        
+#class DisabledCommand(models.Model):
+#    id = models.AutoField(primary_key=True)
+#    cmd = models.CharField(unique=True, max_length=50)
+#    until = EpochDateTimeField()
+#    
+#    def __unicode__(self):
+#        return repr(self)
+#        
+#    def __repr__(self):
+#        return "%s [%s]" % (self.cmd,self.until)
+#        
+#    class Meta:
+#        db_table = u'disabledcmd'
+#        
+#class AuditLog(models.Model):
+#    id = models.AutoField(primary_key=True)
+#    client = models.ForeignKey(Client, db_column="client_id", to_field="id", related_name="commands")
+#    command = models.CharField(max_length=20, db_index=True)
+#    data = models.CharField(max_length=50, blank=True, null=True)
+#    time_add = EpochDateTimeField(db_index=True)
+#    
+#    def __unicode__(self):
+#        return repr(self)
+#    
+#    def __repr__(self):
+#        return "%s: %s" % (self.client.name, self.command)
+#    
+#    class Meta:
+#        ordering = ('-time_add',)
+#        db_table = u"auditlog"

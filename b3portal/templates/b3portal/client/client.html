@@ -1,0 +1,75 @@
+{% extends "base_layout.html" %}
+{% load i18n tagutils settingstag extendedtags geoip urltag plugintag gametag %}
+{% block title %}{{ block.super }} | {{client.name}}{% endblock %}
+{% block extra_header %}
+{{ block.super }}
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery.jeditable.mini.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/client2.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	{% if obj_perms.portal.updatelevel or obj_perms.portal.reglevel %}
+    $('#client_group.icon_edit').editable('{% serverurl change_clientgroup client.id %}', {
+    	data   : '{{group_data|safe}}',
+        type    : 'select',
+        submit  : '{% trans "Save" %}',
+        indicator : '{% trans "Saving..." %}'
+    });		
+    {% endif %}
+});
+
+</script>
+{% endblock %}
+{% block navigation2 %}
+{% include "b3portal/client/client_menu.html" %}
+{% endblock %}
+{% block main_content %}
+<!-- ************************ DETAIL ************************ -->
+{% include "b3portal/client/include/client_detail.html" %}
+<br/>
+<!-- ************************ ALIASES ************************ -->
+{% if obj_perms.portal.viewalias %}
+<div id="client_aliases">
+{% include "b3portal/client/include/client_aliases.html" %}
+</div>
+<br/>
+<!-- ************************ IP ALIAS ************************ -->
+{% ifsetting SUPPORT_IP_ALIASES %}
+<div id="client_ipaliases">
+{% include "b3portal/client/include/client_ipaliases.html" %}
+</div>
+<br/>
+{% endifsetting %}
+{% endif %}
+<!-- ************************ PENALTIES ************************ -->
+{% if obj_perms.portal.listpenalties %}
+<div id="client_penalties">
+{% include "b3portal/client/include/client_penalties.html" %}
+</div>
+<br/>
+<!-- ************************ NOTICES ************************ -->
+<div id="client_notice">
+{% include "b3portal/client/include/client_notices.html" %}
+</div>
+<br/>
+<!-- ************************ PAST PENALTIES ************************ -->
+<div id="past_penalties">
+{% include "b3portal/client/include/client_ipenalties.html" %}
+</div>
+<br/>
+{% endif %} <!-- PERM ENDIF -->
+<!-- ************************ ADMIN ACTIONS ************************ -->
+{% if obj_perms.portal.viewadminsinfo %}    
+<div id="admin_actions">
+{% include "b3portal/client/include/client_adminactions.html" %}
+</div>
+<br/>
+{% endif %}
+<!-- ************************ PORTAL ACTIONS ************************ -->
+{% if obj_perms.portal.viewauditlogs %}    
+<div id="portal_actions">
+{% include "b3portal/client/include/client_audit.html" %}
+</div>
+<br/>
+{% endif %}
+{% endblock %}

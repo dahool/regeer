@@ -1,0 +1,118 @@
+.tooltip {
+	border:0 none;
+	overflow:hidden;
+}
+
+.tooltip .tip-tc {
+	background: transparent url(simpletooltip/tip-sprite.gif) no-repeat 0 -62px;
+	padding-top:3px;
+    overflow:hidden;
+    zoom:1;
+}
+.tooltip .tip-tl {
+	background: transparent url(simpletooltip/tip-sprite.gif) no-repeat 0 0;
+	padding-left:6px;
+    overflow:hidden;
+    zoom:1;
+}
+.tooltip .tip-tr {
+	background: transparent url(simpletooltip/tip-sprite.gif) no-repeat right 0;
+	padding-right:6px;
+    overflow:hidden;
+    zoom:1;
+}
+.tooltip .tip-bc {
+	background: transparent url(simpletooltip/tip-sprite.gif) no-repeat 0 -121px;
+	height:3px;
+    overflow:hidden;
+}
+.tooltip .tip-bl {
+	background: transparent url(simpletooltip/tip-sprite.gif) no-repeat 0 -59px;
+	padding-left:6px;
+    zoom:1;
+}
+.tooltip .tip-br {
+	background: transparent url(simpletooltip/tip-sprite.gif) no-repeat right -59px;
+	padding-right:6px;
+    zoom:1;
+}
+.tooltip .tip-mc {
+    border:0 none;
+    font: normal 11px tahoma,arial,helvetica,sans-serif;
+}
+.tooltip .tip-ml {
+	background: #fff url(simpletooltip/tip-sprite.gif) no-repeat 0 -124px;
+	padding-left:6px;
+    zoom:1;
+}
+.tooltip .tip-mr {
+	background: transparent url(simpletooltip/tip-sprite.gif) no-repeat right -124px;
+	padding-right:6px;
+    zoom:1;
+}
+.tooltip .tip-body {
+	-moz-user-select:none;
+    font: normal 11px tahoma,arial,helvetica,sans-serif;
+    margin:0 !important;
+    line-height:14px;
+    color:#444;
+    padding:0;
+}
+
+.error-tip {
+	border:0 none;
+	overflow:hidden;
+}
+.error-tip .tip-tl {
+	background:transparent url(simpletooltip/error-tip-corners.gif) no-repeat scroll 0 0;
+	padding-left: 6px;
+}
+.error-tip .tip-tr {
+	background:transparent url(simpletooltip/error-tip-corners.gif) no-repeat scroll right 0;
+	padding-right: 6px;
+}
+.error-tip .tip-tc {
+	background:transparent url(simpletooltip/error-tip-corners.gif) repeat-x scroll 0 -12px;
+	padding-top: 6px;
+}
+.error-tip .tip-bl {
+	background:transparent url(simpletooltip/error-tip-corners.gif) no-repeat scroll 0 -6px;
+	padding-left: 6px;
+}
+.error-tip .tip-br {
+	background:transparent url(simpletooltip/error-tip-corners.gif) no-repeat scroll right -6px;
+	padding-right: 6px;
+}
+.error-tip .tip-bc {
+	background:transparent url(simpletooltip/error-tip-corners.gif) repeat-x scroll 0 -18px;
+	height:6px;
+}
+.error-tip .tip-ml {
+	background:transparent url(simpletooltip/error-tip-corners.gif) no-repeat scroll 0 -124px;
+	padding-left: 6px;
+}
+.error-tip .tip-mr {
+	background:transparent url(simpletooltip/error-tip-corners.gif) no-repeat scroll right -124px;
+	padding-right: 6px;
+}
+.error-tip .tip-mc {
+	-x-system-font:none;
+	border:0 none;
+}
+.error-tip .tip-body {
+	-moz-user-select:none;
+	background:transparent url(simpletooltip/exclamation.png) no-repeat scroll 2px 2px;
+	-x-system-font:none;
+	color:#444444;
+	font-family:tahoma,arial,helvetica,sans-serif;
+	font-size:11px;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:14px;
+	margin:0 !important;
+	padding: 2px 5px;
+	padding-left: 24px;
+}

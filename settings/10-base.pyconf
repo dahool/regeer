@@ -25,17 +25,19 @@ DATETIME_FORMAT = 'M, d Y - H:i'
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(PROJECT_PATH, 'webmedia')
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'site_store')
+STATIC_ROOT = os.path.join(PROJECT_PATH, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = '/webmedia/'
+MEDIA_URL = '/site_store/'
+STATIC_URL = '/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = r"[[SECRETKEY]]"
@@ -49,7 +51,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+RUNTIME_DB_UPDATE = True
+ENABLE_PHPBB_AUTH = False
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-STATIC_SERVE = True
-LOCAL_CONFIG = 'local.conf'
+LOCAL_CONFIG = os.path.join(PROJECT_PATH, 'local.conf')
+
+UI_VERSION='1.8.16'
+UI_MEDIA_PATH='http://ajax.googleapis.com/ajax/libs/jqueryui/'

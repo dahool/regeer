@@ -59,13 +59,9 @@ class bbUser(models.Model):
         return phpbb_checker.phpbb_check_hash(password, self.user_password)
                     
     class Meta:
+        managed = False
         db_table = PHPBB_TABLES_PREFIX + 'users'
         ordering = ['username_clean']
-
-#class UserMapping(models.Model):
-#    """Maps phpBB users to Django users, 1:1."""
-#    user = models.OneToOneField(User)
-#    bbUser = models.ForeignKey(bbUser, unique=True)
 
 class bbGroup(models.Model):
     group_id = models.IntegerField(primary_key=True)
@@ -85,11 +81,12 @@ class bbGroup(models.Model):
     @property
     def local_group(self):
         try:
-            return Group.objects.get(name=GROUP_MAPPING.get(self.group_name))
+            return Group.objects.get(name=GROUP_MAPPING[self.group_name])
         except:
             return None
         
     class Meta:
+        managed = False
         db_table = PHPBB_TABLES_PREFIX + 'groups'
         ordering = ['group_id']
 
@@ -98,6 +95,7 @@ class bbUserGroup(models.Model):
     user = models.ForeignKey(bbUser, to_field="user_id", db_column="user_id", related_name='groups')
     
     class Meta:
+        managed = False
         db_table = PHPBB_TABLES_PREFIX + 'user_group'
             
 class bbAclRole(models.Model):
@@ -114,6 +112,7 @@ class bbAclRole(models.Model):
         return force_unicode(repr(self))
     
     class Meta:
+        managed = False
         db_table = PHPBB_TABLES_PREFIX + 'acl_roles'
         ordering = ['role_name']
 
@@ -131,6 +130,7 @@ class bbAclOption(models.Model):
         return force_unicode(repr(self))
         
     class Meta:
+        managed = False
         db_table = PHPBB_TABLES_PREFIX + 'acl_options'
         ordering = ['auth_option_id']
         
@@ -141,6 +141,7 @@ class bbSession(models.Model):
     session_start = models.IntegerField()
     
     class Meta:
+        managed = False
         db_table = PHPBB_TABLES_PREFIX + 'sessions'
             
 class bbSessionKey(models.Model):
@@ -150,5 +151,6 @@ class bbSessionKey(models.Model):
     last_login = models.IntegerField()
     
     class Meta:
+        managed = False
         db_table = PHPBB_TABLES_PREFIX + 'sessions_keys'
     

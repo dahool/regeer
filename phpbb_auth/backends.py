@@ -27,8 +27,9 @@ class phpbbBackend(ModelBackend):
     Create local django user if success.
     """
     supports_object_permissions = False
-    supports_anonymous_user = True
-
+    supports_anonymous_user = False
+    supports_inactive_user = False
+    
     def authenticate(self, username=None, password=None):
         try:
             user = bbUser.objects.get(username_clean=username.lower())
@@ -41,13 +42,30 @@ class phpbbBackend(ModelBackend):
             except User.DoesNotExist:
                 localuser = User.objects.create(username=username,
                                                 email=user.user_email)
-            localuser.set_password(password)
+                localuser.set_unusable_password()
+                localuser.save()
             # cache the phpbb user
-            localuser._phpbb_user_cache = user      
+            localuser._phpbb_user_cache = user
+            localuser.is_phpbb = True
+            localuser.is_external = True
             return localuser
         
         return None
-    
+
+    def get_user(self, user_id):
+        try:
+            u = User.objects.get(pk=user_id)
+            try:
+                user = bbUser.objects.get(username_clean=u.username.lower())
+                u._phpbb_user_cache = user
+                u.is_phpbb = True
+                u.is_external = True
+            except bbUser.DoesNotExist:
+                return None            
+        except User.DoesNotExist:
+            return None
+        return u
+            
     def get_group_permissions(self, user_obj):
         """
         Returns a set of permission strings that this user has through his/her

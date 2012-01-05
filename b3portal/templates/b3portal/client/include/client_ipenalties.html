@@ -1,0 +1,46 @@
+{% load listtocolumns i18n tagutils settingstag urltag paginator%}
+<table class="table-style cd-table client_lists">
+<caption>{% trans "Past Penalties" %}</caption>
+<thead>
+<tr>
+<th>{% trans "Type" %}</th>
+<th>{% trans "Added" %}</th>
+<th>{% trans "Duration" %}</th>
+<th>{% trans "Expires" %}</th>
+<th>{% trans "Reason" %}</th>
+<th>{% trans "Admin" %}</th>
+</tr>
+</thead>
+<tbody id="pastpenalty">
+{% with client_ppenalties.object_list as penalties %}
+{% for penalty in penalties %}
+<tr class="{% cycle "odd" "even" %}">
+<td>{{penalty.get_type_display}}</td>
+<td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
+<td>{% if penalty.inactive == 0 %}{% if penalty.duration != 0 %}{{penalty.display_duration}}{%endif%}{%endif%}</td>
+<td>{% if penalty.inactive == 1 %}<span style="font-weight: bold;">{% trans "De-activated" %}</span>{%else%}{% if penalty.duration != 0 %}{{penalty.time_expire|date:"DATETIME_FORMAT"}}{%else%}-{%endif%}{%endif%}</td>
+<td>{{penalty.reason|clean_colors}}</td>
+<td>{% if obj_perms.portal.viewadminsinfo %}{% if penalty.admin %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}-B3{%endif%}{% else %}-{%endif%}</td>
+</tr>
+{% empty %}
+<tr class="odd">
+<td colspan="6">{% trans "No penalties" %}</td>
+</tr>
+{% endfor %}
+</tbody>
+{% if penalties %}
+<tfoot>
+	<tr>
+		<td colspan="6">
+			{% serverurl client_more_ipenalties client.id as ppurl %}
+			{% paginate client_ppenalties ppurl %}
+		</td>
+	</tr>
+</tfoot>
+{% endif %}
+{% endwith %}
+</table>
+
+
+
+
