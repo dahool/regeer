@@ -18,7 +18,7 @@
 {% if obj_perms.plugin.viewfollow %}
 {% if client.followed.all %}
 {% for follow in client.followed.all %}
-<a href="{% serverurl follow:home %}#F{{client.id}}" class="nodecoration_icon icon_watch follow-message">{% with follow.time_add|date:"DATETIME_FORMAT" as since %}{% blocktrans %}Player being followed since {{since}}{% endblocktrans%}{% endwith %}</a>
+<a href="{% serverurl follow:home %}#F{{client.id}}" class="nodecoration_icon icon_watch follow-message">{% with follow.time_add|date:"DATETIME_FORMAT" as since %}{% if follow.reason %}{%with follow.reason as reason %}{% blocktrans %}Player being followed since {{since}} because {{reason}}{% endblocktrans%}{%endwith%}{%else%}{% blocktrans %}Player being followed since {{since}}{% endblocktrans%}{%endif%}{% endwith %}</a>
 {% endfor %}
 {% endif %}
 {% endif %}

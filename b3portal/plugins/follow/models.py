@@ -47,16 +47,12 @@ class Follow(models.Model):
     time_add = EpochDateTimeField()
     
     def __unicode__(self):
-        return repr(self)
+        return "in watch list because %s" % self.reason
         
     def __repr__(self):
         return "%s [%s]" % (self.client.name,self.time_add.strftime("%d/%m/%Y %H:%M"))
         
     class Meta:
         managed = False
-        ordering = ('client',)
         verbose_name_plural = "Following"
         db_table = u'following'
-        permissions = (
-            ("view_follow", "View follow info"),
-        )

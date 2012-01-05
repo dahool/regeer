@@ -25,7 +25,7 @@
         <td><a name="F{{info.client.id}}" href="{% serverurl client_detail info.client.id %}">{{info.client.name}}</a></td>
         <td>{{info.reason}}</td>
         <td>{{info.time_add|date:"DATETIME_FORMAT"}}</td>
-        <td>{% if info.admin %}-B3{% else %}<a href="{% serverurl client_detail info.admin.id %}">{{info.admin.name}}</a>{%endif%}</td>
+        <td>{% if info.admin %}<a href="{% serverurl client_detail info.admin.id %}">{{info.admin.name}}</a>{% else %}-B3{%endif%}</td>
     </tr>
 {% endfor %}
 </tbody>

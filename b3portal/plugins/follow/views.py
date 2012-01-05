@@ -31,12 +31,13 @@ from b3portal.plugins import is_plugin_enabled
 from b3portal.permission.utils import server_permission_required_with_403
 from b3portal import permissions as perm
 from b3portal.resolver import urlreverse
+from b3portal.models import Auditor
 
 @server_permission_required_with_403(perm.FOLLOW_VIEW)
 @render('follow/list.html')
 def home(request):
     if not is_plugin_enabled(request.server, 'follow'):
-        messages.info(request, _('This function is not enabled for this server.'))
+        messages.info(request, _('This function is not enabled on this server.'))
         return {'list': None}  
         
     return {'list': Follow.objects.using(request.server).all().order_by('-time_add')}
@@ -53,6 +54,12 @@ def add(request, id):
                        time_add=datetime.datetime.now(),
                        admin_id=0)
             messages.success(request, _('Follow added successfully.'))
+            
+            Auditor.objects.create(user=request.user,
+                                   server_id=request.server,
+                                   clientid=client.id,
+                                   message=_("Put %s") % str(p))
+            
             return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':id}))
     else:
         if client.followed.all():
@@ -68,6 +75,12 @@ def remove(request, id):
     if client.followed.all():
         for r in client.followed.all():
             r.delete()
+
+        Auditor.objects.create(user=request.user,
+                               server_id=request.server,
+                               clientid=client.id,
+                               message=_("Remove from watch list"))
+                    
         messages.success(request, _('User removed of the watch list'))    
     else:
         messages.error(request, _('User is not in the watch list'))
