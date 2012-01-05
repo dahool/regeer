@@ -22,8 +22,9 @@
 		<tr class="odd">
 			<td colspan="4">{% trans "No aliases" %}</td>
 		</tr>
-		{% endfor %} {% endwith %}
+		{% endfor %} 
 	</tbody>
+	{% if aliases %}
 	<tfoot>
 		<tr>
 			<td colspan="4">
@@ -32,4 +33,6 @@
 			</td>
 		</tr>
 	</tfoot>
+	{% endif %}
+	{% endwith %}
 </table>

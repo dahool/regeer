@@ -1,5 +1,20 @@
-{% load urltag listtocolumns i18n tagutils settingstag %}
-{% for penalty in penalties %}
+{% load urltag listtocolumns i18n tagutils settingstag paginator %}
+{% with client_admactions.object_list as admactions %}
+{% if admactions %}
+<table class="table-style cd-table client_lists">
+<caption>{% trans "Admin Actions" %}</caption>
+<thead>
+<tr>
+<th>{% trans "Type" %}</th>
+<th>{% trans "Added" %}</th>
+<th>{% trans "Duration" %}</th>
+<th>{% trans "Expires" %}</th>
+<th>{% trans "Reason" %}</th>
+<th>{% trans "Client" %}</th>
+</tr>
+</thead>
+<tbody>
+{% for penalty in admactions %}
 <tr class="{% cycle "odd" "even" %}">
 <td>{{penalty.get_type_display}}</td>
 <td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
@@ -24,8 +39,16 @@
 <td>{{penalty.reason|clean_colors}}</td>
 <td><a href="{% serverurl client_detail penalty.client.id %}">{{penalty.client.name}}</a></td>
 </tr>
-{% empty %}
-<tr class="odd">
-<td colspan="6">{% trans "This user has no recorded admin actions" %}</td>
-</tr>
 {% endfor %}
+</tbody>
+<tfoot>
+	<tr>
+		<td colspan="6">
+			{% serverurl client_more_admactions client.id as admacurl %}
+			{% paginate client_admactions admacurl %}
+		</td>
+	</tr>
+</tfoot>
+</table>
+{% endif %}
+{% endwith %}

@@ -1,0 +1,39 @@
+{% load listtocolumns i18n tagutils settingstag urltag paginator %}
+<table class="table-style cd-table client_lists">
+<caption>{% trans "Notices" %}{% if obj_perms.portal.addnotice %}<a title="{% trans "Add" %}" href="{% serverurl add_notice client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
+<thead>
+<tr>
+<th>{% trans "Added" %}</th>
+<th>{% trans "Reason" %}</th>
+<th>{% trans "Admin" %}</th>
+</tr>
+</thead>
+<tbody>
+{% with client_notices.object_list as notices %}
+{% for penalty in notices %}
+<tr class="{% cycle "odd" "even" %}">
+<td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
+<td>{{penalty.reason|clean_colors}}</td>
+<td>{% if obj_perms.portal.viewadminsinfo %}{% if penalty.admin %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}-B3{%endif%}{% else %}-{%endif%}</td>
+</tr>
+{% empty %}
+<tr class="odd">
+<td colspan="6">{% trans "No notices" %}</td>
+</tr>
+{% endfor %}
+</tbody>
+{% if notices %}
+<tfoot>
+	<tr>
+		<td colspan="5">
+			{% serverurl client_more_notices client.id as noticeurl %}
+			{% paginate client_notices noticeurl %}
+		</td>
+	</tr>
+</tfoot>
+{% endif %}
+{% endwith %}
+</table>
+
+
+

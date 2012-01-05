@@ -15,10 +15,25 @@ $(document).ready(function() {
 		e.preventDefault();
 		do_get($(this).attr('href'),$('#client_ipaliases'));
 	});	
+	$('#client_notice').on('click','div.pagination a', function(e) {
+		e.preventDefault();
+		do_get($(this).attr('href'),$('#client_notice'));
+	});		
+	$('#past_penalties').on('click','div.pagination a', function(e) {
+		e.preventDefault();
+		do_get($(this).attr('href'),$('#past_penalties'));
+	});			
+	$('#admin_actions').on('click','div.pagination a', function(e) {
+		e.preventDefault();
+		do_get($(this).attr('href'),$('#admin_actions'));
+	});
+	$('#portal_actions').on('click','div.pagination a', function(e) {
+		e.preventDefault();
+		do_get($(this).attr('href'),$('#portal_actions'));
+	});	
 	
 	{% if obj_perms.portal.updatelevel or obj_perms.portal.reglevel %}
     $('#client_group').editable('{% serverurl change_clientgroup client.id %}', {
-    	//loadurl  : '{% serverurl group_list_json %}',
     	data   : '{{group_data|safe}}',
         type    : 'select',
         submit  : '{% trans "Save" %}',
@@ -33,267 +48,52 @@ $(document).ready(function() {
 {% include "b3portal/client/client_menu.html" %}
 {% endblock %}
 {% block main_content %}
-<table class="table-style cd-table client_detail">
-<caption><h3>{{client.name}}<small>  
-{% with request.server as current_server %}
-{% for server in request.server_list %}
-{% if current_server == server.uuid %}{{server.name}}{%endif%}
-{% endfor %}
-{% endwith %}
-</small>
-{% if client.ip %}
-<small>
-{% geolocation client.ip %}
-</small>
-{% endif %}
-{% if obj_perms.portal.viewguid %}<small>{% ifvalidguid client.guid %}<span class="nodecoration_icon icon_valid" title="{% trans "Guid is valid" %}">{% trans "Guid is valid" %}</span>{% else %}<span class="nodecoration_icon icon_invalid" style="color: red;" title="{% trans "Invalid guid" %}">{%blocktrans%}Guid {{client.guid}} is Invalid{%endblocktrans%}</span>{% endifvalidguid %}</small>{% endif %}
-</h3>
-{% ifpluginenabled "follow" %}
-{% if obj_perms.plugin.viewfollow %}
-{% if client.followed.all %}
-{% for follow in client.followed.all %}
-<a href="{% serverurl follow:home %}#F{{client.id}}" class="nodecoration_icon icon_watch follow-message">{% with follow.time_add|date:"DATETIME_FORMAT" as since %}{% blocktrans %}Player being followed since {{since}}{% endblocktrans%}{% endwith %}</a>
-{% endfor %}
-{% endif %}
-{% endif %}
-{% endifpluginenabled %}
-</caption>
-<thead class="table_menu">
-<tr><td colspan="4">
-<ul>
-{% ifpluginenabled "follow" %}
-{% if client.followed.all %}
-{% if obj_perms.plugin.removefollow %}
-<li><a href="{% serverurl follow:remove client.id %}">{% trans "Remove from watch list" %}</a></li>
-{% endif %}
-{% else %}
-{% if obj_perms.plugin.addfollow %}
-<li><a href="{% serverurl follow:add client.id %}">{% trans "Add to watch list" %}</a></li>
-{% endif %}
-{% endif %}
-{% endifpluginenabled %}
-</ul>
-</td></tr>
-</thead>
-<tbody>
-<tr>
-<th>{% trans "Name" %}</th><td>{{client.name}}{% ifpluginenabled "chatlog" %}{% if obj_perms.plugin.chatlog %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% serverurl chatlog:chat_list %}&name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endif %}{% endifpluginenabled %}</td>
-<th>{% trans "@id" %}</th><td>{{client.id}}</td>
-</tr>
-<tr>
-<th>{% trans "Level" %}</th>
-{% if obj_perms.portal.viewclientgroup %}
-<td id="client_group"
-{% if obj_perms.portal.updatelevel %}
-title="{% trans "Click to edit..." %}" class="nodecoration_icon icon_edit"
-{% else %}
-{% if obj_perms.portal.reglevel and client.group_id < 2%}
-title="{% trans "Click to edit..." %}" class="nodecoration_icon icon_edit"
-{% else %} 
-{% if obj_perms.portal.userlevel and client.group_id < 1%}
-title="{% trans "Click to Register Player" %}" class="nodecoration_icon icon_useradd" onclick="register_user('{% serverurl change_clientgroup client.id %}',1)" 
-{% endif %}
-{% endif %}
-{% endif %}>
-{{client.displayGroup}}</td>
-{% else %}
-<td>-</td>
-{% endif %}
-<th>{% trans "Connections" %}</th><td>{{client.connections}}</td>
-</tr>
-<tr>
-<th>{% trans "First Seen" %}</th><td>{{client.time_add|date:"DATETIME_FORMAT"}}</td>
-<th>{% trans "Last Seen" %}</th><td>{{client.time_edit|date:"DATETIME_FORMAT"}}{% ifpluginenabled "status" %}{% if obj_perms.plugin.viewstatus %}<a href="{% serverurl status:client_log client.id %}" title="{% trans "Expand" %}" class="nodecoration_icon icon_table"></a>{% endif %}{% endifpluginenabled %}</td>
-</tr>
-<tr>
-<th>{% trans "IP Address" %}</th>
-<td>{% if client.ip %}
-{% if obj_perms.portal.viewfullip %}
-{% set client.ip as baseip %}
-{% set client.ip as maskip %}
-{% else %}
-{% set client.ip|baseip as baseip %}
-{% set client.ip|maskip as maskip %}
-{% endif %}
-<a href="{% serverurl client_list %}&type=ip&data={{maskip}}&search=Search">{{maskip}}</a>
-<a target="_blank" href="http://whois.domaintools.com/{{baseip}}" title="{% trans "Whois IP search" %}" class="nodecoration_icon icon_vcard"></a>
-<a target="_blank" href="{% setting 'GEOTOOL' %}{{baseip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
-{% if client.ip in banlist %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endif %}
-{% else %}{% trans "(No IP address available)" %}{% endif %}</td>
-<td colspan="2">{% if status != None %}{%if status %}<span class="online">{% trans "Playing" %}</span>{%else%}<span class="offline">{% trans "Offline" %}</span>{%endif%}{%endif%}</td>
-</tr>
-</tbody>
-</table>
+<!-- ************************ DETAIL ************************ -->
+{% include "b3portal/client/include/client_detail.html" %}
 <br/>
 <!-- ************************ ALIASES ************************ -->
 {% if obj_perms.portal.viewalias %}
 <div id="client_aliases">
-{% include "b3portal/client/client_aliases.html" %}
+{% include "b3portal/client/include/client_aliases.html" %}
 </div>
 <br/>
+<!-- ************************ IP ALIAS ************************ -->
 {% ifsetting SUPPORT_IP_ALIASES %}
 <div id="client_ipaliases">
-{% include "b3portal/client/client_ipaliases.html" %}
+{% include "b3portal/client/include/client_ipaliases.html" %}
 </div>
 <br/>
 {% endifsetting %}
 {% endif %}
 <!-- ************************ PENALTIES ************************ -->
 {% if obj_perms.portal.listpenalties %}
-<table class="table-style cd-table client_lists">
-<caption>{% trans "Active Penalties" %}{% if obj_perms.portal.addpenalty %}<a title="{% trans "Add" %}" href="{% serverurl add_penalty client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
-<thead>
-<tr>
-<th>{% trans "Type" %}</th>
-<th>{% trans "Added" %}</th>
-<th>{% trans "Duration" %}</th>
-<th>{% trans "Expires" %}</th>
-<th>{% trans "Reason" %}</th>
-<th>{% trans "Admin" %}</th>
-</tr>
-</thead>
-<tbody>
-{% for penalty in client.penalties.active_bans %}
-<tr class="{% cycle "odd" "even" %}">
-<td>{{penalty.get_type_display}}
-{% if obj_perms.portal.removepenalty and penalty.inactive == 0 %}
-<a href="{% serverurl disable_penalty penalty.id %}" title="{% trans "De-active" %}" class="nodecoration_icon icon_delete"></a>
-{% endif %}
-{% if obj_perms.portal.editpenalty and penalty.inactive == 0 %}
-<a href="{% serverurl edit_penalty penalty.id %}" title="{% trans "Edit" %}" class="nodecoration_icon icon_edit">&nbsp;</a>
-{% endif %}
-&nbsp;
-</td>
-<td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
-<td>{% if penalty.inactive == 0 %}{% if penalty.duration != 0 %}{{penalty.display_duration}}{%endif%}{%endif%}</td>
-<td>{% if penalty.inactive == 1 %}<span style="font-weight: bold;">{% trans "De-activated" %}</span>{%else%}{% if penalty.duration != 0 %}{{penalty.time_expire|date:"DATETIME_FORMAT"}}{%else%}<span style="color:red;">{% trans "Permanent" %}</span>{%endif%}{%endif%}</td>
-<td>{{penalty.reason|clean_colors}}</td>
-<td>{% if obj_perms.portal.viewadminsinfo %}{% if penalty.admin %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}-B3{%endif%}{% else %}-{%endif%}</td>
-</tr>
-{% empty %}
-<tr class="odd">
-<td colspan="6">{% trans "No penalties" %}</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
+<div id="client_penalties">
+{% include "b3portal/client/include/client_penalties.html" %}
+</div>
 <br/>
-{% endif %}
 <!-- ************************ NOTICES ************************ -->
-{% if obj_perms.portal.listpenalties %}
-<table id="client_notice" class="table-style cd-table client_lists">
-<caption>{% trans "Notices" %}{% if obj_perms.portal.addnotice %}<a title="{% trans "Add" %}" href="{% serverurl add_notice client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
-<thead>
-<tr>
-<th>{% trans "Added" %}</th>
-<th>{% trans "Reason" %}</th>
-<th>{% trans "Admin" %}</th>
-</tr>
-</thead>
-<tbody id="notices">
-{% with client.penalties.notices|slice:":5" as notices %} 
-{% include "b3portal/client/client_notices.html" %}
-{% endwith %}
-</tbody>
-{% if client.penalties.notices|length > 5 %}
-<tfoot>
-<tr>
-<td colspan="5">
-<span class="link right" onclick="do_call_get('{% serverurl client_more_notices client.id %}','notices', '#client_notice tfoot')">{% trans "more ..." %}</span>
-</td>
-</tr>
-</tfoot>
-{% endif %}
-</table>
-{% endif %}
+<div id="client_notice">
+{% include "b3portal/client/include/client_notices.html" %}
+</div>
 <br/>
 <!-- ************************ PAST PENALTIES ************************ -->
-<table id="past_penalties" class="table-style cd-table client_lists">
-<caption>{% trans "Past Penalties" %}</caption>
-<thead>
-<tr>
-<th>{% trans "Type" %}</th>
-<th>{% trans "Added" %}</th>
-<th>{% trans "Duration" %}</th>
-<th>{% trans "Expires" %}</th>
-<th>{% trans "Reason" %}</th>
-<th>{% trans "Admin" %}</th>
-</tr>
-</thead>
-<tbody id="pastpenalty">
-{% with client.penalties.inactive|slice:":2" as penalties %} 
-{% include "b3portal/client/client_penalties.html" %}
-{% endwith %}
-</tbody>
-{% if client.penalties.inactive|length > 2 %}
-<tfoot>
-<tr>
-<td colspan="6">
-<span class="link right" onclick="do_call_get('{% serverurl client_more_ipenalties client.id %}','pastpenalty', '#past_penalties tfoot')">{% trans "more ..." %}</span>
-</td>
-</tr>
-</tfoot>
-{% endif %}
-</table>
+<div id="past_penalties">
+{% include "b3portal/client/include/client_ipenalties.html" %}
+</div>
 <br/>
+{% endif %} <!-- PERM ENDIF -->
 <!-- ************************ ADMIN ACTIONS ************************ -->
 {% if obj_perms.portal.viewadminsinfo %}    
-<table id="admin_actions" class="table-style cd-table client_lists">
-<caption>{% trans "Admin Actions" %}</caption>
-<thead>
-<tr>
-<th>{% trans "Type" %}</th>
-<th>{% trans "Added" %}</th>
-<th>{% trans "Duration" %}</th>
-<th>{% trans "Expires" %}</th>
-<th>{% trans "Reason" %}</th>
-<th>{% trans "Client" %}</th>
-</tr>
-</thead>
-<tbody id="adminact">
-{% with client.adminpenalties.all|slice:":5" as penalties %} 
-{% include "b3portal/client/client_adminactions.html" %}
-{% endwith %}
-</tbody>
-{% if client.adminpenalties.all|length > 5 %}
-<tfoot>
-<tr>
-<td colspan="6">
-<span class="link right" onclick="do_call_get('{% serverurl client_more_admactions client.id %}','adminact', '#admin_actions tfoot')">{% trans "more ..." %}</span>
-</td>
-</tr>
-</tfoot>
-{% endif %}
-</table>
+<div id="admin_actions">
+{% include "b3portal/client/include/client_adminactions.html" %}
+</div>
 <br/>
 {% endif %}
 <!-- ************************ PORTAL ACTIONS ************************ -->
-{% if auditlogs %}    
-<table id="portal_actions" class="table-style cd-table client_lists">
-<caption>{% trans "Portal Actions" %}</caption>
-<thead>
-<tr>
-<th style="width: 125px;">{% trans "Date" %}</th>
-<th>{% trans "User" %}</th>
-<th>{% trans "Action" %}</th>
-</tr>
-</thead>
-<tbody id="portalact">
-{% with auditlogs|slice:":5" as logs %} 
-{% include "b3portal/client/client_audit.html" %}
-{% endwith %}
-</tbody>
-{% if auditlogs.all|length > 5 %}
-<tfoot>
-<tr>
-<td colspan="3">
-<!-- 
-<span class="link right" onclick="do_call_get('{% serverurl client_more_admactions client.id %}','adminact', '#admin_actions tfoot')">{% trans "more ..." %}</span>
--->
-</td>
-</tr>
-</tfoot>
-{% endif %}
-</table>
+{% if obj_perms.portal.viewauditlogs %}    
+<div id="portal_actions">
+{% include "b3portal/client/include/client_audit.html" %}
+</div>
+<br/>
 {% endif %}
 {% endblock %}

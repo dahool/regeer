@@ -31,8 +31,9 @@
 <tr class="odd">
 <td colspan="4">{% trans "No registered ip addresses" %}</td>
 </tr>
-{% endfor %} {% endwith %}
+{% endfor %}
 </tbody>
+{% if aliases %}
 <tfoot>
 	<tr>
 		<td colspan="4">
@@ -41,6 +42,8 @@
 		</td>
 	</tr>
 </tfoot>
+{% endif %}
+{% endwith %}
 </table>
 
 

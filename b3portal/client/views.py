@@ -82,21 +82,29 @@ def client(request, id):
             pass
     
     if has_server_perm(request.user, perm.VIEW_AUDITLOGS, request.server):
-        audits = Auditor.objects.get_by_client(client.id, request.server)
+        client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server)) 
     else:
-        audits = None
+        client_auditlogs = None
         
     client_aliases = _paginate(request, client.aliases.all())
-    ipaliases = _paginate(request, client.ip_aliases.all())
-        
+    client_ipaliases = _paginate(request, client.ip_aliases.all())
+    client_notices = _paginate(request, client.penalties.notices())
+    client_penalties = _paginate(request, client.penalties.active_bans())
+    client_ppenalties = _paginate(request, client.penalties.inactive())
+    client_admactions = _paginate(request, client.adminpenalties.all())
+    
     list = _get_banlist(request)
     
     return {'client': client,
             'status': online,
-            'auditlogs': audits,
             'banlist': list,
+            'client_auditlogs': client_auditlogs,
             'client_aliases': client_aliases,
-            'client_ipaliases': ipaliases,
+            'client_ipaliases': client_ipaliases,
+            'client_notices': client_notices,
+            'client_penalties': client_penalties,
+            'client_ppenalties': client_ppenalties,
+            'client_admactions': client_admactions,
             'group_data': get_json_value(get_group_list(request))}
 
 def _get_banlist(request):
@@ -410,17 +418,17 @@ def change_clientgroup(request, id):
     
     return HttpResponse(str(group), mimetype='plain/text')
 
-@server_permission_required_with_403(perm.VIEW_CLIENT)
+@server_permission_required_with_403(perm.VIEW_ALIAS)
 @cache_page(15*60)
-@render('b3portal/client/client_aliases.html')
+@render('b3portal/client/include/client_aliases.html')
 def more_alias(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
     client_aliases = _paginate(request, client.aliases.all())
     return {'client_aliases': client_aliases, 'client': client}
 
-@server_permission_required_with_403(perm.VIEW_CLIENT)
+@server_permission_required_with_403(perm.VIEW_ALIAS)
 @cache_page(15*60)
-@render('b3portal/client/client_ipaliases.html')
+@render('b3portal/client/include/client_ipaliases.html')
 def more_ipalias(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
     ipaliases = _paginate(request, client.ip_aliases.all())
@@ -430,24 +438,50 @@ def more_ipalias(request, id):
 
 @server_permission_required_with_403(perm.VIEW_HIGH_LEVEL_CLIENT)
 @cache_page(15*60)
-@render('b3portal/client/client_adminactions.html')
+@render('b3portal/client/include/client_adminactions.html')
 def more_admactions(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
-    return {'penalties': client.adminpenalties.all()}
+    client_admactions = _paginate(request, client.adminpenalties.all())
+    return {'client_admactions': client_admactions,
+            'client': client}
 
-@server_permission_required_with_403(perm.VIEW_CLIENT)
+@server_permission_required_with_403(perm.VIEW_PENALTY)
 @cache_page(15*60)
-@render('b3portal/client/client_penalties.html')
+@render('b3portal/client/include/client_penalties.html')
+def more_penalties(request, id):
+    client = get_object_or_404(Client, id=id, using=request.server)
+    client_penalties = _paginate(request, client.penalties.active_bans())
+    return {'client_penalties': client_penalties,
+            'client': client }
+    
+@server_permission_required_with_403(perm.VIEW_PENALTY)
+@cache_page(15*60)
+@render('b3portal/client/include/client_ipenalties.html')
 def more_ipenalties(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
-    return {'penalties': client.penalties.inactive()[:20]}
+    client_ppenalties = _paginate(request, client.penalties.inactive())
+    return {'client_ppenalties': client_ppenalties,
+            'client': client }
 
-@server_permission_required_with_403(perm.VIEW_CLIENT)
+@server_permission_required_with_403(perm.VIEW_PENALTY)
 @cache_page(15*60)
-@render('b3portal/client/client_notices.html')
+@render('b3portal/client/include/client_notices.html')
 def more_notices(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
-    return {'notices': client.penalties.notices()}
+    notices = _paginate(request, client.penalties.notices())
+    return {'client_notices': notices,
+            'client': client}
+
+@server_permission_required_with_403(perm.VIEW_AUDITLOGS)
+@cache_page(15*60)
+@render('b3portal/client/include/client_audit.html')
+def more_logs(request, id):
+    client = get_object_or_404(Client, id=id, using=request.server)
+    client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server))
+    return {'client_auditlogs': client_auditlogs,
+            'client': client}
+    
+ 
 
 def direct(request):
     if request.method != 'POST':
