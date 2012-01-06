@@ -66,7 +66,8 @@ $(document).ready(function() {
 <br/>
 {% endif %}
 <!-- ************************ PORTAL ACTIONS ************************ -->
-{% if obj_perms.portal.viewauditlogs %}    
+{% comment %}{% if obj_perms.portal.viewauditlogs %}{% endcomment %}
+{% if client_auditlogs %}    
 <div id="portal_actions">
 {% include "b3portal/client/include/client_audit.html" %}
 </div>

@@ -106,13 +106,16 @@ class AuditorManager(models.Manager):
     def get_by_client(self, clientId, server):
         return self.filter(clientid=clientId, server=server).order_by('-created')
     
+    def get_by_client_n_user(self, clientId, server, user):
+        return self.filter(clientid=clientId, server=server, user=user).order_by('-created')
+    
 class Auditor(models.Model):
     user = models.ForeignKey(User)
     server = models.ForeignKey(Server)
     clientid = models.IntegerField(db_index=True, default=0)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     message = models.CharField(max_length=765)
-
+    
     objects = AuditorManager()
     
     def __repr__(self):

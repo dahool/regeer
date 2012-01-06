@@ -204,6 +204,18 @@ class Penalty(models.Model):
         return ''
     
     @property
+    def display_data(self):
+        if self.data and not self.data.startswith("UP#"):
+            return self.data
+        return None
+    
+    @property
+    def admin_username(self):
+        if self.data and self.data.startswith("UP#"):
+            return "@" + self.data[3:]
+        return None
+    
+    @property
     def is_expired(self):
         return self.time_expire < datetime.datetime.now()
         

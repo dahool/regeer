@@ -22,12 +22,12 @@
 </tr>
 </thead>
 <tbody>
-{% for ban in ban_list.object_list %}
+{% for penalty in ban_list.object_list %}
 <tr class="{% cycle "odd" "even" %}">
-<td><a href="{% serverurl client_detail ban.client.id %}">{{ban.client.name}}</a></td>
-<td>{{ban.time_add|date:"D, d M Y (H:i)"}}</td>
-<td>{{ban.reason|clean_colors}}</td>
-<td>{% if ban.admin %}<a href="{% serverurl client_detail ban.admin.id %}">{{ban.admin.name}}</a>{% else %}B3{% endif %}</td>
+<td><a href="{% serverurl client_detail penalty.client.id %}">{{penalty.client.name}}</a></td>
+<td>{{penalty.time_add|date:"D, d M Y (H:i)"}}</td>
+<td>{{penalty.reason|clean_colors}}</td>
+<td>{% if penalty.admin and penalty.admin_id > 0 %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}{% if penalty.admin_username %}{{penalty.admin_username}}{%else%}-B3{%endif%}{%endif%}</td>
 </tr>
 {% endfor %}
 </tbody>

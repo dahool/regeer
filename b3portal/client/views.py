@@ -84,7 +84,8 @@ def client(request, id):
     if has_server_perm(request.user, perm.VIEW_AUDITLOGS, request.server):
         client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server)) 
     else:
-        client_auditlogs = None
+        client_auditlogs = _paginate(request, Auditor.objects.get_by_client_n_user(client.id, request.server, request.user)) 
+        #client_auditlogs = None
         
     client_aliases = _paginate(request, client.aliases.all())
     client_ipaliases = _paginate(request, client.ip_aliases.all())
@@ -304,9 +305,11 @@ def addpenalty(request, id, notice=False):
         form = frmObj(request.POST)
         if form.is_valid():
             p = Penalty(client=client,
-                                       reason=_("%(reason)s (by %(user)s)") % {'reason': form.cleaned_data['reason'], 'user': request.user.username},
+                                       #reason=_("%(reason)s (by %(user)s)") % {'reason': form.cleaned_data['reason'],'user': request.user.username},
+                                       reason= form.cleaned_data['reason'],
                                        time_edit=datetime.datetime.now(),
                                        time_add=datetime.datetime.now(),
+                                       data= "UP#%s" % request.user.username,
                                        admin_id=0)
             if form.Meta.type == 1:
                 p.duration=0
@@ -472,16 +475,18 @@ def more_notices(request, id):
     return {'client_notices': notices,
             'client': client}
 
-@server_permission_required_with_403(perm.VIEW_AUDITLOGS)
+#@server_permission_required_with_403(perm.VIEW_AUDITLOGS)
 @cache_page(15*60)
 @render('b3portal/client/include/client_audit.html')
 def more_logs(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
-    client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server))
+    if has_server_perm(request.user, perm.VIEW_AUDITLOGS, request.server):
+        client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server)) 
+    else:
+        client_auditlogs = _paginate(request, Auditor.objects.get_by_client_n_user(client.id, request.server, request.user))
+    #client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server))
     return {'client_auditlogs': client_auditlogs,
             'client': client}
-    
- 
 
 def direct(request):
     if request.method != 'POST':

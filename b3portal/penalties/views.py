@@ -63,15 +63,15 @@ def banlist(request):
     paginator = Paginator(penalties, settings.ITEMS_PER_PAGE)
     # If page request (9999) is out of range, deliver last page of results.
     try:
-        list = paginator.page(page)
+        lista = paginator.page(page)
     except (EmptyPage, InvalidPage):
-        list = paginator.page(paginator.num_pages)
+        lista = paginator.page(paginator.num_pages)
 
     if search:
         search['server']=request.server
         search = urllib.urlencode(search)
         
-    return {'ban_list': list, 'search': search}
+    return {'ban_list': lista, 'search': search}
     
 @login_required
 @cache_page(120*60)
@@ -105,11 +105,11 @@ def kicklist(request):
     paginator = Paginator(penalties, settings.ITEMS_PER_PAGE)
     # If page request (9999) is out of range, deliver last page of results.
     try:
-        list = paginator.page(page)
+        lista = paginator.page(page)
     except (EmptyPage, InvalidPage):
-        list = paginator.page(paginator.num_pages)
+        lista = paginator.page(paginator.num_pages)
 
-    return {'ban_list': list}
+    return {'ban_list': lista}
 
 @server_permission_required_with_403(perm.VIEW_PENALTY)
 @cache_page(30*60)
@@ -126,18 +126,19 @@ def penalty_list(request):
     paginator = Paginator(penalties, settings.ITEMS_PER_PAGE)
     # If page request (9999) is out of range, deliver last page of results.
     try:
-        list = paginator.page(page)
+        lista = paginator.page(page)
     except (EmptyPage, InvalidPage):
-        list = paginator.page(paginator.num_pages)
+        lista = paginator.page(paginator.num_pages)
 
-    return {'ban_list': list}
+    return {'ban_list': lista}
 
+@server_permission_required_with_403(perm.VIEW_PENALTY)
 @cache_page(30*60)
 @render('b3portal/penalties/notice_list.html')
 def notice_list(request):
     #if not has_any_server_perms(request.user, [perm.VIEW_NOTICE, perm.VIEW_PENALTY], request.server):
-    if not has_server_perm(request.user, perm.VIEW_PENALTY, request.server):        
-        raise Http403
+#    if not has_server_perm(request.user, perm.VIEW_PENALTY, request.server):        
+#        raise Http403
     
     penalties = Penalty.objects.using(request.server).filter(Q(type='Notice'))
 

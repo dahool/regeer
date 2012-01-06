@@ -2,10 +2,13 @@
 {% load i18n settingstag navigation gravatar extendedtags plugintag urltag %}
 {% block extra_header %}
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/jquery.place.css"/>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/tipTip.css"/>
+<script type="text/javascript" src="{{STATIC_URL}}js/baseapp.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.measure.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.place.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.pulse.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.loading.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery.tiptip.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('body').ajaxStart(function() {

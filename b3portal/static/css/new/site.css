@@ -120,6 +120,17 @@ label {
     padding-left: 24px !important;
     /*line-height: 16px;*/
 }
+.simple_icon
+ {
+    text-decoration:none !important;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: 5px 50%;
+    padding-top: 1px;
+    padding-right: 0;
+    padding-bottom: 1px;
+    padding-left: 24px !important;
+}
 .icon_add {
     background-image: url('../../images/icons/add.png');
 }
@@ -158,6 +169,9 @@ label {
 }
 .icon_userdelete {
     background-image: url('../../images/icons/user_delete.png');
+}
+.icon_info {
+    background-image: url('../../images/icons/information.png');
 }
 td a {
     font-weight: bold;

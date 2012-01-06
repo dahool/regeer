@@ -14,7 +14,7 @@
 <tr class="{% cycle "odd" "even" %}">
 <td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
 <td>{{penalty.reason|clean_colors}}</td>
-<td>{% if obj_perms.portal.viewadminsinfo %}{% if penalty.admin %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}-B3{%endif%}{% else %}-{%endif%}</td>
+<td>{% if penalty.admin and penalty.admin.id > 0 %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}{% if penalty.admin_username %}{{penalty.admin_username}}{%else%}-B3{%endif%}{%endif%}</td>
 </tr>
 {% empty %}
 <tr class="odd">
