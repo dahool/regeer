@@ -1,6 +1,13 @@
 {% load listtocolumns i18n tagutils settingstag urltag paginator %}
+<script type="text/javascript">
+<!--
+	function load_notices() {
+		$("#client_notice").load('{% serverurl client_more_notices client.id %}');		
+	}
+-->
+</script>
 <table class="table-style cd-table client_lists">
-<caption>{% trans "Notices" %}{% if obj_perms.portal.addnotice %}<a title="{% trans "Add" %}" href="{% serverurl add_notice client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
+<caption>{% trans "Notices" %}{% if obj_perms.portal.addnotice %}<a id="add_notice_link" title="{% trans "Add" %}" alt="{% serverurl add_notice client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
 <thead>
 <tr>
 <th>{% trans "Added" %}</th>
@@ -34,6 +41,3 @@
 {% endif %}
 {% endwith %}
 </table>
-
-
-

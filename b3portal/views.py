@@ -28,3 +28,7 @@ def home(request):
     if Server.objects.count() == 0:
         return HttpResponseRedirect(reverse("admin:index"))
     return {}
+
+@render('messages.html')
+def userinformation(request):
+    return {}

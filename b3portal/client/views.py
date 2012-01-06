@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Copyright (c) 2010,2011 Sergio Gabriel Teves
+"""Copyright (c) 2010,2011,2012 Sergio Gabriel Teves
 All rights reserved.
 
 This program is free software: you can redistribute it and/or modify
@@ -330,10 +330,15 @@ def addpenalty(request, id, notice=False):
                 messages.success(request, _('Notice added successfully.'))
             else:
                 messages.success(request, _('Penalty added successfully.'))
-            return HttpResponseRedirect(urlreverse("client_detail", server=request.server, kwargs={'id':id}))
+            return HttpResponse("{\"sucess\": true}", mimetype='application/json') 
+            #return HttpResponseRedirect(urlreverse("client_detail", server=request.server, kwargs={'id':id}))
     else:
         form = frmObj()
-    return {'form': form, 'client': client}
+    if notice:
+        url = urlreverse("add_notice", server=request.server, kwargs={'id':id})
+    else:
+        url = urlreverse("add_penalty", server=request.server, kwargs={'id':id})
+    return {'form': form, 'client': client, 'url': url}
 
 @server_permission_required_with_403(perm.DELETE_PENALTY)
 def disablepenalty(request, id):

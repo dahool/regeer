@@ -16,6 +16,13 @@ function do_get(url, elem) {
 		$(elem).html(data);
 	})
 }
+function update_user_messages(callback) {
+	$.get(MUP_URL, function(data) {
+		$("#message_teaser").html(data);
+		if (callback) callback();
+	})	
+}
+
 $(document).ready(
 	function() {
 		$('.option').each(
@@ -56,12 +63,12 @@ $(document).ready(
 				});  
 			}	
 		);
-	    $('ul.messages li').each(function() {
+	    /*$('ul.messages').on('show','li', function() {
 	        $(this).append("<img class='close_button' src='"+MEDIA_URL+"images/close.gif'/>");
 	     });
 	     $('.close_button').click(function() {
 	         $(this).parent().remove();
-	     })
+	     })*/
 	}
 );
 $(document).ajaxSend(function(event, xhr, settings) {
