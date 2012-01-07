@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 import sys
+import os
 from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
@@ -33,6 +34,10 @@ class Command(BaseCommand):
         output = options.get('output')
         if not output: output = settings.LOCAL_CONFIG
         
+        if os.path.exists(output):
+             sys.stdout.write("\nRemove %s before run this command.\n" % output)
+             sys.exit(1)
+             
         databases = settings.DATABASES
         
         sys.stdout.write("\nReading database.\n")
