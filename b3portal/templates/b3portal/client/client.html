@@ -9,69 +9,18 @@
 <script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/client2.js"></script>
 <script type="text/javascript">
+function update_portal_act() {
+	$("#portal_actions").load('{% serverurl client_more_logs client.id %}');
+}
+function load_penalties() {
+    $("#client_penalties").load('{% serverurl client_more_penalties client.id %}');
+    update_portal_act()
+}
+function load_notices() {
+    $("#client_notice").load('{% serverurl client_more_notices client.id %}');
+    update_portal_act()
+}
 $(document).ready(function() {
-	$("#add_notice_link").on('click',function() {
-	    var dialog = $('<div style="display:none; text-align: left;"></div>').appendTo('body');
-	    var url = $(this).attr('alt');
-	    dialog.load(
-	        url, 
-	        function (responseText, textStatus, XMLHttpRequest) {
-	            dialog.dialog({
-	            	modal: true,
-	            	width: 550,
-	                close: function(event, ui) {
-	                    dialog.remove();
-	                }
-	            });
-	        }
-	    );
-	    dialog.on('submit','form', function(ev) {
-	    	ev.preventDefault();
-	    	$.post($(this).attr('action'),
-	    			$(this).serializeArray(),
-	    			function(data, status, xr) {
-	    				if (typeof(data) === "string") {
-	    					// TODO
-	    				} else {
-	    					$(ev.delegateTarget).dialog('close');
-	    					update_user_messages(function() { load_notices(); });
-	    				}
-	    			}
-	    	);
-	    });
-	});
-
-	$("#add_penalty_link").on('click',function() {
-	    var dialog = $('<div style="display:none; text-align: left;"></div>').appendTo('body');
-	    var url = $(this).attr('alt');
-	    dialog.load(
-	        url, 
-	        function (responseText, textStatus, XMLHttpRequest) {
-	            dialog.dialog({
-	            	modal: true,
-	            	width: 550,
-	                close: function(event, ui) {
-	                    dialog.remove();
-	                }
-	            });
-	        }
-	    );
-	    dialog.on('submit','form', function(ev) {
-	    	ev.preventDefault();
-	    	$.post($(this).attr('action'),
-	    			$(this).serializeArray(),
-	    			function(data, status, xr) {
-	    				if (typeof(data) === "string") {
-	    					// TODO
-	    				} else {
-	    					$(ev.delegateTarget).dialog('close');
-	    					update_user_messages(function() { load_penalties(); });
-	    				}
-	    			}
-	    	);
-	    });
-	});
-	
 	{% if obj_perms.portal.updatelevel or obj_perms.portal.reglevel %}
     $('#client_group.icon_edit').editable('{% serverurl change_clientgroup client.id %}', {
     	data   : '{{group_data|safe}}',
@@ -81,7 +30,6 @@ $(document).ready(function() {
     });		
     {% endif %}
 });
-
 </script>
 {% endblock %}
 {% block navigation2 %}

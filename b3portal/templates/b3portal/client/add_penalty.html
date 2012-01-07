@@ -18,3 +18,15 @@
 </fieldset>
 </form>
 </div>
+<script type="text/javascript">
+<!--
+$('#id_time').on('keypress', function(e) {
+    return ( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)) ? false : true ;
+})
+$('#id_permanent').on('change',function() {
+    control_checkbox($(this));  
+});
+control_checkbox($('#id_permanent'));
+
+//-->
+</script>

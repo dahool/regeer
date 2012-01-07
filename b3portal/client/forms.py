@@ -20,6 +20,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import EMPTY_VALUES
+from common.utils.functions import time2minutes
 
 TIME_CHOICES = (
     ('m', _('Minutes')),
@@ -29,6 +30,8 @@ TIME_CHOICES = (
     ('M', _('Month')),
     ('y', _('Years')),
 )
+
+MAX_DURATION = 10518960 # 20 years
 
 class NoticeForm(forms.Form):
     
@@ -43,11 +46,24 @@ class PenaltyForm(NoticeForm):
     time = forms.IntegerField(min_value=1, label=_('Duration'), required=False)
     time_type = forms.ChoiceField(label=_('Period'), choices=TIME_CHOICES)
 
-    def clean_time(self):
-        time = self.cleaned_data['time']
-        if time in EMPTY_VALUES and not self.cleaned_data['permanent']:
-            raise ValidationError(self.fields['time'].error_messages['required'])
-        return time
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        time = cleaned_data['time']
+        if time in EMPTY_VALUES and not cleaned_data['permanent']:
+            #raise ValidationError(self.fields['time'].error_messages['required'])
+            self._errors["time"] = self.error_class([self.fields['time'].error_messages['required']])
+            del cleaned_data['time']
+        elif not cleaned_data['permanent']:
+            time = time2minutes(str(time)+cleaned_data['time_type'])
+            if time == 0:
+                self._errors["time"] = self.error_class([_('Invalid duration')])
+                del cleaned_data['time']
+            elif time > MAX_DURATION:
+                self._errors["time"] = self.error_class([_('Duration is too big. Why don\'t you use permanent instead?')])
+                del cleaned_data['time']
+            else:
+                cleaned_data['time'] = time
+        return cleaned_data
 
     class Meta:
         type = 2

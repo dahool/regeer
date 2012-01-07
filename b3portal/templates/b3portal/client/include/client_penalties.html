@@ -1,11 +1,4 @@
 {% load listtocolumns i18n tagutils settingstag urltag %}
-<script type="text/javascript">
-<!--
-	function load_penalties() {
-		$("#client_penalties").load('{% serverurl client_more_penalties client.id %}');		
-	}
--->
-</script>
 <table class="table-style cd-table client_lists">
 <caption>{% trans "Active Penalties" %}{% if obj_perms.portal.addpenalty %}<a id="add_penalty_link" title="{% trans "Add" %}" alt="{% serverurl add_penalty client.id %}" class="nodecoration_icon icon_add">&nbsp;</a>{% endif %}</caption>
 <thead>
@@ -27,7 +20,7 @@
 <a href="{% serverurl disable_penalty penalty.id %}" title="{% trans "De-active" %}" class="nodecoration_icon icon_delete"></a>
 {% endif %}
 {% if obj_perms.portal.editpenalty and penalty.inactive == 0 %}
-<a href="{% serverurl edit_penalty penalty.id %}" title="{% trans "Edit" %}" class="nodecoration_icon icon_edit">&nbsp;</a>
+<a dialog="dialog" alt="{% serverurl edit_penalty penalty.id %}" title="{% trans "Edit" %}" class="nodecoration_icon icon_edit">&nbsp;</a>
 {% endif %}
 &nbsp;
 </td>
@@ -45,3 +38,9 @@
 {% endwith %}
 </tbody>
 </table>
+<script type="text/javascript">
+<!--
+create_dialog("#add_penalty_link", load_penalties);
+create_dialog("a[dialog]", load_penalties);
+-->
+</script>

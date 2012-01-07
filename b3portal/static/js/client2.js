@@ -1,3 +1,35 @@
+function create_dialog(id, callback) {
+    $(id).click(function() {
+        var dialog = $('<div id="content_dialog" style="display:none; text-align: left;"></div>').appendTo('body');
+        var url = $(this).attr('alt');
+        dialog.load(
+            url, 
+            function (responseText, textStatus, XMLHttpRequest) {
+                dialog.dialog({
+                    modal: true,
+                    width: 550,
+                    close: function(event, ui) {
+                        dialog.remove();
+                    }
+                });
+            }
+        );
+        dialog.on('submit','form', function(ev) {
+            ev.preventDefault();
+            $.post($(this).attr('action'),
+                    $(this).serializeArray(),
+                    function(data, status, xr) {
+                        if (typeof(data) === "string") {
+                            $("#content_dialog").html(data);
+                        } else {
+                            $(ev.delegateTarget).dialog('close');
+                            update_user_messages(function() { callback(); });
+                        }
+                    }
+            );
+        });
+    }); 
+}
 $(document).ready(
 	function() {
 		// ajax boxes

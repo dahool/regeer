@@ -50,11 +50,5 @@ $(document).ready(
 					})
 				}
 		);		
-		$('#id_permanent').change(function() {
-			control_checkbox($(this));	
-		});
-		$('#id_permanent:checked').each(function() {
-			control_checkbox($(this));	
-		});
 	}
 );

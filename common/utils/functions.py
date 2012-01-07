@@ -3,7 +3,8 @@ import re
 
 def minutes2int(mins):
     if re.match('^[0-9.]+$', mins):
-        return round(float(mins), 2)
+        #return round(float(mins), 2)
+        return int(mins)
     else:
         return 0
     
@@ -27,7 +28,9 @@ def time2minutes(timeStr):
     elif timeStr[-1:] == 'w':
         return minutes2int(timeStr[:-1]) * 60 * 24 * 7
     elif timeStr[-1:] == 'M':
-        return minutes2int(timeStr[:-1]) * 60 * 24 * 31    
+        return minutes2int(timeStr[:-1]) * 60 * 24 * 31
+    elif timeStr[-1:] == 'y':
+        return minutes2int(timeStr[:-1]) * 525948        
     else:
         return minutes2int(timeStr) 
     

@@ -319,7 +319,8 @@ def addpenalty(request, id, notice=False):
                     p.duration=0
                     p.type='Ban'
                 else:
-                    p.duration = time2minutes(str(form.cleaned_data['time'])+form.cleaned_data['time_type'])
+                    #dt = time2minutes(str(form.cleaned_data['time'])+form.cleaned_data['time_type'])
+                    p.duration = form.cleaned_data['time']
                     p.type='TempBan'
             p.save()
             Auditor.objects.create(user=request.user,
@@ -373,7 +374,8 @@ def editpenalty(request, id):
                                    clientid=p.client.id,
                                    message=_("Update \"%s\"") % str(p))            
             messages.success(request, _('Penalty updated.'))
-            return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':p.client.id}))
+            #return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':p.client.id}))
+            return HttpResponse("{\"sucess\": true}", mimetype='application/json')
     else:
         if p.duration==0:
             form = PenaltyForm(initial={'permanent': True, 'reason': p.reason})
@@ -381,7 +383,8 @@ def editpenalty(request, id):
             form = PenaltyForm(initial={'permanent': False, 'reason': p.reason,
                                         'time': p.duration,
                                         'time_type': 'm'})
-    return {'form': form, 'client': p.client}
+    url = urlreverse("edit_penalty", server=request.server, kwargs={'id':id})            
+    return {'form': form, 'client': p.client, 'url': url}
 
 @login_required
 def change_clientgroup(request, id):
