@@ -8,4 +8,5 @@
 @import url(new/table.css);
 @import url(topbar.css);
 @import url(new/site.css);
-@import url(../menu/menu.css);
+/*@import url(../menu/menu.css);*/
+@import url(../menu/menu2.css);
