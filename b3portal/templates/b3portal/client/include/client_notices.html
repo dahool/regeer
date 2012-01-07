@@ -12,7 +12,11 @@
 {% with client_notices.object_list as notices %}
 {% for penalty in notices %}
 <tr class="{% cycle "odd" "even" %}">
-<td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
+<td>{{penalty.time_add|date:"DATETIME_FORMAT"}}
+{% if obj_perms.portal.removepenalty or obj_perms.portal.removenotice %}
+<a confirm="confirm" alt="{% serverurl del_notice penalty.id %}" callback="load_notices" title="{% trans "Remove" %}" class="nodecoration_icon icon_delete"></a>
+{% endif %}
+</td>
 <td>{{penalty.reason|clean_colors}}</td>
 <td>{% if penalty.admin and penalty.admin.id > 0 %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}{% if penalty.admin_username %}{{penalty.admin_username}}{%else%}-B3{%endif%}{%endif%}</td>
 </tr>

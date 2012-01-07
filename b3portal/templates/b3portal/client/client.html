@@ -21,6 +21,31 @@ function load_notices() {
     update_portal_act()
 }
 $(document).ready(function() {
+    $("#main").on('click',"a[confirm]",function() {
+        var url = $(this).attr('alt');
+        var callback = $(this).attr('callback');
+        var dialog = $('<div id="dialog-confirm" style="display:none;">{% trans "Are you sure you want to remove this?" %}</div>').appendTo('body');
+        dialog.dialog({
+            resizable: false,
+            width: 350,
+            height:150,
+            modal: true,
+            title: '{% trans "Confirmation required" %}',
+            buttons: {
+                "Yes": function() {
+                	$(this).dialog( "close" );
+                	$.get(url, function() {
+                		update_user_messages()
+                		if (window.hasOwnProperty(callback)) window[callback]();
+                	})
+                },
+                "Cancel": function() {
+                    $(this).dialog( "close" );
+                }
+            }
+        });         
+    });
+    
 	{% if obj_perms.portal.updatelevel or obj_perms.portal.reglevel %}
     $('#client_group.icon_edit').editable('{% serverurl change_clientgroup client.id %}', {
     	data   : '{{group_data|safe}}',

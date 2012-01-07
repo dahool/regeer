@@ -17,7 +17,7 @@
 <tr class="{% cycle "odd" "even" %}">
 <td>{{penalty.get_type_display}}
 {% if obj_perms.portal.removepenalty and penalty.inactive == 0 %}
-<a href="{% serverurl disable_penalty penalty.id %}" title="{% trans "De-active" %}" class="nodecoration_icon icon_delete"></a>
+<a confirm="confirm" alt="{% serverurl disable_penalty penalty.id %}" callback="load_penalties" title="{% trans "De-active" %}" class="nodecoration_icon icon_delete"></a>
 {% endif %}
 {% if obj_perms.portal.editpenalty and penalty.inactive == 0 %}
 <a dialog="dialog" alt="{% serverurl edit_penalty penalty.id %}" title="{% trans "Edit" %}" class="nodecoration_icon icon_edit">&nbsp;</a>

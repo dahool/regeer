@@ -341,6 +341,24 @@ def addpenalty(request, id, notice=False):
         url = urlreverse("add_penalty", server=request.server, kwargs={'id':id})
     return {'form': form, 'client': client, 'url': url}
 
+@login_required
+def removenotice(request, id):
+    
+    if not has_any_server_perms(request.user, [perm.DELETE_NOTICE, perm.DELETE_PENALTY], request.server):
+        raise Http403
+    
+    penalty = get_object_or_404(Penalty, id=id, using=request.server)
+    if (penalty.type != 'Notice'):
+        raise Http403
+    Auditor.objects.create(user=request.user,
+                           server_id=request.server,
+                           clientid=penalty.client.id,
+                           message=_("Remove \"%s\"") % str(penalty))
+    penalty.delete()    
+    messages.success(request, _('Notice removed successfully.'))
+    return HttpResponse("{\"sucess\": true}", mimetype='application/json')
+    #return HttpResponseRedirect(urlreverse("client_detail",server=request.server, kwargs={'id':penalty.client.id}))
+    
 @server_permission_required_with_403(perm.DELETE_PENALTY)
 def disablepenalty(request, id):
     penalty = get_object_or_404(Penalty, id=id, using=request.server)
@@ -351,7 +369,8 @@ def disablepenalty(request, id):
                            clientid=penalty.client.id,
                            message=_("Disable \"%s\"") % str(penalty))    
     messages.success(request, _('Penalty de-activated successfully.'))
-    return HttpResponseRedirect(urlreverse("client_detail",server=request.server, kwargs={'id':penalty.client.id}))
+    return HttpResponse("{\"sucess\": true}", mimetype='application/json')
+    #return HttpResponseRedirect(urlreverse("client_detail",server=request.server, kwargs={'id':penalty.client.id}))
 
 @server_permission_required_with_403(perm.CHANGE_PENALTY)
 @render('b3portal/client/add_penalty.html')

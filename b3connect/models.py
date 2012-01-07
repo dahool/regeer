@@ -180,8 +180,8 @@ class Penalty(models.Model):
     
     def __unicode__(self):
         if self.duration == 0:
-            return ugettext(u"%(type)s. Reason %(reason)s" % {'type': self.get_type_display(), 'reason': self.reason})
-        return ugettext(u"%(type)s for %(duration)s. Reason %(reason)s" % {'type': self.get_type_display(),
+            return ugettext(u"%(type)s %(reason)s" % {'type': self.get_type_display(), 'reason': self.reason})
+        return ugettext(u"%(type)s %(reason)s. Duration: %(duration)s" % {'type': self.get_type_display(),
                                                                     'duration': self.display_duration,
                                                                     'reason': self.reason})
             
