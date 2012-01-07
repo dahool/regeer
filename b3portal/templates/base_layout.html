@@ -1,8 +1,6 @@
 {% extends "base_simple.html" %}
 {% load i18n settingstag navigation gravatar extendedtags plugintag urltag %}
 {% block extra_header %}
-<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/jquery.place.css"/>
-<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/tipTip.css"/>
 <script type="text/javascript" src="{{STATIC_URL}}js/baseapp.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.measure.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.place.js"></script>
@@ -12,7 +10,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('body').ajaxStart(function() {
-        $.loading(true, {text: '{% trans "Loading..." %}'});
+    	$.loading(true, {text: '{% trans "Working..." %}', loadingClass: 'context-loader', update: {texts: ['{% trans "Please, wait..." %}', '{% trans "Oops!, something went wrong." %}']}});
     }); 
     $('body').ajaxStop(function() {
         $.loading(false);      

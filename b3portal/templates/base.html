@@ -9,16 +9,22 @@
 var MEDIA_URL='{{STATIC_URL}}';
 var MUP_URL='{% url userinformation %}';
 </script>
-<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/tipTip.css"/>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/layout.css"/>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/site/layout_patch.css"/>
 <!--[if lte IE 7]>
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/layout_patch.css"/>
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/site/layout_ie.css"/>
 <![endif]-->
-<!-- script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script-->
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/new/inputs.css"/>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/new/table.css"/>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/topbar.css"/>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/jquery.place.css"/>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/new/site.css"/>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}menu/menu2.css"/>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.cookie.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.dropdown.js"></script>
-<!-- script type="text/javascript" src="{{STATIC_URL}}menu/menu.js"></script-->
 <script type="text/javascript" src="{{STATIC_URL}}menu/menu2.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/base.js"></script>
 <script type="text/javascript">
@@ -48,8 +54,16 @@ $(document).ready(function() {
 {% endblock %}
 </head>
 <body>
-<div id="loading"></div>
-   {% block main_page %}{% endblock %}
+<div style="display: none;">
+<!-- preload image -->
+<img src="{{STATIC_URL}}images/metabox_loader.gif"/>
+</div>
+<!-- div id="loading"></div-->
+<div id="context-loader" class="context-loader">{% trans "Loading..." %}</div>
+ {% block main_page %}{% endblock %}
+<script type="text/javascript">
+$("#context-loader").hide();
+</script>
 </body>
 </html>
 																																																																																																																																																						
