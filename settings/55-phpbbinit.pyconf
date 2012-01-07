@@ -1,0 +1,11 @@
+PHPBB_DB_ID = 'phpbb'
+PHPBB_TABLES_PREFIX = 'phpbb_'
+
+# PHPBB GROUP NAME: PORTAL GROUP NAME
+PHPBB_GROUP_MAPPING =  {'ADMINISTRATORS':'Server Full Admin',
+                        'GLOBAL_MODERATORS': 'Server Admin',
+                        'Server Admin':'Server Admin'}
+
+# SERVER IN WITH USERS WILL HAVE AUTOMATIC GROUP MATCHING
+# EMPTY FOR GLOBAL
+PHPBB_SERVERS = []

@@ -3,15 +3,3 @@ if ENABLE_PHPBB_AUTH:
     #AUTHENTICATION_BACKENDS = ('phpbb_auth.backends.phpbbBackend',) + AUTHENTICATION_BACKENDS
     AUTHENTICATION_BACKENDS = ('phpbb_auth.portal_backend.phpbbServerPermBackend',) + AUTHENTICATION_BACKENDS
     DATABASE_ROUTERS = ('phpbb_auth.routers.phpbbRouter',)
-
-    PHPBB_DB_ID = 'phpbb'
-    PHPBB_TABLES_PREFIX = 'phpbb_'
-
-    # PHPBB GROUP NAME: PORTAL GROUP NAME
-    PHPBB_GROUP_MAPPING =  {'ADMINISTRATORS':'Server Full Admin',
-                            'GLOBAL_MODERATORS': 'Server Admin',
-                            'Server Admin':'Server Admin'}
-    
-    # SERVER IN WITH USERS WILL HAVE AUTOMATIC GROUP MATCHING
-    # EMPTY FOR GLOBAL
-    PHPBB_SERVERS = []
