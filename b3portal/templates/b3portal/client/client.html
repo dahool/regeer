@@ -46,12 +46,15 @@ $(document).ready(function() {
         });         
     });
     
-	{% if obj_perms.portal.updatelevel or obj_perms.portal.reglevel %}
+	{% if change_group %}
     $('#client_group.icon_edit').editable('{% serverurl change_clientgroup client.id %}', {
     	data   : '{{group_data|safe}}',
         type    : 'select',
         submit  : '{% trans "Save" %}',
-        indicator : '{% trans "Saving..." %}'
+        indicator : '{% trans "Saving..." %}',
+        callback : function(value, settings) {
+        	update_user_messages(update_portal_act);
+        }        
     });		
     {% endif %}
 });

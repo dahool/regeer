@@ -40,7 +40,7 @@ class Group(models.Model):
         return repr(self)
         
     def __repr__(self):
-        return "%s (Level %d)" % (self.name, self.level)
+        return _("%s (Level %d)") % (self.name, self.level)
     
     class Meta:
         managed = False
@@ -74,10 +74,10 @@ class Client(models.Model):
         
     @property
     def displayGroup(self):
-        if self.group_id > 0:
+        if self.group:
             return self.group
         else:
-            return _('Un-registered')
+            return _('Guest')
         
     @property
     def masked_ip(self):

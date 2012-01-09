@@ -38,7 +38,7 @@ class Command(BaseCommand):
                                               codename=perm,
                                               content_type=ctype)
                 except Exception, e:
-                    self.stdout.write("Error: %s\n" % str(e))
+                    self.stdout.write("Error: %s - [%s]\n" % (str(e), perm))
         
         for name, perms in appsettings.APP_GROUP_PERMISSION:
             self.stdout.write("Updating %s...\n" % name)

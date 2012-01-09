@@ -34,7 +34,7 @@ from django.views.decorators.cache import cache_page
 import urllib
 from b3portal.client.forms import PenaltyForm, NoticeForm
 
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.utils.translation import gettext as _
 from common.utils.functions import time2minutes
 
@@ -97,6 +97,8 @@ def client(request, id):
     
     banlist = _get_banlist(request)
     
+    groups = get_group_list(request, client)
+    
     return {'client': client,
             'status': online,
             'banlist': banlist,
@@ -107,7 +109,8 @@ def client(request, id):
             'client_penalties': client_penalties,
             'client_ppenalties': client_ppenalties,
             'client_admactions': client_admactions,
-            'group_data': get_json_value(get_group_list(request))}
+            'group_data': get_json_value(groups),
+            'change_group': len(groups) > 0}
 
 def _get_banlist(request):
     if not has_server_perm(request.user, perm.VIEW_PENALTY, request.server):
@@ -417,9 +420,9 @@ def change_clientgroup(request, id):
 
     g = int(request.POST.get('value'))
     if not has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
-        if g <= 1 and has_any_server_perms(request.user, [perm.CLIENT_REGISTER, perm.CLIENT_REGULAR], request.server):
+        if g < 2 and has_any_server_perms(request.user, [perm.CLIENT_REGISTER, perm.CLIENT_REGULAR, perm.CLIENT_REMOVE_REGULAR, perm.CLIENT_REMOVE_REGISTER], request.server):
             pass
-        elif g <= 2 and has_server_perm(request.user, perm.CLIENT_REGULAR, request.server):
+        elif g == 2 and has_server_perm(request.user, perm.CLIENT_REGULAR, request.server):
             pass
         else:
             raise Http403        
@@ -427,11 +430,16 @@ def change_clientgroup(request, id):
     group = get_object_or_404(Group, id=g, using=request.server)
     client = get_object_or_404(Client, id=id, using=request.server)
     
-    if client.group_id > 0:
-        if client.group_id > group.id and not has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
-            raise Http403
-    
-    if group.id > client.group_id:
+    if client.group_id > group.id:
+        if client.group_id == 2 and has_server_perm(request.user, perm.CLIENT_REMOVE_REGULAR, request.server):
+            pass
+        elif client.group_id == 1 and has_server_perm(request.user, perm.CLIENT_REMOVE_REGISTER, request.server):
+            pass
+        elif has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
+            pass
+        else:
+            messages.error(request, _('You are not authorized to update this client at this time.'))
+            return HttpResponse(str(client.group), mimetype='plain/text')
         upgrade = True
     else:
         upgrade = False
@@ -450,6 +458,7 @@ def change_clientgroup(request, id):
                            clientid=client.id,
                            message=_("Downgrade client to \"%s\"") % group.name)
     
+    messages.info(request, _('Client updated.'))
     return HttpResponse(str(group), mimetype='plain/text')
 
 @server_permission_required_with_403(perm.VIEW_ALIAS)
@@ -542,26 +551,30 @@ def direct(request):
         return HttpResponseRedirect(next)
     return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':player.id}))
 
-@cache_page(180*60)
-@render('json')
-def group_list(request):
-    return get_group_list(request)
-
-def get_group_list(request):
+def get_group_list(request, client):
     dict = {}
     query = Group.objects.using(request.server)
+    groups= []
+    print client.group_id
     if has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
         server = Server.objects.get(pk=request.server)
         if (request.user.is_superuser or server.is_owner(request.user)):
             groups = query.all()
         else:
             groups = query.all().exclude(id=128)
-    elif has_server_perm(request.user, perm.CLIENT_REGULAR, request.server):
+    elif client.group_id == 2 and has_server_perm(request.user, perm.CLIENT_REMOVE_REGULAR, request.server):
         groups = query.filter(id__lte=2)
-    else:
-        groups = query.filter(id=0)
+    elif client.group_id < 2:
+        if has_server_perm(request.user, perm.CLIENT_REGULAR, request.server):
+            groups = query.filter(id__lte=2, id__gt=0)
+        elif client.group_id == 1 and has_server_perm(request.user, perm.CLIENT_REMOVE_REGISTER, request.server):
+            groups = query.filter(id__lte=1)
+        elif client.group_id == 0 and has_server_perm(request.user, perm.CLIENT_REGISTER, request.server):
+            groups = query.filter(id__lte=1,id__gt=0) 
+    
     for group in groups:
         dict[group.id]=str(group)
+ 
     return dict     
 
 def _paginate(request, data):

@@ -50,16 +50,8 @@
 <th>{% trans "Level" %}</th>
 {% if obj_perms.portal.viewclientgroup %}
 <td id="client_group"
-{% if obj_perms.portal.updatelevel %}
+{% if change_group %}
 title="{% trans "Click to edit..." %}" class="nodecoration_icon icon_edit"
-{% else %}
-{% if obj_perms.portal.reglevel and client.group_id < 2 %}
-title="{% trans "Click to edit..." %}" class="nodecoration_icon icon_edit"
-{% else %} 
-{% if obj_perms.portal.userlevel and client.group_id < 1 %}
-title="{% trans "Click to Register Player" %}" class="nodecoration_icon icon_useradd" onclick="register_user('{% serverurl change_clientgroup client.id %}',1)" 
-{% endif %}
-{% endif %}
 {% endif %}>
 {{client.displayGroup}}</td>
 {% else %}

@@ -39,6 +39,5 @@ urlpatterns = patterns('',
     url(r'^more/(?P<id>[0-9]+)/ipenalties/$', views.more_ipenalties, name='client_more_ipenalties'),
     url(r'^more/(?P<id>[0-9]+)/notices/$', views.more_notices, name='client_more_notices'),
     url(r'^more/(?P<id>[0-9]+)/logs/$', views.more_logs, name='client_more_logs'),
-    url(r'^group-list/$', views.group_list, name='group_list_json'),    
     url(r'^$', views.clientlist, name='client_list'),
 )
