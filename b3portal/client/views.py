@@ -22,7 +22,7 @@ from common.shortcuts import get_object_or_404
 from django.db.models import Q
 
 from b3connect.models import Penalty, Client, Group
-from b3portal.models import Server, Auditor
+from b3portal.models import Server, Auditor, ServerBanList
 
 from django.conf import settings
 
@@ -54,6 +54,7 @@ from b3portal.permission.utils import server_permission_required_with_403, has_s
 from b3portal import permissions as perm
 from b3portal.resolver import urlreverse
 from common.view.renders.json import get_json_value
+from gameutils import load_banlist_all
 
 @server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(15*60)
@@ -94,11 +95,11 @@ def client(request, id):
     client_ppenalties = _paginate(request, client.penalties.inactive())
     client_admactions = _paginate(request, client.adminpenalties.all())
     
-    list = _get_banlist(request)
+    banlist = _get_banlist(request)
     
     return {'client': client,
             'status': online,
-            'banlist': list,
+            'banlist': banlist,
             'client_auditlogs': client_auditlogs,
             'client_aliases': client_aliases,
             'client_ipaliases': client_ipaliases,
@@ -112,12 +113,15 @@ def _get_banlist(request):
     if not has_server_perm(request.user, perm.VIEW_PENALTY, request.server):
         return []
     cache_key = "%s_banlist" % request.server
-    list = cache.get(cache_key)
-    if list is None:
-        #list = load_banlist(settings.SERVERS[request.session.get('server')]['BANLIST'])
-        list = []
-        cache.set(cache_key, list, 60*60)
-    return list
+    lista = cache.get(cache_key)
+    if lista is None:
+        try:
+            sb = ServerBanList.objects.get(server=request.server)
+        except:
+            return []
+        lista = load_banlist_all(sb.get_file())
+        cache.set(cache_key, lista, getattr(settings, 'BANLIST_CACHE_EXPIRE', 1440) * 60)
+    return lista
         
 @login_required
 @cache_page(120*60)

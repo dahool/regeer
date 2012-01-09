@@ -26,6 +26,7 @@ from django.conf import settings
 from b3portal.server.forms import ServerForm
 
 from models import UserProfile, Server, ServerPermission
+from b3portal.models import ServerBanList
 
 admin.site.unregister(Site)
 admin.site.unregister(User)
@@ -39,8 +40,14 @@ class ServerPermissionInline(admin.StackedInline):
 class UserProfileAdmin(UserAdmin):
     inlines = [ServerPermissionInline]
 
+class ServerBanListInline(admin.StackedInline):
+    model = ServerBanList
+    verbose_name = _('Server Banlist')
+    verbose_name_plural = _('Server Banlist')
+        
 class ServerAdmin(admin.ModelAdmin):
     form = ServerForm
+    inlines = [ServerBanListInline]
     fieldsets = [
         (None,               {'fields': [('name','default'),'game','owners']}),
         (_('Database settings'), {'fields': ['hostname','database',('user','dbpasswd')]}),

@@ -16,15 +16,54 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-def load_banlist(file):
-    banlist = open(file)
+def load_banlist(filen):
+    banlist = open(filen)
     iplist = banlist.readlines()
     banlist.close()
-    list = set([v.split(':')[0].strip() for v in iplist])
-    return list
+    lista = set([v.split(':')[0].strip() for v in iplist])
+    return lista
 
-def save_banlist(file, list):
-    banlist = open(file,'w')
-    for e in list:
+def load_banlist_all(filen):
+    if isinstance(filen, file):
+        banlist = filen
+    else:
+        banlist = open(filen)
+    iplist = banlist.readlines()
+    banlist.close()
+    lista = set()
+    for ip in iplist:
+        lista.update(create_ip_range(ip.split(':')[0].strip()))
+    return lista
+
+def create_ip_range(ip):
+    parts = ip.split('.')
+    iplist = []
+    if parts[3] == '0':
+        start = ip_to_decimal("%s.%s.%s.1" % (parts[0],parts[1],parts[2]))
+        end = ip_to_decimal("%s.%s.%s.255" % (parts[0],parts[1],parts[2]))
+        for n in range(start, end + 1):
+            iplist.append(decimal_to_ip(n))
+    else:
+        iplist = [ip]
+    return iplist
+    
+def ip_to_decimal(ip):
+    parts = ip.split('.')
+    value = 16777216 * int(parts[0]);
+    value += 65536 * int(parts[1]);
+    value += 256 * int(parts[2]);
+    value += int(parts[3]);
+    return value
+
+def decimal_to_ip(number):
+    ip = "%d.%d.%d.%d" % (number / 256 / 65536,
+                          (number / 65536) % 256,
+                          (number / 256) % 256,
+                          number % 256)
+    return ip
+    
+def save_banlist(filen, lista):
+    banlist = open(filen,'w')
+    for e in lista:
         banlist.write("%s:-1\n" % e)
     banlist.close()

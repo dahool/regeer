@@ -27,6 +27,8 @@ import re
 from django.contrib.auth.models import Permission, Group, User
 from django.contrib.contenttypes.models import ContentType
 from b3portal import appsettings
+import datetime
+from django.core.files.base import ContentFile
 
 DISPLAY_SUB = re.compile(r'ut4_|ut_|ut42_')
 
@@ -54,7 +56,7 @@ class Server(models.Model):
     user = models.CharField(max_length=50, verbose_name=_('Database User'))
     password = CryptField(max_length=200)
     hostname = models.CharField(max_length=50, verbose_name=_('Database Host'))
-
+    
     #rcon
     rcon_ip = models.IPAddressField(verbose_name=_('IP'), blank=True)
     rcon_port = models.IntegerField(verbose_name=_('Port'), blank=True, null=True)
@@ -84,6 +86,31 @@ class Server(models.Model):
         ordering  = ('name',)
         unique_together = ('database','user','hostname')
 
+class ServerBanList(models.Model):
+    server = models.ForeignKey(Server, related_name="banlist", unique=True, verbose_name=_('Server'))
+    location = models.CharField(max_length=500, verbose_name=_('Banlist File Location'),
+                                help_text=_('For ftp access use: ftp://user:password@host:port/file/banlist.txt'))
+    cache = models.FileField(upload_to='banlist', max_length=500, editable=False, null=True)
+    updated = models.DateTimeField(editable=False, null=True)
+        
+    def get_file(self):
+        d = datetime.timedelta(minutes=getattr(settings, 'BANLIST_CACHE_EXPIRE', 1440))
+        if not self.cache or not self.updated or self.updated + d < datetime.datetime.now():
+            from common.utils.file import getfile
+            f = getfile(self.location)
+            if not f: raise Exception(_('Unable to read banlist file'))
+            if self.location.startswith("ftp://"):
+                file_content = ContentFile(f.read())
+                f.seek(0)
+                self.updated = datetime.datetime.now()
+                if self.cache: self.cache.delete()
+                self.cache.save(self.server.uuid + ".txt", file_content)
+                self.save()
+            else:
+                return f
+        return self.cache
+        
+    
 #serverPermissionChoices = [(p.id,unicode(p)) for p in Permission.objects.filter(content_type__in=ContentType.objects.filter(app_label__in=appsettings.PERMISSION_CHOICES))]
 
 class ServerPermission(models.Model):
