@@ -55,11 +55,11 @@ function set_field(field, value) {
 </thead>
 <tbody>
 {% for chat in chat_list.object_list %}
-<tr class="{% cycle "odd" "even" %}">
+<tr class="{% cycle "odd" "even" %} {% if chat.client.id == highlight %}highlight{%endif%}">
 <td><a href="{% serverurl client_detail chat.client.id %}">{{chat.client.id}}</a></td>
-<td class="autofill2" name="id_name" alt="@{{chat.client.id}}">{{chat.client.name}}</td>
+<td class="autofill" name="id_name" alt="@{{chat.client.id}}">{{chat.client.name}}</td>
 <td>{{chat.data}}</td>
-<td><span style="cursor: pointer;" onclick="$('#id_name').val(''); set_field('datefrom','{{chat.time_add|summinutes:-5|date:"d/m/Y H:i"}}'); set_field('dateto','{{chat.time_add|summinutes:10|date:"d/m/Y H:i"}}')">{{chat.time_add|date:"DATETIME_FORMAT"}}</span></td>
+<td><span style="cursor: pointer;" onclick="$('#id_name').val('+@{{chat.client.id}}'); set_field('datefrom','{{chat.time_add|summinutes:-5|date:"d/m/Y H:i"}}'); set_field('dateto','{{chat.time_add|summinutes:10|date:"d/m/Y H:i"}}')">{{chat.time_add|date:"DATETIME_FORMAT"}}</span></td>
 <td>{{chat.target_display}}</td>
 <td>{% if chat.info %}{{chat.info}}{%else%}-{%endif%}</td>
 </tr>

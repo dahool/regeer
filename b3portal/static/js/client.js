@@ -40,15 +40,10 @@ $(document).ready(
 					})
 				}
 		);
-		$('[class=autofill2]').each(
-				function() {
-					$(this).css('cursor','pointer');
-					$(this).click(function(){
-						name = $(this).attr('name');
-						value = $(this).attr('alt');
-						$('#'+name).val(value);
-					})
-				}
-		);		
+		$('.autofill').on('click', function() {
+			name = $(this).attr('name');
+			value = $(this).attr('alt');
+			$('#'+name).val(value);
+		});
 	}
 );

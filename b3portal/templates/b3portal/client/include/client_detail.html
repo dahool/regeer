@@ -43,7 +43,7 @@
 </thead>
 <tbody>
 <tr>
-<th>{% trans "Name" %}</th><td>{{client.name}}{% ifpluginenabled "chatlog" %}{% if obj_perms.plugin.chatlog %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% serverurl chatlog:chat_list %}&name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endif %}{% endifpluginenabled %}</td>
+<th>{% trans "Name" %}</th><td><a href="{% serverurl client_list %}&type=name&data={{client.name}}&search=Search">{{client.name}}</a>{% ifpluginenabled "chatlog" %}{% if obj_perms.plugin.chatlog %}&nbsp;&nbsp;<a title="{% trans "See what this player was talking about" %}" href="{% serverurl chatlog:chat_list %}&name=@{{client.id}}&search=Search" class="nodecoration_icon icon_chat">&nbsp;</a>{% endif %}{% endifpluginenabled %}</td>
 <th>{% trans "@id" %}</th><td>{{client.id}}</td>
 </tr>
 <tr>

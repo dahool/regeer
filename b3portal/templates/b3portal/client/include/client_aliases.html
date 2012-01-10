@@ -13,7 +13,7 @@
 		{% with client_aliases.object_list as aliases %}
 		{% for alias in	aliases %}
 		<tr class="{% cycle "odd" "even" %}">
-			<td>{{alias.alias}}</td>
+			<td><a href="{% serverurl client_list %}&type=name&data={{alias.alias}}&search=Search">{{alias.alias}}</a></td>
 			<td>{{alias.num_used}}</td>
 			<td>{{alias.time_add|date:"DATETIME_FORMAT"}}</td>
 			<td>{{alias.time_edit|date:"DATETIME_FORMAT"}}</td>

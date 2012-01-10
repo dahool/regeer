@@ -50,6 +50,7 @@ def chatlist(request):
         page = 1
     
     search = None
+    highlight = None
     if request.GET.has_key('search'):
         form = ChatLogSearch(request.GET)
         if form.is_valid():
@@ -60,7 +61,9 @@ def chatlist(request):
             name = data['name']
             if len(name)>0:
                 if re.search('^[@]{1}[0-9]*$',name):
-                    chats = chats.filter(client__id=name[1:])    
+                    chats = chats.filter(client__id=name[1:])
+                elif re.search('^\+[@]{1}[0-9]*$',name):
+                    highlight = int(name[2:]) 
                 else:
                     chats = chats.filter(Q(client__name__icontains=name) | Q(client__aliases__alias__icontains=name)).distinct()
             datefrom = data['datefrom']
@@ -90,4 +93,5 @@ def chatlist(request):
 
     return {'chat_list': list,
             'form': form,
-            'search': search}
+            'search': search,
+            'highlight': highlight}

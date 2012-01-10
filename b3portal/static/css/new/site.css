@@ -561,3 +561,12 @@ h3 {
     -moz-box-shadow: 0 0 10px rgb(0, 0, 0);
     box-shadow: 0 0 5px rgb(0, 0, 0);
 }
+.autofill {
+	cursor: pointer;
+}
+.highlight {
+	background-color: #FFFFA4 !important; 
+}
+.highlight:hover {
+	background: #FFFF6F !important; 
+}

@@ -14,7 +14,7 @@
 {% for log in auditlogs %}
 <tr class="{% cycle "odd" "even" %}">
 <td>{{log.created|date:"DATETIME_FORMAT"}}</td>
-<td>{{log.user.username}}</td>
+<td>@{{log.user.username}}</td>
 <td>{{log.message}}</td>
 </tr>
 {% endfor %}
