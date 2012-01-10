@@ -440,9 +440,9 @@ def change_clientgroup(request, id):
         else:
             messages.error(request, _('You are not authorized to update this client at this time.'))
             return HttpResponse(str(client.group), mimetype='plain/text')
-        upgrade = True
-    else:
         upgrade = False
+    else:
+        upgrade = True
     
     client.group = group
     client.save()
@@ -551,6 +551,11 @@ def direct(request):
         return HttpResponseRedirect(next)
     return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':player.id}))
 
+@render('json')
+def group_list(request, id):
+    client = get_object_or_404(Client, id=id, using=request.server);
+    return get_group_list(request, client) 
+
 def get_group_list(request, client):
     dict = {}
     query = Group.objects.using(request.server)
@@ -561,16 +566,22 @@ def get_group_list(request, client):
         if (request.user.is_superuser or server.is_owner(request.user)):
             groups = query.all()
         else:
-            groups = query.all().exclude(id=128)
+            groups = query.all().exclude(level=100)
     elif client.group_id == 2 and has_server_perm(request.user, perm.CLIENT_REMOVE_REGULAR, request.server):
-        groups = query.filter(id__lte=2)
+        if has_server_perm(request.user, perm.CLIENT_REMOVE_REGISTER, request.server):
+            groups = query.filter(level__lte=2)
+        else:
+            groups = query.filter(level__lte=2).exclude(level=0)
     elif client.group_id < 2:
         if has_server_perm(request.user, perm.CLIENT_REGULAR, request.server):
-            groups = query.filter(id__lte=2, id__gt=0)
+            if has_server_perm(request.user, perm.CLIENT_REMOVE_REGISTER, request.server):
+                groups = query.filter(level__lte=2)
+            else:
+                groups = query.filter(level__lte=2).exclude(level=0)
         elif client.group_id == 1 and has_server_perm(request.user, perm.CLIENT_REMOVE_REGISTER, request.server):
-            groups = query.filter(id__lte=1)
+            groups = query.filter(level__lte=1)
         elif client.group_id == 0 and has_server_perm(request.user, perm.CLIENT_REGISTER, request.server):
-            groups = query.filter(id__lte=1,id__gt=0) 
+            groups = query.filter(level__lte=1).exclude(level=0) 
     
     for group in groups:
         dict[group.id]=str(group)

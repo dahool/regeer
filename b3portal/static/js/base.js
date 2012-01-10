@@ -23,6 +23,11 @@ function update_user_messages(callback) {
 	})	
 }
 
+function isEmpty(ob){
+    for(var i in ob){ return false;}
+	return true;
+}
+
 $(document).ready(
 	function() {
 		$('.option').each(

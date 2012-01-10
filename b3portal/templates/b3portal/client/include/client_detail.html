@@ -12,7 +12,7 @@
 {% geolocation client.ip %}
 </small>
 {% endif %}
-{% if obj_perms.portal.viewguid %}<small>{% ifvalidguid client.guid %}<span class="nodecoration_icon icon_valid" title="{% trans "Guid is valid" %}">{% trans "Guid is valid" %}</span>{% else %}<span class="nodecoration_icon icon_invalid" style="color: red;" title="{% trans "Invalid guid" %}">{% with client.guid as guid %}{%blocktrans%}Guid {{guid}} is Invalid{%endblocktrans%}{% endwith %}</span>{% endifvalidguid %}</small>{% endif %}
+{% if obj_perms.portal.viewguid %}<small>{% ifvalidguid client.guid %}<span class="nodecoration_icon icon_valid" title="{% trans "Guid is valid" %}">{% trans "Guid is valid" %}</span>{% else %}<span class="nodecoration_icon icon_invalid" style="color: red;" title="{% trans "Invalid guid" %}">{% with client.guid as guid %}{%blocktrans%}Guid [{{guid}}] is invalid{%endblocktrans%}{% endwith %}</span>{% endifvalidguid %}</small>{% endif %}
 </h3>
 {% ifpluginenabled "follow" %}
 {% if obj_perms.plugin.viewfollow %}

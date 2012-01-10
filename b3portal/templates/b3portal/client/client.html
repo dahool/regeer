@@ -47,12 +47,22 @@ $(document).ready(function() {
     });
     
 	{% if change_group %}
+	var group_data = '{{group_data|safe}}';
     $('#client_group.icon_edit').editable('{% serverurl change_clientgroup client.id %}', {
-    	data   : '{{group_data|safe}}',
+    	data   : function() { return group_data; },
         type    : 'select',
         submit  : '{% trans "Save" %}',
         indicator : '{% trans "Saving..." %}',
         callback : function(value, settings) {
+        	$.get('{% serverurl list_groups client.id %}', function(data) {
+        		if (isEmpty(data)) {
+        			$('#client_group').removeClass('nodecoration_icon icon_edit');
+        			$('#client_group').attr('title','');
+        			$('#client_group').unbind();
+        		} else {
+        			group_data = data;
+        		}
+        	});
         	update_user_messages(update_portal_act);
         }        
     });		
