@@ -1,4 +1,4 @@
-#Tue Jan 10 10:20:59 ART 2012
+#Thu Jan 12 11:29:12 ART 2012
 eclipse.preferences.version=1
 encoding//b3/clients.py=latin1
 encoding//b3connect/admin.py=utf-8
@@ -37,6 +37,10 @@ encoding//b3portal/plugins/follow/forms.py=utf-8
 encoding//b3portal/plugins/follow/models.py=utf-8
 encoding//b3portal/plugins/follow/urls.py=utf-8
 encoding//b3portal/plugins/follow/views.py=utf-8
+encoding//b3portal/plugins/ipdb/admin.py=utf-8
+encoding//b3portal/plugins/ipdb/models.py=utf-8
+encoding//b3portal/plugins/ipdb/urls.py=utf-8
+encoding//b3portal/plugins/ipdb/views.py=utf-8
 encoding//b3portal/plugins/map/admin.py=utf-8
 encoding//b3portal/plugins/map/management/commands/updatemaps.py=utf-8
 encoding//b3portal/plugins/map/models.py=utf-8

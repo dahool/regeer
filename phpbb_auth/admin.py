@@ -22,6 +22,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm
 from django import forms
 from django.forms.widgets import TextInput, HiddenInput
+from b3portal.admin import UserProfileAdmin
 
 admin.site.unregister(User)
 
@@ -41,7 +42,7 @@ class UserForm(UserChangeForm):
     username = forms.CharField(widget=ReadOnlyInput);
     password = forms.CharField(widget=HiddenInput);
 
-class UserAdminForm(UserAdmin):
+class UserAdminForm(UserProfileAdmin):
     form = UserForm
     
 admin.site.register(User, UserAdminForm)

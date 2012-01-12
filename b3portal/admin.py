@@ -34,7 +34,8 @@ admin.site.unregister(User)
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
     
-class ServerPermissionInline(admin.StackedInline):    
+class ServerPermissionInline(admin.StackedInline):
+    extra = 1
     model = ServerPermission
 
 class UserProfileAdmin(UserAdmin):

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Copyright (c) 2011 Sergio Gabriel Teves
+"""Copyright (c) 2011-2012 Sergio Gabriel Teves
 All rights reserved.
 
 This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,8 @@ from b3portal.permission.utils import has_server
 
 class ServerDetectMiddleware(object):
     
+    SERVER_KEY_NAME = 'server'
+    
     def process_request(self, request):
         if hasattr(request, 'session'):
             server_list = request.session.get('server_list', None)
@@ -29,13 +31,6 @@ class ServerDetectMiddleware(object):
             server_list = None
             
         if not server_list or len(server_list) == 0:
-#            server_list = [] 
-#            for s in Server.objects.all():
-#                if not request.user.is_authenticated() or has_server(request.user, s):
-#                    server_list.append(s)
-#            if hasattr(request, 'session'):
-#                if len(server_list)>0:
-#                    request.session['server_list'] = server_list
             server_list = Server.objects.all()
             if hasattr(request, 'session'):
                 if Server.objects.count() > 0:
@@ -50,14 +45,26 @@ class ServerDetectMiddleware(object):
             if request.POST.has_key('server'):
                 server = request.POST.get('server')
         if not server:
-            for s in server_list:
-                if s.default:
-                    server = s.uuid
-                    break
+            if request.COOKIES.has_key(self.SERVER_KEY_NAME):
+                value = request.COOKIES[self.SERVER_KEY_NAME]
+                if has_server(request.user,value):
+                    server = value
+            if not server and request.user.is_authenticated() and request.user.server_permissions.all():
+                server = request.user.server_permissions.all()[0].server.uuid
+            if not server:
+                for s in server_list:
+                    if s.default:
+                        server = s.uuid
+                        break
             if not server and len(server_list) > 0:
                 server = server_list[0].uuid
         request.__class__.server = server
         
+    def process_response(self, request, response):
+        if response and hasattr(request, 'server'):
+            response.set_cookie(self.SERVER_KEY_NAME, request.__class__.server)
+        return response
+    
 class MultiDBMiddleware(object):
     
     def process_request(self, request):
