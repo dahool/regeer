@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Copyright (c) 2010,2011 Sergio Gabriel Teves
+"""Copyright (c) 2010-2012 Sergio Gabriel Teves
 All rights reserved.
 
 This program is free software: you can redistribute it and/or modify
@@ -133,13 +133,19 @@ class AliasIP(models.Model):
         ordering = ('-time_edit',)
         verbose_name_plural = "IP Aliases"
         db_table = u'ipaliases'
-        
+
+PENALTY_TYPE_NOTICE = 'Notice'
+PENALTY_TYPE_WARN = 'Warning'       
+PENALTY_TYPE_BAN = 'Ban'
+PENALTY_TYPE_TEMPBAN = 'TempBan'
+PENALTY_TYPE_KICK = 'Kick'
+
 PENALTY_CHOICES = (
-    ('Warning', _('Warning')),
-    ('Notice', _('Notice')),
-    ('Ban', _('Ban')),
-    ('TempBan', _('TempBan')),
-    ('Kick', _('Kick')),
+    (PENALTY_TYPE_WARN, _('Warning')),
+    (PENALTY_TYPE_NOTICE, _('Notice')),
+    (PENALTY_TYPE_BAN, _('Ban')),
+    (PENALTY_TYPE_TEMPBAN, _('TempBan')),
+    (PENALTY_TYPE_KICK, _('Kick')),
 )
 
 class PenaltyManager(models.Manager):
@@ -149,14 +155,14 @@ class PenaltyManager(models.Manager):
 
     def active_bans(self):
         return self.filter(Q(time_expire='-1') | Q(time_expire__gt=int(time.time())),
-                    (Q(type='Ban') | Q(type='TempBan')),inactive=0)
+                    (Q(type=PENALTY_TYPE_BAN) | Q(type=PENALTY_TYPE_TEMPBAN)),inactive=0)
 
     def notices(self):
-        return self.filter(type='Notice',inactive=0)
+        return self.filter(type=PENALTY_TYPE_NOTICE,inactive=0)
         
     def inactive(self):
         return self.filter(Q(inactive=1) | 
-                           Q(time_expire__lt=int(time.time())) & ~Q(type='Notice')
+                           Q(time_expire__lt=int(time.time())) & ~Q(type=PENALTY_TYPE_NOTICE)
                            ).exclude(Q(inactive=0) & Q(time_expire='-1'))
         
     def noexpired(self):
@@ -196,6 +202,7 @@ class Penalty(models.Model):
         ordering = ('-time_add',)
         verbose_name_plural = "Penalties"
         db_table = u'penalties'
+        get_latest_by = "time_add"
         
     @property
     def display_duration(self):
@@ -220,7 +227,7 @@ class Penalty(models.Model):
         return self.time_expire < datetime.datetime.now()
         
     def save(self, force_insert=False, force_update=False):
-        if self.duration == 0 and self.type == 'Ban':
+        if self.duration == 0 and self.type == PENALTY_TYPE_BAN:
             self.time_expire = -1
         else:
             self.time_expire =  int(time.mktime(self.time_add.timetuple())) + (self.duration * 60)

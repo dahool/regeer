@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Copyright (c) 2010,2011,2012 Sergio Gabriel Teves
+"""Copyright (c) 2010-2012 Sergio Gabriel Teves
 All rights reserved.
 
 This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ from common.view.decorators import render
 from common.shortcuts import get_object_or_404
 from django.db.models import Q
 
-from b3connect.models import Penalty, Client, Group
+from b3connect.models import Penalty, Client, Group, PENALTY_TYPE_NOTICE
 from b3portal.models import Server, Auditor, ServerBanList
 
 from django.conf import settings
@@ -56,6 +56,12 @@ from b3portal.resolver import urlreverse
 from common.view.renders.json import get_json_value
 from gameutils import load_banlist_all
 
+from b3portal.client import signals
+
+import logging
+
+logger = logging.getLogger(__name__)
+
 @server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(15*60)
 @render('b3portal/client/client.html')
@@ -69,7 +75,8 @@ def client(request, id):
                 raise Http403
     except Group.DoesNotExist:
         pass
-    except:
+    except Exception, e:
+        logger.error(str(e))
         raise
     
     online = None
@@ -166,11 +173,11 @@ def adminlist(request, filter=False):
     paginator = Paginator(clients, settings.ITEMS_PER_PAGE)
     # If page request (9999) is out of range, deliver last page of results.
     try:
-        list = paginator.page(page)
+        lista = paginator.page(page)
     except (EmptyPage, InvalidPage):
-        list = paginator.page(paginator.num_pages)
+        lista = paginator.page(paginator.num_pages)
     
-    res['client_list']=list        
+    res['client_list']=lista        
     return res
 
 @server_permission_required_with_403(perm.VIEW_CLIENT)
@@ -218,11 +225,11 @@ def clientlist(request):
     paginator = Paginator(clients, settings.ITEMS_PER_PAGE)
     # If page request (9999) is out of range, deliver last page of results.
     try:
-        list = paginator.page(page)
+        lista = paginator.page(page)
     except (EmptyPage, InvalidPage):
-        list = paginator.page(paginator.num_pages)
+        lista = paginator.page(paginator.num_pages)
     
-    return {'client_list': list, 'filter': filter, 'data': data, 'search': urllib.urlencode(search), 'order_by': get_query_order(clients)}
+    return {'client_list': lista, 'filter': filter, 'data': data, 'search': urllib.urlencode(search), 'order_by': get_query_order(clients)}
 
 def _getclientlist(request, server, search = True):
 
@@ -234,7 +241,8 @@ def _getclientlist(request, server, search = True):
     if search:
         try:
             field = request.GET['type']
-        except MultiValueDictKeyError:
+        except MultiValueDictKeyError, e:
+            logger.warning(str(e))
             field = request.GET['?type']
         data = request.GET['data']
         filter = field
@@ -286,11 +294,11 @@ def regularclients(request):
     paginator = Paginator(clients, settings.ITEMS_PER_PAGE)
     # If page request (9999) is out of range, deliver last page of results.
     try:
-        list = paginator.page(page)
+        lista = paginator.page(page)
     except (EmptyPage, InvalidPage):
-        list = paginator.page(paginator.num_pages)
+        lista = paginator.page(paginator.num_pages)
         
-    return {'client_list': list}
+    return {'client_list': lista}
 
 @login_required
 @render('b3portal/client/add_penalty.html')
@@ -334,6 +342,13 @@ def addpenalty(request, id, notice=False):
                                    server_id=request.server,
                                    clientid=client.id,
                                    message=_("Add \"%s\"") % str(p))
+            try:
+                signals.add_penalty.send(sender=p, user=request.user,
+                                                client=client,
+                                                penalty=p,
+                                                server=request.server)
+            except Exception, e:
+                logger.error(str(e))
             if notice:
                 messages.success(request, _('Notice added successfully.'))
             else:
@@ -355,13 +370,20 @@ def removenotice(request, id):
         raise Http403
     
     penalty = get_object_or_404(Penalty, id=id, using=request.server)
-    if (penalty.type != 'Notice'):
+    if (penalty.type != PENALTY_TYPE_NOTICE):
         raise Http403
     Auditor.objects.create(user=request.user,
                            server_id=request.server,
                            clientid=penalty.client.id,
                            message=_("Remove \"%s\"") % str(penalty))
-    penalty.delete()    
+    try:
+        signals.delete_penalty.send(sender=penalty, user=request.user,
+                                        client=penalty.client,
+                                        penalty=penalty,
+                                        server=request.server)        
+    except Exception, e:
+        logger.error(str(e))
+    penalty.delete()        
     messages.success(request, _('Notice removed successfully.'))
     return HttpResponse("{\"sucess\": true}", mimetype='application/json')
     #return HttpResponseRedirect(urlreverse("client_detail",server=request.server, kwargs={'id':penalty.client.id}))
@@ -374,7 +396,16 @@ def disablepenalty(request, id):
     Auditor.objects.create(user=request.user,
                            server_id=request.server,
                            clientid=penalty.client.id,
-                           message=_("Disable \"%s\"") % str(penalty))    
+                           message=_("Disable \"%s\"") % str(penalty))
+    try:
+        signals.delete_penalty.send(sender=penalty,
+                                        user=request.user,
+                                        client=penalty.client,
+                                        penalty=penalty,
+                                        server=request.server)
+    except Exception, e:
+        logger.error(str(e))
+        
     messages.success(request, _('Penalty de-activated successfully.'))
     return HttpResponse("{\"sucess\": true}", mimetype='application/json')
     #return HttpResponseRedirect(urlreverse("client_detail",server=request.server, kwargs={'id':penalty.client.id}))
@@ -400,6 +431,14 @@ def editpenalty(request, id):
                                    clientid=p.client.id,
                                    message=_("Update \"%s\"") % str(p))            
             messages.success(request, _('Penalty updated.'))
+            try:
+                signals.change_penalty.send(sender=p,
+                                            user=request.user,
+                                                client= p.client,
+                                                penalty=p,
+                                                server=request.server)
+            except Exception, e:
+                logger.error(str(e))
             #return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':p.client.id}))
             return HttpResponse("{\"sucess\": true}", mimetype='application/json')
     else:
@@ -457,6 +496,13 @@ def change_clientgroup(request, id):
                            server_id=request.server,
                            clientid=client.id,
                            message=_("Downgrade client to \"%s\"") % group.name)
+
+    try:
+        signals.update_player_group.send(sender=client, user=request.user,
+                                        client=client,
+                                        server=request.server)
+    except Exception, e:
+        logger.error(str(e))
     
     messages.info(request, _('Client updated.'))
     return HttpResponse(str(group), mimetype='plain/text')
