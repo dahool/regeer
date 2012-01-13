@@ -31,10 +31,16 @@ class Command(BaseCommand):
         for ctypeKey, perms in appsettings.APP_PERMISSION.items():
             for model, perm, title in perms:
                 ctype, c = ContentType.objects.get_or_create(name=model.title(),
-                                                  app_label=ctypeKey,
-                                                  model=model)
+                                                          app_label=ctypeKey,
+                                                          model=model)
                 try:
-                    Permission.objects.get_or_create(name=title,
+                    p = Permission.objects.get(codename=perm,
+                                              content_type=ctype)
+                    if p.name != title:
+                        p.name = title
+                        p.save()
+                except Permission.DoesNotExist:
+                    Permission.objects.create(name=title,
                                               codename=perm,
                                               content_type=ctype)
                 except Exception, e:
