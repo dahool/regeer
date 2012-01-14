@@ -20,13 +20,6 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from djangoui.widgets import uiSplitDateTimeWidget
 
-try:
-    from b3portal.plugins.map.models import Map
-    MAP_CHOICES = [(m.name, m.display_name) for m in Map.objects.all()]
-    MAP_CHOICES.insert(0, ('','-'))
-except:
-    MAP_CHOICES = []
-
 class ChatLogSearch(forms.Form):
     
     name = forms.CharField(max_length=50, label=_('Name/@id'), required=False)
@@ -40,7 +33,6 @@ class ChatLogSearch(forms.Form):
                                     widget=uiSplitDateTimeWidget(date_format="%d/%m/%Y",
                                                                  show_seconds=False),
                                     label=_('To'), required=False)
-    map = forms.ChoiceField(choices=MAP_CHOICES, required=False, label = _('Map'))
     
     @property
     def datetime_from(self):
@@ -56,4 +48,4 @@ class ChatLogSearch(forms.Form):
             df = self.cleaned_data['dateto']
             return df.strftime('%d/%m/%Y'), df.strftime('%H:%M')
         else:
-            return None, None        
+            return None, None

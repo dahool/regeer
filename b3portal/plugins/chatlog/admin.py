@@ -24,8 +24,8 @@ from django.http import HttpResponseRedirect
 from b3portal.plugins.chatlog.models import ChatLogPlugin
 
 class ChatAdmin(CustomModelAdmin):
-    search_fields=['=client__id','client__name', 'data']
-    list_display=('client', 'data', 'time_add', 'target')
+    search_fields=['=client__id','client__name', 'message']
+    list_display=('client', 'message', 'time_add', 'target')
     list_filter=('time_add',)
     
     def get_urls(self):
