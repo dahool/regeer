@@ -74,10 +74,7 @@ def chatlist(request):
                 chats = chats.filter(time_add__lte=time.mktime(dateto.timetuple()))
             text = data['text']
             if text:
-                chats = chats.filter(data__icontains=text)
-            map = data['map']
-            if map:
-                chats = chats.filter(info=map)
+                chats = chats.filter(message__icontains=text)
     else:
         form = ChatLogSearch()
 
@@ -87,11 +84,11 @@ def chatlist(request):
     paginator = Paginator(chats, settings.ITEMS_PER_PAGE)
     # If page request (9999) is out of range, deliver last page of results.
     try:
-        list = paginator.page(page)
+        lista = paginator.page(page)
     except (EmptyPage, InvalidPage):
-        list = paginator.page(paginator.num_pages)
+        lista = paginator.page(paginator.num_pages)
 
-    return {'chat_list': list,
+    return {'chat_list': lista,
             'form': form,
             'search': search,
             'highlight': highlight}
