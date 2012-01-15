@@ -14,6 +14,18 @@ function set_field(field, value) {
     $("#id_" + field + "_1_hour").val(value2);
     $("#id_" + field + "_1_minute").val(value3);
 }
+$(document).ready(function() {
+    var refresh1 = $("<span class=\"nodecoration_icon refresh_small\">&nbsp;</span>");
+    refresh1.click(function() {
+        set_field("datefrom","");
+    });
+    refresh1.insertAfter($("#id_datefrom_1_minute")); 
+    var refresh2 = $("<span class=\"nodecoration_icon refresh_small\">&nbsp;</span>");
+    refresh2.click(function() {
+        set_field("dateto","");
+    });
+    refresh2.insertAfter($("#id_dateto_1_minute")); 
+});
 </script>
 {% endblock %}
 {% block main_content %}
@@ -59,7 +71,7 @@ function set_field(field, value) {
 <td class="autofill" name="id_name" alt="@{{chat.client.id}}">{{chat.client.name}}</td>
 <td>{{chat.message}}</td>
 <td><span style="cursor: pointer;" onclick="$('#id_name').val('+@{{chat.client.id}}'); set_field('datefrom','{{chat.time_add|summinutes:-5|date:"d/m/Y H:i"}}'); set_field('dateto','{{chat.time_add|summinutes:10|date:"d/m/Y H:i"}}')">{{chat.time_add|date:"DATETIME_FORMAT"}}</span></td>
-<td>{% if chat.target %}<a href="{% serverurl client_detail chat.target.id %}">{{chat.target.name}}</a>{%else%}{{data.type_display}}{%endif%}</td>
+<td>{% if chat.target %}<a href="{% serverurl client_detail chat.target.id %}">{{chat.target.name}}</a>{%else%}{{chat.get_type_display}}{%endif%}</td>
 </tr>
 {% endfor %}
 </tbody>

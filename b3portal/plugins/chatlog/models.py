@@ -56,7 +56,7 @@ class ChatLog(models.Model):
     type = models.CharField(max_length=5, choices=MSG_TYPE, db_column="msg_type")
     client = models.ForeignKey(Client, db_column="client_id", to_field="id", related_name="chats")
     client_team = models.IntegerField(db_column="client_team",choices=TEAM_NAME)
-    message = models.CharField(max_length=528, blank=True, null=True)
+    message = models.CharField(max_length=528, blank=True, null=True, db_column="msg")
     target = models.ForeignKey(Client, db_column="target_id", to_field="id", blank=True, default=0, null=True)
     target_team = models.IntegerField(db_column="target_team",choices=TEAM_NAME, null=True, default=0)
     

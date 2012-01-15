@@ -392,6 +392,9 @@ ul.messages li.warning {
 .icon_delwatch {
     background-image: url('../../images/icons/cross_eye.png');
 }
+.refresh_small {
+    background-image: url('../../images/icons/arrow_refresh_small_gray.png');
+}
 thead.table_menu tr {
     background-color: #4E5155;
     height: 15px;
