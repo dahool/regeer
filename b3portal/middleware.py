@@ -47,7 +47,7 @@ class ServerDetectMiddleware(object):
         if not server:
             if request.COOKIES.has_key(self.SERVER_KEY_NAME):
                 value = request.COOKIES[self.SERVER_KEY_NAME]
-                if has_server(request.user,value):
+                if value != 'None' and has_server(request.user,value):
                     server = value
             if not server and request.user.is_authenticated() and request.user.server_permissions.all():
                 server = request.user.server_permissions.all()[0].server.uuid
