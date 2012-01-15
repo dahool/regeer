@@ -389,10 +389,14 @@ ul.messages li.warning {
 .icon_watch {
     background-image: url('../../images/icons/eye.png');
 }
-.table_menu {
-    background: none repeat scroll 0 0 #4E5155;
+.icon_delwatch {
+    background-image: url('../../images/icons/cross_eye.png');
 }
-.table_menu a {
+thead.table_menu tr {
+    background-color: #4E5155;
+    height: 15px;
+}
+/*.table_menu a {
     font-size: small;
     color: gray;
 }
@@ -421,7 +425,7 @@ ul.messages li.warning {
 .table_menu ul li a:focus, .table_menu ul li a:hover, .table_menu ul li a:active {
 	color:#FFFFFF;
 	text-decoration:none;
-}
+}*/
 :target {
     color:#408080 !important;
 }

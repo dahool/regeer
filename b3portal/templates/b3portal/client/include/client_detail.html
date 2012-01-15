@@ -26,15 +26,15 @@
 </caption>
 <thead class="table_menu">
 <tr><td colspan="4">
-<ul>
+<ul class="actionmenu">
 {% ifpluginenabled "follow" %}
 {% if client.followed.all %}
 {% if obj_perms.plugin.removefollow %}
-<li><a href="{% serverurl follow:remove client.id %}">{% trans "Remove from watch list" %}</a></li>
+<li title="{% trans "Remove from watch list" %}"><a class="nodecoration_icon icon_delwatch" href="{% serverurl follow:remove client.id %}">&nbsp;</a></li>
 {% endif %}
 {% else %}
 {% if obj_perms.plugin.addfollow %}
-<li><a href="{% serverurl follow:add client.id %}">{% trans "Add to watch list" %}</a></li>
+<li title="{% trans "Add to watch list" %}"><a class="nodecoration_icon icon_watch" href="{% serverurl follow:add client.id %}">&nbsp;</a></li>
 {% endif %}
 {% endif %}
 {% endifpluginenabled %}
