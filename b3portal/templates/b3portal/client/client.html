@@ -21,6 +21,11 @@ function load_notices() {
     $("#client_notice").load('{% serverurl client_more_notices client.id %}');
     update_portal_act()
 }
+function note_update(data) {
+	$.get('{% serverurl client_more_notes client.id %}',function(data) {
+		$("#note_box > ul").html(data);
+	});
+}
 $(document).ready(function() {
     $("#main").on('click',"a[confirm]",function() {
         var url = $(this).attr('alt');
@@ -69,7 +74,37 @@ $(document).ready(function() {
         }        
     });		
     {% endif %}
+    $("li.first").on('click', function(){
+    	var current = $("li.note:visible");
+    	var back = $(current).prev();
+    	if (!$(back).hasClass('first')) {
+        	$(current).slideUp('fast');
+        	$(back).slideDown('fast');
+        	slide_control(back);
+    	}
+    });    
+    $("li.last").on('click', function(){
+    	var current = $("li.note:visible");
+    	var next = $(current).next();
+    	if (!$(next).hasClass('last')) {
+    		$(current).slideUp('fast');
+        	$(next).slideDown('fast');
+        	slide_control(next);
+    	}
+    });
 });
+function slide_control(curr) {
+	if ($(curr).next().hasClass('last')) {
+		$("li.last").addClass('note_nomore');
+	} else {
+		$("li.last").removeClass('note_nomore');
+	}
+	if ($(curr).prev().hasClass('first')) {
+		$("li.first").addClass('note_nomore');
+	} else {
+		$("li.first").removeClass('note_nomore');
+	}	
+}
 </script>
 {% endblock %}
 {% block navigation2 %}
@@ -79,6 +114,32 @@ $(document).ready(function() {
 <!-- ************************ DETAIL ************************ -->
 {% include "b3portal/client/include/client_detail.html" %}
 <br/>
+{% if obj_perms.portal.viewnotes %}
+<div id="note_box" class="client_detail">
+<ul>
+<!-- li class="first" title="{% trans "Back" %}">&nbsp;</li-->
+{% for note in client.penalties.comments|slice:":1" %}
+{% include "b3portal/client/include/client_noteline.html" %}
+{% endfor %}
+<!-- li class="last" title="{% trans "More" %}">&nbsp;</li-->
+</ul>
+</div>
+<br/>
+{% comment %}
+<script type="text/javascript">
+<!--
+slide_control("li.note:visible");
+//-->
+</script>
+{% endcomment %}
+{% endif %}
+{% if obj_perms.portal.addnotes %}
+<script type="text/javascript">
+<!--
+create_dialog("#add_note_link", note_update); 
+-->
+</script>
+{% endif %}
 <!-- ************************ ALIASES ************************ -->
 {% if obj_perms.portal.viewalias %}
 <div id="client_aliases">

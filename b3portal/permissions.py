@@ -35,6 +35,10 @@ VIEW_PENALTY = 'portal.listpenalties'
 VIEW_AUDITLOGS = 'portal.viewauditlogs'
 VIEW_ALIAS = 'portal.viewalias'
 
+VIEW_NOTES = 'portal.viewnotes'
+ADD_NOTES = 'portal.addnotes'
+DELETE_NOTES = 'portal.deletenotes'
+
 #PERFORM_ADV_SEARCH = 'b3connect.client_advanced_search'
 
 # PLUGINS

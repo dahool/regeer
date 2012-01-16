@@ -38,6 +38,9 @@
 {% endif %}
 {% endif %}
 {% endifpluginenabled %}
+{% if obj_perms.portal.addnotes %}
+<li title="{% trans "Add comment" %}"><a id="add_note_link" class="nodecoration_icon icon_addcomment" alt="{% serverurl add_note client.id %}">&nbsp;</a></li>
+{% endif %}
 </ul>
 </td></tr>
 </thead>

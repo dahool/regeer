@@ -21,7 +21,7 @@ from common.view.decorators import render
 from common.shortcuts import get_object_or_404
 from django.db.models import Q
 
-from b3connect.models import Penalty, Client, Group, PENALTY_TYPE_NOTICE
+from b3connect.models import Penalty, Client, Group, PENALTY_TYPE_NOTICE, TYPE_COMMENT
 from b3portal.models import Server, Auditor, ServerBanList
 
 from django.conf import settings
@@ -32,7 +32,7 @@ import datetime
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.views.decorators.cache import cache_page
 import urllib
-from b3portal.client.forms import PenaltyForm, NoticeForm
+from b3portal.client.forms import PenaltyForm, NoticeForm, CommentForm
 
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.utils.translation import gettext as _
@@ -59,6 +59,9 @@ from gameutils import load_banlist_all
 from b3portal.client import signals
 
 import logging
+from django.template.loader import render_to_string
+
+from django.utils.html import escape as escapehtml
 
 logger = logging.getLogger(__name__)
 
@@ -320,12 +323,11 @@ def addpenalty(request, id, notice=False):
         form = frmObj(request.POST)
         if form.is_valid():
             p = Penalty(client=client,
-                                       #reason=_("%(reason)s (by %(user)s)") % {'reason': form.cleaned_data['reason'],'user': request.user.username},
-                                       reason= form.cleaned_data['reason'],
-                                       time_edit=datetime.datetime.now(),
-                                       time_add=datetime.datetime.now(),
-                                       data= "UP#%s" % request.user.username,
-                                       admin_id=0)
+                        reason= form.cleaned_data['reason'],
+                        time_edit=datetime.datetime.now(),
+                        time_add=datetime.datetime.now(),
+                        data= "UP#%s" % request.user.username,
+                        admin_id=0)
             if form.Meta.type == 1:
                 p.duration=0
                 p.type='Notice'
@@ -337,7 +339,7 @@ def addpenalty(request, id, notice=False):
                     #dt = time2minutes(str(form.cleaned_data['time'])+form.cleaned_data['time_type'])
                     p.duration = form.cleaned_data['time']
                     p.type='TempBan'
-            p.save()
+            p.save(using=request.server)
             Auditor.objects.create(user=request.user,
                                    server_id=request.server,
                                    clientid=client.id,
@@ -362,6 +364,49 @@ def addpenalty(request, id, notice=False):
     else:
         url = urlreverse("add_penalty", server=request.server, kwargs={'id':id})
     return {'form': form, 'client': client, 'url': url}
+
+@server_permission_required_with_403(perm.ADD_NOTES)
+@render('b3portal/client/add_note.html')
+def addnote(request, id):
+    client = get_object_or_404(Client, id=id, using=request.server)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            # penalty type in db is defined as enum.
+            # so we treat a comment like an inactive notice with a special keyword
+            p = Penalty(client=client,
+                        type=PENALTY_TYPE_NOTICE,
+                        keyword=TYPE_COMMENT,
+                        inactive=1,
+                        duration=0,
+                        reason= form.cleaned_data['reason'],
+                        time_edit=datetime.datetime.now(),
+                        time_add=datetime.datetime.now(),
+                        data= "UP#%s" % request.user.username,
+                        admin_id=0)
+            p.save(using=request.server)
+            Auditor.objects.create(user=request.user,
+                                   server_id=request.server,
+                                   clientid=client.id,
+                                   message=_("Add \"%s\"") % str(p))
+            messages.success(request, _('Comment added successfully.'))
+            return HttpResponse("{\"sucess\": true}",  mimetype='application/json') 
+    else:
+        form = CommentForm()
+        url = urlreverse("add_note", server=request.server, kwargs={'id':id})
+    return {'form': form, 'client': client, 'url': url}
+
+@server_permission_required_with_403(perm.DELETE_NOTES)
+@render('b3portal/client/add_note.html')
+def removenote(request, id):
+    penalty = get_object_or_404(Penalty, id=id, using=request.server)
+    Auditor.objects.create(user=request.user,
+                           server_id=request.server,
+                           clientid=penalty.client.id,
+                           message=_("Remove \"%s\"") % str(penalty))
+    penalty.delete()        
+    messages.success(request, _('Comment removed successfully.'))
+    return HttpResponse("{\"sucess\": true}", mimetype='application/json')
 
 @login_required
 def removenotice(request, id):
@@ -506,6 +551,13 @@ def change_clientgroup(request, id):
     
     messages.info(request, _('Client updated.'))
     return HttpResponse(str(group), mimetype='plain/text')
+
+@server_permission_required_with_403(perm.VIEW_NOTES)
+@render('b3portal/client/include/client_noteline.html')
+def more_notes(request, id):
+    client = get_object_or_404(Client, id=id, using=request.server)
+    p = client.penalties.comments()[:1][0]
+    return {'note': p}
 
 @server_permission_required_with_403(perm.VIEW_ALIAS)
 @cache_page(15*60)

@@ -23,7 +23,7 @@ function create_dialog(id, callback) {
                             $("#content_dialog").html(data);
                         } else {
                             $(ev.delegateTarget).dialog('close');
-                            update_user_messages(function() { callback(); });
+                            update_user_messages(function() { callback(data); });
                         }
                     }
             );

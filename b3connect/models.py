@@ -140,6 +140,8 @@ PENALTY_TYPE_BAN = 'Ban'
 PENALTY_TYPE_TEMPBAN = 'TempBan'
 PENALTY_TYPE_KICK = 'Kick'
 
+TYPE_COMMENT = 'NOTE'
+
 PENALTY_CHOICES = (
     (PENALTY_TYPE_WARN, _('Warning')),
     (PENALTY_TYPE_NOTICE, _('Notice')),
@@ -149,6 +151,9 @@ PENALTY_CHOICES = (
 )
 
 class PenaltyManager(models.Manager):
+    
+    def comments(self):
+        return self.filter(keyword=TYPE_COMMENT).order_by('-time_add')
     
     def active(self):
         return self.filter(Q(time_expire='-1') | Q(time_expire__gt=int(time.time())),inactive=0)
@@ -186,8 +191,8 @@ class Penalty(models.Model):
     
     def __unicode__(self):
         if self.duration == 0:
-            return ugettext(u"%(type)s %(reason)s" % {'type': self.get_type_display(), 'reason': self.reason})
-        return ugettext(u"%(type)s %(reason)s. Duration: %(duration)s" % {'type': self.get_type_display(),
+            return ugettext(u"%(type)s: %(reason)s" % {'type': self.get_type_display(), 'reason': self.reason})
+        return ugettext(u"%(type)s: %(reason)s. Duration: %(duration)s" % {'type': self.get_type_display(),
                                                                     'duration': self.display_duration,
                                                                     'reason': self.reason})
             
@@ -226,12 +231,12 @@ class Penalty(models.Model):
     def is_expired(self):
         return self.time_expire < datetime.datetime.now()
         
-    def save(self, force_insert=False, force_update=False):
+    def save(self, *args, **kwargs):
         if self.duration == 0 and self.type == PENALTY_TYPE_BAN:
             self.time_expire = -1
         else:
             self.time_expire =  int(time.mktime(self.time_add.timetuple())) + (self.duration * 60)
-        super(Penalty, self).save(force_insert, force_update)
+        super(Penalty, self).save(*args, **kwargs)
         
 #class Nick(models.Model):
 #    nickid = models.IntegerField(db_index=True)

@@ -33,6 +33,9 @@ TIME_CHOICES = (
 
 MAX_DURATION = 10518960 # 20 years
 
+class CommentForm(forms.Form):
+    reason = forms.CharField(max_length=765, label=_('Note'))
+        
 class NoticeForm(forms.Form):
     
     reason = forms.CharField(max_length=765, label=_('Reason'))

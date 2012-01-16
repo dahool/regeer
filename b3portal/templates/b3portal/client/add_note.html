@@ -1,0 +1,17 @@
+{% load listtocolumns urltag i18n tagutils settingstag formtags %}
+<h3>{% trans "Add Comment" %}<small>  
+{% with request.server as current_server %}
+{% for server in request.server_list %}
+{% if current_server == server.uuid %}{{server.name}}{%endif%}
+{% endfor %}
+{% endwith %}</small></h3>
+<div class="centered_form">
+<form method="post" action="{{url}}">
+<fieldset>
+<legend>{{client.id}} - {{client.name}}</legend>
+{% csrf_token %}
+{% as_form form %}
+<input type="submit" name="save" value="{% trans "Add" %}" style="float: right;">&nbsp;&nbsp;
+</fieldset>
+</form>
+</div>

@@ -173,6 +173,9 @@ label {
 .icon_info {
     background-image: url('../../images/icons/information.png');
 }
+.icon_addcomment {
+    background-image: url('../../images/icons/comments_add.png');
+}
 td a {
     font-weight: bold;
 }
@@ -576,4 +579,53 @@ h3 {
 }
 .highlight:hover {
 	background: #FFFF6F !important; 
+}
+#note_box ul {
+	list-style-type: none;
+	margin: 0;
+}
+#note_box {
+	height: 65px;
+}
+#note_box li.note {
+	border: 1px solid #CCCCCC;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;	
+	background: none repeat scroll 0 0 #FFFFD7;
+	height: 40px;
+	padding: 5px;
+	margin: 0;
+	margin-bottom: 4px;
+	font-family: "Courier New", Courier, monospace;
+}
+/*#note_box li.note:hover {
+	background: #FFFFFF url(../../images/new/table-hover.png) repeat;
+}*/
+#note_box li.last, #note_box li.first {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	background: transparent url(../../images/icons/bullet_down_gray.png) no-repeat 50% 50%;
+	height: 16px;
+}
+#note_box li span {
+	float: right;
+	margin-top: 34px;
+	background-color: #DFDFDF;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;	
+	padding-left: 5px;
+	padding-right: 5px;
+	font-family: "Tahoma","Bitstream Vera Sans",Verdana,Helvetica,sans-serif;
+}
+#note_box li.first {
+	background: transparent url(../../images/icons/bullet_up_gray.png) no-repeat 50% 50%;
+}
+#note_box li.last:hover, #note_box li.first:hover {
+	background-color: #C0C0C0;	
+}
+.note_nomore {
+	background-image: url(../../images/icons/bullet_red.png) !important;
 }
