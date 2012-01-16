@@ -22,6 +22,7 @@
 				<exclude name=".project"/>
 				<exclude name=".pydevproject"/>
 				<exclude name=".svn"/>
+				<exclude name=".git"/>
 				<exclude name="*.pyc"/>
 				<exclude name="settings_local.py"/>
 				<exclude name="local.conf"/>
