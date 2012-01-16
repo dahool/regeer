@@ -584,9 +584,6 @@ h3 {
 	list-style-type: none;
 	margin: 0;
 }
-#note_box {
-	height: 65px;
-}
 #note_box li.note {
 	border: 1px solid #CCCCCC;
 	-webkit-border-radius: 10px;
