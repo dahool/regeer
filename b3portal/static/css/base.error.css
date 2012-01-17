@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+body {
+	font-family: Arial;
+	font-size: 12pt;
+	line-height: 20pt;
+}
+a {
+	color: #663300;
+}
+a:visited {
+	color: #663300;
+}
+a:hover {
+	color: #996600;
+}
+.wrapper {
+	width: 1002px;
+	position: relative;
+	padding: 20px;
+}
+.header {
+	font-size: 24pt;
+	font-weight: bolder;
+	color: #663300;
+	border-bottom: solid 1px #000;
+	padding: 10px 0;
+}
+.body {
+	padding: 10px 0;
+	min-height: 500px;
+}
+.body .left {
+	float: left;
+}
+.body .image {
+	float: right;
+	/*width: 400px;*/
+	margin-right: 50px;
+}
+.footer {
+	width: 450px;
+	text-align: center;
+	margin: auto;
+}
+.footer img {
+	float: left;
+}

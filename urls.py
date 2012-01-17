@@ -50,5 +50,12 @@ for app in settings.INSTALLED_APPS:
         urlpatterns += patterns('',
             url(pattern, include(urlconf)),
         )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^500/$', 'django.views.generic.simple.direct_to_template', {'template': '500.html'}),
+        (r'^404/$', 'django.views.generic.simple.direct_to_template', {'template': '404.html'}),
+        (r'^403/$', 'django.views.generic.simple.direct_to_template', {'template': '403.html'}),
+    )
              
 urlpatterns += staticfiles_urlpatterns()

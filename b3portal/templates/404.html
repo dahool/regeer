@@ -1,9 +1,32 @@
-{% extends 'base_simple.html' %}
-{% load i18n %}
-{% block title %}{{ block.super }} | {% trans "Page not found" %}{% endblock %}
-{% block main_content %}
-<h2>{% trans "Page not found" %}</h2>
-<p>{% blocktrans %}Looks like you followed a bad link. If you think it's our fault, please let us know</a>.{% endblocktrans %}</p>
-{% url home as home %}
-<p>{% blocktrans %}Here's a link to the <a href="{{ home }}">homepage</a>. You know, just in case.{% endblocktrans %}</p>
-{% endblock %}
+{% load i18n settingstag %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}">
+<head>
+<title>{% block title %}{% setting "SITE_NAME" %} | {% trans "Page not found" %}{% endblock %}</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link type="image/x-icon" href="{{STATIC_URL}}favicon.ico" rel="shortcut icon" />
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/base.error.css"/>
+</head>
+<body>
+<div class="wrapper">
+	<div class="header">
+		{% trans "Oops! The requested page is missing." %}
+	</div>
+	<div class="body">
+
+		<div class="left">
+			{% url home as home %}
+			{% blocktrans %}
+			<p>It seems we can not find the page you are requesting for.</p>
+			<p>The most likely reasons are:</p>
+			<ul>
+				<li>You have typed a wrong address in your browser.</li>
+			</ul> 
+			<p>Here's a link to the <a href="{{ home }}">homepage</a>. You know, just in case ;)</p>
+			{% endblocktrans %}
+		</div>
+		<img class="image" src="{{STATIC_URL}}images/404.png" alt="{% trans "Page not found" %}" />
+	</div>
+</div>
+</body>
+</html>
