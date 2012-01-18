@@ -66,7 +66,8 @@ class ServerForm(ModelForm):
             p.password = data.get('dbpasswd')
         if data.get('rcon_passwd'):
             p.rcon_password = data.get('rcon_passwd')
-        p.save()
+        if commit:
+            p.save()
         return p
 
     class Meta:

@@ -1,4 +1,4 @@
-#Thu Jan 12 11:29:12 ART 2012
+#Tue Jan 17 10:02:06 ART 2012
 eclipse.preferences.version=1
 encoding//b3/clients.py=latin1
 encoding//b3connect/admin.py=utf-8
@@ -55,6 +55,8 @@ encoding//b3portal/plugins/status/views.py=utf-8
 encoding//b3portal/rconadmin/urls.py=utf-8
 encoding//b3portal/rconadmin/views.py=utf-8
 encoding//b3portal/server/forms.py=utf-8
+encoding//b3portal/server/urls.py=utf-8
+encoding//b3portal/server/views.py=utf-8
 encoding//b3portal/templatetags/gametag.py=utf-8
 encoding//b3portal/templatetags/plugintag.py=utf-8
 encoding//b3portal/templatetags/serverpermtag.py=utf-8

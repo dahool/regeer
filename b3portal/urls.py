@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^userinformation/$', views.userinformation, name="userinformation"),
     url(r'^client/', include('b3portal.client.urls')),
     url(r'^banned/', include('b3portal.penalties.urls')),
+    url(r'^server/', include('b3portal.server.urls', namespace="server")),
 )
 
 if settings.B3_INSTALLED:

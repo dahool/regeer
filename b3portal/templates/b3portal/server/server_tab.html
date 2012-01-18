@@ -1,0 +1,47 @@
+{% load i18n tagutils settingstag extendedtags urltag plugintag %}
+<div id="server-tabs">
+	<ul>
+		<li><a href="#tabs-1">{% trans "Details" %}</a></li>
+		<li><a href="#tabs-2">{% trans "Plugins" %}</a></li>
+		<li><a href="#tabs-3">{% trans "Permissions" %}</a></li>
+		<li><a href="#tabs-4">{% trans "RCON" %}</a></li>
+	</ul>
+	<div id="tabs-1">
+		<h2>{{server.name}} <sup><small>{{server.game}}</small></sup></h2>
+		<fieldset>
+			<legend>{% trans "Database" %}</legend>
+			<p>{% trans "Name" %}: {{server.database}}</p>
+			<p>{% trans "Host" %}: {{server.hostname}}</p>
+		</fieldset>
+		<fieldset>
+			<legend>{% trans "RCON" %}</legend>
+			<p>{% trans "IP" %}: {{server.rcon_ip}}</p>
+			<p>{% trans "Port" %}: {{server.rcon_port}}</p>
+		</fieldset>
+	</div>
+	<div id="tabs-2">
+		<ul class="plugin_list">
+		{% for name, title in plugins %}
+			<li><span class="nodecoration_icon {% ifpluginenabled name server.pk %}plugin_enabled{%else%}plugin_disabled{%endifpluginenabled%}">{{title}}</span></li>
+		{% endfor %}
+		</ul>
+	</div>
+	<div id="tabs-3">
+		<fieldset>
+			<legend>{% trans "Owners" %}</legend>
+			<ul class="owners">
+				{% for u in server.owners.all %}
+				<li>{{u.username}}</li>
+				{% endfor %}
+			</ul>
+		</fieldset>
+		<fieldset>
+			<legend>{% trans "Users" %}</legend>
+			<ul class="users">
+				{% for p in server.user_permissions.all %}
+				<li>{{p.user.username}} {% if p.groups.all %}({% for g in p.groups.all %}{{g}}{%if not forloop.last %}, {%endif%}{%endfor%}){%endif%}</li>
+				{% endfor %}
+			</ul>
+		</fieldset>
+	</div>
+</div>

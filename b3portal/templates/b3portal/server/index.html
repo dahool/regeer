@@ -1,0 +1,116 @@
+{% extends "base_layout.html" %}
+{% load i18n tagutils settingstag extendedtags geoip urltag plugintag gametag %}
+{% block title %}{{ block.super }} | {% trans "Server Management" %}{% endblock %}
+{% block extra_header %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/actionmenu.css"/>
+<link rel="stylesheet" type="text/css" href="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/themes/base/jquery-ui.css"/>
+<script type="text/javascript" src="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#server-nav").on('click', 'a', function(e) {
+		e.preventDefault();
+		if ($(this).parent().hasClass('active')) return;
+		var url = $(this).attr('href');
+		$("#server-content").load(url, function() {
+			$("#server-tabs").tabs({ selected: 0 });
+		});
+		$("#server-nav li.active").removeClass('active');
+		$(this).parent().addClass('active');
+	});
+	$("#server-tabs").tabs({ selected: 0 });	
+});
+</script>
+<style>
+<!--
+#server-content {
+	float: right;
+	overflow:hidden;
+	width: 780px;
+}
+#server-nav, #server-nav dt, #server-nav dd, #server-nav ul, #server-nav li {
+	margin: 0;
+	padding: 0;
+}
+#server-nav {
+	width: 150px;
+	float: left;
+	margin-top: 5px;
+}
+#server-nav ul {
+	list-style: none outside none;
+}
+#server-nav li {
+    font-size: 11px;
+    margin: 3px 0;
+    padding: 0 10px 0 0;
+}
+#server-nav li a {
+	display: block;
+	text-decoration: none;
+	border-bottom: 1px dotted #B3B3B3;
+	padding: 1px 8px 4px;
+}
+#server-nav li.active {
+	background: url("{{STATIC_URL}}images/ontile.gif") repeat-x scroll left center transparent;
+	padding: 0;
+}
+#server-nav li a:hover {
+	background-color: #f6f6f6;
+}
+#server-nav li.active a {
+    background: url("{{STATIC_URL}}images/rarrowactive.gif") no-repeat scroll right center transparent;
+    border: 0 none;
+    color: #FFFFFF;
+    margin-bottom: 0;
+    margin-left: -10px;
+    padding-left: 18px;
+}
+ul.plugin_list {
+	list-style: none outside none;
+}
+.plugin_list span {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 11px;
+}
+.plugin_list span.plugin_enabled {
+	background-image: url('{{STATIC_URL}}images/icons/bullet_green.png');
+}
+.plugin_list span.plugin_disabled {
+	background-image: url('{{STATIC_URL}}images/icons/bullet_red.png');
+}
+ul.owners, ul.users {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.owners li, .users li {
+	background-position:0 50%;
+	background-repeat:no-repeat;
+	padding:0 0 0 25px;	
+}
+.owners li {
+	background-image: url('{{STATIC_URL}}images/icons/user_gray.png');
+}
+.users li {
+	background-image: url('{{STATIC_URL}}images/icons/user.png');
+}
+-->
+</style>
+{% endblock %}
+{% block main_content %}
+<div>
+<div id="server-nav">
+<ul>
+	{% for srv in servers %}
+	<li {% if srv.pk == server.pk %}class="active"{%endif%}><a href="{% url server:get_server srv.pk %}">{{srv.name}}</a></li>
+	{% endfor %}
+</ul>
+</div>
+<div id="server-content">
+{% include "b3portal/server/server_tab.html" %}
+</div>
+<div style="clear: both;"></div>
+</div>
+{% endblock %}

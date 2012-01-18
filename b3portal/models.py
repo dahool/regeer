@@ -48,7 +48,7 @@ class Server(models.Model):
     game = models.CharField(max_length=15, choices=PARSER_CHOICES, verbose_name=_('Game'))
     default = models.BooleanField(default=False, verbose_name=_('Default'), help_text=_('Set as default server'), db_index=True)
     
-    owners = models.ManyToManyField(User, verbose_name=_('Server Owners'), blank=True)
+    owners = models.ManyToManyField(User, verbose_name=_('Server Owners'), blank=True, related_name="owned_servers")
     
     # database
     database = models.CharField(max_length=50, verbose_name=_('Database Name'))
@@ -115,9 +115,9 @@ class ServerBanList(models.Model):
 
 class ServerPermission(models.Model):
     user = models.ForeignKey(User, related_name='server_permissions',verbose_name=_('Server Permissions'))
-    server = models.ForeignKey(Server)
+    server = models.ForeignKey(Server, related_name='user_permissions')
     groups = models.ManyToManyField(Group, verbose_name=_('groups'), blank=True)
-    permissions = models.ManyToManyField(Permission, verbose_name=_('user permissions'), blank=True, limit_choices_to={'content_type__in': ContentType.objects.filter(app_label__in=appsettings.PERMISSION_CHOICES)})
+    permissions = models.ManyToManyField(Permission, verbose_name=_('User Permissions'), blank=True, limit_choices_to={'content_type__in': ContentType.objects.filter(app_label__in=appsettings.PERMISSION_CHOICES)})
 
     def __repr__(self):
         return "%s - %s" % (self.user.username, self.server.name)

@@ -2,11 +2,12 @@ from django.utils.translation import gettext as _
 from common.utils.application import is_installed
 from b3portal.models import Server
 
-PLUGINS = [('autoslap',_('AutoSlap Plugin')),
-           ('chatlog',_('Chat Logger Plugin')),
-           ('follow',_('Follow Players Plugin')),
-           ('nickreg',_('Registered Nicks Plugin')),
-           ('status',_('Status Plugin')),
+PLUGINS = [('autoslap',_('Auto Slap')),
+           ('chatlog',_('Chat Logger')),
+           ('follow',_('Follow Players')),
+           ('nickreg',_('Registered Nicks')),
+           ('status',_('Status')),
+           ('ipdb',_('IPDB')),
            ('map',_('Maps'))]
 
 def is_plugin_installed(name):
