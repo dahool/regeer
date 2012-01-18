@@ -270,7 +270,7 @@ def _getclientlist(request, server, search = True):
         clients = clients.order_by(sort)
         
     if request.GET.has_key('level'):
-        if has_server_perm(request.user, perm.VIEW_GROUP, server):
+        if not has_server_perm(request.user, perm.VIEW_GROUP, server):
             raise Http403
         if request.GET.get('level'):
             clients = clients.filter(group__level=request.GET.get('level'))

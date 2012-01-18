@@ -16,7 +16,7 @@
 		<fieldset>
 			<legend>{% trans "RCON" %}</legend>
 			<p>{% trans "IP" %}: {{server.rcon_ip}}</p>
-			<p>{% trans "Port" %}: {{server.rcon_port}}</p>
+			<p>{% trans "Port" %}: {% if server.rcon_port %}{{server.rcon_port}}{%endif%}</p>
 		</fieldset>
 	</div>
 	<div id="tabs-2">
