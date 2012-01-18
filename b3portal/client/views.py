@@ -466,7 +466,7 @@ def editpenalty(request, id):
                 p.duration=0
                 p.type='Ban'
             else:
-                p.duration = time2minutes(str(form.cleaned_data['time'])+form.cleaned_data['time_type'])
+                p.duration = form.cleaned_data['time']
                 p.type='TempBan'
             p.reason = form.cleaned_data['reason']
             p.time_edit=datetime.datetime.now()
