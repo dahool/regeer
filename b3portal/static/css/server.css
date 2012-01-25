@@ -1,5 +1,5 @@
 #server-content {
-	float: right;
+	/*float: right;*/
 	overflow:hidden;
 	width: 780px;
 }
@@ -8,9 +8,10 @@
 	padding: 0;
 }
 #server-nav {
-	width: 150px;
+	width: 175px;
 	float: left;
 	margin-top: 5px;
+	margin-right: 15px;
 }
 #server-nav ul {
 	list-style: none outside none;
