@@ -1,12 +1,34 @@
 {% load i18n serverpermtag %}
+<script type="text/javascript">
+<!--
+$(document).ready(
+	function() {
+		$("#quick_server").on('change', function() {
+			$("#server_search_quick").val($(this).val());
+		});
+	}
+);
+//-->
+</script>
 <small>
+<form method="get" action="{% url client_list %}" style="display:inline; margin-right: 20px;">
+<small>
+<input type="hidden" name="server" value="{{request.server}}" id="server_search_quick">
+<select name="type">
+<option value="name" {% if filter == 'name' %}selected="selected"{%endif%}>{% trans "Name" %}</option>
+<option value="ip" {% if filter == 'ip' %}selected="selected"{%endif%}>{% trans "IP" %}</option>
+</select>
+<input type="text" id="data" name="data" value="{{data}}" style="width: 90px;">
+<input type="submit" name="search" id="search" value="{% trans "Search" %}">
+</small>
+</form>
 <form id="go_client" style="display:inline;" method="post" action="{% url go_player %}">
 {% csrf_token %}
 <label style="color: white; padding-right: 0px;" for="id_playerid">{% trans "Player" %} @</label>
 <input type="text" name="playerid" id="id_playerid" class="default" style="width:50px;" placeholder="{% trans "id" %}">
 <input type="hidden" name="next" value="{{request.path}}">
 {% with request.server as current_server %}
-<select name="server">
+<select name="server" id="quick_server">
 {% for server in request.server_list %}
 {% ifperm user server 'portal.viewclientinfo' %}
 <option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
