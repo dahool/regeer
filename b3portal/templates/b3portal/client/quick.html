@@ -11,15 +11,16 @@ $(document).ready(
 //-->
 </script>
 <small>
-<form method="get" action="{% url client_list %}" style="display:inline; margin-right: 20px;">
+<form id="go_search" method="get" action="{% url client_list %}" style="display:inline; margin-right: 20px;">
 <small>
 <input type="hidden" name="server" value="{{request.server}}" id="server_search_quick">
+<input type="hidden" name="search" value="Search">
 <select name="type">
 <option value="name" {% if filter == 'name' %}selected="selected"{%endif%}>{% trans "Name" %}</option>
 <option value="ip" {% if filter == 'ip' %}selected="selected"{%endif%}>{% trans "IP" %}</option>
 </select>
 <input type="text" id="data" name="data" value="{{data}}" style="width: 90px;">
-<input type="submit" name="search" id="search" value="{% trans "Search" %}">
+<span title="{% trans "Search" %}" onclick="$('#go_search').submit()" class="nodecoration_icon icon_go">&nbsp;</span>
 </small>
 </form>
 <form id="go_client" style="display:inline;" method="post" action="{% url go_player %}">
