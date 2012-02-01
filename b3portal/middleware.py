@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from b3portal.models import Server
 from b3portal import init_database_config
 from b3portal.permission.utils import has_server
+from django.http import Http404
 
 class ServerDetectMiddleware(object):
     
@@ -58,6 +59,10 @@ class ServerDetectMiddleware(object):
                         break
             if not server and len(server_list) > 0:
                 server = server_list[0].uuid
+        
+        if server and server not in [s.uuid for s in server_list]:
+            raise Http404
+        
         request.__class__.server = server
         
     def process_response(self, request, response):
