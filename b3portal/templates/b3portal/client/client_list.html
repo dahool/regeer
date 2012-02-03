@@ -60,17 +60,18 @@
 {% for client in client_list.object_list %}
 <tr class="{% cycle "odd" "even" %}">
 <td><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
-<td name="autofill" alt="name" submit="#search" title="{% trans "Search for players with same name" %}">{{client.name}}
+<td title="{% trans "Search for players with same name" %}">
+<a style="font-weight: normal" href="?type=name&data={{client.name|urlencode}}&server={{request.server}}&search=Search">{{client.name}}</a>
 {% if obj_perms.portal.listpenalties and client.penalties.notices %}
 <span class="nodecoration_icon icon_info">&nbsp;</span>
 {% endif %}
 </td>
 <td>{% if obj_perms.portal.viewclientgroup %}<a style="font-weight: normal" href="?level={{client.group.level}}&server={{request.server}}" title="{% trans "Filter users sharing the same group" %}">{{client.displayGroup}}</a>{%else%}-{%endif%}</td>
-<td name="autofill" alt="ip" submit="#search" title="{% trans "Search for players with same IP address" %}">
+<td title="{% trans "Search for players with same IP address" %}">
 {% if obj_perms.portal.viewfullip %}
-{{client.ip}}
+<a style="font-weight: normal" href="?type=ip&data={{client.ip}}&server={{request.server}}&search=Search">{{client.ip}}</a>
 {% else %}
-{{client.ip|maskip}}
+<a style="font-weight: normal" href="?type=ip&data={{client.ip|maskip}}&server={{request.server}}&search=Search">{{client.ip|maskip}}</a>
 {% endif %}
 </td>
 <td>{{client.time_add|date:"DATETIME_FORMAT"}}</td>

@@ -18,7 +18,7 @@ $(document).ready(
 <option value="name" {% if filter == 'name' %}selected="selected"{%endif%}>{% trans "Name" %}</option>
 <option value="ip" {% if filter == 'ip' %}selected="selected"{%endif%}>{% trans "IP" %}</option>
 </select>
-<input type="text" id="data" name="data" value="{{data}}" style="width: 90px;">
+<input type="text" name="data" value="{{data}}" style="width: 90px;">
 <span title="{% trans "Search" %}" onclick="$('#go_search').submit()" class="nodecoration_icon icon_search">&nbsp;</span>
 </form>
 <form id="go_client" style="display:inline;" method="post" action="{% url go_player %}">

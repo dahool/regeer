@@ -33,9 +33,9 @@ $(document).ready(
 							}
 						);
 						$('#data').val($(this).text());
-						console.log($(this).attr('submit'));
+						console.log($(this).text());
 						if ($(this).attr('submit') != undefined) {
-							$($(this).attr('submit')).click();
+							//$($(this).attr('submit')).click();
 						}
 					})
 				}
