@@ -22,7 +22,7 @@ from django.contrib.sites.models import Site
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext as _
 from django.conf import settings
-
+from django import forms
 from b3portal.server.forms import ServerForm
 
 from models import UserProfile, Server, ServerPermission
@@ -41,7 +41,19 @@ class ServerPermissionInline(admin.StackedInline):
 class UserProfileAdmin(UserAdmin):
     inlines = [ServerPermissionInline]
 
+class ServerBanListForm(forms.ModelForm):
+        
+    location = forms.CharField(label=_('Banlist File Location'),
+                               help_text=_('Local, ftp and http are supported<br/>For ftp use: ftp://user:password@host:port/file/banlist.txt<br/>For http use: http://your.url.com/banlist.txt'),
+                               max_length=500,
+                               required=False,
+                               widget=forms.TextInput(attrs={'size':'100'}))
+
+    class Meta:
+        model = ServerBanList
+    
 class ServerBanListInline(admin.StackedInline):
+    form = ServerBanListForm
     model = ServerBanList
     verbose_name = _('Server Banlist')
     verbose_name_plural = _('Server Banlist')

@@ -16,18 +16,21 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
+
+def open_file(filen):
+    if isinstance(filen, basestring):
+        return open(filen, 'r')
+    return filen
+
 def load_banlist(filen):
-    banlist = open(filen)
+    banlist = open_file(filen)
     iplist = banlist.readlines()
     banlist.close()
     lista = set([v.split(':')[0].strip() for v in iplist])
     return lista
 
 def load_banlist_all(filen):
-    if isinstance(filen, file):
-        banlist = filen
-    else:
-        banlist = open(filen)
+    banlist = open_file(filen)
     iplist = banlist.readlines()
     banlist.close()
     lista = set()

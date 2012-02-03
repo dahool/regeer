@@ -20,15 +20,12 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from common.fields import CryptField, AutoSlugField
-#from common.crypto import BCipher
+from common.fields import CryptField, AutoSlugField, RemoteCachedFileField
 import re
 
 from django.contrib.auth.models import Permission, Group, User
 from django.contrib.contenttypes.models import ContentType
 from b3portal import appsettings
-import datetime
-from django.core.files.base import ContentFile
 
 DISPLAY_SUB = re.compile(r'ut4_|ut_|ut42_')
 
@@ -70,17 +67,6 @@ class Server(models.Model):
         
     def is_owner(self, user):
         return user in self.owners.all()
-        
-#    def set_password(self, clear_text):
-#        bc = BCipher()
-#        setattr(self, 'password', bc.encrypt(clear_text))
-#
-#    def get_password(self):
-#        value = getattr(self, 'password', None)
-#        if value is not None:
-#            bc = BCipher()
-#            return bc.decrypt(value)
-#        return value
 
     class Meta:
         ordering  = ('name',)
@@ -88,29 +74,15 @@ class Server(models.Model):
 
 class ServerBanList(models.Model):
     server = models.ForeignKey(Server, related_name="banlist", unique=True, verbose_name=_('Server'))
-    location = models.CharField(max_length=500, verbose_name=_('Banlist File Location'),
-                                help_text=_('For ftp access use: ftp://user:password@host:port/file/banlist.txt'))
-    cache = models.FileField(upload_to='banlist', max_length=500, editable=False, null=True)
-    updated = models.DateTimeField(editable=False, null=True)
+    location = RemoteCachedFileField(max_length=500,
+                                     cache_time=getattr(settings, 'BANLIST_CACHE_EXPIRE', 1440),
+                                     upload_to='banlist') 
         
     def get_file(self):
-        d = datetime.timedelta(minutes=getattr(settings, 'BANLIST_CACHE_EXPIRE', 1440))
-        if not self.cache or not self.updated or self.updated + d < datetime.datetime.now():
-            from common.utils.file import getfile
-            f = getfile(self.location)
-            if not f: raise Exception(_('Unable to read banlist file'))
-            if self.location.startswith("ftp://"):
-                file_content = ContentFile(f.read())
-                f.seek(0)
-                self.updated = datetime.datetime.now()
-                if self.cache: self.cache.delete()
-                self.cache.save(self.server.uuid + ".txt", file_content)
-                self.save()
-            else:
-                return f
-        return self.cache
-        
-    
+        if not self.location:
+            return None
+        return self.location
+
 #serverPermissionChoices = [(p.id,unicode(p)) for p in Permission.objects.filter(content_type__in=ContentType.objects.filter(app_label__in=appsettings.PERMISSION_CHOICES))]
 
 class ServerPermission(models.Model):

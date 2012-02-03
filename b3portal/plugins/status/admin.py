@@ -18,5 +18,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from django.contrib import admin
 from b3portal.plugins.status.models import StatusPlugin
-    
-admin.site.register(StatusPlugin)
+from django import forms
+from django.utils.translation import ugettext_lazy as _
+
+class StatusPluginForm(forms.ModelForm):
+        
+    location = forms.CharField(label=_('Status File Location'),
+                               help_text=_('Local, ftp and http are supported<br/>For ftp use: ftp://user:password@host:port/file/status.xml<br/>For http use: http://your.url.com/status.xml'),
+                               max_length=500,
+                               widget=forms.TextInput(attrs={'size':'100'}))
+
+    class Meta:
+        model = StatusPlugin
+                
+class StatusPluginAdmin(admin.ModelAdmin):
+    form = StatusPluginForm
+        
+admin.site.register(StatusPlugin, StatusPluginAdmin)

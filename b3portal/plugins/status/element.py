@@ -61,6 +61,7 @@ class Status(object):
     def __init__(self, xmlfile):
         self.clients = []
         doc = xml.dom.minidom.parse(xmlfile)
+        xmlfile.close()
         for b3status in doc.getElementsByTagName("B3Status"):
             self.updated = datetime.datetime.strptime(b3status.getAttribute('Time'),UP_TIME_FORMAT)
             for clients in b3status.getElementsByTagName("Clients"):

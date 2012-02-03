@@ -132,7 +132,10 @@ def _get_banlist(request):
             sb = ServerBanList.objects.get(server=request.server)
         except:
             return []
-        lista = load_banlist_all(sb.get_file())
+        if sb.get_file():
+            lista = load_banlist_all(sb.get_file())
+        else:
+            return []
         cache.set(cache_key, lista, getattr(settings, 'BANLIST_CACHE_EXPIRE', 1440) * 60)
     return lista
         

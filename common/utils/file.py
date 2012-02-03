@@ -35,13 +35,25 @@ def deltree(topdir):
 def getfile(name):
     if name.startswith("ftp://"):
         return getftpfile(name)
-    return open(name)
+    if name.startswith("http://"):
+        return gethttpfile(name)
+    return open(name, 'rb')
+
+def gethttpfile(url):
+    import urllib2, tempfile
+    try:
+        resp = urllib2.urlopen(url)
+        file = tempfile.TemporaryFile()
+        file.write(resp.read())
+        file.flush()
+        file.seek(0)
+        return file
+    except Exception:
+        raise
 
 def getftpfile(url):
     from ftplib import FTP
-    import re
-    import tempfile
-    import os
+    import re, tempfile
     
     patterns = ['^ftp://(?P<user>[\w]+):(?P<password>[\w]+)@(?P<host>[\w\-\.]+):(?P<port>[\d]+)/(?P<path>.+)$',
                 '^ftp://(?P<user>[\w]+):(?P<password>[\w]+)@(?P<host>[\w\-\.]+)/(?P<path>.+)$',
