@@ -176,6 +176,9 @@ label {
 .icon_addcomment {
     background-image: url('../../images/icons/comments_add.png');
 }
+.icon_search {
+    background-image: url('../../images/icons/magnifier.png');
+}
 td a {
     font-weight: bold;
 }
