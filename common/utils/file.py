@@ -87,7 +87,5 @@ def getftpfile(url):
             file.seek(0)
             ftp.close()
             return file
-        except ftplib.all_errors, e:
+        except Exception, e:
             raise Exception("FTP: %s" % str(e))
-            
-    raise None
