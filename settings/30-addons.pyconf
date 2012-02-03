@@ -20,6 +20,9 @@ ITEMS_ON_CLIENT_PAGE = 5
 # Level to hide to unauthorized users 
 HIGH_LEVEL_CLIENT = 20
 
+# Hide ban reason to anonymous users
+ANOM_HIDE_REASON = True
+
 # Set to True for B3 1.7 support, with new table IpAliases
 SUPPORT_IP_ALIASES = True 
 

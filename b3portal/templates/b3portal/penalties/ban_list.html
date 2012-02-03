@@ -38,7 +38,17 @@
 <td>{{ban.time_add|date:"D, d M Y (H:i)"}}</td>
 <!-- td>{% if ban.duration != 0 %}{{ban.display_duration}}{% endif%}</td-->
 <td>{% if ban.duration != 0 %}{{ban.time_expire|date:"D, d M Y (H:i)"}}{%else%}<span style="color:red;">{% trans "Permanent" %}</span>{%endif%}</td>
-<td {% if ban.display_data and obj_perms.portal.listpenalties %}class="simple_icon icon_info notice_tip" title="{{ban.display_data|clean_colors}}" {%endif%}>{{ban.reason|clean_colors}}</td>
+<td {% if ban.display_data and obj_perms.portal.listpenalties %}class="simple_icon icon_info notice_tip" title="{{ban.display_data|clean_colors}}" {%endif%}>
+{% if user.is_authenticated %}
+{{ban.reason|clean_colors}}
+{% else %}
+{% ifsetting "ANOM_HIDE_REASON" %}
+-
+{% else %}
+{{ban.reason|clean_colors}}
+{% endifsetting %}
+{% endif %}
+</td>
 </tr>
 {% endfor %}
 </tbody>
