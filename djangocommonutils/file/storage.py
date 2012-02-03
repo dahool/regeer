@@ -34,13 +34,7 @@ class RemoteCachedFileSystemStorage(FileSystemStorage):
         super(RemoteCachedFileSystemStorage, self)._save(name, content)
         
     def _open(self, name, mode='rb'):
-        if name.startswith("ftp://"):
-            localfilename = url_to_string(name)
-            localname = self.path(localfilename)
-            if not self._is_cached(localname):
-                fobj = getftpfile(name)
-                self._savelocal(fobj, localfilename)
-        elif name.startswith("http://"):
+        if name.startswith("ftp://") or name.startswith("http://"):
             localfilename = url_to_string(name)
             localname = self.path(localfilename)
             if not self._is_cached(localname):
