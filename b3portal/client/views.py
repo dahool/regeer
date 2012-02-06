@@ -513,10 +513,15 @@ def change_clientgroup(request, id):
             pass
         else:
             raise Http403        
-    
+     
     group = get_object_or_404(Group, id=g, using=request.server)
     client = get_object_or_404(Client, id=id, using=request.server)
-    
+
+    if g == 100 or (client.group and client.group.level == 100):
+        server = get_object_or_404(Server, pk=request.server)
+        if not (request.user.is_superuser or server.is_owner(request.user)):
+            raise Http403
+        
     if client.group_id > group.id:
         if client.group_id == 2 and has_server_perm(request.user, perm.CLIENT_REMOVE_REGULAR, request.server):
             pass
