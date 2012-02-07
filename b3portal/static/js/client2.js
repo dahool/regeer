@@ -32,6 +32,15 @@ function create_dialog(id, callback) {
 }
 $(document).ready(
 	function() {
+		$(".clientPanelTabContent div:first").show();
+		$(".clientPanelTabGroup li").click(function() {
+			var tabId = $(this).attr('alt');
+			$('.clientPanelTabContent .clientContentTab:not(#'+tabId+')').hide();
+			$('#'+tabId).show();
+			$('.clientPanelTabGroup li:not(alt['+tabId+'])').removeClass('tab_selected');
+			$(this).addClass('tab_selected');
+		});
+		
 		// ajax boxes
 		$('#client_aliases').on('click','div.pagination a', function(e) {
 			e.preventDefault();
@@ -56,6 +65,14 @@ $(document).ready(
 		$('#portal_actions').on('click','div.pagination a', function(e) {
 			e.preventDefault();
 			do_get($(this).attr('href'),$('#portal_actions'));
-		});			
+		});
+		$('#player_actions').on('click','div.pagination a', function(e) {
+			e.preventDefault();
+			do_get($(this).attr('href'),$('#player_actions'));
+		});		
+		$('#admin_log_actions').on('click','div.pagination a', function(e) {
+			e.preventDefault();
+			do_get($(this).attr('href'),$('#admin_log_actions'));
+		});		
 	}
 );

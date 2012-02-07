@@ -1,0 +1,41 @@
+{% load listtocolumns i18n tagutils settingstag urltag extendedtags paginator %}
+<table class="table-style cd-table client_lists">
+<caption>{% trans "Server Admin Activity" %}</caption>
+<thead>
+<tr>
+<th>{% trans "Date" %}</th>
+<th>{% trans "Command" %}</th>
+<th>{% trans "Data" %}</th>
+<th>{% trans "Admin" %}</th>
+</tr>
+</thead>
+<tbody>
+{% with client_adm_logs.object_list as logs %}
+{% for log in logs %}
+<tr class="{% cycle "odd" "even" %}">
+<td>{{log.time_add|date:"DATETIME_FORMAT"}}</td>
+<td>{{log.command}}</td>
+<td>{%if log.data %}{{log.data}}{%else%}-{%endif%}</td>
+<td><a href="{% serverurl client_detail log.client.id %}">{{log.client.name}}</a></td>
+{% empty %}
+<tr class="odd">
+<td colspan="4">{% trans "No admin activity registered for this player" %}</td>
+</tr>
+{% endfor %}
+</tbody>
+{% if logs %}
+<tfoot>
+	<tr>
+		<td colspan="4">
+			{% serverurl auditor:actions client.id as actionsurl %}
+			{% paginate client_adm_logs actionsurl %}
+		</td>
+	</tr>
+</tfoot>
+{% endif %}
+{% endwith %}
+</table>
+
+
+
+

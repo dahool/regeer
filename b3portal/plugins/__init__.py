@@ -4,6 +4,7 @@ from b3portal.models import Server
 
 PLUGINS = [('autoslap',_('Auto Slap')),
            ('chatlog',_('Chat Logger')),
+           ('auditor',_('Auditor')),
            ('follow',_('Follow Players')),
            ('nickreg',_('Registered Nicks')),
            ('status',_('Status')),

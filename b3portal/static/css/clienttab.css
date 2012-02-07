@@ -1,0 +1,40 @@
+.clientPanelTabGroup {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	float: right;
+}
+.clientPanelTabGroup li {
+	display: inline;
+    margin-left: 0;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #F0F0F0;
+    border: 1px solid;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+    cursor: pointer;
+}
+.clientPanelTabGroup li:hover {
+	background-color: #E6E6E6;
+}
+.clientPanelTabGroup li.tab_selected {
+	background-color: #E6E6E6;
+	font-weight: bold;
+}
+.clientPanelTabContent div.clientContentTab {
+	display: none;
+}
+.clientPanelTabGroups {
+	width: 650px;
+	margin-left: auto;
+	margin-right: auto;
+}
+/*
+.clientPanelTabContent {
+	-webkit-box-shadow: 2px 2px 5px 2px ;
+	-moz-box-shadow: 2px 2px 5px 2px ;
+	box-shadow: 2px 2px 5px 2px ; 
+}*/

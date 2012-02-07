@@ -4,6 +4,7 @@
 {% block extra_header %}
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/actionmenu.css"/>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/clienttab.css"/>
 <link rel="stylesheet" type="text/css" href="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/themes/base/jquery-ui.css"/>
 <script type="text/javascript" src="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.jeditable.mini.js"></script>
@@ -114,6 +115,14 @@ function slide_control(curr) {
 <!-- ************************ DETAIL ************************ -->
 {% include "b3portal/client/include/client_detail.html" %}
 <br/>
+{% if obj_perms.portal.addnotes %}
+<script type="text/javascript">
+<!--
+create_dialog("#add_note_link", note_update); 
+-->
+</script>
+{% endif %}
+<!-- ************************ COMMENTS ************************ -->
 {% if obj_perms.portal.viewnotes %}
 <div id="note_box" class="client_detail">
 <ul>
@@ -133,57 +142,80 @@ slide_control("li.note:visible");
 </script>
 {% endcomment %}
 {% endif %}
-{% if obj_perms.portal.addnotes %}
-<script type="text/javascript">
-<!--
-create_dialog("#add_note_link", note_update); 
--->
-</script>
-{% endif %}
-<!-- ************************ ALIASES ************************ -->
-{% if obj_perms.portal.viewalias %}
-<div id="client_aliases">
-{% include "b3portal/client/include/client_aliases.html" %}
+<div class="clientPanelTabGroups">
+	<ul class="clientPanelTabGroup">
+		<li class="tab_selected" alt="tab_details">{% trans "Details" %}</li> 
+		<li alt="tab_penalties">{% trans "Penalties" %}</li> 
+		<li alt="tab_activity">{% trans "Activity" %}</li> 
+	</ul>
 </div>
-<br/>
-<!-- ************************ IP ALIAS ************************ -->
-{% ifsetting SUPPORT_IP_ALIASES %}
-<div id="client_ipaliases">
-{% include "b3portal/client/include/client_ipaliases.html" %}
+<div style="clear: both;"></div>	
+<div class="clientPanelTabContent">
+	<div id="tab_details" class="clientContentTab">
+		<!-- ************************ ALIASES ************************ -->
+		{% if obj_perms.portal.viewalias %}
+		<div id="client_aliases">
+		{% include "b3portal/client/include/client_aliases.html" %}
+		</div>
+		<br/>
+		<!-- ************************ IP ALIAS ************************ -->
+		{% ifsetting SUPPORT_IP_ALIASES %}
+		<div id="client_ipaliases">
+		{% include "b3portal/client/include/client_ipaliases.html" %}
+		</div>
+		<br/>
+		{% endifsetting %}
+		{% endif %}		
+	</div>
+	<div id="tab_penalties" class="clientContentTab">
+		<!-- ************************ PENALTIES ************************ -->
+		{% if obj_perms.portal.listpenalties %}
+		<div id="client_penalties">
+		{% include "b3portal/client/include/client_penalties.html" %}
+		</div>
+		<br/>
+		<!-- ************************ NOTICES ************************ -->
+		<div id="client_notice">
+		{% include "b3portal/client/include/client_notices.html" %}
+		</div>
+		<br/>
+		<!-- ************************ PAST PENALTIES ************************ -->
+		<div id="past_penalties">
+		{% include "b3portal/client/include/client_ipenalties.html" %}
+		</div>
+		<br/>
+		{% endif %} <!-- PERM ENDIF -->		
+	</div>
+	<div id="tab_activity" class="clientContentTab">
+		<!-- ************************ USER ACTIVITY ************************ -->
+		{% if obj_perms.plugin.view_user_logs and client_adm_commands %}    
+		<div id="player_actions">
+		{% include "b3portal/client/include/client_user_cmd.html" %}
+		</div>
+		<br/>
+		{% endif %}
+		<!-- ************************ ADMIN ACTIVITY ************************ -->
+		{% if obj_perms.plugin.view_adm_logs and client_adm_logs %}    
+		<div id="admin_log_actions">
+		{% include "b3portal/client/include/client_admin_logs.html" %}
+		</div>
+		<br/>
+		{% endif %}
+		<!-- ************************ ADMIN ACTIONS ************************ -->
+		{% if obj_perms.portal.viewadminsinfo %}    
+		<div id="admin_actions">
+		{% include "b3portal/client/include/client_adminactions.html" %}
+		</div>
+		<br/>
+		{% endif %}
+		<!-- ************************ PORTAL ACTIONS ************************ -->
+		{% comment %}{% if obj_perms.portal.viewauditlogs %}{% endcomment %}
+		{% if client_auditlogs %}    
+		<div id="portal_actions">
+		{% include "b3portal/client/include/client_audit.html" %}
+		</div>
+		<br/>
+		{% endif %}		
+	</div> 
 </div>
-<br/>
-{% endifsetting %}
-{% endif %}
-<!-- ************************ PENALTIES ************************ -->
-{% if obj_perms.portal.listpenalties %}
-<div id="client_penalties">
-{% include "b3portal/client/include/client_penalties.html" %}
-</div>
-<br/>
-<!-- ************************ NOTICES ************************ -->
-<div id="client_notice">
-{% include "b3portal/client/include/client_notices.html" %}
-</div>
-<br/>
-<!-- ************************ PAST PENALTIES ************************ -->
-<div id="past_penalties">
-{% include "b3portal/client/include/client_ipenalties.html" %}
-</div>
-<br/>
-{% endif %} <!-- PERM ENDIF -->
-<!-- ************************ ADMIN ACTIONS ************************ -->
-{% if obj_perms.portal.viewadminsinfo %}    
-<div id="admin_actions">
-{% include "b3portal/client/include/client_adminactions.html" %}
-</div>
-<br/>
-{% endif %}
-<!-- ************************ PORTAL ACTIONS ************************ -->
-{% comment %}{% if obj_perms.portal.viewauditlogs %}{% endcomment %}
-{% if client_auditlogs %}    
-<div id="portal_actions">
-{% include "b3portal/client/include/client_audit.html" %}
-</div>
-<br/>
-{% endif %}
 {% endblock %}

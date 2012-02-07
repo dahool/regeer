@@ -48,7 +48,7 @@ from common.query.functions import get_query_order
 from django.core.cache import cache
 from django.utils.datastructures import MultiValueDictKeyError
 
-from b3portal.plugins import is_plugin_installed
+from b3portal.plugins import is_plugin_enabled, is_plugin_installed
 
 from b3portal.permission.utils import server_permission_required_with_403, has_server_perm, has_any_server_perms
 from b3portal import permissions as perm
@@ -83,8 +83,8 @@ def client(request, id):
         raise
     
     online = None
+    server = Server.objects.get(uuid=request.server)
     if is_plugin_installed('status'):
-        server = Server.objects.get(uuid=request.server)
         try:
             from b3portal.plugins.status.models import ServerStatus
             status = ServerStatus.objects.filter(server=server).latest()
@@ -105,6 +105,13 @@ def client(request, id):
     client_ppenalties = _paginate(request, client.penalties.inactive())
     client_admactions = _paginate(request, client.adminpenalties.all())
     
+    if is_plugin_enabled(server, "auditor"):
+        client_actions = _paginate(request, client.commands.all())
+        client_adm_actions = _paginate(request, client.admin_logs.all())
+    else:
+        client_actions = None
+        client_adm_actions = None
+        
     banlist = _get_banlist(request)
     
     groups = get_group_list(request, client)
@@ -119,6 +126,8 @@ def client(request, id):
             'client_penalties': client_penalties,
             'client_ppenalties': client_ppenalties,
             'client_admactions': client_admactions,
+            'client_adm_commands': client_actions,
+            'client_adm_logs': client_adm_actions,            
             'group_data': get_json_value(groups),
             'change_group': len(groups) > 0}
 
