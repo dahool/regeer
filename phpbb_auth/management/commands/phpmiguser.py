@@ -42,6 +42,6 @@ class Command(BaseCommand):
                                                 email=user.user_email)
                 localuser.set_unusable_password()
                 localuser.save()
+                self.stdout.write('Done.\n')
             else:
                 self.stdout.write('User already exists')
-        self.stdout.write('Done.\n')
