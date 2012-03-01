@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Copyright (c) 2011 Sergio Gabriel Teves
+"""Copyright (c) 2011-2012 Sergio Gabriel Teves
 All rights reserved.
 
 This program is free software: you can redistribute it and/or modify
@@ -17,18 +17,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 import datetime
+import re
 import xml.dom.minidom
+from django.utils.translation import gettext as _
 
 UP_TIME_FORMAT= '%a %b %d %H:%M:%S %Y'
 
-_gametype_detail = {'ffa': 'Free For All',
-                 'tdm': 'Team Death Match',
-                 'ts': 'Team Survivor',
-                 'ftl': 'Follow The Leader',
-                 'cah': 'Capture And Hold',
-                 'ctf': 'Capture The Flag',
-                 'bomb': 'Bomb',
-                 'bm': 'Bomb'}
+_gametype_detail = {'ffa': _('Free For All'),
+                 'tdm': _('Team Death Match'),
+                 'ts': _('Team Survivor'),
+                 'ftl': _('Follow The Leader'),
+                 'cah': _('Capture And Hold'),
+                 'ctf': _('Capture The Flag'),
+                 'bomb': _('Bomb'),
+                 'bm': _('Bomb')}
+
+_level_name = {'0': _('Guest'),
+                 '1': _('User'),
+                 '2': _('Regular'),
+                 '20': _('Moderator'),
+                 '40': _('Admin'),
+                 '60': _('Full Admin'),
+                 '80': _('Senior Admin'),
+                 '100': _('Super Admin')}
 
 class Client(object):
     name = None
@@ -39,7 +50,13 @@ class Client(object):
     cid = None
     updated = None
     score = 0
+    level = None
     
+    @property
+    def get_display_group(self):
+        if self.level:
+            return _level_name.get(self.level, None)
+        
 class Status(object):
     
     clients = []
@@ -54,10 +71,15 @@ class Status(object):
     typeCode = None
     redTeamName = "Red Team"
     blueTeamName = "Blue Team"
+    redTeamCount = 0
+    blueTeamCount = 0
+    specTeamCount = 0
     round = 0
     state = 0
     password = None
     
+    _color_re = re.compile(r'\^[0-9]')
+
     def __init__(self, xmlfile):
         self.clients = []
         doc = xml.dom.minidom.parse(xmlfile)
@@ -76,6 +98,13 @@ class Status(object):
                     c.cid = client.getAttribute('CID')
                     c.guid = client.getAttribute('GUID')
                     c.ip = client.getAttribute('IP')
+                    c.level = client.getAttribute('Level')
+                    if c.team == "2":
+                        self.redTeamCount+=1
+                    elif c.team == "3":
+                        self.blueTeamCount+=1
+                    elif c.team == "1":
+                        self.specTeamCount+=1
                     c.updated = datetime.datetime.strptime(client.getAttribute('Updated'),UP_TIME_FORMAT)
                     self.clients.append(c)
             for game in b3status.getElementsByTagName("Game"):
@@ -97,9 +126,9 @@ class Status(object):
                         if value<>"None":
                             self.password = value
                     elif name == 'g_teamnameblue':
-                        self.blueTeamName = value
+                        self.blueTeamName = self._color_re.sub('',value)
                     elif name == 'g_teamnamered':
-                        self.redTeamName = value
+                        self.redTeamName = self._color_re.sub('',value)
     
     @property
     def timeleft(self):

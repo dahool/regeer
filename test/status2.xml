@@ -112,7 +112,7 @@
                 <Data Name="g_matchmode" Value="0"/>
                 <Data Name="g_enablePrecip" Value="0"/>
                 <Data Name="sv_privateClients" Value="1"/>
-                <Data Name="gameType" Value="ts"/>
+                <Data Name="gameType" Value="ffa"/>
                 <Data Name="sv_allowdownload" Value="0"/>
                 <Data Name="g_antilagvis" Value="0"/>
                 <Data Name="sv_maxRate" Value="0"/>

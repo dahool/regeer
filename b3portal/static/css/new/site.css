@@ -90,6 +90,9 @@ label {
 .game_status .inner_table .total {
     width: 50px;
 }
+.total {
+	text-align: right !important;
+}
 .game_status tbody tr:hover {
     background: #fff;
 }
@@ -628,4 +631,43 @@ h3 {
 }
 .note_nomore {
 	background-image: url(../../images/icons/bullet_red.png) !important;
+}
+.level_row {
+	text-align: center;
+	width: 165px;
+}
+.level_row_1, .level_row_2, .level_row_20,
+.level_row_40, .level_row_60,
+.level_row_80, .level_row_100 {
+	font-weight: bold !important;
+}
+.level_row_2 {
+	color: #008040 !important;
+}
+.level_row_20 {
+	color: #64B1FF !important;
+}
+.level_row_40 {
+	color: #0080FF !important;
+}
+.level_row_60 {
+	color: #FF8000 !important;
+}
+.level_row_80 {
+	color: #804040 !important;
+}
+.level_row_100 {
+	color: #FF0000 !important;
+}
+.team_red {
+	background-image: url(../../images/icons/bullet_red.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0px 50%;
+    padding-left: 24px !important;
+}
+.team_blue {
+	background-image: url(../../images/icons/bullet_blue.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0px 50%;
+    padding-left: 24px !important;
 }

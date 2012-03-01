@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Copyright (c) 2011 Sergio Gabriel Teves
+"""Copyright (c) 2011-2012 Sergio Gabriel Teves
 All rights reserved.
 
 This program is free software: you can redistribute it and/or modify
@@ -37,8 +37,10 @@ from b3portal import permissions as perm
 @cache_page(60)
 @render('status/game_status.html')
 def game_status(request):
+    server = get_object_or_404(Server,uuid=request.server)
+
     try:
-        plugin = StatusPlugin.objects.get(server=get_object_or_404(Server,uuid=request.server))
+        plugin = StatusPlugin.objects.get(server=server)
     except StatusPlugin.DoesNotExist:
         return {}
     try:
@@ -46,7 +48,11 @@ def game_status(request):
     except Exception, e:
         messages.error(request, _('Error: %s' % str(e)))
         return {}
-    return {"status": status}
+    if request.user.is_authenticated() and server.is_owner(request.user):
+        owner = True
+    else:
+        owner = False
+    return {"status": status, 'owner': owner}
 
 @server_permission_required_with_403(perm.STATUS_VIEWSTATUS)    
 @cache_page(60*60)

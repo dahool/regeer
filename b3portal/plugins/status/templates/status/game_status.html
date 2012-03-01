@@ -1,5 +1,5 @@
 {% extends "base_layout.html" %}
-{% load i18n media dates urltag %}
+{% load i18n media dates urltag geoip %}
 {% block title %}{{ block.super }} | {% trans "Server Status" %}{% endblock %}
 {% block main_content %}
 <h3>{% trans "Current Game Status" %}
@@ -37,7 +37,7 @@
         <tr class="even">
         <th>{% trans "Total Players" %}</th>
         <td>{{ status.totalClients }}</td>
-        {% if user.is_staff %}
+        {% if owner %}
         <th>{% trans "Password" %}</th>
         <td>{% if status.password %}{{ status.password }}{% else %}-{%endif%}</td>
         {% endif %}
@@ -50,13 +50,21 @@
                 {% if status.typeCode != "ffa" %} 
                 <table class="table-style inner_table">
                         <tr>
-                        <th>{{ status.redTeamName }}</th>
+                        <th {% if obj_perms.portal.viewclientgroup %} colspan="2" {%endif %}><span class="team_red">{{ status.redTeamName }} ({{status.redTeamCount}})</span></th>
                         <th class="total">{{ status.redScore }}</th>
                         </tr>
                         {% for client in status.clients %}
                         {% ifequal client.team "2" %}
                         <tr class="{% cycle "odd" "even" %}">
-                        <td><a {%if client.state == "1" %}style="color: #D1D1D1;"{%endif%} href="{% serverurl client_detail client.id %}">{{client.name}}</a></td>
+                        <td>
+						{% if client.ip %}
+						{% geolocation client.ip %}
+						{% endif %}                        
+                        <a {%if client.state == "1" %}style="color: #D1D1D1;"{%endif%} href="{% serverurl client_detail client.id %}">{{client.name}}</a>
+                        </td>
+                        {% if obj_perms.portal.viewclientgroup %}
+                        <td class="level_row level_row_{{client.level}}">{{client.get_display_group}}</td>
+                        {% endif %}
                         <td class="total">{{client.score}}</td>
                         </tr>
                         {% endifequal %}
@@ -64,13 +72,21 @@
                 </table>
                 <table class="table-style inner_table">
                         <tr>
-                        <th>{{ status.blueTeamName }}</th>
+                        <th {% if obj_perms.portal.viewclientgroup %} colspan="2" {%endif %}><span class="team_blue">{{ status.blueTeamName }} ({{status.blueTeamCount}})</span></th>
                         <th class="total">{{ status.blueScore }}</th>
                         </tr>
                         {% for client in status.clients %}
                         {% ifequal client.team "3" %}
                         <tr class="{% cycle "odd" "even" %}">
-                        <td><a {%if client.state == "1" %}style="color: #D1D1D1;"{%endif%} href="{% serverurl client_detail client.id %}">{{client.name}}</a></td>
+                        <td>
+						{% if client.ip %}
+						{% geolocation client.ip %}
+						{% endif %}                        
+                        <a {%if client.state == "1" %}style="color: #D1D1D1;"{%endif%} href="{% serverurl client_detail client.id %}">{{client.name}}</a>
+                        </td>
+                        {% if obj_perms.portal.viewclientgroup %}
+                        <td class="level_row level_row_{{client.level}}">{{client.get_display_group}}</td>
+                        {% endif %}
                         <td class="total">{{client.score}}</td>
                         </tr>
                         {% endifequal %}
@@ -78,12 +94,19 @@
                 </table>
                 <table class="table-style inner_table">
                         <tr>
-                        <th colspan="2">{% trans "Specs" %}</th>
+                        <th {% if obj_perms.portal.viewclientgroup %} colspan="3" {%else%}colspan="2" {%endif %}>{% trans "Specs" %} ({{status.specTeamCount}})</th>
                         </tr>
                         {% for client in status.clients %}
                         {% ifequal client.team "1" %}
                         <tr class="{% cycle "odd" "even" %}">
-                        <td colspan="2"><a href="{% serverurl client_detail client.id %}">{{client.name}}</a></td>
+                        <td colspan="2">
+						{% if client.ip %}
+						{% geolocation client.ip %}
+						{% endif %}                          
+                        <a href="{% serverurl client_detail client.id %}">{{client.name}}</a></td>
+                        {% if obj_perms.portal.viewclientgroup %}
+                        <td class="level_row level_row_{{client.level}}">{{client.get_display_group}}</td>
+                        {% endif %}
                         </tr>
                         {% endifequal %}
                         {% endfor %}
@@ -91,11 +114,19 @@
                 {% else %}
                 <table class="table-style inner_table">
                         <tr>
-                        <th colspan="2">{% trans "Playing" %}</th>
+                        <th {% if obj_perms.portal.viewclientgroup %} colspan="3" {%else%}colspan="2" {%endif %}>{% trans "Playing" %}</th>
                         </tr>                
                         {% for client in status.clients %}
                         <tr class="{% cycle "odd" "even" %}">
-                        <td><a href="{% serverurl client_detail client.id %}">{{client.name}}</a></td>
+                        <td>
+						{% if client.ip %}
+						{% geolocation client.ip %}
+						{% endif %}                        
+                        <a href="{% serverurl client_detail client.id %}">{{client.name}}</a>
+                        </td>
+                        {% if obj_perms.portal.viewclientgroup %}
+                        <td class="level_row level_row_{{client.level}}">{{client.get_display_group}}</td>
+                        {% endif %}
                         <td class="total">{{client.score}}</td>
                         </tr>
                         {% endfor %}
