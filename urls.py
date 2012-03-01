@@ -26,6 +26,8 @@ from common.decorators import permission_required_with_403
 
 admin.autodiscover()
 
+handler500 = 'b3portal.views.general_error'
+
 permission_required_with_403('b3portal.change_password')
 def change_password_view(*args, **kwargs):
     return auth_views.password_change(*args, **kwargs)
@@ -53,7 +55,7 @@ for app in settings.INSTALLED_APPS:
 
 if settings.DEBUG:
     urlpatterns += patterns('',
-        (r'^500/$', 'django.views.generic.simple.direct_to_template', {'template': '500.html'}),
+        (r'^500/$', handler500),
         (r'^404/$', 'django.views.generic.simple.direct_to_template', {'template': '404.html'}),
         (r'^403/$', 'django.views.generic.simple.direct_to_template', {'template': '403.html'}),
     )

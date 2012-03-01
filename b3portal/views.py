@@ -18,10 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from common.view.decorators import render
 
-from django.views.decorators.cache import cache_page
 from b3portal.models import Server
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.views.decorators.csrf import requires_csrf_token
+from django.template import Context, loader
+from django import http
+from django.conf import settings
 
 @render('b3portal/index.html')
 def home(request):
@@ -32,3 +35,8 @@ def home(request):
 @render('messages.html')
 def userinformation(request):
     return {}
+
+@requires_csrf_token
+def general_error(request):
+    t = loader.get_template("500.html")
+    return http.HttpResponseServerError(t.render(Context({'STATIC_URL': settings.STATIC_URL})))
