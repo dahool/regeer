@@ -21,7 +21,9 @@
 {% endif %}
 <tr class="{% cycle "odd" "even" %}">
 <td style="text-align: right;">
-<a href="{% serverurl client_list %}&type=ip&data={{maskip}}&search=Search">{{maskip}}</a>&nbsp;<a target="_blank" href="{% setting 'GEOTOOL' %}{{baseip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
+<a href="{% serverurl client_list %}&type=ip&data={{maskip}}&search=Search">{{maskip}}</a>&nbsp;
+<a target="_blank" href="http://whois.domaintools.com/{{baseip}}" title="{% trans "Whois IP search" %}" class="nodecoration_icon icon_vcard"></a>
+<a target="_blank" href="{% setting 'GEOTOOL' %}{{baseip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
 {% if alias.ip in banlist %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endif %}
 </td>
 <td>{{alias.num_used}}</td>
