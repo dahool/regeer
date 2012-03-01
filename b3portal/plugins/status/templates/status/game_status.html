@@ -58,7 +58,7 @@
                         <tr class="{% cycle "odd" "even" %}">
                         <td>
 						{% if client.ip %}
-						{% geolocation client.ip %}
+						{% geocountry client.ip %}
 						{% endif %}                        
                         <a {%if client.state == "1" %}style="color: #D1D1D1;"{%endif%} href="{% serverurl client_detail client.id %}">{{client.name}}</a>
                         </td>
@@ -80,7 +80,7 @@
                         <tr class="{% cycle "odd" "even" %}">
                         <td>
 						{% if client.ip %}
-						{% geolocation client.ip %}
+						{% geocountry client.ip %}
 						{% endif %}                        
                         <a {%if client.state == "1" %}style="color: #D1D1D1;"{%endif%} href="{% serverurl client_detail client.id %}">{{client.name}}</a>
                         </td>
@@ -101,7 +101,7 @@
                         <tr class="{% cycle "odd" "even" %}">
                         <td colspan="2">
 						{% if client.ip %}
-						{% geolocation client.ip %}
+						{% geocountry client.ip %}
 						{% endif %}                          
                         <a href="{% serverurl client_detail client.id %}">{{client.name}}</a></td>
                         {% if obj_perms.portal.viewclientgroup %}
@@ -120,7 +120,7 @@
                         <tr class="{% cycle "odd" "even" %}">
                         <td>
 						{% if client.ip %}
-						{% geolocation client.ip %}
+						{% geocountry client.ip %}
 						{% endif %}                        
                         <a href="{% serverurl client_detail client.id %}">{{client.name}}</a>
                         </td>

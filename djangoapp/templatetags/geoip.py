@@ -42,3 +42,11 @@ def geolocation(ip):
             data['city'] = None
         data['img'] = 'images/flag/%s.gif' % data['country_code'].lower()
     return {'data': data, 'STATIC_URL': settings.STATIC_URL}
+
+@register.inclusion_tag('tags/geoip.html')
+def geocountry(ip):
+    data = geoip(ip)
+    if data:
+        data['city'] = None
+        data['img'] = 'images/flag/%s.gif' % data['country_code'].lower()
+    return {'data': data, 'STATIC_URL': settings.STATIC_URL}
