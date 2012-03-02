@@ -23,7 +23,8 @@
         options['dataMode'] = 'regions';
         options['width'] = '800px';
         options['height'] = '550px';
-
+        options['colors'] = [0xFFBFBF, 0xFF7777, 0xFF2D2D, 0xFF0000];
+        
         var container = document.getElementById('map-box');
         var geomap = new google.visualization.GeoMap(container);
         geomap.draw(data, options);
