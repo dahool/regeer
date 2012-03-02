@@ -1,0 +1,11 @@
+#map_editor_list {
+	width: 50%;
+	float: left;
+}
+#map_editor_current {
+	width: 50%;
+	float: right;
+}
+#current_map_list, #available_map_list { list-style-type: none; margin: 0; padding: 0; }
+#current_map_list li, #available_map_list li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 14px; height: 22px; }
+#current_map_list li span, #available_map_list li span { position: absolute; margin-left: -1.3em; margin-top: 2px;}

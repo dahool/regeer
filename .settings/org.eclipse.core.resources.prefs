@@ -1,8 +1,6 @@
-#Mon Feb 06 12:14:05 ART 2012
+#Fri Mar 02 17:00:37 ART 2012
 eclipse.preferences.version=1
-encoding//b3/clients.py=latin1
 encoding//b3connect/admin.py=utf-8
-encoding//b3connect/console/client.py=utf-8
 encoding//b3connect/fields.py=utf-8
 encoding//b3connect/filters.py=utf-8
 encoding//b3connect/models.py=utf-8
@@ -56,6 +54,7 @@ encoding//b3portal/plugins/status/management/commands/updatestatus.py=utf-8
 encoding//b3portal/plugins/status/models.py=utf-8
 encoding//b3portal/plugins/status/urls.py=utf-8
 encoding//b3portal/plugins/status/views.py=utf-8
+encoding//b3portal/rconadmin/fields.py=utf-8
 encoding//b3portal/rconadmin/urls.py=utf-8
 encoding//b3portal/rconadmin/views.py=utf-8
 encoding//b3portal/server/forms.py=utf-8
@@ -95,4 +94,7 @@ encoding//phpbb_auth/models.py=utf-8
 encoding//phpbb_auth/password.py=utf-8
 encoding//phpbb_auth/routers.py=utf-8
 encoding//phpbb_auth/settings.py=utf-8
+encoding//rconconsole/__init__.py=utf-8
+encoding//rconconsole/q3a/games/iourt41.py=utf-8
+encoding//rconconsole/q3a/games/q3a.py=utf-8
 encoding/urls.py=utf-8

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Copyright (c) 2011 Sergio Gabriel Teves
+"""Copyright (c) 2012 Sergio Gabriel Teves
 All rights reserved.
 
 This program is free software: you can redistribute it and/or modify

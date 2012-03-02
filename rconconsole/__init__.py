@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Copyright (c) 2010,2011,2012 Sergio Gabriel Teves
+"""Copyright (c) 2012 Sergio Gabriel Teves
 All rights reserved.
+
+Some parts or this code are copyright of Michael "ThorN" Thornton and BigBrotherBot(B3)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,12 +16,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 """
-from django.conf.urls.defaults import *
-from b3portal.plugins.map import views
-
-urlpatterns = patterns('',
-    url(r'^$', views.maps, name='home'),
-    url(r'^edit/(?P<id>[-\w]+)/$', views.map_editor, name='map_edit'),
-)
+   
+class Player:
+    slot = None
+    score = None
+    guid = None
+    name = None
+    ip = None
+    ping = None

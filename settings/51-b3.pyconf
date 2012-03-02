@@ -10,3 +10,7 @@ B3_PARSERS = ['cod',
            'smg',
            'smg11',
            'oa081']
+
+RCON_HANDLERS = {
+    'iourt41': 'b3portal.rconadmin.handlers.iourt41.Iourt41RconHandler',
+}

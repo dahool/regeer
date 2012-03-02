@@ -1,0 +1,49 @@
+{% extends "base_layout.html" %}
+{% load listtocolumns i18n tagutils media settingstag %}
+{% block extra_header %}
+{{super}}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/mapeditor.css"/>
+<link rel="stylesheet" type="text/css" href="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/themes/base/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/themes/dark-hive/jquery-ui.css"/>
+<script type="text/javascript" src="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(document).ready(
+    function() {
+		$( "#current_map_list" ).sortable({
+			placeholder: "ui-state-highlight",
+			connectWith: "#available_map_list"
+		}).disableSelection();
+		$( "#available_map_list" ).sortable({
+			connectWith: "#current_map_list",
+			placeholder: "ui-state-highlight"
+		}).disableSelection();
+		$( "#current_map_list" ).sortable({
+				stop: function(event, ui) {
+				   console.log($( "#current_map_list" ).sortable('serialize', {'expression': /(.+)[=](.+)/}));
+			   }
+		});
+    }
+);
+</script>
+{% endblock %}
+{% block title %}{{ block.super }} | {% trans "Edit Map Cycle" %}{% endblock %}
+{% block main_content %}
+<h3>{% with server.name as server_name %}{% blocktrans %}Edit map cycle for {{server_name}}{% endblocktrans %}{% endwith %}</h3>
+<div id="map_editor">
+	<div id="map_editor_list">
+		<ul id="available_map_list">
+			<li class="ui-state-default" id="map=1"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Map 1</li>
+			<li class="ui-state-default" id="map=2"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Map 2</li>
+			<li class="ui-state-default" id="map=3"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Map 3</li>
+		</ul>	
+	</div>
+	<div id="map_editor_current">
+		<ul id="current_map_list">
+			{% for map in maps %}
+			<li class="ui-state-default" id="map={{map.name}}"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>{{map.display_name}}</li>
+			{% endfor %}
+		</ul>	
+	</div>
+	<div style="clear: both;"></div>
+</div>
+{% endblock %}
