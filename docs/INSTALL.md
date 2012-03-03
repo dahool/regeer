@@ -3,8 +3,7 @@ Prerequisites
 
 * Python 2.5+
 * Django 1.3.x
-* Rcon Module requires B3 bot
-* PyCrypto
+* A django supported database module
 
 Quick Install
 ==============
