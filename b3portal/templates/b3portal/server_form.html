@@ -1,4 +1,4 @@
-{% load plugintag serverpermtag %}
+{% load plugintag serverpermtag i18n %}
 <form style="display:inline;" method="get">
 {% with request.server as current_server %}
 <select name="server" onchange="this.form.submit()">
@@ -25,4 +25,5 @@
 {% endfor %}
 </select>
 {% endwith %}
+<span onclick="$(this).parent().submit();" class="nodecoration_icon refresh" title="{% trans "Reset" %}">&nbsp;</span>
 </form>

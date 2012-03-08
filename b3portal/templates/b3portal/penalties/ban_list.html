@@ -15,7 +15,7 @@
 <label for="name">{% trans "Name" %}</label><input type="text" id="name" name="name" class="search submit">
 <input type="submit" name="search" value="{% trans "Search" %}">&nbsp;&nbsp;&nbsp;
 </small>
-<a href="{% url ban_list %}" style="display:inline;">{% trans "reset"%}</a>
+{%comment%}<!--<a href="{% url ban_list %}" style="display:inline;">{% trans "reset"%}</a>-->{%endcomment%}
 </form>
 <div id="ban_list">
 {% if search %}

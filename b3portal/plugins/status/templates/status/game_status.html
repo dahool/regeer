@@ -8,7 +8,7 @@
 	{% with "status" as pluginname %}
 	{% include "b3portal/server_form.html" %}
 	{% endwith %}    
-    <a href="{% serverurl status:home %}" style="display:inline;">{% trans "refresh"%}</a>
+{%comment%}<!--<a href="{% serverurl status:home %}" style="display:inline;">{% trans "refresh"%}</a>-->{%endcomment%}
 </small>    
 </h3>
 {% if status %}

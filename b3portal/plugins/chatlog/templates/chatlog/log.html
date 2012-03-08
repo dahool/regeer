@@ -45,7 +45,7 @@ $(document).ready(function() {
 </div>
 <input type="hidden" name="server" value="{{request.server}}"/>
 <input type="submit" name="search" value="{% trans "Search" %}">&nbsp;&nbsp;&nbsp;
-<a href="{% serverurl chatlog:chat_list %}" style="display:inline;">{% trans "reset"%}</a>
+{%comment%}<!--<a href="{% serverurl chatlog:chat_list %}" style="display:inline;">{% trans "reset"%}</a>-->{%endcomment%}
 </fieldset>
 </small>
 </form>
