@@ -28,12 +28,8 @@ urlpatterns = patterns('',
     url(r'^client/', include('b3portal.client.urls')),
     url(r'^banned/', include('b3portal.penalties.urls')),
     url(r'^server/', include('b3portal.server.urls', namespace="server")),
+    url(r'^rcon/', include('b3portal.rconadmin.urls', namespace="rcon")),
 )
-
-if settings.B3_INSTALLED:
-    urlpatterns += patterns('',
-        url(r'^rcon/', include('b3portal.rconadmin.urls')),
-    )    
 
 for plugin in PLUGINS:
     if is_plugin_installed(plugin[0]):

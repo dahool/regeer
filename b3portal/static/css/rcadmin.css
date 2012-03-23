@@ -1,0 +1,27 @@
+ul.commands {
+    list-style-type: none;
+    padding: 5px;
+    margin-right:25px;
+    font-weight: bold;
+}
+ul.commands li {
+    font-size:11px;
+    padding: 5px;
+    color:black;
+    width: auto;
+    background: none repeat scroll 0 0 transparent;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;    
+}
+#console {
+    width: 100%;
+    background-color: #000;
+    color: #80FF80;
+    height: 100px;
+    overflow: auto;
+    padding: 5px;
+}
+.console_error {
+    color: #FF1111;
+}

@@ -62,24 +62,26 @@ class Iourt41(Q3ARcon):
     def setGametype(self, value):
         data = self._gametype_set.get(value, None)
         if data:
-            super(Iourt41, self).setGametype(data)
-        
+            return super(Iourt41, self).setGametype(data)
+        return None
+    
     def saybig(self, msg):
-        self.output.write(self.getCommand('saybig', message=msg))
+        return self.output.write(self.getCommand('saybig', message=msg))
 
     def slap(self, cid):
-        self.output.write(self.getCommand('slap', cid=cid))
+        return self.output.write(self.getCommand('slap', cid=cid))
 
     def nuke(self, cid):
-        self.output.write(self.getCommand('nuke', cid=cid))
+        return self.output.write(self.getCommand('nuke', cid=cid))
 
     def mute(self, cid):
-        self.output.write(self.getCommand('mute', cid=cid))
+        return self.output.write(self.getCommand('mute', cid=cid))
                                 
     def unban(self, ip):
-        super(Iourt41, self).unban(ip);
+        r = super(Iourt41, self).unban(ip);
         t1 = threading.Timer(1, self._unbanmultiple, (ip,))
         t1.start()
+        return r
 
     def _unbanmultiple(self, ip):
         # UrT adds multiple instances to banlist.txt Make sure we remove up to 4 remaining duplicates in a separate thread

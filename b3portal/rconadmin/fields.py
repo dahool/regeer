@@ -46,7 +46,7 @@ class InputWidget(widgets.TextInput):
         if value != '':
             # Only add the 'value' attribute if a value is non-empty.
             final_attrs['value'] = force_unicode(self._format_value(value))
-        return mark_safe(u'<input%s />&nbsp;<input type="button" name="command" alt="%s" value="%s">' % (flatatt(final_attrs), final_attrs['id'], _('Set')))
+        return mark_safe(u'<input%s />&nbsp;<input type="button" name="command" alt="%s" value="%s">' % (flatatt(final_attrs), final_attrs['id'], self.label))
 
 class SelectWidget(widgets.Select):
     def render(self, name, value, attrs=None, choices=()):
@@ -57,11 +57,28 @@ class SelectWidget(widgets.Select):
         if options:
             output.append(options)
         output.append(u'</select>')
-        output.append(u'&nbsp;<input type="button" name="command" alt="%s" value="%s">' % (final_attrs['id'], _('Set')))
+        output.append(u'&nbsp;<input type="button" name="command" alt="%s" value="%s">' % (final_attrs['id'], self.label))
         return mark_safe(u''.join(output))
           
 class InputField(fields.CharField):
-    widget = InputWidget
+    
+    def __init__(self, *args, **kwargs):
+        self.widget = InputWidget()
+        lbl = kwargs.pop('buttonlabel', None)
+        if lbl:
+            self.widget.label = lbl
+        else:
+            self.widget.label = _('Set')
+        super(InputField, self).__init__(*args, **kwargs)
     
 class SelectField(fields.ChoiceField):
-    widget = SelectWidget
+    
+    def __init__(self, *args, **kwargs):
+        self.widget = SelectWidget()
+        lbl = kwargs.pop('buttonlabel', None)
+        if lbl:
+            self.widget.label = lbl
+        else:
+            self.widget.label = _('Set')
+        super(SelectField, self).__init__(*args, **kwargs)
+    

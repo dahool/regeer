@@ -99,14 +99,6 @@ label {
 .game_status .inner_table tr:hover {
     background: #FFF url(../../images/new/table-hover.png) repeat;
 }
-#response {
-    width: 100%;
-    background-color: #000;
-    color: #80FF80;
-    height: 100px;
-    overflow: auto;
-    padding: 5px;
-}
 /*.nodecoration_icon:hover,*/
 .nodecoration_icon
  {

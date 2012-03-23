@@ -65,10 +65,13 @@ class Q3ARcon:
     def __init__(self, host, password):
         self.output = Rcon(host, password)
     
+    def write(self, data):
+        return self.output.write(data)
+    
     def _get_status(self):
         if self._status and self._lastStatus + self._statusExpire > time.time():
             return self._status
-        data = self.output.write('status')
+        data = self.write('status')
         if data:
             self._status = data
             self._lastStatus = time.time()
@@ -140,7 +143,7 @@ class Q3ARcon:
     def getCvar(self, name):
         m = None
         if self._reCvarName.match(name):
-            val = self.output.write(name)
+            val = self.write(name)
             for f in self._reCvar:
                 m = re.match(f, val)
                 if m:
@@ -157,35 +160,35 @@ class Q3ARcon:
             
     def setCvar(self, name, value):
         if self._reCvarName.match(name):
-            self.output.write(self.getCommand('set', name=name, value=value))
+            self.write(self.getCommand('set', name=name, value=value))
 
     def say(self, text):
         """print message to console"""
-        self.write(self.getCommand('say', message=text))
+        return self.write(self.getCommand('say', message=text))
 
     def message(self, cid, text):
         """send a message to a player"""
-        self.write(self.getCommand('message', cid=cid, message=text))
+        return self.write(self.getCommand('message', cid=cid, message=text))
         
     def ban(self, ip):
         """add ip to server banlist"""
-        self.write(self.getCommand('ban', cid=ip))
+        return self.write(self.getCommand('ban', cid=ip))
 
     def unban(self, ip):
         """remove a ip from banlist"""
-        self.write(self.getCommand('unban', ip=ip))
+        return self.write(self.getCommand('unban', ip=ip))
 
     def kick(self, cid):
         """kick given player"""
-        self.write(self.getCommand('kick', cid=cid))
+        return self.write(self.getCommand('kick', cid=cid))
 
     def rotateMap(self):
         """cycle to next map"""
-        self.output.write(self.getCommand('cyclemap'))
+        return self.write(self.getCommand('cyclemap'))
 
     def changeMap(self, mapname):
         """change current map"""
-        self.output.write(self.getCommand('map', map=mapname))
+        return self.write(self.getCommand('map', map=mapname))
 
     def getCommand(self, cmd, **kwargs):
         """Return a reference to a loaded command"""

@@ -82,10 +82,8 @@ $(document).ready(function() {
 	    </li>
 	    {% endif %}
 	    {% endifplugininstalled %}
-	    {% ifsetting "B3_INSTALLED" %}
-	    {% serverurl game_admin as url_nav_admin %}
+	    {% serverurl rcon:home as url_nav_admin %}
 	    <li class="{% current_nav url_nav_admin %}"><a href="{{ url_nav_admin }}">{% trans "RCon" %}</a></li>
-	    {% endifsetting %}
         <li style="float: right; margin-right: 45px;">
 		  {% if user.is_authenticated %}
 		  {% with user.username as name %}
