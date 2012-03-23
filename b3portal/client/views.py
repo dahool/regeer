@@ -526,7 +526,12 @@ def change_clientgroup(request, id):
     group = get_object_or_404(Group, id=g, using=request.server)
     client = get_object_or_404(Client, id=id, using=request.server)
 
-    if g == 100 or (client.group and client.group.level == 100):
+    try:
+        currentLevel = client.group.level if client.group else 0
+    except Group.DoesNotExist:
+        currentLevel = 0
+        
+    if g == 100 or currentLevel == 100:
         server = get_object_or_404(Server, pk=request.server)
         if not (request.user.is_superuser or server.is_owner(request.user)):
             raise Http403
