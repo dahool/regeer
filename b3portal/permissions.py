@@ -52,3 +52,5 @@ VIEW_ADM_LOG = 'plugin.view_adm_logs'
 VIEW_USER_LOG = 'plugin.view_user_logs'
 
 MAP_EDIT = 'plugin.mapedit'
+
+RCON = 'portal.rcon'

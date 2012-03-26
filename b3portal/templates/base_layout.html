@@ -82,8 +82,10 @@ $(document).ready(function() {
 	    </li>
 	    {% endif %}
 	    {% endifplugininstalled %}
+	    {% if obj_perms.portal.rcon %}
 	    {% serverurl rcon:home as url_nav_admin %}
 	    <li class="{% current_nav url_nav_admin %}"><a href="{{ url_nav_admin }}">{% trans "RCon" %}</a></li>
+	    {% endif %}
         <li style="float: right; margin-right: 45px;">
 		  {% if user.is_authenticated %}
 		  {% with user.username as name %}

@@ -23,6 +23,7 @@ APP_PERMISSION = {'portal': [('portal','updatelevel', ugettext('Change Player Le
                              ('portal','viewauditlogs', ugettext('View Audit Logs')),
                              ('portal','viewnotes', ugettext('View User Comments')),
                              ('portal','addnotes', ugettext('Add User Comments')),
+                             ('portal','rcon', ugettext('RCON Control')),
                              ('portal','deletenotes', ugettext('Delete User Comments'))],
                   'plugin': [('chatlog','chatlog', ugettext('View Chat Records')),
                              ('auditor','view_adm_logs', ugettext('View Admin Activity')),

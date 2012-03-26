@@ -42,10 +42,14 @@ from gameutils import load_banlist
 from b3portal.models import Server
 from b3portal.rconadmin.handlers.iourt41 import Iourt41RconHandler
 from django.contrib.auth.decorators import login_required
+from b3portal.permission.utils import has_server_perm
+from b3portal.permission.context_processors import perm
 
 @login_required
 @render('b3portal/admin/home.html')
 def home(request):
+    if not has_server_perm(request.user, perm.RCON, request.server):
+        raise Http403
     server = Server.objects.get(uuid=request.server)
     h = Iourt41RconHandler(server)
     return {'form': h.form} 
@@ -53,6 +57,8 @@ def home(request):
 @login_required    
 @render('json')
 def execute(request):
+    if not has_server_perm(request.user, perm.RCON, request.server):
+        raise Http403
     if request.method != 'POST':
         raise Http403
     return {'success': False, 'response': request.POST['cmd']}
