@@ -11,12 +11,12 @@ class GeoLocation:
         
     def _get_citydat(self):
         if not self.geocity:
-            self.geocity = pygeoip.GeoIP(settings.GEOIPCITY_DAT)
+            self.geocity = pygeoip.GeoIP(settings.GEOIPCITY_DAT, pygeoip.MMAP_CACHE)
         return self.geocity 
 
     def _get_geodat(self):
         if not self.geo:
-            self.geo = pygeoip.GeoIP(settings.GEOIP_DAT)
+            self.geo = pygeoip.GeoIP(settings.GEOIP_DAT, pygeoip.MMAP_CACHE)
         return self.geo
         
     def get_city(self, ip):
