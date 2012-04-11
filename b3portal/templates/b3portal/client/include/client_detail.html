@@ -83,5 +83,12 @@ title="{% trans "Double click to edit..." %}" class="nodecoration_icon icon_edit
 {% else %}{% trans "(No IP address available)" %}{% endif %}</td>
 <td colspan="2">{% if status != None %}{%if status %}<span class="online">{% trans "Playing" %}</span>{%else%}<span class="offline">{% trans "Offline" %}</span>{%endif%}{%endif%}</td>
 </tr>
+{% if playedtime %}
+<tr>
+{% with firstplayed=playedtime.start|date:"DATETIME_FORMAT" totalplayed=playedtime.total  %}
+	<th colspan="4">{%blocktrans%}Played {{totalplayed}} since {{firstplayed}}{%endblocktrans%}</th>
+{% endwith %}
+</tr>
+{% endif %}
 </tbody>
 </table>

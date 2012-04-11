@@ -1,4 +1,4 @@
-#Fri Mar 02 17:00:37 ART 2012
+#Wed Apr 11 13:00:24 ART 2012
 eclipse.preferences.version=1
 encoding//b3connect/admin.py=utf-8
 encoding//b3connect/fields.py=utf-8
@@ -34,6 +34,9 @@ encoding//b3portal/plugins/chatlog/forms.py=utf-8
 encoding//b3portal/plugins/chatlog/models.py=utf-8
 encoding//b3portal/plugins/chatlog/urls.py=utf-8
 encoding//b3portal/plugins/chatlog/views.py=utf-8
+encoding//b3portal/plugins/ctime/admin.py=utf-8
+encoding//b3portal/plugins/ctime/functions.py=utf-8
+encoding//b3portal/plugins/ctime/models.py=utf-8
 encoding//b3portal/plugins/follow/admin.py=utf-8
 encoding//b3portal/plugins/follow/forms.py=utf-8
 encoding//b3portal/plugins/follow/models.py=utf-8
@@ -54,6 +57,8 @@ encoding//b3portal/plugins/status/management/commands/updatestatus.py=utf-8
 encoding//b3portal/plugins/status/models.py=utf-8
 encoding//b3portal/plugins/status/urls.py=utf-8
 encoding//b3portal/plugins/status/views.py=utf-8
+encoding//b3portal/plugins/xlrstats/admin.py=utf-8
+encoding//b3portal/plugins/xlrstats/models.py=utf-8
 encoding//b3portal/rconadmin/fields.py=utf-8
 encoding//b3portal/rconadmin/urls.py=utf-8
 encoding//b3portal/rconadmin/views.py=utf-8

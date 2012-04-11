@@ -3,5 +3,6 @@ INSTALLED_APPS += ('b3portal.plugins.status',
                    'b3portal.plugins.map',
                    'b3portal.plugins.follow',
                    'b3portal.plugins.auditor',
-                   'b3portal.plugins.ipdb',)
+                   'b3portal.plugins.ipdb',
+                   'b3portal.plugins.ctime',)
                    

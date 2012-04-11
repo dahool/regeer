@@ -9,6 +9,7 @@ PLUGINS = [('autoslap',_('Auto Slap')),
            ('nickreg',_('Registered Nicks')),
            ('status',_('Status')),
            ('ipdb',_('IPDB')),
+           ('ctime',_('Play Time')),
            ('map',_('Maps'))]
 
 def is_plugin_installed(name):
