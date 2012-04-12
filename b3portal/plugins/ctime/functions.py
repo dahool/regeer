@@ -46,13 +46,30 @@ def get_player_activity(client):
     d = {}
     idx = 1
     for ctime in clist:
-        start = seconds_from_midnight(ctime.start)
-        end = start + (ctime.end - ctime.start)
-        d1 = datetime.datetime.fromtimestamp(ctime.start)
-        if not d.has_key(format_date(d1)):
-            d[format_date(d1)] = idx
-            idx+=1
-        data.append([d[format_date(d1)]-1, format_date(d1), start, end])
+        if format_date(ctime.start) == format_date(ctime.end):
+            start = seconds_from_midnight(ctime.start)
+            end = start + (ctime.end - ctime.start)            
+            d1 = datetime.datetime.fromtimestamp(ctime.start)
+            if not d.has_key(format_date(d1)):
+                d[format_date(d1)] = idx
+                idx+=1
+            data.append([d[format_date(d1)]-1, format_date(d1), start, end])
+        else:
+            start = seconds_from_midnight(ctime.start)
+            end = 86400 - start 
+            d1 = datetime.datetime.fromtimestamp(ctime.start)
+            if not d.has_key(format_date(d1)):
+                d[format_date(d1)] = idx
+                idx+=1
+            data.append([d[format_date(d1)]-1, format_date(d1), start, end])
+            if idx == limit: break;
+            start = 0
+            end = seconds_from_midnight(ctime.end)            
+            d1 = datetime.datetime.fromtimestamp(ctime.end)
+            if not d.has_key(format_date(d1)):
+                d[format_date(d1)] = idx
+                idx+=1
+            data.append([d[format_date(d1)]-1, format_date(d1), start, end])
         if idx == limit: break;
     return data
 
