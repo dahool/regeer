@@ -40,7 +40,7 @@ class Group(models.Model):
         return repr(self)
         
     def __repr__(self):
-        return _("%s (Level %d)") % (self.name, self.level)
+        return ("%s (Level %d)") % (self.name, self.level)
     
     class Meta:
         managed = False
