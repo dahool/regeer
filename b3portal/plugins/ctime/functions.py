@@ -86,12 +86,5 @@ def get_total_playtime(client, since = None):
         q = client.playtime.all()
     first = datetime.datetime.fromtimestamp(q.order_by('id')[0].start)
     sums = q.aggregate(Sum('came'), Sum('gone'))
-    total = sums['gone__sum'] - sums['came__sum']
-    return {'since': first, 'total': total}
-#    total = 0
-#    clist = client.playtime.all().order_by('id')
-#    first = datetime.datetime.fromtimestamp(long(clist[0].start))
-#    for ctime in clist:
-#        total += long(ctime.end) - long(ctime.start)
-#    return {'since': first, 'total': total}
-    
+    total = (sums['gone__sum'] - sums['came__sum']) * 60
+    return {'since': first, 'total': total}   

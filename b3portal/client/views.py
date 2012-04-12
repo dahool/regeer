@@ -97,12 +97,12 @@ def client(request, id):
     if is_plugin_enabled(server, 'ctime'):
         try:
             from b3portal.plugins.ctime import functions as ctime
-            from common.utils.timesince import date_to_string
+            from common.utils.timesince import minutes_to_string
             ptime = ctime.get_total_playtime(client)
-            playedtime = {'start': ptime['since'], 'total': date_to_string(ptime['total'])}
+            playedtime = {'start': ptime['since'], 'total': minutes_to_string(ptime['total'])}
             if (datetime.datetime.now() - ptime['since']).days > 30:
                 ptime = ctime.get_total_playtime(client, datetime.datetime.now() - datetime.timedelta(days=30))
-                playedlastmonth = {'start': ptime['since'], 'total': date_to_string(ptime['total'])}
+                playedlastmonth = {'start': ptime['since'], 'total': minutes_to_string(ptime['total'])}
         except:
             pass
             
