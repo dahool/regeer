@@ -66,7 +66,6 @@ from django.utils.html import escape as escapehtml
 logger = logging.getLogger(__name__)
 
 @server_permission_required_with_403(perm.VIEW_CLIENT)
-@cache_page(15*60)
 @render('b3portal/client/client.html')
 def client(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
@@ -181,7 +180,6 @@ def player_map(request):
     return {'list': countries}
 
 @server_permission_required_with_403(perm.VIEW_HIGH_LEVEL_CLIENT)
-@cache_page(15*60)
 @render('b3portal/client/admin_list.html')
 def adminlist(request, filter=False):
     clients = Client.objects.using(request.server).filter(id__gt=1, group__level__gte=settings.HIGH_LEVEL_CLIENT)
@@ -212,9 +210,8 @@ def adminlist(request, filter=False):
     return res
 
 @server_permission_required_with_403(perm.VIEW_CLIENT)
-@cache_page(15*60)
 @render('b3portal/client/client_list.html')
-#@flood
+@cache_page(30)
 def clientlist(request):
     data = ''
     search = {'server': request.server}
@@ -308,9 +305,8 @@ def _getclientlist(request, server, search = True):
     return clients
 
 @server_permission_required_with_403(perm.VIEW_CLIENT)
-@cache_page(15*60)
+@cache_page(30*60)
 @render('b3portal/client/regular_client_list.html')
-#@flood
 def regularclients(request):
     dt = datetime.datetime.now() - datetime.timedelta(days=7)
     clients = Client.objects.using(request.server).filter(id__gt=1, connections__gte=50, time_edit__gte=time.mktime(dt.timetuple()))
@@ -625,7 +621,6 @@ def more_admactions(request, id):
             'client': client}
 
 @server_permission_required_with_403(perm.VIEW_PENALTY)
-@cache_page(15*60)
 @render('b3portal/client/include/client_penalties.html')
 def more_penalties(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
@@ -634,7 +629,6 @@ def more_penalties(request, id):
             'client': client }
     
 @server_permission_required_with_403(perm.VIEW_PENALTY)
-@cache_page(15*60)
 @render('b3portal/client/include/client_ipenalties.html')
 def more_ipenalties(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
@@ -643,7 +637,6 @@ def more_ipenalties(request, id):
             'client': client }
 
 @server_permission_required_with_403(perm.VIEW_PENALTY)
-@cache_page(15*60)
 @render('b3portal/client/include/client_notices.html')
 def more_notices(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
@@ -651,8 +644,6 @@ def more_notices(request, id):
     return {'client_notices': notices,
             'client': client}
 
-#@server_permission_required_with_403(perm.VIEW_AUDITLOGS)
-@cache_page(15*60)
 @render('b3portal/client/include/client_audit.html')
 def more_logs(request, id):
     client = get_object_or_404(Client, id=id, using=request.server)
@@ -688,6 +679,7 @@ def direct(request):
     return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':player.id}))
 
 @render('json')
+@cache_page(5*60)
 def group_list(request, id):
     client = get_object_or_404(Client, id=id, using=request.server);
     return get_group_list(request, client) 

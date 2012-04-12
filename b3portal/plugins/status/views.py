@@ -55,7 +55,7 @@ def game_status(request):
     return {"status": status, 'owner': owner}
 
 @server_permission_required_with_403(perm.VIEW_ACTIVITY)    
-@cache_page(60*60)
+@cache_page(120*60)
 @render('status/client_detail.html')
 def client_detail(request, id):
     server = Server.objects.get(uuid=request.server)

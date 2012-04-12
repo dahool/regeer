@@ -38,9 +38,8 @@ from common.middleware.exceptions import Http403
 
 #from common.floodprotection import flood
 
-@cache_page(60*60)
+@cache_page(15*60)
 @render('b3portal/penalties/ban_list.html')
-#@flood
 def banlist(request):
     penalties = Penalty.objects.using(request.server).filter(Q(type='ban') | Q(type='tempban'),
                            Q(time_expire='-1') | Q(time_expire__gt=int(time.time())),
@@ -76,7 +75,6 @@ def banlist(request):
 @login_required
 @cache_page(120*60)
 @render('b3portal/penalties/world_map_banned.html')
-#@flood
 def banned_player_map(request):
     from common.utils.geoip import GeoLocation
     countries = {}
