@@ -37,9 +37,8 @@ from django.http import Http404
 
 from b3portal.plugins.ctime.functions import get_player_activity
 
-
-@server_permission_required_with_403(perm.STATUS_VIEWSTATUS)    
-@cache_page(120)
+@server_permission_required_with_403(perm.VIEW_ACTIVITY)    
+@cache_page(60*60)
 @render('activity/client_activity.html')
 def client_detail(request, id):
     server = get_object_or_404(Server,uuid=request.server)

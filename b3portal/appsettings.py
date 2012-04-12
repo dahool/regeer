@@ -31,7 +31,9 @@ APP_PERMISSION = {'portal': [('portal','updatelevel', ugettext('Change Player Le
                              ('follow','viewfollow', ugettext('View Follow List')),
                              ('follow','addfollow', ugettext('Add Player To Follow List')),
                              ('follow','removefollow', ugettext('Remove Player From Follow List')),
-                             ('status','viewstatus', ugettext('View Server Status'))]};
+                             ('status','viewstatus', ugettext('View Server Status')),
+                             ('ctime','activity', ugettext('View Player Activity'))
+                             ]};
 
 APP_GROUP_PERMISSION = [('Server Admin',['portal.viewfullip',
                                       'portal.viewclientinfo',
@@ -45,6 +47,7 @@ APP_GROUP_PERMISSION = [('Server Admin',['portal.viewfullip',
                                       'portal.viewadminsinfo',
                                       'portal.viewclientgroup',
                                       'plugin.status.viewstatus',
+                                      'plugin.ctime.activity',
                                       'plugin.follow.addfollow',
                                       'plugin.follow.viewfollow',
                                       'plugin.chatlog.chatlog']),
@@ -66,6 +69,7 @@ APP_GROUP_PERMISSION = [('Server Admin',['portal.viewfullip',
                                       'portal.viewclientgroup',
                                       'portal.viewnotes',
                                       'portal.addnotes',
+                                      'plugin.ctime.activity',
                                       'plugin.auditor.view_adm_logs',
                                       'plugin.auditor.view_user_logs',
                                       'plugin.status.viewstatus',

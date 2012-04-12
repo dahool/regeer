@@ -28,13 +28,6 @@ def format_date(ts, fmt=settings.SHORT_DATE_FORMAT):
         ts = datetime.datetime.fromtimestamp(ts)
     return format(ts, fmt)
 
-def jstimestamp(d):
-    if isinstance(d, datetime.datetime):
-        dt = datetime.datetime.strptime('2012-01-01 %s:%s' % (d.hour, d.minute),'%Y-%m-%d %H:%M')
-    else:
-        dt = datetime.datetime.strptime('2012-01-01 %s' % d,'%Y-%m-%d %H:%M')
-    return int(time.mktime(dt.timetuple())) * 1000
-    
 def seconds_from_midnight(d):
     if not isinstance(d, datetime.datetime):
         d = datetime.datetime.fromtimestamp(d)
@@ -63,14 +56,17 @@ def get_player_activity(client):
         if idx == limit: break;
     return data
 
-def get_total_playtime(client):
+def get_total_playtime(client, since = None):
     """
     Returns the total played time in seconds.
     Result:
     Dict: 'since': first appearance
           'total': total time in seconds
     """
-    q = client.playtime.all()
+    if since:
+        q = client.playtime.filter(came__gte=time.mktime(since.timetuple()))
+    else:
+        q = client.playtime.all()
     first = datetime.datetime.fromtimestamp(q.order_by('id')[0].start)
     sums = q.aggregate(Sum('came'), Sum('gone'))
     total = sums['gone__sum'] - sums['came__sum']

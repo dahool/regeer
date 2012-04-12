@@ -40,6 +40,13 @@ table.table-style tbody tr:hover {
 	background: #FFF url(../../images/new/table-hover.png) repeat;
 }
 
+table.table-style tbody tr.trhighlight {
+	background: #FFF url(../../images/new/table-hover.png) repeat;
+}
+table.table-style tbody tr.trhighlight:hover {
+	background:url("../../images/sprites.gif") repeat-x scroll 0 -1500px #EFEFEF;
+}
+
 table.table-style tbody tr:hover td {
 	color: #454545;
 }

@@ -39,6 +39,7 @@ VIEW_NOTES = 'portal.viewnotes'
 ADD_NOTES = 'portal.addnotes'
 DELETE_NOTES = 'portal.deletenotes'
 
+VIEW_ACTIVITY = 'plugin.activity'
 #PERFORM_ADV_SEARCH = 'b3connect.client_advanced_search'
 
 # PLUGINS

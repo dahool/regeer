@@ -16,7 +16,7 @@ def date_to_string(d, short=False):
           (60 * 60 * 60 * 24, lambda n: ugettext('d')),
           (60 * 60 * 60, lambda n: ugettext('h')),
           (60 * 60, lambda n: ugettext('m')),
-          (60, lambda n: ugettext('s'))
+          #(60, lambda n: ugettext('s'))
         )
     else:
         chunks = (
@@ -26,7 +26,7 @@ def date_to_string(d, short=False):
           (60 * 60 * 60 * 24, lambda n : ungettext('day', 'days', n)),
           (60 * 60 * 60, lambda n: ungettext('hour', 'hours', n)),
           (60 * 60, lambda n: ungettext('minute', 'minutes', n)),
-          (60, lambda n: ungettext('second', 'seconds', n))
+          #(60, lambda n: ungettext('second', 'seconds', n))
         )
     if isinstance(d, datetime.datetime):
         ts = time.mktime(d.timetuple()) 
@@ -38,13 +38,14 @@ def date_to_string(d, short=False):
         if count != 0:
             break
 
-    s = ugettext('%(number)d %(type)s') % {'number': count, 'type': name(count)}
-    if i + 1 < len(chunks):
-        # Now get the second item
-        seconds2, name2 = chunks[i + 1]
-        count2 = (ts - (seconds * count)) // seconds2
-        if count2 != 0:
-            s += ugettext(', %(number)d %(type)s') % {'number': count2, 'type': name2(count2)}
+    if count > 0:
+        s = ugettext('%(number)d %(type)s') % {'number': count, 'type': name(count)}
+        if i + 1 < len(chunks):
+            # Now get the second item
+            seconds2, name2 = chunks[i + 1]
+            count2 = (ts - (seconds * count)) // seconds2
+            if count2 > 0:
+                s += ugettext(', %(number)d %(type)s') % {'number': count2, 'type': name2(count2)}
     return s
 
 def timesince(d, now=None):
