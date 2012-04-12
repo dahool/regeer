@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: b3webportal\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-12 13:00-0300\n"
-"PO-Revision-Date: 2011-07-15 17:13-0300\n"
-"Last-Translator: Sergio Gabriel Teves <gabriel@opensuse.org>\n"
+"PO-Revision-Date: 2012-04-12 20:45-0300\n"
+"Last-Translator: Gabriel <gabriel@opensuse.org>\n"
 "Language-Team: Spanish <i18n-es@codwar.com.ar>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,67 +17,80 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: Spanish\n"
 
-#: dashboard.py:28 admin_tools/dashboard/dashboards.py:224
+#: dashboard.py:28
+#: admin_tools/dashboard/dashboards.py:224
 msgid "Quick links"
-msgstr ""
+msgstr "Vínculos rápidos"
 
-#: dashboard.py:34 templates/admin/base_site.html:36
+#: dashboard.py:34
+#: templates/admin/base_site.html:36
 msgid "Site Index"
-msgstr ""
+msgstr "Indice general"
 
-#: dashboard.py:35 admin_tools/dashboard/dashboards.py:231
+#: dashboard.py:35
+#: admin_tools/dashboard/dashboards.py:231
 #: admin_tools/theming/templates/admin/base.html:43
 #: b3portal/templates/base_layout.html:99
-#, fuzzy
 msgid "Change password"
-msgstr "Contraseña"
+msgstr "Cambiar contraseña"
 
-#: dashboard.py:37 admin_tools/dashboard/dashboards.py:233
+#: dashboard.py:37
+#: admin_tools/dashboard/dashboards.py:233
 #: admin_tools/theming/templates/admin/base.html:50
-#, fuzzy
 msgid "Log out"
 msgstr "Salir"
 
 #: dashboard.py:42
 msgid "Portal"
-msgstr ""
+msgstr "Portal"
 
-#: dashboard.py:48 b3portal/models.py:76 b3portal/plugins/auditor/models.py:26
-#: b3portal/plugins/chatlog/models.py:40 b3portal/plugins/ctime/models.py:25
-#: b3portal/plugins/follow/models.py:26 b3portal/plugins/ipdb/models.py:24
-#: b3portal/plugins/map/models.py:29 b3portal/plugins/status/models.py:28
+#: dashboard.py:48
+#: b3portal/models.py:76
+#: b3portal/plugins/auditor/models.py:26
+#: b3portal/plugins/chatlog/models.py:40
+#: b3portal/plugins/ctime/models.py:25
+#: b3portal/plugins/follow/models.py:26
+#: b3portal/plugins/ipdb/models.py:24
+#: b3portal/plugins/map/models.py:29
+#: b3portal/plugins/status/models.py:28
 #: b3portal/plugins/xlrstats/models.py:25
-#, fuzzy
 msgid "Server"
-msgstr "Estado del Servidor"
+msgstr "Servidor"
 
-#: dashboard.py:52 b3portal/templates/b3portal/server/server_tab.html:5
+#: dashboard.py:52
+#: b3portal/templates/b3portal/server/server_tab.html:5
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
-#: dashboard.py:56 admin_tools/dashboard/dashboards.py:245
+#: dashboard.py:56
+#: admin_tools/dashboard/dashboards.py:245
 #: admin_tools/menu/menus.py:107
 msgid "Administration"
 msgstr "Administración"
 
-#: dashboard.py:65 dashboard.py:82 admin_tools/dashboard/dashboards.py:250
+#: dashboard.py:65
+#: dashboard.py:82
+#: admin_tools/dashboard/dashboards.py:250
 #: admin_tools/dashboard/dashboards.py:304
-#: admin_tools/dashboard/modules.py:553 templates/admin/_index.html:53
+#: admin_tools/dashboard/modules.py:553
+#: templates/admin/_index.html:53
 msgid "Recent Actions"
-msgstr ""
+msgstr "Acciones recientes"
 
-#: admin_tools/dashboard/dashboards.py:81 admin_tools/menu/menus.py:100
+#: admin_tools/dashboard/dashboards.py:81
+#: admin_tools/menu/menus.py:100
 msgid "Dashboard"
-msgstr ""
+msgstr "Dashboard"
 
 #: admin_tools/dashboard/dashboards.py:230
 msgid "Return to site"
-msgstr ""
+msgstr "Retornar al sitio"
 
 #: admin_tools/dashboard/dashboards.py:239
-#: admin_tools/dashboard/modules.py:400 admin_tools/menu/menus.py:103
+#: admin_tools/dashboard/modules.py:400
+#: admin_tools/menu/menus.py:103
 msgid "Applications"
-msgstr ""
+msgstr "Aplicaciones"
 
 #: admin_tools/dashboard/dashboards.py:254
 msgid "Latest Django News"
@@ -85,7 +98,7 @@ msgstr ""
 
 #: admin_tools/dashboard/dashboards.py:261
 msgid "Support"
-msgstr ""
+msgstr "Soporte"
 
 #: admin_tools/dashboard/dashboards.py:264
 msgid "Django documentation"
@@ -100,9 +113,8 @@ msgid "Django irc channel"
 msgstr ""
 
 #: admin_tools/dashboard/modules.py:329
-#, fuzzy
 msgid "Links"
-msgstr "Inciar sesión"
+msgstr "Vínculos"
 
 #: admin_tools/dashboard/modules.py:606
 #, fuzzy
@@ -164,7 +176,7 @@ msgstr ""
 
 #: admin_tools/theming/templates/admin/base.html:30
 msgid "Welcome,"
-msgstr ""
+msgstr "Bienvenido,"
 
 #: admin_tools/theming/templates/admin/base.html:35
 #, fuzzy
@@ -179,8 +191,8 @@ msgstr "Error de base de datos"
 #, python-format
 msgid "%(count)s %(name)s was changed successfully."
 msgid_plural "%(count)s %(name)s were changed successfully."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s %(name)s cambiado correctamente."
+msgstr[1] "%(count)s %(name)s cambiados correctamente."
 
 #: b3connect/filters.py:44
 msgid "Any date"
@@ -202,10 +214,10 @@ msgstr "Ultimos 30 minutos"
 msgid "Last hour"
 msgstr "En la última hora"
 
-#: b3connect/models.py:80 b3portal/plugins/status/element.py:35
-#, fuzzy
+#: b3connect/models.py:80
+#: b3portal/plugins/status/element.py:35
 msgid "Guest"
-msgstr "Leer"
+msgstr "Invitado"
 
 #: b3connect/models.py:146
 msgid "Warning"
@@ -223,32 +235,31 @@ msgstr "Ban"
 msgid "TempBan"
 msgstr "Ban Temporal"
 
-#: b3connect/models.py:150 b3portal/templates/b3portal/admin/clients.html:21
+#: b3connect/models.py:150
+#: b3portal/templates/b3portal/admin/clients.html:21
 msgid "Kick"
 msgstr "Kick"
 
 #: b3connect/models.py:194
 #, python-format
 msgid "%(type)s: %(reason)s"
-msgstr ""
+msgstr "%(type)s: %(reason)s"
 
 #: b3connect/models.py:195
 #, python-format
 msgid "%(type)s: %(reason)s. Duration: %(duration)s"
-msgstr ""
+msgstr "%(type)s: %(reason)s. Duración: %(duration)s"
 
 #: b3portal/admin.py:46
 msgid "Banlist File Location"
-msgstr ""
+msgstr "Ubicación del archivo banlist"
 
 #: b3portal/admin.py:47
-msgid ""
-"Local, ftp and http are supported<br/>For ftp use: ftp://user:password@host:"
-"port/file/banlist.txt<br/>For http use: http://your.url.com/banlist.txt"
+msgid "Local, ftp and http are supported<br/>For ftp use: ftp://user:password@host:port/file/banlist.txt<br/>For http use: http://your.url.com/banlist.txt"
 msgstr ""
 
-#: b3portal/admin.py:58 b3portal/admin.py:59
-#, fuzzy
+#: b3portal/admin.py:58
+#: b3portal/admin.py:59
 msgid "Server Banlist"
 msgstr "Lista de baneados del Servidor"
 
@@ -270,27 +281,27 @@ msgstr ""
 
 #: b3portal/appsettings.py:5
 msgid "Change Player Level"
-msgstr ""
+msgstr "Cambiar Nivel del Jugador"
 
 #: b3portal/appsettings.py:6
 msgid "Give Player Regular Level"
-msgstr ""
+msgstr "Otorgar Nivel Regular"
 
 #: b3portal/appsettings.py:7
 msgid "Give Player Registered Level"
-msgstr ""
+msgstr "Otorgar Nivel de Usuario"
 
 #: b3portal/appsettings.py:8
 msgid "Remove Regular Level"
-msgstr ""
+msgstr "Quitar Nivel Regular"
 
 #: b3portal/appsettings.py:9
 msgid "Remove Registered Level"
-msgstr ""
+msgstr "Quitar Nivel Usuario"
 
 #: b3portal/appsettings.py:10
 msgid "View Player Full IP"
-msgstr ""
+msgstr "Ver IP Real"
 
 #: b3portal/appsettings.py:11
 #, fuzzy
@@ -299,11 +310,11 @@ msgstr "Lista de Jugadores"
 
 #: b3portal/appsettings.py:12
 msgid "View Admins Details"
-msgstr ""
+msgstr "Ver Detalles de Admins"
 
 #: b3portal/appsettings.py:13
 msgid "View Player Group"
-msgstr ""
+msgstr "Ver Grupo del Jugador"
 
 #: b3portal/appsettings.py:14
 #, fuzzy
@@ -349,7 +360,7 @@ msgstr "Lista de Jugadores"
 
 #: b3portal/appsettings.py:23
 msgid "View Audit Logs"
-msgstr ""
+msgstr "Ver registros de auditoría"
 
 #: b3portal/appsettings.py:24
 msgid "View User Comments"
@@ -394,9 +405,8 @@ msgid "Remove Player From Follow List"
 msgstr "Quitar de la lista de seguimiento"
 
 #: b3portal/appsettings.py:34
-#, fuzzy
 msgid "View Server Status"
-msgstr "Estado del Servidor"
+msgstr "Ver Estado del Servidor"
 
 #: b3portal/appsettings.py:35
 msgid "View Player Activity"
@@ -419,9 +429,8 @@ msgid "Set as default server"
 msgstr ""
 
 #: b3portal/models.py:48
-#, fuzzy
 msgid "Server Owners"
-msgstr "Nombre del servidor"
+msgstr "Dueños del Servidor"
 
 #: b3portal/models.py:51
 msgid "Database Name"
@@ -447,23 +456,23 @@ msgstr "Servidor de base de datos"
 msgid "IP"
 msgstr "IP"
 
-#: b3portal/models.py:59 b3portal/templates/b3portal/server/server_tab.html:19
+#: b3portal/models.py:59
+#: b3portal/templates/b3portal/server/server_tab.html:19
 msgid "Port"
 msgstr ""
 
-#: b3portal/models.py:60 b3portal/server/forms.py:32
+#: b3portal/models.py:60
+#: b3portal/server/forms.py:32
 msgid "RCON Password"
 msgstr "Contraseña RCON"
 
 #: b3portal/models.py:89
-#, fuzzy
 msgid "Server Permissions"
-msgstr "Administración del Servidor"
+msgstr "Permisos del Servidor"
 
 #: b3portal/models.py:91
-#, fuzzy
 msgid "groups"
-msgstr "Grupo"
+msgstr "grupos"
 
 #: b3portal/models.py:92
 msgid "User Permissions"
@@ -494,11 +503,11 @@ msgid "Years"
 msgstr "Años"
 
 #: b3portal/client/forms.py:37
-#, fuzzy
 msgid "Note"
 msgstr "Nota"
 
-#: b3portal/client/forms.py:41 b3portal/plugins/follow/forms.py:24
+#: b3portal/client/forms.py:41
+#: b3portal/plugins/follow/forms.py:24
 #: b3portal/plugins/follow/templates/follow/list.html:16
 #: b3portal/templates/b3portal/client/include/client_adminactions.html:12
 #: b3portal/templates/b3portal/client/include/client_ipenalties.html:10
@@ -543,7 +552,8 @@ msgstr ""
 msgid "You are not authorized to view details about this player."
 msgstr "No estás autorizado a ver información de este jugador."
 
-#: b3portal/client/views.py:374 b3portal/client/views.py:419
+#: b3portal/client/views.py:374
+#: b3portal/client/views.py:419
 #, python-format
 msgid "Add \"%s\""
 msgstr ""
@@ -562,7 +572,8 @@ msgstr ""
 msgid "Comment added successfully."
 msgstr "Seguimiento agregado con éxito"
 
-#: b3portal/client/views.py:434 b3portal/client/views.py:451
+#: b3portal/client/views.py:434
+#: b3portal/client/views.py:451
 #, fuzzy, python-format
 msgid "Remove \"%s\""
 msgstr "Eliminar"
@@ -619,15 +630,14 @@ msgstr "Información actualizada"
 #: b3portal/client/views.py:675
 #, fuzzy
 msgid "You don't have enough permissions to search on that server."
-msgstr ""
-"Lo lamento, no tienes permisos suficientes para acceder a esta sección."
+msgstr "Lo lamento, no tienes permisos suficientes para acceder a esta sección."
 
 #: b3portal/client/views.py:681
 msgid "You entered an invalid player id."
 msgstr ""
 
 #: b3portal/client/views.py:686
-#, fuzzy, python-format
+#, python-format
 msgid "A player with id %d was not found."
 msgstr "No se encontró jugador con el id %d."
 
@@ -637,11 +647,11 @@ msgid "Auto Slap"
 msgstr "Slap"
 
 #: b3portal/plugins/__init__.py:6
-#, fuzzy
 msgid "Chat Logger"
 msgstr "Registro de Chats"
 
-#: b3portal/plugins/__init__.py:7 b3portal/plugins/auditor/models.py:35
+#: b3portal/plugins/__init__.py:7
+#: b3portal/plugins/auditor/models.py:35
 #: b3portal/plugins/auditor/models.py:36
 msgid "Auditor"
 msgstr ""
@@ -652,27 +662,27 @@ msgid "Follow Players"
 msgstr "Jugadores Totales"
 
 #: b3portal/plugins/__init__.py:9
-#, fuzzy
 msgid "Registered Nicks"
-msgstr "Registrar"
+msgstr "Nombres Registrados"
 
-#: b3portal/plugins/__init__.py:10 b3portal/plugins/status/models.py:43
-#: b3portal/plugins/status/models.py:44 b3portal/templates/base_layout.html:80
+#: b3portal/plugins/__init__.py:10
+#: b3portal/plugins/status/models.py:43
+#: b3portal/plugins/status/models.py:44
+#: b3portal/templates/base_layout.html:80
 #: b3portal/templates/b3portal/client/client_list.html:57
 msgid "Status"
 msgstr "Estado"
 
 #: b3portal/plugins/__init__.py:11
-#, fuzzy
 msgid "IPDB"
-msgstr "IP"
+msgstr "IPDB"
 
 #: b3portal/plugins/__init__.py:12
-#, fuzzy
 msgid "Play Time"
-msgstr "Jugador"
+msgstr "Tiempo de Juego"
 
-#: b3portal/plugins/__init__.py:13 b3portal/templates/base_layout.html:59
+#: b3portal/plugins/__init__.py:13
+#: b3portal/templates/base_layout.html:59
 msgid "Maps"
 msgstr "Mapas"
 
@@ -693,7 +703,8 @@ msgstr "Texto"
 msgid "To"
 msgstr "Hasta"
 
-#: b3portal/plugins/chatlog/models.py:27 b3portal/plugins/chatlog/models.py:34
+#: b3portal/plugins/chatlog/models.py:27
+#: b3portal/plugins/chatlog/models.py:34
 msgid "Everyone"
 msgstr "Todos"
 
@@ -710,15 +721,15 @@ msgid "Red Team"
 msgstr "Equipo Rojo"
 
 #: b3portal/plugins/chatlog/models.py:35
-#, fuzzy
 msgid "Team"
-msgstr "Equipo Rojo"
+msgstr "Equipo"
 
 #: b3portal/plugins/chatlog/models.py:36
 msgid "PM"
 msgstr ""
 
-#: b3portal/plugins/chatlog/models.py:49 b3portal/plugins/chatlog/models.py:50
+#: b3portal/plugins/chatlog/models.py:49
+#: b3portal/plugins/chatlog/models.py:50
 msgid "Chat Log"
 msgstr "Registro de Chats"
 
@@ -791,7 +802,8 @@ msgstr "Cuando"
 msgid "Showing %(number)s records"
 msgstr "Mostrando %(number)s registros"
 
-#: b3portal/plugins/ctime/models.py:34 b3portal/plugins/ctime/models.py:35
+#: b3portal/plugins/ctime/models.py:34
+#: b3portal/plugins/ctime/models.py:35
 msgid "CTime"
 msgstr ""
 
@@ -804,7 +816,8 @@ msgstr "Bienvenido %(name)s"
 msgid "(activity in the last 30 days)"
 msgstr ""
 
-#: b3portal/plugins/follow/models.py:35 b3portal/plugins/follow/models.py:36
+#: b3portal/plugins/follow/models.py:35
+#: b3portal/plugins/follow/models.py:36
 msgid "Follow"
 msgstr ""
 
@@ -877,7 +890,8 @@ msgstr "Añadido por"
 msgid "Remove"
 msgstr "Eliminar"
 
-#: b3portal/plugins/ipdb/models.py:34 b3portal/plugins/ipdb/models.py:35
+#: b3portal/plugins/ipdb/models.py:34
+#: b3portal/plugins/ipdb/models.py:35
 msgid "Ipdb"
 msgstr ""
 
@@ -886,12 +900,11 @@ msgid "Mapcycle file location"
 msgstr ""
 
 #: b3portal/plugins/map/models.py:31
-msgid ""
-"Local, ftp and http are supported<br/>For ftp use: ftp://user:password@host:"
-"port/file/mapcycle.txt<br/>For http use: http://your.url.com/mapcycle.txt"
+msgid "Local, ftp and http are supported<br/>For ftp use: ftp://user:password@host:port/file/mapcycle.txt<br/>For http use: http://your.url.com/mapcycle.txt"
 msgstr ""
 
-#: b3portal/plugins/map/models.py:41 b3portal/plugins/map/models.py:42
+#: b3portal/plugins/map/models.py:41
+#: b3portal/plugins/map/models.py:42
 #: b3portal/plugins/status/templates/status/client_detail.html:21
 #: b3portal/plugins/status/templates/status/game_status.html:20
 #: b3portal/templates/b3portal/admin/commands.html:16
@@ -928,9 +941,7 @@ msgid "Status File Location"
 msgstr ""
 
 #: b3portal/plugins/status/admin.py:27
-msgid ""
-"Local, ftp and http are supported<br/>For ftp use: ftp://user:password@host:"
-"port/file/status.xml<br/>For http use: http://your.url.com/status.xml"
+msgid "Local, ftp and http are supported<br/>For ftp use: ftp://user:password@host:port/file/status.xml<br/>For http use: http://your.url.com/status.xml"
 msgstr ""
 
 #: b3portal/plugins/status/element.py:26
@@ -957,7 +968,8 @@ msgstr ""
 msgid "Capture The Flag"
 msgstr ""
 
-#: b3portal/plugins/status/element.py:32 b3portal/plugins/status/element.py:33
+#: b3portal/plugins/status/element.py:32
+#: b3portal/plugins/status/element.py:33
 msgid "Bomb"
 msgstr ""
 
@@ -967,9 +979,8 @@ msgid "User"
 msgstr ""
 
 #: b3portal/plugins/status/element.py:37
-#, fuzzy
 msgid "Regular"
-msgstr "Visitantes Regulares"
+msgstr "Regular"
 
 #: b3portal/plugins/status/element.py:38
 msgid "Moderator"
@@ -987,18 +998,16 @@ msgid "Admin"
 msgstr "Admin"
 
 #: b3portal/plugins/status/element.py:40
-#, fuzzy
 msgid "Full Admin"
-msgstr "Admin"
+msgstr "Full Admin"
 
 #: b3portal/plugins/status/element.py:41
 msgid "Senior Admin"
 msgstr ""
 
 #: b3portal/plugins/status/element.py:42
-#, fuzzy
 msgid "Super Admin"
-msgstr "Admin"
+msgstr "Super Admin"
 
 #: b3portal/plugins/status/views.py:49
 #, python-format
@@ -1103,7 +1112,8 @@ msgstr "Gráfico de Jugadores"
 msgid "XLRStats"
 msgstr "Estadísticas"
 
-#: b3portal/rconadmin/fields.py:71 b3portal/rconadmin/fields.py:82
+#: b3portal/rconadmin/fields.py:71
+#: b3portal/rconadmin/fields.py:82
 #: b3portal/templates/b3portal/admin/commands.html:12
 #: b3portal/templates/b3portal/admin/commands.html:24
 #: b3portal/templates/b3portal/admin/commands.html:32
@@ -1158,7 +1168,8 @@ msgstr "Consola"
 msgid "Database Password"
 msgstr "Contraseña de la base de datos"
 
-#: b3portal/server/forms.py:31 b3portal/server/forms.py:37
+#: b3portal/server/forms.py:31
+#: b3portal/server/forms.py:37
 msgid "Non ascii chars are forbidden."
 msgstr ""
 
@@ -1166,7 +1177,8 @@ msgstr ""
 msgid "All fields are required for RCON access"
 msgstr ""
 
-#: b3portal/templates/403.html:5 b3portal/templates/403.html.py:26
+#: b3portal/templates/403.html:5
+#: b3portal/templates/403.html.py:26
 msgid "Forbidden"
 msgstr "Prohibido"
 
@@ -1182,12 +1194,12 @@ msgid ""
 "\t\t\t<p>You don't have enough permissions to access here.</p>\n"
 "\t\t\t<p>If you think this is an error, contact your administrator.</p>\n"
 "\t\t\t<br/>\n"
-"\t\t\t<p>Go <a href=\"%(back)s\">back</a> or return to the <a href=\"%(home)s"
-"\">homepage</a>.</p>\n"
+"\t\t\t<p>Go <a href=\"%(back)s\">back</a> or return to the <a href=\"%(home)s\">homepage</a>.</p>\n"
 "\t\t\t"
 msgstr ""
 
-#: b3portal/templates/404.html:5 b3portal/templates/404.html.py:28
+#: b3portal/templates/404.html:5
+#: b3portal/templates/404.html.py:28
 msgid "Page not found"
 msgstr "Página no encontrada"
 
@@ -1204,12 +1216,12 @@ msgid ""
 "\t\t\t<ul>\n"
 "\t\t\t\t<li>You have typed a wrong address in your browser.</li>\n"
 "\t\t\t</ul> \n"
-"\t\t\t<p>Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, "
-"just in case ;)</p>\n"
+"\t\t\t<p>Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in case ;)</p>\n"
 "\t\t\t"
 msgstr ""
 
-#: b3portal/templates/500.html:5 b3portal/templates/500.html.py:25
+#: b3portal/templates/500.html:5
+#: b3portal/templates/500.html.py:25
 msgid "Page unavailable"
 msgstr "Página no disponible"
 
@@ -1223,9 +1235,7 @@ msgid "The <b>bad news</b> is that we have just encountered an error."
 msgstr ""
 
 #: b3portal/templates/500.html:19
-msgid ""
-"The <b>good news</b> is that you've helped us find a bug, which we are now "
-"looking into."
+msgid "The <b>good news</b> is that you've helped us find a bug, which we are now looking into."
 msgstr ""
 
 #: b3portal/templates/500.html:21
@@ -1287,11 +1297,13 @@ msgstr "Estado del Servidor"
 msgid "Sign out"
 msgstr "Salir"
 
-#: b3portal/templates/base_layout.html:108 templates/auth/login.html:25
+#: b3portal/templates/base_layout.html:108
+#: templates/auth/login.html:25
 msgid "Username"
 msgstr ""
 
-#: b3portal/templates/base_layout.html:110 templates/auth/login.html:40
+#: b3portal/templates/base_layout.html:110
+#: templates/auth/login.html:40
 msgid "Sign in"
 msgstr "Iniciar sesión"
 
@@ -1304,9 +1316,8 @@ msgid "You have to wait between queries."
 msgstr "Tienes que esperar entre consultas."
 
 #: b3portal/templates/b3portal/server_form.html:28
-#, fuzzy
 msgid "Reset"
-msgstr "limpiar"
+msgstr "Limpiar"
 
 #: b3portal/templates/b3portal/admin/banlist.html:5
 msgid "Ban List"
@@ -1412,9 +1423,8 @@ msgid "Type:"
 msgstr "Tipo:"
 
 #: b3portal/templates/b3portal/client/add_note.html:2
-#, fuzzy
 msgid "Add Comment"
-msgstr "Agregar Penalidad"
+msgstr "Añadir comentario"
 
 #: b3portal/templates/b3portal/client/add_penalty.html:2
 msgid "Add Penalty"
@@ -1461,24 +1471,21 @@ msgid "Confirmation required"
 msgstr ""
 
 #: b3portal/templates/b3portal/client/client.html:63
-#, fuzzy
 msgid "Saving..."
-msgstr "Cargando..."
+msgstr "Guardando..."
 
 #: b3portal/templates/b3portal/client/client.html:129
 msgid "Back"
 msgstr ""
 
 #: b3portal/templates/b3portal/client/client.html:133
-#, fuzzy
 msgid "More"
-msgstr "Más ..."
+msgstr "Más"
 
 #: b3portal/templates/b3portal/client/client.html:147
 #: b3portal/templates/b3portal/server/server_tab.html:4
-#, fuzzy
 msgid "Details"
-msgstr "Detalles de Contacto"
+msgstr "Detalles"
 
 #: b3portal/templates/b3portal/client/client.html:149
 #: b3portal/templates/b3portal/client/include/client_detail.html:71
@@ -1593,12 +1600,8 @@ msgstr ""
 
 #: b3portal/templates/b3portal/client/regular_client_list.html:10
 #, python-format
-msgid ""
-"There are %(count)s regultar visitors. Must have more than <b>50</b> "
-"connections and been seen in the last <b>7</b> days."
-msgstr ""
-"Hay %(count)s visitantes regulares. Deben tener más de <b>50</b> conexiones "
-"y haberse conectado dentro de los últimos <b>7</b> días."
+msgid "There are %(count)s regultar visitors. Must have more than <b>50</b> connections and been seen in the last <b>7</b> days."
+msgstr "Hay %(count)s visitantes regulares. Deben tener más de <b>50</b> conexiones y haberse conectado dentro de los últimos <b>7</b> días."
 
 #: b3portal/templates/b3portal/client/world_map.html:3
 msgid "World Player Map"
@@ -1618,9 +1621,8 @@ msgid "Players around the world"
 msgstr "Jugadores alrededor del mundo"
 
 #: b3portal/templates/b3portal/client/include/client_admin_logs.html:3
-#, fuzzy
 msgid "Server Admin Activity"
-msgstr "Administración del Servidor"
+msgstr "Actividad de la Administración "
 
 #: b3portal/templates/b3portal/client/include/client_admin_logs.html:6
 #: b3portal/templates/b3portal/client/include/client_audit.html:8
@@ -1697,9 +1699,8 @@ msgid "No aliases"
 msgstr "Sin alias"
 
 #: b3portal/templates/b3portal/client/include/client_audit.html:5
-#, fuzzy
 msgid "Portal Actions"
-msgstr "Sin penalidades"
+msgstr "Acciones del Portal"
 
 #: b3portal/templates/b3portal/client/include/client_audit.html:10
 msgid "Action"
@@ -1733,9 +1734,8 @@ msgid "Add to watch list"
 msgstr "Agregar a la lista de seguimiento"
 
 #: b3portal/templates/b3portal/client/include/client_detail.html:42
-#, fuzzy
 msgid "Add comment"
-msgstr "Agregar Penalidad"
+msgstr "Añadir comentario"
 
 #: b3portal/templates/b3portal/client/include/client_detail.html:49
 msgid "See what this player was talking about"
@@ -1774,9 +1774,7 @@ msgstr "Desconectado"
 
 #: b3portal/templates/b3portal/client/include/client_detail.html:103
 #, python-format
-msgid ""
-"Played <b>%(totalplayed)s</b> since %(firstplayed)s, <b>%(totalmonth)s</b> "
-"in last month."
+msgid "Played <b>%(totalplayed)s</b> since %(firstplayed)s, <b>%(totalmonth)s</b> in last month."
 msgstr ""
 
 #: b3portal/templates/b3portal/client/include/client_detail.html:107
@@ -1785,9 +1783,8 @@ msgid "Played <b>%(totalplayed)s</b> since <b>%(firstplayed)s</b>"
 msgstr ""
 
 #: b3portal/templates/b3portal/client/include/client_ipaliases.html:3
-#, fuzzy
 msgid "IP Addresses"
-msgstr "Dirección IP"
+msgstr "Direcciones IP"
 
 #: b3portal/templates/b3portal/client/include/client_ipaliases.html:34
 msgid "No registered ip addresses"
@@ -1825,9 +1822,8 @@ msgid "Edit"
 msgstr "Editar"
 
 #: b3portal/templates/b3portal/client/include/client_user_cmd.html:3
-#, fuzzy
 msgid "Player Activity"
-msgstr "Lista de Jugadores"
+msgstr "Actividad del Jugador"
 
 #: b3portal/templates/b3portal/client/include/client_user_cmd.html:8
 #, fuzzy
@@ -1835,9 +1831,8 @@ msgid "Params"
 msgstr "Jugadores"
 
 #: b3portal/templates/b3portal/client/include/client_user_cmd.html:9
-#, fuzzy
 msgid "Target"
-msgstr "Texto"
+msgstr "Destino"
 
 #: b3portal/templates/b3portal/client/include/client_user_cmd.html:22
 msgid "No player activity"
@@ -1858,9 +1853,8 @@ msgid "Admin Kicks"
 msgstr ""
 
 #: b3portal/templates/b3portal/penalties/ban_list_menu.html:11
-#, fuzzy
 msgid "B3 Penalties"
-msgstr "Sanciones"
+msgstr "Sanciones de B3"
 
 #: b3portal/templates/b3portal/penalties/kick_list.html:6
 #, python-format
@@ -1913,23 +1907,20 @@ msgid "RCON"
 msgstr ""
 
 #: b3portal/templates/b3portal/server/server_tab.html:12
-#, fuzzy
 msgid "Database"
 msgstr "Base de datos"
 
 #: b3portal/templates/b3portal/server/server_tab.html:14
-#, fuzzy
 msgid "Host"
-msgstr "Horas"
+msgstr "Host"
 
 #: b3portal/templates/b3portal/server/server_tab.html:31
 msgid "Owners"
 msgstr ""
 
 #: b3portal/templates/b3portal/server/server_tab.html:39
-#, fuzzy
 msgid "Users"
-msgstr "Años"
+msgstr "Usuarios"
 
 #: common/notification.py:15
 msgid "Files changed"
@@ -1999,48 +1990,56 @@ msgstr ""
 msgid "m"
 msgstr ""
 
-#: common/utils/timesince.py:23 common/utils/timesince.py:63
+#: common/utils/timesince.py:23
+#: common/utils/timesince.py:63
 msgid "year"
 msgid_plural "years"
 msgstr[0] "año"
 msgstr[1] "años"
 
-#: common/utils/timesince.py:24 common/utils/timesince.py:64
+#: common/utils/timesince.py:24
+#: common/utils/timesince.py:64
 msgid "month"
 msgid_plural "months"
 msgstr[0] "mes"
 msgstr[1] "meses"
 
-#: common/utils/timesince.py:25 common/utils/timesince.py:65
+#: common/utils/timesince.py:25
+#: common/utils/timesince.py:65
 msgid "week"
 msgid_plural "weeks"
 msgstr[0] "semana"
 msgstr[1] "semanas"
 
-#: common/utils/timesince.py:26 common/utils/timesince.py:66
+#: common/utils/timesince.py:26
+#: common/utils/timesince.py:66
 msgid "day"
 msgid_plural "days"
 msgstr[0] "día"
 msgstr[1] "días"
 
-#: common/utils/timesince.py:27 common/utils/timesince.py:67
+#: common/utils/timesince.py:27
+#: common/utils/timesince.py:67
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "hora"
 msgstr[1] "horas"
 
-#: common/utils/timesince.py:28 common/utils/timesince.py:68
+#: common/utils/timesince.py:28
+#: common/utils/timesince.py:68
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuto"
 msgstr[1] "minutos"
 
-#: common/utils/timesince.py:42 common/utils/timesince.py:93
+#: common/utils/timesince.py:42
+#: common/utils/timesince.py:93
 #, python-format
 msgid "%(number)d %(type)s"
 msgstr "%(number)d %(type)s"
 
-#: common/utils/timesince.py:48 common/utils/timesince.py:99
+#: common/utils/timesince.py:48
+#: common/utils/timesince.py:99
 #, python-format
 msgid ", %(number)d %(type)s"
 msgstr ", %(number)d %(type)s"
@@ -2056,14 +2055,12 @@ msgid "minutes"
 msgstr "minutos"
 
 #: djangoapp/templates/tags/pagination.html:6
-#, fuzzy
 msgid "&laquo; first"
-msgstr "&laquo; Anterior"
+msgstr "&laquo; primero"
 
 #: djangoapp/templates/tags/pagination.html:7
-#, fuzzy
 msgid "previous"
-msgstr "< anterior"
+msgstr "anterior"
 
 #: djangoapp/templates/tags/pagination.html:13
 #, python-format
@@ -2071,14 +2068,12 @@ msgid "Page %(page_number)s of %(num_pages)s"
 msgstr "Página %(page_number)s de %(num_pages)s"
 
 #: djangoapp/templates/tags/pagination.html:19
-#, fuzzy
 msgid "next"
-msgstr "siguiente >"
+msgstr "siguiente"
 
 #: djangoapp/templates/tags/pagination.html:20
-#, fuzzy
 msgid "last &raquo;"
-msgstr "Siguiente &raquo;"
+msgstr "último &raquo;"
 
 #: djangoapp/templates/tags/pagination_page.html:4
 msgid "&laquo; Previous"
@@ -2116,9 +2111,7 @@ msgid "Go to <a href=\\"
 msgstr "Ir a <a href=\\"
 
 #: djangogravatar/templates/profile/profile.html:23
-msgid ""
-"We couldn't find a public profile. Either you don't have one configured or "
-"you are not registered with your primary email address."
+msgid "We couldn't find a public profile. Either you don't have one configured or you are not registered with your primary email address."
 msgstr ""
 
 #: templates/admin/_index.html:18
@@ -2142,7 +2135,8 @@ msgstr ""
 msgid "Unknown content"
 msgstr ""
 
-#: templates/admin/base_site.html:30 templates/admin/base_site.html.py:33
+#: templates/admin/base_site.html:30
+#: templates/admin/base_site.html.py:33
 #, python-format
 msgid "%(site)s Admin"
 msgstr ""
@@ -2156,8 +2150,7 @@ msgid "User login"
 msgstr "Inicio de sesión"
 
 #: templates/auth/login.html:19
-msgid ""
-"Enter your username and password here in order to log in on the website:"
+msgid "Enter your username and password here in order to log in on the website:"
 msgstr ""
 
 #: templates/auth/login.html:44
@@ -2167,40 +2160,32 @@ msgstr ""
 #: templates/auth/password_change.html:3
 #: templates/auth/password_change.html:18
 #: templates/auth/password_change_done.html:3
-#, fuzzy
 msgid "Password update"
-msgstr "Contraseña"
+msgstr "Actualización de contraseña"
 
 #: templates/auth/password_change.html:19
-msgid ""
-"Please enter your old password, for security's sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
+msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
 msgstr ""
 
 #: templates/auth/password_change.html:25
-#, fuzzy
 msgid "Old password"
-msgstr "Contraseña RCON"
+msgstr "Contraseña anterior"
 
 #: templates/auth/password_change.html:34
-#, fuzzy
 msgid "New password"
-msgstr "Contraseña"
+msgstr "Nueva Contraseña"
 
 #: templates/auth/password_change.html:43
-#, fuzzy
 msgid "Password (again)"
-msgstr "Contraseña"
+msgstr "Contraseña (de nuevo)"
 
 #: templates/auth/password_change.html:51
-#, fuzzy
 msgid "Change my password"
-msgstr "Contraseña"
+msgstr "Cambiar contraseña"
 
 #: templates/auth/password_change_done.html:9
-#, fuzzy
 msgid "Password change successful"
-msgstr "Seguimiento agregado con éxito"
+msgstr "Contraseña cambiada con éxito"
 
 #: templates/auth/password_change_done.html:10
 msgid "Your password was updated."
