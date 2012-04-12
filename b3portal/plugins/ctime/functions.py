@@ -56,7 +56,7 @@ def get_player_activity(client):
             data.append([d[format_date(d1)]-1, format_date(d1), start, end])
         else:
             start = seconds_from_midnight(ctime.start)
-            end = 86400 - start 
+            end = start + (86400 - start) 
             d1 = datetime.datetime.fromtimestamp(ctime.start)
             if not d.has_key(format_date(d1)):
                 d[format_date(d1)] = idx
