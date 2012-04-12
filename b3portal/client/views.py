@@ -103,8 +103,8 @@ def client(request, id):
             if (datetime.datetime.now() - ptime['since']).days > 30:
                 ptime = ctime.get_total_playtime(client, datetime.datetime.now() - datetime.timedelta(days=30))
                 playedlastmonth = {'start': ptime['since'], 'total': date_to_string(ptime['total'])}
-        except Exception, e:
-            print e
+        except:
+            pass
             
     if has_server_perm(request.user, perm.VIEW_AUDITLOGS, request.server):
         client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server)) 

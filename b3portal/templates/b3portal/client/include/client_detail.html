@@ -65,10 +65,18 @@ title="{% trans "Double click to edit..." %}" class="nodecoration_icon icon_edit
 <tr>
 <th>{% trans "First Seen" %}</th><td>{{client.time_add|date:"DATETIME_FORMAT"}}</td>
 <th>{% trans "Last Seen" %}</th><td>{{client.time_edit|date:"DATETIME_FORMAT"}}
-{% ifpluginenabled "ctime" %}{% if obj_perms.plugin.viewstatus %}<a href="{% serverurl ctime:detail client.id %}" title="{% trans "Activity" %}" class="nodecoration_icon icon_table"></a>{% endif %}{% endifpluginenabled %}</td>
-<!-- 
-{% ifpluginenabled "status" %}{% if obj_perms.plugin.viewstatus %}<a href="{% serverurl status:client_log client.id %}" title="{% trans "Expand" %}" class="nodecoration_icon icon_table"></a>{% endif %}{% endifpluginenabled %}</td>
- -->
+{% if obj_perms.plugin.activity %}
+{% ifpluginenabled "ctime" %}
+{% if playedtime %}
+<a href="{% serverurl ctime:detail client.id %}" title="{% trans "Activity" %}" class="nodecoration_icon icon_table"></a>
+{% endif %}
+{% else %}
+{% ifpluginenabled "status" %}
+<a href="{% serverurl status:client_log client.id %}" title="{% trans "Activity" %}" class="nodecoration_icon icon_table"></a>
+{% endifpluginenabled %}
+{% endifpluginenabled %}
+{% endif %}
+</td>
 </tr>
 <tr>
 <th>{% trans "IP Address" %}</th>
