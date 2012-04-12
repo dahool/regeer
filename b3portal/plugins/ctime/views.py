@@ -50,4 +50,4 @@ def client_detail(request, id):
     
     data = get_player_activity(client)
 
-    return {'client': client, 'data': data}
+    return {'client': client, 'activity': data}
