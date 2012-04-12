@@ -1,0 +1,75 @@
+{% extends "base_layout.html" %}
+{% load urltag listtocolumns i18n tagutils settingstag media extendedtags geoip %}
+{% block title %}{{ block.super }} | {% with name=client.name %}{%blocktrans%}Activity of {{name}}{%endblocktrans%}{%endwith%}{% endblock %}
+{% block extra_header %}
+{{ block.super }}
+<script type="text/javascript" src="{{STATIC_URL}}js/flot/jquery.flot.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/flot/jquery.flot.gantt.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/flot/jquery.flot.highlighter.min.js"></script>
+<!--[if lte IE 8]>
+<script type="text/javascript" src="{{STATIC_URL}}js/flot/excanvas.min.js"></script>
+<![endif]-->
+<script type='text/javascript'>
+function hours_tick() {
+	var axis = [];
+	for (i=0;i<=23;i++) {
+		axis.push([i*60,padding(i) + ":00"])
+	}
+	return axis;
+}
+/*function hours_tick() {
+	var axis = [];
+	for (i=0;i<=23;i++) {
+		axis.push([i*60])
+	}
+	return axis;
+}*/
+function hours_formatter(val, axis) {
+	return padding(val) + ":00";
+}
+function padding(val) {
+	if (val < 10) {
+		return "0" + val;
+	}
+	return val;
+}
+$(function () {
+	
+	var d1 = [];
+	var axis = [];
+	var i = 0;
+	 {% for d in data %}
+	 	if (!axis[{{d.0}}]) {
+	 		axis.push([{{d.0}},'{{d.1}}']);	
+	 	}
+	 	i = {{d.0}};
+	 	d1.push([{{d.2}}/60,{{d.0}},{{d.3}}/60,'']);
+	{% endfor %}
+    console.log(axis);
+    console.log(d1);
+    console.log(hours_tick());
+	var options = { series: { gantt: { active: true, show: true, barHeight: .5 } }
+	 	,xaxis:  { min: 0, max: 1440, ticks: hours_tick }
+		,yaxis:  { ticks: axis }
+		,grid:   { hoverable: true, clickable: false}
+	};
+   $.plot($("#graphplaceholder"), [{data: d1}], options);
+});
+</script>
+{% endblock %}
+{% block main_content %}
+<table class="table-style cd-table client_lists">
+<caption><h3><a href="{% serverurl client_detail client.id %}" class="nodecoration_icon go_back">&nbsp;</a>{{client.name}}<small>  
+{% with request.server as current_server %}
+{% for server in request.server_list %}
+{% if current_server == server.uuid %}{{server.name}}{%endif%}
+{% endfor %}
+{% endwith %}
+&nbsp;
+{% trans "(activity in the last 30 days)" %}
+</small>
+</h3>
+</caption>
+</table>
+<div id="graphplaceholder" class="client_lists" style="width:800px;height: 500px;"></div>
+{% endblock %}

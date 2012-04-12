@@ -666,3 +666,6 @@ h3 {
     background-position: 0px 50%;
     padding-left: 24px !important;
 }
+.go_back {
+	background-image: url(../../images/icons/arrow_turn_left.png) !important;
+}

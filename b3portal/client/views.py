@@ -93,13 +93,14 @@ def client(request, id):
             pass
 
     playedtime = None
-#    if is_plugin_enabled('ctime', server):
-    from b3portal.plugins.ctime import functions as ctime
-    from common.utils.timesince import date_to_string
-    ptime = ctime.get_total_playtime(client)
-    playedtime = {'start': ptime['since'], 'total': date_to_string(ptime['total'])}
-
-            
+    if is_plugin_enabled(server, 'ctime'):
+        try:
+            from b3portal.plugins.ctime import functions as ctime
+            from common.utils.timesince import date_to_string
+            ptime = ctime.get_total_playtime(client)
+            playedtime = {'start': ptime['since'], 'total': date_to_string(ptime['total'])}
+        except:
+            pass
             
     if has_server_perm(request.user, perm.VIEW_AUDITLOGS, request.server):
         client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server)) 

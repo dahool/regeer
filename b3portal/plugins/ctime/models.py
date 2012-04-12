@@ -39,8 +39,8 @@ class ClientTime(models.Model):
     id = models.AutoField(primary_key=True)
     client = models.ForeignKey(Client, db_column="guid", to_field="guid", related_name="playtime")
     guid = models.CharField(db_column="guid", max_length=36)
-    start = models.CharField(db_column="came", max_length=11)
-    end = models.CharField(db_column="gone", max_length=11)
+    came = models.CharField(db_column="came", max_length=11)
+    gone = models.CharField(db_column="gone", max_length=11)
     nick = models.CharField(db_column="nick", max_length=32)
 
     def __unicode__(self):
@@ -48,6 +48,14 @@ class ClientTime(models.Model):
     
     def __repr__(self):
         return "[%s] %s" % (self.client.id, self.client.name)
+    
+    @property
+    def start(self):
+        return long(self.came)
+    
+    @property
+    def end(self):
+        return long(self.gone)
     
     class Meta:
         managed = False
