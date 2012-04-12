@@ -17,12 +17,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-from b3portal.plugins.ctime.models import ClientTime
 from django.conf import settings
 import datetime
 import time
-import math
 from django.utils.dateformat import format
+from django.db.models import Sum
 
 def format_date(ts, fmt=settings.SHORT_DATE_FORMAT):
     if not isinstance(ts, datetime.datetime):
@@ -71,10 +70,15 @@ def get_total_playtime(client):
     Dict: 'since': first appearance
           'total': total time in seconds
     """
-    total = 0
-    clist = client.playtime.all().order_by('id')
-    first = datetime.datetime.fromtimestamp(long(clist[0].start))
-    for ctime in clist:
-        total += long(ctime.end) - long(ctime.start)
+    q = client.playtime.all()
+    first = datetime.datetime.fromtimestamp(q.order_by('id')[0].start)
+    sums = q.aggregate(Sum('came'), Sum('gone'))
+    total = sums['gone__sum'] - sums['came__sum']
     return {'since': first, 'total': total}
+#    total = 0
+#    clist = client.playtime.all().order_by('id')
+#    first = datetime.datetime.fromtimestamp(long(clist[0].start))
+#    for ctime in clist:
+#        total += long(ctime.end) - long(ctime.start)
+#    return {'since': first, 'total': total}
     

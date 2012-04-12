@@ -691,7 +691,6 @@ def get_group_list(request, client):
     dict = {}
     query = Group.objects.using(request.server)
     groups= []
-    print client.group_id
     if has_server_perm(request.user, perm.CLIENT_GROUP_CHANGE, request.server):
         server = Server.objects.get(pk=request.server)
         if (request.user.is_superuser or server.is_owner(request.user)):
