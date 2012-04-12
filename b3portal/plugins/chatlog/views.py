@@ -32,10 +32,11 @@ from b3portal.plugins import is_plugin_enabled
 
 from b3portal.permission.utils import server_permission_required_with_403
 from b3portal import permissions as perm
+from django.views.decorators.cache import cache_page
 
 @server_permission_required_with_403(perm.CHATLOG_VIEW)
+@cache_page(60)
 @render('chatlog/log.html')
-#@flood
 def chatlist(request):
     if not is_plugin_enabled(request.server, 'chatlog'):
         messages.info(request, _('This function is not enabled for this server.'))

@@ -17,13 +17,6 @@ function hours_tick() {
 	}
 	return axis;
 }
-/*function hours_tick() {
-	var axis = [];
-	for (i=0;i<=23;i++) {
-		axis.push([i*60])
-	}
-	return axis;
-}*/
 function hours_formatter(val, axis) {
 	return padding(val) + ":00";
 }
@@ -38,16 +31,13 @@ $(function () {
 	var d1 = [];
 	var axis = [];
 	var i = 0;
-	 {% for d in data %}
+	 {% for d in activity %}
 	 	if (!axis[{{d.0}}]) {
 	 		axis.push([{{d.0}},'{{d.1}}']);	
 	 	}
 	 	i = {{d.0}};
 	 	d1.push([{{d.2}}/60,{{d.0}},{{d.3}}/60,'']);
 	{% endfor %}
-    console.log(axis);
-    console.log(d1);
-    console.log(hours_tick());
 	var options = { series: { gantt: { active: true, show: true, barHeight: .5 } }
 	 	,xaxis:  { min: 0, max: 1440, ticks: hours_tick }
 		,yaxis:  { ticks: axis }

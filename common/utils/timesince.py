@@ -1,51 +1,32 @@
 import datetime
-import time
 
 from django.utils.tzinfo import LocalTimezone
 from django.utils.translation import ungettext, ugettext
 
-def date_to_string(d, short=False):
-    """
-    Takes a datetime and returns it in human readable format
-    """
-    if short:
-        chunks = (
-          (60 * 60 * 60 * 24 * 365, lambda n: ugettext('y')),
-          (60 * 60 * 60 * 24 * 30, lambda n: ugettext('M')),
-          (60 * 60 * 60 * 24 * 7, lambda n: ugettext('w')),
-          (60 * 60 * 60 * 24, lambda n: ugettext('d')),
-          (60 * 60 * 60, lambda n: ugettext('h')),
-          (60 * 60, lambda n: ugettext('m')),
-          #(60, lambda n: ugettext('s'))
-        )
-    else:
-        chunks = (
+def minutes_to_string(ts):
+
+    chunks = (
           (60 * 60 * 60 * 24 * 365, lambda n: ungettext('year', 'years', n)),
           (60 * 60 * 60 * 24 * 30, lambda n: ungettext('month', 'months', n)),
           (60 * 60 * 60 * 24 * 7, lambda n : ungettext('week', 'weeks', n)),
           (60 * 60 * 60 * 24, lambda n : ungettext('day', 'days', n)),
           (60 * 60 * 60, lambda n: ungettext('hour', 'hours', n)),
           (60 * 60, lambda n: ungettext('minute', 'minutes', n)),
-          #(60, lambda n: ungettext('second', 'seconds', n))
-        )
-    if isinstance(d, datetime.datetime):
-        ts = time.mktime(d.timetuple()) 
-    else:
-        ts = d
-    
-    for i, (seconds, name) in enumerate(chunks):
-        count = ts // seconds
-        if count != 0:
-            break
+    )
 
-    if count > 0:
-        s = ugettext('%(number)d %(type)s') % {'number': count, 'type': name(count)}
-        if i + 1 < len(chunks):
-            # Now get the second item
-            seconds2, name2 = chunks[i + 1]
-            count2 = (ts - (seconds * count)) // seconds2
-            if count2 > 0:
-                s += ugettext(', %(number)d %(type)s') % {'number': count2, 'type': name2(count2)}
+    s = None
+    prev = None
+    for i, (seconds, name) in enumerate(chunks):
+        if prev:
+            c = int((ts % prev) / seconds)
+        else:
+            c = int(ts / seconds)
+        prev = seconds
+        if c == 0: continue
+        if s:
+            s += ugettext(', %(number)d %(type)s') % {'number': c, 'type': name(c)}
+        else:
+            s = ugettext('%(number)d %(type)s') % {'number': c, 'type': name(c)}
     return s
 
 def timesince(d, now=None):
@@ -102,5 +83,4 @@ def timesince(d, now=None):
 if __name__ == "__main__":
     dt = datetime.datetime.now() - datetime.timedelta(seconds=50)
     print timesince(dt)
-    print date_to_string(dt)
     
