@@ -78,7 +78,7 @@ def client(request, id):
     except Group.DoesNotExist:
         pass
     except Exception, e:
-        logger.error(str(e))
+        logger.exception(str(e))
         raise
     
     online = None
@@ -88,8 +88,8 @@ def client(request, id):
             from b3portal.plugins.status.models import ServerStatus
             status = ServerStatus.objects.filter(server=server).latest()
             online = status.is_online(client.id)
-        except:
-            pass
+        except Exception, e:
+            logger.exception(str(e))
 
     playedtime = None
     playedlastmonth = None
@@ -102,8 +102,8 @@ def client(request, id):
             if (datetime.datetime.now() - ptime['since']).days > 30:
                 ptime = ctime.get_total_playtime(client, datetime.datetime.now() - datetime.timedelta(days=30))
                 playedlastmonth = {'start': ptime['since'], 'total': minutes_to_string(ptime['total'])}
-        except:
-            pass
+        except Exception, e:
+            logger.exception(str(e))
             
     if has_server_perm(request.user, perm.VIEW_AUDITLOGS, request.server):
         client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server)) 
@@ -223,14 +223,6 @@ def clientlist(request):
         search['sort'] = sort
         search['order'] = order
             
-#    if request.GET.has_key('searchall') and request.user.has_perm(perm.PERFORM_ADV_SEARCH):
-#        field = request.GET['type']
-#        data = request.GET['data']
-#        list = {}
-#        for server in request.server_list:
-#            list[server.uuid] = _getclientlist(request, server.uuid)
-#        return {'list': list, 'field': field, 'data': data, 'search': urllib.urlencode(search)}
-#    elif
     if request.GET.has_key('search') or request.GET.has_key('searchall'):
         for k,v in request.GET.items():
             # there is an odd bug I can't identify

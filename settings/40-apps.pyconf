@@ -27,6 +27,7 @@ MIDDLEWARE_CLASSES = (
     'b3portal.middleware.MultiDBMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'exceptionlogger.middleware.ExceptionLoggerMiddleware',
     'common.middleware.http.HttpErrorMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
 )
@@ -43,6 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'exceptionlogger',
     'djangoui',
     'b3connect',
     'djangoapp',
