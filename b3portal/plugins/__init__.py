@@ -10,7 +10,8 @@ PLUGINS = [('autoslap',_('Auto Slap')),
            ('status',_('Status')),
            ('ipdb',_('IPDB')),
            ('ctime',_('Play Time')),
-           ('map',_('Maps'))]
+           ('map',_('Maps')),
+           ('configeditor',_('Config Editor')),]
 
 def is_plugin_installed(name):
     return is_installed('b3portal.plugins.%s' % name)

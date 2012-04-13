@@ -1,4 +1,4 @@
-#Fri Apr 13 10:16:52 ART 2012
+#Fri Apr 13 14:19:53 ART 2012
 eclipse.preferences.version=1
 encoding//b3connect/admin.py=utf-8
 encoding//b3connect/fields.py=utf-8
@@ -34,6 +34,10 @@ encoding//b3portal/plugins/chatlog/forms.py=utf-8
 encoding//b3portal/plugins/chatlog/models.py=utf-8
 encoding//b3portal/plugins/chatlog/urls.py=utf-8
 encoding//b3portal/plugins/chatlog/views.py=utf-8
+encoding//b3portal/plugins/configeditor/admin.py=utf-8
+encoding//b3portal/plugins/configeditor/models.py=utf-8
+encoding//b3portal/plugins/configeditor/urls.py=utf-8
+encoding//b3portal/plugins/configeditor/views.py=utf-8
 encoding//b3portal/plugins/ctime/admin.py=utf-8
 encoding//b3portal/plugins/ctime/functions.py=utf-8
 encoding//b3portal/plugins/ctime/models.py=utf-8
