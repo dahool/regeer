@@ -210,8 +210,8 @@ def adminlist(request, filter=False):
     return res
 
 @server_permission_required_with_403(perm.VIEW_CLIENT)
-@render('b3portal/client/client_list.html')
 @cache_page(30)
+@render('b3portal/client/client_list.html')
 def clientlist(request):
     data = ''
     search = {'server': request.server}
@@ -678,8 +678,8 @@ def direct(request):
         return HttpResponseRedirect(next)
     return HttpResponseRedirect(urlreverse("client_detail",server=request.server,kwargs={'id':player.id}))
 
-@render('json')
 @cache_page(5*60)
+@render('json')
 def group_list(request, id):
     client = get_object_or_404(Client, id=id, using=request.server);
     return get_group_list(request, client) 
