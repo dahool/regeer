@@ -99,12 +99,12 @@ title="{% trans "Double click to edit..." %}" class="nodecoration_icon icon_edit
 {% if playedtime %}
 <tr class="trhighlight">
 {% if playedlastmonth %}
-{% with firstplayed=playedtime.start|date:"DATE_FORMAT" totalplayed=playedtime.total totalmonth=playedlastmonth.total %}
-	<td colspan="4">{%blocktrans%}Played <b>{{totalplayed}}</b> since {{firstplayed}}, <b>{{totalmonth}}</b> in last month.{%endblocktrans%}</td>
+{% with firstplayed=playedtime.start|timesince totalplayed=playedtime.total totalmonth=playedlastmonth.total %}
+	<td colspan="4">{%blocktrans%}Played <b>{{totalplayed}}</b> in {{firstplayed}}, <b>{{totalmonth}}</b> in the last month.{%endblocktrans%}</td>
 {% endwith %}
 {% else %}
-{% with firstplayed=playedtime.start|date:"DATE_FORMAT" totalplayed=playedtime.total %}
-	<td colspan="4">{%blocktrans%}Played <b>{{totalplayed}}</b> since <b>{{firstplayed}}</b>{%endblocktrans%}</td>
+{% with firstplayed=playedtime.start|timesince totalplayed=playedtime.total %}
+	<td colspan="4">{%blocktrans%}Played <b>{{totalplayed}}</b> in <b>{{firstplayed}}</b>{%endblocktrans%}</td>
 {% endwith %}
 {% endif %}
 </tr>

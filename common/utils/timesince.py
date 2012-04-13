@@ -6,10 +6,10 @@ from django.utils.translation import ungettext, ugettext
 def minutes_to_string(ts):
 
     chunks = (
-          (60 * 60 * 60 * 24 * 365, lambda n: ungettext('year', 'years', n)),
-          (60 * 60 * 60 * 24 * 30, lambda n: ungettext('month', 'months', n)),
-          (60 * 60 * 60 * 24 * 7, lambda n : ungettext('week', 'weeks', n)),
-          (60 * 60 * 60 * 24, lambda n : ungettext('day', 'days', n)),
+#          (60 * 60 * 60 * 24 * 365, lambda n: ungettext('year', 'years', n)),
+#          (60 * 60 * 60 * 24 * 30, lambda n: ungettext('month', 'months', n)),
+#          (60 * 60 * 60 * 24 * 7, lambda n : ungettext('week', 'weeks', n)),
+#          (60 * 60 * 60 * 24, lambda n : ungettext('day', 'days', n)),
           (60 * 60 * 60, lambda n: ungettext('hour', 'hours', n)),
           (60 * 60, lambda n: ungettext('minute', 'minutes', n)),
     )
