@@ -30,14 +30,12 @@ $(function () {
 	
 	var d1 = [];
 	var axis = [];
-	var i = 0;
-	 {% for d in activity %}
-	 	if (!axis[{{d.0}}]) {
-	 		axis.push([{{d.0}},'{{d.1}}']);	
-	 	}
-	 	i = {{d.0}};
-	 	d1.push([{{d.2}}/60,{{d.0}},{{d.3}}/60,'']);
-	{% endfor %}
+{% for d in activity %}
+    if (!axis[{{d.0}}]) {
+		axis.push([{{d.0}},'{{d.1}}']);	
+	}
+	d1.push([{{d.2}}/60,{{d.0}},{{d.3}}/60,'']);
+{% endfor %}
 	var options = { series: { gantt: { active: true, show: true, barHeight: .5 } }
 	 	,xaxis:  { min: 0, max: 1440, ticks: hours_tick }
 		,yaxis:  { ticks: axis }
