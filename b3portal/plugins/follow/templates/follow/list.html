@@ -1,13 +1,25 @@
 {% extends "base_layout.html" %}
 {% load listtocolumns i18n tagutils urltag %}
 {% block title %}{{ block.super }} | {% trans "Watched Players" %}{% endblock %}
-{% block main_content %}
+{% block main_content_header %}
+<h3>{% trans "Watched Players" %}</h3>
+<span>
+{% blocktrans count counter=list|length %}
+(there is {{counter}} player in the watch list)
+{% plural %}
+(there are {{counter}} players in the watch list) 
+{% endblocktrans %}
+</span>
+<div class="header-right">
 <small>
 {% with "follow" as pluginname %}
 {% include "b3portal/server_form.html" %}
 {% endwith %}
 </small>
-<h3>{% trans "Watched Players" %}</h3>
+</div>
+
+{% endblock %}
+{% block main_content %}
 <table class="table-style">
 <thead>
 <tr>

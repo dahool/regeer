@@ -22,7 +22,6 @@ register = template.Library()
 
 @register.tag
 def current_nav(parser, token):
-    import re
     args = token.split_contents()
     template_tag = args[0]
     if len(args) < 2:
@@ -33,7 +32,7 @@ def current_nav(parser, token):
         return NavSelectedNode(args[1], args[2])
 
 class NavSelectedNode(template.Node):
-    def __init__(self, url, style=None):
+    def __init__(self, url, style='nav-active'):
         self.url = url
         self.style = style
 
@@ -44,9 +43,7 @@ class NavSelectedNode(template.Node):
             if (pValue == '/' or pValue == '') and not (path  == '/' or path == ''):
                 return ""
             if path.startswith(pValue):
-                if self.style:
-                    return self.style
-                return "current"
+                return self.style
         except:
             pass
         return ""

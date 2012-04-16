@@ -1,14 +1,22 @@
 {% extends "base_layout.html" %}
 {% load listtocolumns i18n tagutils settingstag paginator navigation urltag %}
-{% block main_content %}
-<h3>{% trans "Public Ban List" %}</h3>
-{% with ban_list.paginator.count as count %}
-<span>{% blocktrans %}There are {{count}} active bans/tempbans{%endblocktrans%}
+{% block title %}{{ block.super }} | {% trans "Banned Players" %}{% endblock %}
+{% block main_content_header %}
+<h3>{% trans "Banned Players" %}</h3>
+<span>
+{% blocktrans count counter=ban_list.paginator.count %}
+(there is {{counter}} active ban)
+{% plural %}
+(there are {{counter}} active bans)
+{% endblocktrans %}
+</span>
+<div class="header-right">
 <small>
 {% include "b3portal/server_form.html" %}
 </small>
-</span>
-{% endwith %}
+</div>
+{% endblock %}
+{% block main_content %}
 <form method="get" action="{% url ban_list %}">
 <small>
 <input type="hidden" name="server" value="{{request.server}}">
@@ -35,11 +43,12 @@
 {% for ban in ban_list.object_list %}
 <tr class="{% cycle "odd" "even" %}">
 <td><a href="{% serverurl client_detail ban.client.id %}">{{ban.client.name}}</a></td>
-<td>{{ban.time_add|date:"D, d M Y (H:i)"}}</td>
+<td>{{ban.time_add|date:"DATETIME_FORMAT"}}</td>
 <!-- td>{% if ban.duration != 0 %}{{ban.display_duration}}{% endif%}</td-->
-<td>{% if ban.duration != 0 %}{{ban.time_expire|date:"D, d M Y (H:i)"}}{%else%}<span style="color:red;">{% trans "Permanent" %}</span>{%endif%}</td>
+<td>{% if ban.duration != 0 %}{{ban.time_expire|date:"DATETIME_FORMAT"}}{%else%}<span style="color:red;">{% trans "Permanent" %}</span>{%endif%}</td>
 <td {% if ban.display_data and obj_perms.portal.listpenalties %}class="simple_icon icon_info notice_tip" title="{{ban.display_data|clean_colors}}" {%endif%}>
-{% if user.is_authenticated %}
+<p class="wordwrap" style="width: 390px;">
+{% if obj_perms.portal.listpenalties %}
 {{ban.reason|clean_colors}}
 {% else %}
 {% ifsetting "ANOM_HIDE_REASON" %}
@@ -48,6 +57,7 @@
 {{ban.reason|clean_colors}}
 {% endifsetting %}
 {% endif %}
+</p>
 </td>
 </tr>
 {% endfor %}

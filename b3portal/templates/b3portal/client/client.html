@@ -55,11 +55,12 @@ $(document).ready(function() {
     
 	{% if change_group %}
 	var group_data = '{{group_data|safe}}';
+	var submitbtn = '<span class="nodecoration_icon icon_save" title="{% trans "Save" %}">&nbsp;</span>';
     $('#client_group.icon_edit').editable('{% serverurl change_clientgroup client.id %}', {
     	data   : function() { return group_data; },
     	event	: 'dblclick',
         type    : 'select',
-        submit  : '{% trans "Save" %}',
+        submit  : submitbtn,
         indicator : '{% trans "Saving..." %}',
         callback : function(value, settings) {
         	$.get('{% serverurl list_groups client.id %}', function(data) {
@@ -110,6 +111,9 @@ function slide_control(curr) {
 {% endblock %}
 {% block navigation2 %}
 {% include "b3portal/client/client_menu.html" %}
+{% endblock %}
+{% block main_content_header %}
+<h3>{% blocktrans with name=client.name %}Details for {{name}}{% endblocktrans %}</h3>
 {% endblock %}
 {% block main_content %}
 <!-- ************************ DETAIL ************************ -->

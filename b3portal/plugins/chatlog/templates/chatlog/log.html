@@ -28,13 +28,19 @@ $(document).ready(function() {
 });
 </script>
 {% endblock %}
-{% block main_content %}
+{% block main_content_header %}
 <h3>{% trans "Chat Logs" %}</h3>
+
+<div class="header-right">
 <small>
 {% with "chatlog" as pluginname %}
 {% include "b3portal/server_form.html" %}
 {% endwith %}
 </small>
+</div>
+
+{% endblock %}
+{% block main_content %}
 {% if chat_list %}
 <form method="get">
 <small>
@@ -69,7 +75,7 @@ $(document).ready(function() {
 <tr class="{% cycle "odd" "even" %} {% if chat.client.id == highlight %}highlight{%endif%}">
 <td><a href="{% serverurl client_detail chat.client.id %}">{{chat.client.id}}</a></td>
 <td class="autofill" name="id_name" alt="@{{chat.client.id}}">{{chat.client.name}}</td>
-<td>{{chat.message}}</td>
+<td><p class="wordwrap" style="width: 330px;">{{chat.message}}</p></td>
 <td><span style="cursor: pointer;" onclick="$('#id_name').val('+@{{chat.client.id}}'); set_field('datefrom','{{chat.time_add|summinutes:-5|date:"d/m/Y H:i"}}'); set_field('dateto','{{chat.time_add|summinutes:10|date:"d/m/Y H:i"}}')">{{chat.time_add|date:"DATETIME_FORMAT"}}</span></td>
 <td>{% if chat.target %}<a href="{% serverurl client_detail chat.target.id %}">{{chat.target.name}}</a>{%else%}{{chat.get_type_display}}{%endif%}</td>
 </tr>

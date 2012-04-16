@@ -45,6 +45,9 @@ $(function () {
 });
 </script>
 {% endblock %}
+{% block main_content_header %}
+<h3>{% trans "Activity" %}</h3>
+{% endblock %}
 {% block main_content %}
 <table class="table-style cd-table client_lists">
 <caption><h3><a href="{% serverurl client_detail client.id %}" class="nodecoration_icon go_back">&nbsp;</a>{{client.name}}<small>  

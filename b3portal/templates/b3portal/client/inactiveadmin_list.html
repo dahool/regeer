@@ -1,44 +1,16 @@
 {% extends "base_layout.html" %}
 {% load listtocolumns i18n tagutils settingstag paginator navigation urltag plugintag serverpermtag %}
 {% block title %}{{ block.super }} | {% trans "Inactive Admins" %}{% endblock %}
-{% block navigation2 %}
-{% include "b3portal/client/client_menu.html" %}
-{% endblock %}
-{% block main_content %}
+{% block main_content_header %}
 <h3>{% trans "Inactive Admins" %}</h3>
-<small>
+
+<span>
+{% blocktrans count counter=client_list.paginator.count %}
+There is {{counter}} admin not been seen by B3 for
+{% plural %}
+There are {{counter}} admins not been seen by B3 for 
+{% endblocktrans %}
 <form style="display:inline;" method="get">
-{% with 'portal.viewclientgroup' as checkperm %}
-{% with request.server as current_server %}
-<select name="server" onchange="this.form.submit()">
-{% for server in request.server_list %}
-{% if checkperm %}
-{% ifperm user server checkperm checkperm2 %}
-	{% if pluginname %}
-	{% ifpluginenabled pluginname server %}
-		<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
-	{% endifpluginenabled %}
-	{% else %}
-		<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
-	{% endif %}
-{% endifperm %}
-{% else %}
-	{% if pluginname %}
-	{% ifpluginenabled pluginname server %}
-		<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
-	{% endifpluginenabled %}
-	{% else %}
-		<option value="{{server.uuid}}" {% if current_server == server.uuid %}selected="selected"{%endif%}>{{server.name}}</option>
-	{% endif %}
-{% endif %}
-{% endfor %}
-</select>
-{% endwith %}
-{% endwith %}
-</small>
-{% with client_list.paginator.count as count %}
-<span>{% blocktrans %}There are {{count}} admins who have not been seen by B3 for {%endblocktrans%}</span>
-{% endwith %}
 <small>
 <select name="days" onchange="this.form.submit()">
 <option value="1" {% if days == 1 %}selected="selected"{%endif%}>{% trans "1 day" %}</option>
@@ -52,6 +24,17 @@
 </select>
 </small>
 </form>
+</span>
+
+<div class="header-right">
+<small>
+{% with 'portal.viewclientgroup' as checkperm %}
+{% include "b3portal/server_form.html" %}
+{% endwith %}
+</small>
+</div>
+{% endblock %}
+{% block main_content %}
 <div id="client_list">
 <table class="table-style">
 <thead>
@@ -61,18 +44,18 @@
 <th>{% trans "Group" %}</th>
 <th>{% trans "Connections" %}</th>
 <th>{% trans "Last Seen" %}</th>
-<th>{% trans "Duration" %}</th>
+<th>{% trans "Since" %}</th>
 </tr>
 </thead>
 <tbody>
 {% for client in client_list.object_list %}
 <tr class="{% cycle "odd" "even" %}">
-<td><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
+<td class="align-right"><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
 <td>{{client.name}}</td>
-<td>{{client.displayGroup}}</td>
-<td>{{client.connections}}</td>
+<td class="level_row_{{client.group.level}}">{{client.displayGroup}}</td>
+<td class="align-right">{{client.connections}}</td>
 <td>{{client.time_edit|date:"DATETIME_FORMAT"}}</td>
-<td>{{client.time_edit|timesince}}</td>
+<td>{{client.time_edit|timesince}} {% trans "ago" %}</td>
 </tr>
 {% endfor %}
 </tbody>

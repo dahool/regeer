@@ -43,7 +43,7 @@ from b3portal.models import Server
 from b3portal.rconadmin.handlers.iourt41 import Iourt41RconHandler
 from django.contrib.auth.decorators import login_required
 from b3portal.permission.utils import has_server_perm
-from b3portal.permission.context_processors import perm
+import b3portal.permissions as perm
 
 @login_required
 @render('b3portal/admin/home.html')

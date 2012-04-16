@@ -1,20 +1,26 @@
 {% extends "base_layout.html" %}
 {% load listtocolumns i18n tagutils settingstag media paginator navigation urltag %}
 {% block title %}{{ block.super }} | {% trans "Regular Visitors" %}{% endblock %}
-{% block navigation2 %}
-{% include "b3portal/client/client_menu.html" %}
-{% endblock %}
-{% block main_content %}
+{% block main_content_header %}
 <h3>{% trans "Regular Visitors" %}</h3>
-{% with client_list.paginator.count as count %}
-<span>{% blocktrans %}There are {{count}} regultar visitors. Must have more than <b>50</b> connections and been seen in the last <b>7</b> days.{%endblocktrans%}
+
+<span>
+{% blocktrans count counter=client_list.paginator.count %}
+(there is {{counter}} visitors with more than <b>50</b> connections seen in the last <b>7</b> days)
+{% plural %}
+(there are {{counter}} visitors with more than <b>50</b> connections seen in the last <b>7</b> days)
+{% endblocktrans %}
+</span>
+
+<div class="header-right">
 <small>
 {% with 'portal.viewclientinfo' as checkperm %}
 {% include "b3portal/server_form.html" %}
 {% endwith %}
 </small>
-</span>
-{% endwith %}
+</div>
+{% endblock %}
+{% block main_content %}
 <div id="client_list">
 <table class="table-style">
 <thead>
@@ -29,10 +35,10 @@
 <tbody>
 {% for client in client_list.object_list %}
 <tr class="{% cycle "odd" "even" %}">
-<td><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
+<td class="align-right"><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
 <td>{{client.name}}</td>
-<td>{% if obj_perms.portal.viewclientgroup %}{{client.displayGroup}}{%else%}-{%endif%}</td>
-<td>{{client.connections}}</td>
+<td>{% if obj_perms.portal.viewclientgroup %}<span class="level_row_{{client.group.level}}">{{client.displayGroup}}</span>{%else%}-{%endif%}</td>
+<td class="align-right">{{client.connections}}</td>
 <td>{{client.time_edit|date:"DATETIME_FORMAT"}}</td>
 </tr>
 {% endfor %}

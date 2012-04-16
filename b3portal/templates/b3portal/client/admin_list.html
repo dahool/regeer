@@ -1,20 +1,26 @@
 {% extends "base_layout.html" %}
 {% load urltag listtocolumns i18n tagutils settingstag paginator navigation %}
 {% block title %}{{ block.super }} | {% trans "Admin List" %}{% endblock %}
-{% block navigation2 %}
-{% include "b3portal/client/client_menu.html" %}
-{% endblock %}
-{% block main_content %}
+{% block main_content_header %}
 <h3>{% trans "Admin List" %}</h3>
-{% with client_list.paginator.count as count %}
-<span>{% blocktrans %}There are {{count}} admins{%endblocktrans%}
+
+<span>
+{% blocktrans count counter=client_list.paginator.count %}
+(there is {{counter}} admin)
+{% plural %}
+(there are {{counter}} admins)
+{% endblocktrans %}
+</span>
+
+<div class="header-right">
 <small>
 {% with 'portal.viewclientgroup' as checkperm %}
 {% include "b3portal/server_form.html" %}
 {% endwith %}
 </small>
-</span>
-{% endwith %}
+</div>
+{% endblock %}
+{% block main_content %}
 <div id="client_list">
 <table class="table-style">
 <thead>
@@ -29,10 +35,10 @@
 <tbody>
 {% for client in client_list.object_list %}
 <tr class="{% cycle "odd" "even" %}">
-<td><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
+<td class="align-right"><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
 <td name="autofill" alt="name">{{client.name}}</td>
-<td>{{client.displayGroup}}</td>
-<td name="autofill" alt="ip">{{client.ip}}</td>
+<td class="level_row_{{client.group.level}}">{{client.displayGroup}}</td>
+<td class="align-right" name="autofill" alt="ip">{{client.ip}}</td>
 <td>{{client.time_edit|date:"DATETIME_FORMAT"}}</td>
 </tr>
 {% endfor %}

@@ -1,6 +1,7 @@
 {% extends "base_simple.html" %}
 {% load i18n settingstag navigation gravatar extendedtags plugintag urltag %}
 {% block extra_header %}
+<script type="text/javascript" src="{{STATIC_URL}}plus/layout.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/baseapp.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.measure.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.place.js"></script>
@@ -18,100 +19,150 @@ $(document).ready(function() {
 });
 </script>
 {% endblock %}
+
+{% comment %}
+<!-- /////// LANG ICONS ///////// -->
 {% block topnav-lang %}
 {% get_available_languages as LANGUAGES %}
 {% for code, name in LANGUAGES %}
 <a href="?lang={{code}}" class="nodecoration_icon_2 lang_{{code}}" title="{{name}}"></a> 
 {% endfor %}
 {% endblock %}
-{% block topbar %}
-{% if user.is_authenticated %}
-<div id="topbar" class="clear topbar">&nbsp;
-	<div class="topbar-container" style="display: none;">
-	<div class="topbar-button-close-container">
-		<a class="topbar-button-close" href="#">&nbsp;</a>
-	</div>
-	<div class="topbar-content">
-	{% if obj_perms.portal.viewclientinfo %}
-	<div style="float: right; margin-right: 10px;">
-	{% include "b3portal/client/quick.html" %}
-	</div>
-	{% endif %}
-	</div>
-	</div>
-	<div class="topbar-single-container">
-		<div class="topbar-button-open-container" style="display: none;">
-			<a class="topbar-button-open" href="#">&nbsp;</a>
-		</div>
-	</div>
+{% endcomment %}
+
+<!-- HEADER -->
+{% block main_header %} 
+{% if user.is_staff %}
+<a href="{% url admin:index %}" class="plus-button button-settings">
+    <div class="button-settings-icon">{% trans "Administration" %}</div>
+</a>
+{% endif %}		
+
+{% if obj_perms.portal.viewclientinfo %}
+<div id="header_action_bar">
+{% include "b3portal/client/quick.html" %}
 </div>
 {% endif %}
+
+<div class="header-right">
+	{% if user.is_authenticated %}
+    <ol id="profile">
+        <li class="profile-text">{{user.username}}</li>
+        <li class="avatar">
+        	{% gravatar user.email "gravatar" 40 %}
+        </li>
+    </ol>
+    <div id="profile-box" class="profile-box">
+        <div class="profile-detail">
+            {% gravatar user.email "gravatar" 60 %}
+		  	{% if user.is_superuser or user.owned_servers.all %}
+		  	<a href="{% url server:home %}" class="plus-button plus-button-blue">{% trans "My Servers" %}</a>
+		  	{% endif %}
+            <span class="profile-text">{{user.email}}</span>
+        </div>
+        <div class="profile-box-footer">
+            <table>
+                <tr>
+				  	{% if not user.is_external %}
+				  	<td><a href="{% url account_update_password %}" class="plus-button">{% trans "Change password" %}</a></td>
+				  	{% endif %}
+            		<td><a href="{% url auth_logout %}" class="plus-button">{% trans "Sign out" %}</a></td>    
+                </tr>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    	<!--  TODO -->
+	  	<form id="login" method="post" accept-charset="utf-8" action="{% url user_signin %}">
+	  	<small>
+		{% csrf_token %}
+         	<input type="text" id="id_username" name="username" maxlength="30" placeholder="{% trans "Username" %}" autocomplete="on" title="{% trans "Username" %}" value="">
+         	<input type="password" name="password" id="id_password" title="{% trans "Password" %}" placeholder="{% trans "Password" %}" value="">
+		<input type="submit" value="{% trans "Sign in" %}"/>
+		</small>
+		</form>
+    {% endif %}
+</div>
 {% endblock %}
+
+<!-- NAVIGATION -->
 {% block navigation %}
-	<ul class="topnav">
-        {% if user.is_staff %}
-        <li class="nodecoration_icon icon_config"><a style="font-weight: bold;" href="{% url admin:index %}">{% trans "Administration Panel" %}</a></li>
-        {% endif %}		
-		{% url home as url_nav_home %}        
-		<li class="{% current_nav url_nav_home %}"><a href="{{ url_nav_home }}">{% trans "Home" %}</a></li>
-		{% ifplugininstalled "map" %}
-		{% url map:home as url_nav_maps %}
-	    <li class="{% current_nav url_nav_maps %}"><a href="{{ url_nav_maps }}">{% trans "Maps" %}</a></li>
-	    {% endifplugininstalled %}
-	    {% serverurl ban_list as url_nav_bans %}
-	    <li class="{% current_nav url_nav_bans %}"><a href="{{ url_nav_bans }}">{% trans "Penalties" %}</a>
-	    {% include "b3portal/penalties/ban_list_menu.html" %}
-	    </li>
-	    {% if obj_perms.portal.viewclientinfo %}
-	    {% serverurl client_list as url_nav_clients %}
-	    <li class="{% current_nav url_nav_clients %}"><a href="{{ url_nav_clients }}">{% trans "Players" %}</a>
-		{% include "b3portal/client/client_menu.html" %}	    
-	    </li>
-	    {% endif %}
-	    {% ifplugininstalled "chatlog" %}
-	    {% if obj_perms.plugin.chatlog %}
-	    {% serverurl chatlog:chat_list as url_nav_chatlog %}
-	    <li class="{% current_nav url_nav_chatlog %}"><a href="{{ url_nav_chatlog }}">{% trans "Chat Logs" %}</a></li>
-	    {% endif %}
-	    {% endifplugininstalled %}
-	    {% ifplugininstalled "status" %}
-	    {% if obj_perms.plugin.viewstatus %}
-	    {% serverurl status:home as url_nav_status %}
-	    <li class="{% current_nav url_nav_status %}"><a href="{{ url_nav_status }}">{% trans "Status" %}</a>
-	    {% include "status/status_menu.html" %}
-	    </li>
-	    {% endif %}
-	    {% endifplugininstalled %}
-	    {% if obj_perms.portal.rcon %}
-	    {% serverurl rcon:home as url_nav_admin %}
-	    <li class="{% current_nav url_nav_admin %}"><a href="{{ url_nav_admin }}">{% trans "RCon" %}</a></li>
-	    {% endif %}
-        <li style="float: right; margin-right: 45px;">
-		  {% if user.is_authenticated %}
-		  {% with user.username as name %}
-		  <a alt="span">{% blocktrans %}Welcome {{name}}{% endblocktrans %} {% gravatar user.email "avatar" 18 %}</a>
-		  {% endwith %}
-		  <ul class="subnav">
-		  	{% if request.user.is_superuser or request.user.owned_servers.all %}
-		  	<li><a href="{% url server:home %}">{% trans "My Servers" %}</a></li>
-		  	{% endif %}
-		  	{% if not request.user.is_external %}
-		  	<li><a href="{% url account_update_password %}">{% trans "Change password" %}</a></li>
-		  	{% endif %}
-		  	<li><a class="logout" href="{% url auth_logout %}">{% trans "Sign out" %}</a></li>
-		  </ul>
-		  {% else %}
-		  <div class="loginbar">
-		  	<form id="login" method="post" accept-charset="utf-8" action="{% url user_signin %}">
-		  	<small>
-			{% csrf_token %}
-          	<input type="text" id="id_username" name="username" maxlength="30" placeholder="{% trans "Username" %}" autocomplete="on" title="{% trans "Username" %}" value="">
-          	<input type="password" name="password" id="id_password" title="{% trans "Password" %}" placeholder="{% trans "Password" %}" value="">
-			<input type="submit" value="{% trans "Sign in" %}"/>
-			</small>
-			</form>
-		  </div>
-		  {% endif %}
-		</li>
-    </ul>
+
+	{% ifplugininstalled "map" %}
+     <div class="nav-menu">
+     	{% url map:home as url_nav_maps %}
+         <a tabindex="-1" class="nav-button {% current_nav url_nav_maps %}" href="{{ url_nav_maps }}">
+             <div>
+                 <div class="nav-icon nav-icon-maps"></div>
+                 <div class="nav-text">{% trans "Maps" %}</div>
+             </div>
+         </a>
+     </div>
+    {% endifplugininstalled %}
+    
+     <div class="nav-menu">
+     	 {% include "b3portal/penalties/ban_list_menu.html" %}
+     	 {% serverurl ban_list as url_nav_bans %}
+         <a tabindex="-1" class="nav-button {% current_nav url_nav_bans %}" href="{{ url_nav_bans }}">
+             <div>
+                 <div class="nav-icon nav-icon-penalties"></div>
+                 <div class="nav-text">{% trans "Penalties" %}</div>
+             </div>
+         </a>
+     </div>
+     
+     {% if obj_perms.portal.viewclientinfo %}
+     <div class="nav-menu">
+     	 {% include "b3portal/client/client_menu.html" %}
+     	 {% serverurl client_list as url_nav_clients %}
+         <a tabindex="-1" class="nav-button {% current_nav url_nav_clients %}" href="{{ url_nav_clients }}">
+             <div>
+                 <div class="nav-icon nav-icon-players"></div>
+                 <div class="nav-text">{% trans "Players" %}</div>
+             </div>
+         </a>
+     </div>
+     {% endif %}
+
+	{% ifplugininstalled "chatlog" %}
+	{% if obj_perms.plugin.chatlog %}
+     <div class="nav-menu">
+     	 {% serverurl chatlog:chat_list as url_nav_chatlog %}
+         <a tabindex="-1" class="nav-button {% current_nav url_nav_chatlog %}" href="{{ url_nav_chatlog }}">
+             <div>
+                 <div class="nav-icon nav-icon-chat"></div>
+                 <div class="nav-text">{% trans "Chat Logs" %}</div>
+             </div>
+         </a>
+     </div>
+     {% endif %}
+     {% endifplugininstalled %}
+	    
+	{% ifplugininstalled "status" %}
+	{% if obj_perms.plugin.viewstatus %}
+     <div class="nav-menu">
+		 {% include "status/status_menu.html" %}
+     	 {% serverurl status:home as url_nav_status %}
+         <a tabindex="-1" class="nav-button {% current_nav url_nav_status %}" href="{{ url_nav_status }}">
+             <div>
+                 <div class="nav-icon nav-icon-status"></div>
+                 <div class="nav-text">{% trans "Status" %}</div>
+             </div>
+         </a>
+     </div>
+     {% endif %}
+     {% endifplugininstalled %}
+
+	{% if obj_perms.portal.rcon %}
+     <div class="nav-menu">
+		 {% serverurl rcon:home as url_nav_admin %}
+         <a tabindex="-1" class="nav-button {% current_nav url_nav_admin %}" href="{{ url_nav_admin }}">
+             <div>
+                 <div class="nav-icon nav-icon-rcon"></div>
+                 <div class="nav-text">{% trans "RCon" %}</div>
+             </div>
+         </a>
+     </div>
+     {% endif %}
+     
 {% endblock %}																																																																																																																																																

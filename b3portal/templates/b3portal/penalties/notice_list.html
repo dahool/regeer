@@ -1,16 +1,27 @@
 {% extends "base_layout.html" %}
 {% load listtocolumns i18n tagutils settingstag paginator navigation urltag %}
-{% block main_content %}
+{% block title %}{{ block.super }} | {% trans "Notices" %}{% endblock %}
+{% block main_content_header %}
 <h3>{% trans "Notices" %}</h3>
-{% with ban_list.paginator.count as count %}
-<span>{% blocktrans %}There are {{count}} notices{%endblocktrans%}
+
+<span>
+{% blocktrans count counter=ban_list.paginator.count %}
+(there is {{counter}} notice)
+{% plural %}
+(there are {{counter}} notices)
+{% endblocktrans %}
+</span>
+
+<div class="header-right">
 <small>
-{% with checkperm='portal.listpenalties' %}
+{% with 'portal.listpenalties' as checkperm %}
 {% include "b3portal/server_form.html" %}
 {% endwith %}
 </small>
-</span>
-{% endwith %}
+</div>
+
+{% endblock %}
+{% block main_content %}
 <div id="ban_list">
 <table class="table-style">
 <thead>
@@ -25,8 +36,8 @@
 {% for penalty in ban_list.object_list %}
 <tr class="{% cycle "odd" "even" %}">
 <td><a href="{% serverurl client_detail penalty.client.id %}">{{penalty.client.name}}</a></td>
-<td>{{penalty.time_add|date:"D, d M Y (H:i)"}}</td>
-<td>{{penalty.reason|clean_colors}}</td>
+<td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
+<td><p class="wordwrap" style="width: 400px;">{{penalty.reason|clean_colors}}</p></td>
 <td>{% if penalty.admin and penalty.admin_id > 0 %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}{% if penalty.admin_username %}{{penalty.admin_username}}{%else%}-B3{%endif%}{%endif%}</td>
 </tr>
 {% endfor %}

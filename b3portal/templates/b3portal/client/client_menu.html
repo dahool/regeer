@@ -1,19 +1,22 @@
 {% load i18n navigation extendedtags plugintag urltag %}
-<ul class="subnav">
-{% serverurl world_map as url_nav_map %}
-{% serverurl regularclient_list as url_nav_regular_list %}
-<li id="{% current_nav url_nav_map current2 %}"><a href="{{ url_nav_map }}">{% trans "World Map" %}</a></li>
-<li id="{% current_nav url_nav_regular_list current2 %}"><a href="{{ url_nav_regular_list }}">{% trans "Regular Visitors" %}</a></li>
-{% if obj_perms.portal.listadmins %}
-{% serverurl admin_list as url_nav_admin_list %}
-{% serverurl inactive_admin_list as url_nav_inadmin_list %}
-<li id="{% current_nav url_nav_admin_list current2 %}"><a href="{{ url_nav_admin_list }}">{% trans "Admin List" %}</a></li>
-<li id="{% current_nav url_nav_inadmin_list current2 %}"><a href="{{ url_nav_inadmin_list }}">{% trans "Inactive Admins" %}</a></li>
-{% endif %}
-{% ifplugininstalled "follow" %}
-{% serverurl follow:home as url_nav_follow %}
-{% if obj_perms.plugin.viewfollow %}
-<li id="{% current_nav url_nav_follow current2 %}"><a href="{{ url_nav_follow }}">{% trans "Watched Players" %}</a></li>
-{% endif %}
-{% endifplugininstalled %}
-</ul>
+<div class="sub-nav">
+    <span class="sub-nav-indicator"></span>
+    <ul>
+		{% serverurl world_map as url_nav_map %}
+		{% serverurl regularclient_list as url_nav_regular_list %}
+		<li><a href="{{ url_nav_map }}">{% trans "World Map" %}</a></li>
+		<li><a href="{{ url_nav_regular_list }}">{% trans "Regular Visitors" %}</a></li>
+		{% if obj_perms.portal.listadmins %}
+		{% serverurl admin_list as url_nav_admin_list %}
+		{% serverurl inactive_admin_list as url_nav_inadmin_list %}
+		<li><a href="{{ url_nav_admin_list }}">{% trans "Admin List" %}</a></li>
+		<li><a href="{{ url_nav_inadmin_list }}">{% trans "Inactive Admins" %}</a></li>
+		{% endif %}
+		{% ifplugininstalled "follow" %}
+		{% serverurl follow:home as url_nav_follow %}
+		{% if obj_perms.plugin.viewfollow %}
+		<li><a href="{{ url_nav_follow }}">{% trans "Watched Players" %}</a></li>
+		{% endif %}
+		{% endifplugininstalled %}
+    </ul>                
+</div>

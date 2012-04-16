@@ -1,7 +1,7 @@
 {% extends "base_layout.html" %}
 {% load listtocolumns i18n tagutils media settingstag %}
 {% block extra_header %}
-{{super}}
+{{block.super}}
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/mapeditor.css"/>
 <link rel="stylesheet" type="text/css" href="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/themes/base/jquery-ui.css"/>
 <link rel="stylesheet" type="text/css" href="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/themes/dark-hive/jquery-ui.css"/>

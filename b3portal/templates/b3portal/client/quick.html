@@ -1,29 +1,19 @@
 {% load i18n serverpermtag %}
-<script type="text/javascript">
-<!--
-$(document).ready(
-	function() {
-		$("#quick_server").on('change', function() {
-			$("#server_search_quick").val($(this).val());
-		});
-	}
-);
-//-->
-</script>
 <small>
-<form id="go_search" method="get" action="{% url client_list %}" style="display:inline; margin-right: 10px;">
+<form id="go_search" method="get" action="{% url client_list %}">
 <input type="hidden" name="server" value="{{request.server}}" id="server_search_quick">
 <input type="hidden" name="search" value="Search">
-<select name="type">
+<label for="id_searchtype">{% trans "Search" %}</label>
+<select id="id_searchtype" name="type">
 <option value="name" {% if filter == 'name' %}selected="selected"{%endif%}>{% trans "Name" %}</option>
 <option value="ip" {% if filter == 'ip' %}selected="selected"{%endif%}>{% trans "IP" %}</option>
 </select>
-<input type="text" name="data" value="{{data}}" style="width: 90px;">
+<input type="text" name="data" value="{{data}}" style="width: 120px;">
 <span title="{% trans "Search" %}" onclick="$('#go_search').submit()" class="nodecoration_icon icon_search">&nbsp;</span>
 </form>
-<form id="go_client" style="display:inline;" method="post" action="{% url go_player %}">
+<form id="go_client" method="post" action="{% url go_player %}">
 {% csrf_token %}
-<label style="color: white; padding-right: 0px;" for="id_playerid">{% trans "Player" %} @</label>
+<label for="id_playerid">{% trans "Player" %} @</label>
 <input type="text" name="playerid" id="id_playerid" class="default" style="width:50px;" placeholder="{% trans "id" %}">
 <input type="hidden" name="next" value="{{request.path}}">
 {% with request.server as current_server %}

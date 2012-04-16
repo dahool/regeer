@@ -1,20 +1,5 @@
 {% extends "base_layout.html" %}
-{% load i18n media %}
-{% block extra_header %}
-{{ block.super }}
-<!-- script type="text/javascript" src="http://dl.dropbox.com/u/9131337/web/script.min.js"></script-->
-<script type="text/javascript">
-$(document).ready(
- function() {
- 	  //$("#tweets-container").twitscroll({username: 'urtserver',media_root: 'http://dl.dropbox.com/u/9131337/web/'});
-}
-);
-</script>
-{% endblock %}
-{% block main_block %}
-<!-- 
-<div id="main_logo">
-<img src="{{STATIC_URL}}images/logo.png" />
-</div>
- -->
+{% load settingstag %}
+{% block main_content_header %}
+<h3>{% setting "SITE_NAME" %}</h3>
 {% endblock %}

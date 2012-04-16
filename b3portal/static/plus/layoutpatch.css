@@ -1,0 +1,33 @@
+@charset "UTF-8";
+#header_action_bar, #header_action_bar form {
+	display: inline-block;	
+}
+#header_action_bar {
+	margin-left: 15px;
+    border-radius: 5px 5px 5px 5px;
+    padding: 2px;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: nowrap; 
+    background-color: #F5F5F5;
+    background-image: -moz-linear-gradient(center top , #F5F5F5, #F1F1F1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #444444;       
+}
+#go_search label, #go_client label {
+	color: #999999;	
+}
+#go_search span, #go_client span {
+	vertical-align: middle !important;	
+}
+div#main_content {
+	margin-bottom: 20px;
+	height: auto !important;
+}
+#ban_list .table-style, #client_list .table-style {
+	width: 100%;
+}
+#playerlist .inner_table {
+	width: 100%;
+	 margin-bottom: 0.5em;
+} 
