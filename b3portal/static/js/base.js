@@ -68,7 +68,7 @@ $(document).ready(
 				});  
 			}	
 		);
-		/*$("'a[alt='link']").ajaxlink({success: 'main_content'});*/
+		/*$("a[alt='link']").ajaxlink({success: 'main_content'});*/
 	    /*$('ul.messages').on('show','li', function() {
 	        $(this).append("<img class='close_button' src='"+MEDIA_URL+"images/close.gif'/>");
 	     });

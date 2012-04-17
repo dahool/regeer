@@ -22,10 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         var opts = $.extend({}, $.fn.ajaxlink.defaults, options);
         var success = opts.success || function() { };
-        
+        var selector = $(this).selector;
         return $(this).each(function(){
-            $this = $(this);
-            jQuery(this).click( function() {
+            jQuery(document).on('click', selector, function() {
                 var url  = $(this).attr("href");
                 var div = $(this).prop("success");
                 
