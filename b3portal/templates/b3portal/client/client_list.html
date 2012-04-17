@@ -65,7 +65,7 @@
 <tbody>
 {% for client in client_list.object_list %}
 <tr class="{% cycle "odd" "even" %}">
-<td class="align-right"><a href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
+<td class="align-right"><a alt="link" href="{% serverurl client_detail client.id %}">{{client.id}}</a></td>
 <td title="{% trans "Search for players with same name" %}">
 <a style="font-weight: normal" href="?type=name&data={{client.name|urlencode}}&server={{request.server}}&search=Search">{{client.name}}</a>
 {% if obj_perms.portal.listpenalties and client.penalties.notices %}
