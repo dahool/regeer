@@ -5,3 +5,4 @@ settings/60-local.pyconf
 *.sqlite
 .settings/*
 build.ver
+GeoLiteCity.dat

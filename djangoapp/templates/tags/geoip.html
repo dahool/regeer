@@ -1,3 +1,6 @@
 {% if data %}
+<span class="top_tip flag flag-{{data.code}}" title="{% if data.city %}{{data.city}} - {%endif%}{{data.country_name}}">&nbsp;</span>{% if data.city %}&nbsp;{{data.city}}{%endif%}
+{%comment%}
 <img src="{{STATIC_URL}}{{data.img}}" alt="[{{data.country_name}}]" title="{% if data.city %}{{data.city}} - {%endif%}{{data.country_name}}">&nbsp;{% if data.city %}{{data.city}}{%endif%}
+{%endcomment%}
 {% endif %}
