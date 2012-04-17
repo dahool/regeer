@@ -104,13 +104,25 @@ div#content {
     color: #A7A7A7;
 }
 #nav-active-indicator {
-    background: url("images/arrow.png") no-repeat 0 50% transparent;
+	background: url("images/arrow-sp.png") no-repeat top left;
+	background-position: -29px 0;
+    /*background: url("images/arrow.png") no-repeat 0 50% transparent;*/
     height: 24px;
     width: 13px;
     z-index: 1;
     position: absolute;
     left: 101px;
     display: none;
+}
+#profile-box-indicator {
+	background: url("images/arrow-sp.png") no-repeat top left;
+	background-position: 0 0;
+    width: 24px;
+    height: 13px;
+    z-index: 1;
+    position: absolute;
+    right: 25px;
+    top: -13px;
 }
 .nav-active, .nav-button:hover {
     color: #333333 !important;

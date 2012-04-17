@@ -53,6 +53,7 @@ $(document).ready(function() {
         </li>
     </ol>
     <div id="profile-box" class="profile-box">
+    	<div id="profile-box-indicator"></div>
         <div class="profile-detail">
             {% gravatar user.email "gravatar" 60 %}
 		  	{% if user.is_superuser or user.owned_servers.all %}

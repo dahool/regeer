@@ -42,6 +42,7 @@ class NavSelectedNode(template.Node):
             pValue = template.Variable(self.url).resolve(context)
             if (pValue == '/' or pValue == '') and not (path  == '/' or path == ''):
                 return ""
+            pValue = pValue.split('?')[0]
             if path.startswith(pValue):
                 return self.style
         except:

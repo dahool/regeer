@@ -6,13 +6,13 @@ function set_indicator_position() {
 };
 $(document).ready(function() {
     set_indicator_position();
-    $(".nav-button").click(function() {
+/*    $(".nav-button").click(function() {
         if (!$(this).hasClass("nav-active")) {
             $(".nav-active").removeClass("nav-active");
             $(this).addClass("nav-active");
             set_indicator_position();
         }
-    });
+    });*/
     $("#profile .avatar").click(function(e) {
         $("#profile-box").toggle();
         e.stopPropagation();
