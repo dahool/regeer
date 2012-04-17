@@ -22,13 +22,14 @@ from djangoui.widgets import uiSplitDateTimeWidget
 
 class ChatLogSearch(forms.Form):
     
-    name = forms.CharField(max_length=50, label=_('Name/@id'), required=False)
+    #name = forms.CharField(max_length=50, label=_('Name/@id'), required=False)
+    name = forms.CharField(max_length=10, label=_('@id'), required=False)
     datefrom = forms.SplitDateTimeField(('%d/%m/%Y',),('%H:%M',),
                                     widget=uiSplitDateTimeWidget(date_format="%d/%m/%Y",
                                                                  show_seconds=False),
                                     label=_('From'),
                                     required=False)
-    text = forms.CharField(max_length=50, label=_('Text'), required=False)
+    text = forms.CharField(max_length=50, label=_('Text'), required=False, min_length=4)
     dateto = forms.SplitDateTimeField(('%d/%m/%Y',),('%H:%M',),
                                     widget=uiSplitDateTimeWidget(date_format="%d/%m/%Y",
                                                                  show_seconds=False),

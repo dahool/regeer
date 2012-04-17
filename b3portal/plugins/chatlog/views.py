@@ -64,9 +64,16 @@ def chatlist(request):
                 if re.search('^[@]{1}[0-9]*$',name):
                     chats = chats.filter(client__id=name[1:])
                 elif re.search('^\+[@]{1}[0-9]*$',name):
-                    highlight = int(name[2:]) 
+                    highlight = int(name[2:])
+                elif re.search('^[0-9]*$',name):
+                    chats = chats.filter(client__id=name)
                 else:
-                    chats = chats.filter(Q(client__name__icontains=name) | Q(client__aliases__alias__icontains=name)).distinct()
+                    messages.warning(request, _('Invalid search term.'))
+                    chats = chats.filter(client__id=0)
+                # there is not performance at all in this search.
+                # lets disable it 
+                #else:
+                #    chats = chats.filter(Q(client__name__istartswith=name) | Q(client__aliases__alias__istartswith=name)).distinct()
             datefrom = data['datefrom']
             if datefrom:
                 chats = chats.filter(time_add__gte=time.mktime(datefrom.timetuple()))
@@ -75,7 +82,8 @@ def chatlist(request):
                 chats = chats.filter(time_add__lte=time.mktime(dateto.timetuple()))
             text = data['text']
             if text:
-                chats = chats.filter(message__icontains=text)
+                #chats = chats.filter(message__icontains=text)
+                chats = chats.filter(message__search=text)
     else:
         form = ChatLogSearch()
 

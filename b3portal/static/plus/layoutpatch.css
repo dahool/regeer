@@ -22,7 +22,7 @@
 }
 div#main_content {
 	margin-bottom: 20px;
-	height: auto !important;
+	/*height: auto !important;*/
 }
 #ban_list .table-style, #client_list .table-style {
 	width: 100%;

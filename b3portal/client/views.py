@@ -223,7 +223,7 @@ def clientlist(request):
         search['sort'] = sort
         search['order'] = order
             
-    if request.GET.has_key('search') or request.GET.has_key('searchall'):
+    if request.GET.has_key('search'):
         for k,v in request.GET.items():
             # there is an odd bug I can't identify
             # sometimes type is passed as ?type
@@ -248,6 +248,8 @@ def clientlist(request):
         lista = paginator.page(page)
     except (EmptyPage, InvalidPage):
         lista = paginator.page(paginator.num_pages)
+    
+    search['page'] = page
     
     return {'client_list': lista, 'filter': filter, 'data': data, 'search': urllib.urlencode(search), 'order_by': get_query_order(clients)}
 
@@ -285,6 +287,8 @@ def _getclientlist(request, server, search = True):
         if order == 'desc':
             sort = "-%s" % sort
         clients = clients.order_by(sort)
+    elif search:
+        clients = clients.order_by('-time_edit')
         
     if request.GET.has_key('level'):
         if not has_server_perm(request.user, perm.VIEW_GROUP, server):

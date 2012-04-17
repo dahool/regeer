@@ -1,13 +1,13 @@
 {% extends "base_layout.html" %}
-{% load listtocolumns i18n tagutils urltag %}
+{% load listtocolumns i18n tagutils urltag paginator %}
 {% block title %}{{ block.super }} | {% trans "Watched Players" %}{% endblock %}
 {% block main_content_header %}
 <h3>{% trans "Watched Players" %}</h3>
 <span>
-{% blocktrans count counter=list|length %}
-(there is {{counter}} player in the watch list)
+{% blocktrans count counter=client_list.paginator.count %}
+(found {{counter}} player in the watch list)
 {% plural %}
-(there are {{counter}} players in the watch list) 
+(found {{counter}} players in the watch list) 
 {% endblocktrans %}
 </span>
 <div class="header-right">
@@ -20,6 +20,7 @@
 
 {% endblock %}
 {% block main_content %}
+<div id="client_list">
 <table class="table-style">
 <thead>
 <tr>
@@ -31,15 +32,26 @@
 </tr>
 </thead>
 <tbody>
-{% for info in list %}
+{% for info in client_list.object_list %}
     <tr>
         <td>{% if perms.plugin.removefollow %}<a href="{% serverurl follow:remove info.client.id %}&ls=" class="nodecoration_icon icon_delete" title="{% trans "Remove" %}"></a>{% endif %}</td>
         <td><a name="F{{info.client.id}}" href="{% serverurl client_detail info.client.id %}">{{info.client.name}}</a></td>
-        <td>{{info.reason}}</td>
+        <td><p class="wordwrap" style="width: 340px;">{{info.reason}}</p></td>
         <td>{{info.time_add|date:"DATETIME_FORMAT"}}</td>
         <td>{% if info.admin %}<a href="{% serverurl client_detail info.admin.id %}">{{info.admin.name}}</a>{% else %}-B3{%endif%}</td>
     </tr>
 {% endfor %}
 </tbody>
+<tfoot>
+<tr>
+<td colspan="7">
+{% with client_list.object_list|length as number %}
+{% blocktrans %}Showing {{number}} records{% endblocktrans %}
+{% endwith %}
+{% paginatepage client_list %}
+</td>
+</tr>
+</tfoot>
 </table>
+</div>
 {% endblock %}

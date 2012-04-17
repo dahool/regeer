@@ -32,15 +32,33 @@ from b3portal.permission.utils import server_permission_required_with_403
 from b3portal import permissions as perm
 from b3portal.resolver import urlreverse
 from b3portal.models import Auditor
+from django.conf import settings
+
+from django.core.paginator import Paginator, EmptyPage, InvalidPage
 
 @server_permission_required_with_403(perm.FOLLOW_VIEW)
 @render('follow/list.html')
 def home(request):
     if not is_plugin_enabled(request.server, 'follow'):
         messages.info(request, _('This function is not enabled on this server.'))
-        return {'list': None}  
-        
-    return {'list': Follow.objects.using(request.server).all().order_by('-time_add')}
+        return {'client_list': None}  
+
+    query = Follow.objects.using(request.server).all().order_by('-time_add')
+    
+    # Make sure page request is an int. If not, deliver first page.
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    paginator = Paginator(query, settings.ITEMS_PER_PAGE)
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        lista = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        lista = paginator.page(paginator.num_pages)
+                
+    return {'client_list': lista}
 
 @server_permission_required_with_403(perm.FOLLOW_ADD)
 @render('follow/add.html')

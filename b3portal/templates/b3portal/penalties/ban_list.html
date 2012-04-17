@@ -5,9 +5,9 @@
 <h3>{% trans "Banned Players" %}</h3>
 <span>
 {% blocktrans count counter=ban_list.paginator.count %}
-(there is {{counter}} active ban)
+(found {{counter}} active ban)
 {% plural %}
-(there are {{counter}} active bans)
+(found {{counter}} active bans)
 {% endblocktrans %}
 </span>
 <div class="header-right">
@@ -23,7 +23,6 @@
 <label for="name">{% trans "Name" %}</label><input type="text" id="name" name="name" class="search submit">
 <input type="submit" name="search" value="{% trans "Search" %}">&nbsp;&nbsp;&nbsp;
 </small>
-{%comment%}<!--<a href="{% url ban_list %}" style="display:inline;">{% trans "reset"%}</a>-->{%endcomment%}
 </form>
 <div id="ban_list">
 {% if search %}
@@ -34,7 +33,6 @@
 <tr>
 <th>{% trans "Player" %}</th>
 <th>{% trans "Added" %}</th>
-<!-- th>{% trans "Duration" %}</th -->
 <th>{% trans "Expires" %}</th>
 <th>{% trans "Reason" %}</th>
 </tr>
@@ -44,7 +42,6 @@
 <tr class="{% cycle "odd" "even" %}">
 <td><a href="{% serverurl client_detail ban.client.id %}">{{ban.client.name}}</a></td>
 <td>{{ban.time_add|date:"DATETIME_FORMAT"}}</td>
-<!-- td>{% if ban.duration != 0 %}{{ban.display_duration}}{% endif%}</td-->
 <td>{% if ban.duration != 0 %}{{ban.time_expire|date:"DATETIME_FORMAT"}}{%else%}<span style="color:red;">{% trans "Permanent" %}</span>{%endif%}</td>
 <td {% if ban.display_data and obj_perms.portal.listpenalties %}class="simple_icon icon_info notice_tip" title="{{ban.display_data|clean_colors}}" {%endif%}>
 <p class="wordwrap" style="width: 390px;">

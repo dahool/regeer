@@ -46,5 +46,9 @@ def sortheader(data, name, params=None, url=None, style=None):
         del params['order']
     except KeyError:
         pass
+    try:
+        del params['page']
+    except KeyError:
+        pass    
     url += '?%s' % serialize_params(params)
     return {'style': style, 'order': order, 'data': data, 'name': name, 'url': url}
