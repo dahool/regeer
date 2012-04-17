@@ -15,12 +15,12 @@ function set_field(field, value) {
     $("#id_" + field + "_1_minute").val(value3);
 }
 $(document).ready(function() {
-    var refresh1 = $("<span class=\"nodecoration_icon refresh_small\">&nbsp;</span>");
+    var refresh1 = $("<span class=\"nodecoration_icon icon_refresh_small\">&nbsp;</span>");
     refresh1.click(function() {
         set_field("datefrom","");
     });
     refresh1.insertAfter($("#id_datefrom_1_minute")); 
-    var refresh2 = $("<span class=\"nodecoration_icon refresh_small\">&nbsp;</span>");
+    var refresh2 = $("<span class=\"nodecoration_icon icon_refresh_small\">&nbsp;</span>");
     refresh2.click(function() {
         set_field("dateto","");
     });
