@@ -5,9 +5,6 @@
 {{ block.super }}
 <script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
 {% endblock %}
-{% block navigation2 %}
-{% include "b3portal/client/client_menu.html" %}
-{% endblock %}
 {% block main_content_header %}
 <h3>{% trans "Player List" %}</h3>
 
@@ -48,7 +45,6 @@
  -->
 &nbsp;&nbsp;&nbsp;
 </small>
-{%comment%}<!--<a href="{% serverurl client_list %}" style="display:inline;">{% trans "reset"%}</a>-->{%endcomment%}
 </form>
 <div id="client_list">
 {% if search %}

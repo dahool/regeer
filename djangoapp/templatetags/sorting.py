@@ -17,23 +17,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 from django import template
+from common.utils.urlutils import extract_params, serialize_params, parse_params
 
 register = template.Library()
 
 @register.inclusion_tag('tags/sorting.html')
-def sortheader(data, name, url, style=None):
+def sortheader(data, name, params=None, url=None, style=None):
     if not style:
-        style = "sorted"
-    if data and data[:1]=="-":
-        order = "d"
+        style = 'sorted'
+    if data and data[:1]=='-':
+        order = 'd'
         data = data[1:]
     else:
-        order = "a"
+        order = 'a'
     if url:
-        if url.find('?')==-1:
-            url = '?' + url
-        url += '&'
+        if url.find('?') != -1:
+            url, urlpar = extract_params(url) 
+            params.update(urlpar)
     else:
-        url = "?"
-    url += "sort=%s&order=" % name 
+        url = ''
+    if params:
+        if not isinstance(params, dict):
+            params = parse_params(params)
+    else:
+        params = {}
+    params['sort']=name
+    try:
+        del params['order']
+    except KeyError:
+        pass
+    url += '?%s' % serialize_params(params)
     return {'style': style, 'order': order, 'data': data, 'name': name, 'url': url}

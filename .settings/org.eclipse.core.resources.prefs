@@ -1,4 +1,4 @@
-#Fri Apr 13 14:19:53 ART 2012
+#Tue Apr 17 09:18:28 ART 2012
 eclipse.preferences.version=1
 encoding//b3connect/admin.py=utf-8
 encoding//b3connect/fields.py=utf-8
@@ -77,6 +77,7 @@ encoding//b3portal/templatetags/serverpermtag.py=utf-8
 encoding//b3portal/templatetags/urltag.py=utf-8
 encoding//b3portal/urls.py=utf-8
 encoding//b3portal/views.py=utf-8
+encoding//common/utils/urlutils.py=utf-8
 encoding//djangoapp/templatetags/bbcodetag.py=utf-8
 encoding//djangoapp/templatetags/dates.py=utf-8
 encoding//djangoapp/templatetags/extendedtags.py=utf-8

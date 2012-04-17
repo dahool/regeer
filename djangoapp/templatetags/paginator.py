@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from django import template
 from django.conf import settings
+from common.utils.urlutils import extract_params, serialize_params, parse_params
+
 import re
 
 register = template.Library()
@@ -33,14 +35,16 @@ PAGE_RE = re.compile('[\&]?(page=[0-9]+)')
 
 @register.inclusion_tag('tags/pagination.html')
 def paginate(data, params=None):
+    url = ''
     if params:
         if params.find("?"):
-            params += "&"
+            url, params = extract_params(params) 
         else:
-            params += "?"
+            params = parse_params(params)
     else:
-        params += "?"
-    return {'data': data, 'params': params}
+        params = {}
+    url += '?%s' % serialize_params(params)
+    return {'data': data, 'params': url}
 
 @register.inclusion_tag('tags/pagination_page.html', takes_context = True)
 def paginatepage(context, data, params=None):
@@ -67,19 +71,29 @@ def paginatepage(context, data, params=None):
         pages_outside_trailing_range = [n + 1 for n in range(0, NUM_PAGES_OUTSIDE_RANGE)]
 
     # include server param if exists
+    url = None
     if params:
-        params = PAGE_RE.sub('',params)
-        if params[:1]=="&":
-            params = params[1:]
-    
+        if params.find('?') != -1:
+            url, params = extract_params(params) 
+        else:
+            params = parse_params(params)
+        try:
+            del params['page']
+        except:
+            pass
+    else:
+        params = {}
+
     request = context['request']
     if request.server:
-        if params:
-            if params.find("server") == -1:
-                params += "&server=" + request.server
-        else:
-            params = "server=" + request.server
-            
+        if not params.has_key('server'):
+            params['server'] = request.server
+    
+    if url:
+        pdata = '%s?%s' % (url, serialize_params(params))
+    else:
+        pdata = '?%s' % serialize_params(params)
+     
     return {'data': data,
             'numbers': page_numbers,
             'in_leading_range': in_leading_range,
@@ -87,4 +101,4 @@ def paginatepage(context, data, params=None):
             'pages_outside_trailing_range': pages_outside_trailing_range,
             'in_trailing_range': in_trailing_range,
             'pages_outside_leading_range': pages_outside_leading_range,
-            'params': params}
+            'params': pdata}

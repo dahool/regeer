@@ -18,7 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from django import template
 from django.template.defaultfilters import stringfilter
+from django.template import Node, Template, Context, NodeList, VariableDoesNotExist, resolve_variable, TemplateSyntaxError
+
+import logging
 import re
+import urllib
+
+logger = logging.getLogger('regeer')
 
 register = template.Library()
 
@@ -65,3 +71,44 @@ def baseip(text):
     if m: 
         return ".".join(m.groups()[0:3]+('0',))
     return "-"
+
+@register.tag(name='urlize')
+def do_urllize(parser, token):
+    '''
+    Generate url from key=value pair
+    
+        {% urlize urlstring key1=param1 key2='string2' .... %}
+    '''
+    args = token.split_contents()
+    tag_name = args[0]
+    url = args[1]
+    params = args[2:]
+    if len(params) == 0: raise TemplateSyntaxError, "%r missing url params" % tag_name
+    pm = {}
+    for p in params:
+        k, v = p.split('=')
+        pm[k] = parser.compile_filter(v)
+    return UrlizeNode(parser.compile_filter(url), pm)    
+
+class UrlizeNode(template.Node):
+    
+    def __init__(self, url, params):
+        self.url, self.params = url, params
+
+    def __repr__(self):
+        return "<UrlizeNode>"
+
+    def render(self, context):
+        try:
+            url = self.url.resolve(context)
+            params = dict((k, v.resolve(context)) for k, v in self.params.items())  
+        except Exception, e:
+            logger.exception("UrlizeNode <%s>" % str(e))
+            return ''
+        p = urllib.urlencode(params)
+        if url.find('?') == -1:
+            url += '?'
+        else:
+            url += '&'
+        url += '%s' % p
+        return url

@@ -1,13 +1,13 @@
-{% load i18n %}
+{% load i18n tagutils %}
 {% if data == name %}
 	{% if order == "a" %}
 	    <span class="{{style}}">&nbsp;</span>
-	    <a class="{{style}}_desc" href="{{url}}desc" title="{% trans "Sort descending" %}">&nbsp;</a>
+	    <a class="{{style}}_desc" href="{% urlize url order='desc' %}" title="{% trans "Sort descending" %}">&nbsp;</a>
 	{% else %}
-	    <a class="{{style}}_asc" href="{{url}}asc" title="{% trans "Sort ascending" %}">&nbsp;</a>
+	    <a class="{{style}}_asc" href="{% urlize url order='asc' %}" title="{% trans "Sort ascending" %}">&nbsp;</a>
 	    <span class="{{style}}">&nbsp;</span> 
 	{% endif %}
 {% else %}
-	<a class="{{style}}_asc" href="{{url}}asc" title="{% trans "Sort ascending" %}">&nbsp;</a>
-	<a class="{{style}}_desc" href="{{url}}desc" title="{% trans "Sort descending" %}">&nbsp;</a>
+	<a class="{{style}}_asc" href="{% urlize url order='asc' %}" title="{% trans "Sort ascending" %}">&nbsp;</a>
+	<a class="{{style}}_desc" href="{% urlize url order='desc' %}" title="{% trans "Sort descending" %}">&nbsp;</a>
 {% endif %}
