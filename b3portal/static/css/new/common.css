@@ -104,9 +104,6 @@ label {
 .icon_config {
     background-image: url('../../images/icons/wrench.png');
 }
-.icon_go {
-    background-image: url('../../images/icons/bullet_go.png');
-}
 .icon_chat {
     background-image: url('../../images/icons/user_comment.png');
 }
@@ -303,23 +300,27 @@ ul.messages li.warning {
     font-size: 14px !important;
     padding-left: 5px !important;
     line-height: 16px;
-    background: url("../../images/icons/bullet_black.png") no-repeat 50% 50% !important;   
+    /*background: url("../../images/icons/bullet_black.png") no-repeat 50% 50% !important;*/
+    background: url(../../images/icons/csg-bullet.png) no-repeat top left;
+    background-position: -4px -156px;   
 }
 .sorted_asc {
-    border: none !important;
+/*    border: none !important;
     text-decoration:none !important;
     font-size: 14px !important;
     padding-left: 5px !important;
     line-height: 16px;
-    background: url("../../images/icons/bullet_arrow_up.png") no-repeat 50% 50% !important;   
+    background: url("../../images/icons/bullet_arrow_up.png") no-repeat 50% 50% !important;*/
+	background-position: -4px -104px !important;       
 }
 .sorted_desc {
-    border: none !important;
+    /*border: none !important;
     text-decoration:none !important;
     font-size: 14px !important;
     padding-left: 5px !important;
     line-height: 16px;
-    background: url("../../images/icons/bullet_arrow_down.png") no-repeat 50% 50% !important;   
+    background: url("../../images/icons/bullet_arrow_down.png") no-repeat 50% 50% !important;*/
+    background-position: -4px -52px !important;    
 }
 .medal_1 {
     background-image: url('../../images/icons/award_star_gold_1.png');
@@ -368,10 +369,10 @@ ul.messages li.warning {
 .icon_delwatch {
     background-image: url('../../images/icons/cross_eye.png');
 }
-.refresh {
+.icon_refresh {
     background-image: url('../../images/icons/arrow_refresh.png');
 }
-.refresh_small {
+.icon_refresh_small {
     background-image: url('../../images/icons/arrow_refresh_small_gray.png');
 }
 thead.table_menu tr {
@@ -618,17 +619,26 @@ h3 {
 .level_row_100 {
 	color: #FF0000 !important;
 }
-.team_red {
-	background-image: url(../../images/icons/bullet_red.png) !important;
+.team_icon {
     background-repeat: no-repeat;
     background-position: 0px 50%;
     padding-left: 24px !important;
+    background: url(../../images/icons/csg-bullet.png) no-repeat top left;
+}
+
+.team_red {
+	/*background-image: url(../../images/icons/bullet_red.png) !important;
+    background-repeat: no-repeat;
+    background-position: 0px 50%;
+    padding-left: 24px !important;*/
+    background-position: 0 -520px;
 }
 .team_blue {
-	background-image: url(../../images/icons/bullet_blue.png) !important;
+	/*background-image: url(../../images/icons/bullet_blue.png) !important;
     background-repeat: no-repeat;
     background-position: 0px 50%;
-    padding-left: 24px !important;
+    padding-left: 24px !important;*/
+    background-position: 0 -182px;
 }
 .go_back {
 	background-image: url(../../images/icons/arrow_turn_left.png) !important;
@@ -644,3 +654,35 @@ h3 {
 	white-space:nowrap;
 	text-overflow:ellipsis;	
 }
+
+
+.icon-bullet {
+    background: url(../../images/icons/csg-bullet.png) no-repeat top left;
+}
+.bullet_add{ background-position: 0 0;  } 
+.bullet_arrow_bottom{ background-position: 0 -26px;  } 
+.bullet_arrow_down{ background-position: 0 -52px;  } 
+.bullet_arrow_top{ background-position: 0 -78px;  } 
+.bullet_arrow_up{ background-position: 0 -104px;  } 
+.bullet_back{ background-position: 0 -130px;  } 
+.bullet_black{ background-position: 0 -156px;  } 
+.bullet_blue{ background-position: 0 -182px;  } 
+.bullet_delete{ background-position: 0 -208px;  } 
+.bullet_disk{ background-position: 0 -234px;  } 
+.bullet_error{ background-position: 0 -260px;  } 
+.bullet_feed{ background-position: 0 -286px;  } 
+.bullet_go{ background-position: 0 -312px;  } 
+.bullet_go_gray{ background-position: 0 -338px;  } 
+.bullet_green{ background-position: 0 -364px;  } 
+.bullet_key{ background-position: 0 -390px;  } 
+.bullet_orange{ background-position: 0 -416px;  } 
+.bullet_picture{ background-position: 0 -442px;  } 
+.bullet_pink{ background-position: 0 -468px;  } 
+.bullet_purple{ background-position: 0 -494px;  } 
+.bullet_red{ background-position: 0 -520px;  } 
+.bullet_star{ background-position: 0 -546px;  } 
+.bullet_toggle_minus{ background-position: 0 -572px;  } 
+.bullet_toggle_plus{ background-position: 0 -598px;  } 
+.bullet_white{ background-position: 0 -624px;  } 
+.bullet_wrench{ background-position: 0 -650px;  } 
+.bullet_yellow{ background-position: 0 -676px;  }

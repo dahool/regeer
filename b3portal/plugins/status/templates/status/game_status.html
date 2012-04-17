@@ -52,7 +52,7 @@
                 {% if status.typeCode != "ffa" %} 
                 <table class="table-style inner_table">
                         <tr>
-                        <th {% if obj_perms.portal.viewclientgroup %} colspan="2" {%endif %}><span class="team_red">{{ status.redTeamName }} ({{status.redTeamCount}})</span></th>
+                        <th {% if obj_perms.portal.viewclientgroup %} colspan="2" {%endif %}><span class="team_icon team_red">{{ status.redTeamName }} ({{status.redTeamCount}})</span></th>
                         <th class="total">{{ status.redScore }}</th>
                         </tr>
                         {% for client in status.clients %}
@@ -74,7 +74,7 @@
                 </table>
                 <table class="table-style inner_table">
                         <tr>
-                        <th {% if obj_perms.portal.viewclientgroup %} colspan="2" {%endif %}><span class="team_blue">{{ status.blueTeamName }} ({{status.blueTeamCount}})</span></th>
+                        <th {% if obj_perms.portal.viewclientgroup %} colspan="2" {%endif %}><span class="team_icon team_blue">{{ status.blueTeamName }} ({{status.blueTeamCount}})</span></th>
                         <th class="total">{{ status.blueScore }}</th>
                         </tr>
                         {% for client in status.clients %}
