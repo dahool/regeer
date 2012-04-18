@@ -1,0 +1,30 @@
+{% load i18n settingstag extendedtags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}">
+<head>
+<title>{% block title %}{% setting "SITE_NAME" %} | {% trans "Forbidden" %}{% endblock %}</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link type="image/x-icon" href="{{STATIC_URL}}favicon.ico" rel="shortcut icon" />
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/base.error.css"/>
+</head>
+<body>
+<div class="wrapper">
+	<div class="header">
+		{% trans "Forbidden." %}
+	</div>
+	<div class="body">
+		<div class="left">
+			{% url home as home %}
+			{% set "javascript:history.go(-1);" as back %}
+			{% blocktrans %}
+			<p>You don't have enough permissions to access here.</p>
+			<p>If you think this is an error, contact your administrator.</p>
+			<br/>
+			<p>Go <a href="{{back}}">back</a> or return to the <a href="{{ home }}">homepage</a>.</p>
+			{% endblocktrans %}
+		</div>
+		<img class="image" src="{{STATIC_URL}}images/403.png" alt="{% trans "Forbidden" %}" />
+	</div>
+</div>
+</body>
+</html>

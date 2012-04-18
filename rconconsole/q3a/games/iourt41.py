@@ -45,7 +45,7 @@ class Iourt41(Q3ARcon):
     _reColor = re.compile(r'(\^.)|[\x00-\x20]|[\x7E-\xff]')
     
     def __init__(self, host, password):
-        super(Iourt41, self).__init__(host, password)
+        Q3ARcon.__init__(self, host, password)
         self._commands['saybig'] = 'bigtext "%(message)s"'
         self._commands['cyclemap'] = 'cyclemap'
         self._commands['slap'] = 'slap %(cid)s'

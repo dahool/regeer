@@ -58,6 +58,7 @@ if settings.DEBUG:
         (r'^500/$', handler500),
         (r'^404/$', 'django.views.generic.simple.direct_to_template', {'template': '404.html'}),
         (r'^403/$', 'django.views.generic.simple.direct_to_template', {'template': '403.html'}),
+        (r'^503/$', 'django.views.generic.simple.direct_to_template', {'template': '503.html'}),
     )
              
 urlpatterns += staticfiles_urlpatterns()

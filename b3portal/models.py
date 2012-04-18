@@ -69,8 +69,10 @@ class Server(models.Model):
         return user in self.owners.all()
 
     @property
-    def support_rcon(self):
-        return self.rcon_ip and self.rcon_port and self.rcon_password
+    def is_rcon_supported(self):
+        return (self.rcon_ip is not None and self.rcon_ip != '' 
+    and self.rcon_port is not None and self.rcon_port != ''
+    and self.rcon_password is not None and self.rcon_password != '')
             
     class Meta:
         ordering  = ('name',)

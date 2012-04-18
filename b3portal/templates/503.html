@@ -1,13 +1,13 @@
 {% extends "base_layout.html" %}
 {% load i18n %}
 {% block main_content_header %}
-<h3>{% trans "Forbidden" %}</h3>
+<h3>{% trans "Unavailable" %}</h3>
 {% endblock %}
 {% block main_content %}
 <div id="message_teaser">
  <div id="teaser">
    <ul class="messages">
-       <li class="error">{% trans "You don't have enough permissions to access here.<br/>If you think this is an error, contact your administrator." %}</li>
+       <li class="error">{{ reason|escape }}</li>
    </ul>
  </div>
 </div>

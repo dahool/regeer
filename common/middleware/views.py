@@ -1,15 +1,29 @@
-from django.http import HttpResponseForbidden, HttpResponseNotFound
+from django.http import HttpResponseForbidden, HttpResponseNotFound,\
+    HttpResponse
 from django.template import RequestContext, loader, Context
 from django.utils.encoding import smart_str
 from django.conf import settings
 
-def forbidden(request, template_name='403.html'):
+class HttpResponseUnavailable(HttpResponse):
+    status_code = 503
+
+def forbidden(request, exception):
     """Default 403 handler"""
+    template_name = getattr(settings, 'ERROR403', '403.html')
+    
     t = loader.get_template(template_name)
-    return HttpResponseForbidden(t.render(RequestContext(request)))
+    c = RequestContext(request, {
+        'request_path': request.path_info[1:],
+        'reason': smart_str(exception, errors='replace'),
+        'settings': settings,
+    })
+        
+    return HttpResponseForbidden(t.render(c))
 
-def not_found(request, exception, template_name='404.html'):
-
+def not_found(request, exception):
+    """404 handler"""
+    
+    template_name = getattr(settings, 'ERROR404', '404.html')
     try:
         tried = exception.args[0]['tried']
     except (IndexError, TypeError):
@@ -27,3 +41,17 @@ def not_found(request, exception, template_name='404.html'):
         'settings': settings,
     })
     return HttpResponseNotFound(t.render(c))
+
+def unavailable(request, exception):
+    """503 handler"""
+
+    template_name = getattr(settings, 'ERROR503', '503.html')
+
+    t = loader.get_template(template_name)
+    c = RequestContext(request, {
+        'request_path': request.path_info[1:],
+        'reason': smart_str(exception, errors='replace'),
+        'settings': settings,
+    })
+    return HttpResponseUnavailable(t.render(c))
+    

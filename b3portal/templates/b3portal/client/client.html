@@ -6,6 +6,14 @@
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/actionmenu.css"/>
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/clienttab.css"/>
 <link rel="stylesheet" type="text/css" href="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/themes/base/jquery-ui.css"/>
+<style>
+<!--
+div#content_header {
+	border-bottom: 0;
+	height: 0;
+}
+-->
+</style>
 <script type="text/javascript" src="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.jeditable.mini.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
@@ -108,12 +116,6 @@ function slide_control(curr) {
 	}	
 }
 </script>
-{% endblock %}
-{% block navigation2 %}
-{% include "b3portal/client/client_menu.html" %}
-{% endblock %}
-{% block main_content_header %}
-<h3>{% blocktrans with name=client.name %}Details for {{name}}{% endblocktrans %}</h3>
 {% endblock %}
 {% block main_content %}
 <!-- ************************ DETAIL ************************ -->

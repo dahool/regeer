@@ -68,6 +68,9 @@ $(document).ready(
 				});  
 			}	
 		);
+		$('#message_teaser').on('click', '.close_button', function() {
+		    $(this).parent().remove();
+		});
 		/*$("a[alt='link']").ajaxlink({success: 'main_content'});*/
 	    /*$('ul.messages').on('show','li', function() {
 	        $(this).append("<img class='close_button' src='"+MEDIA_URL+"images/close.gif'/>");

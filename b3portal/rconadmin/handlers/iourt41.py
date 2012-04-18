@@ -45,7 +45,7 @@ class Iourt41RconHandler(RconHandler):
 
     def _init_console(self):
         from rconconsole.q3a.games.iourt41 import Iourt41
-        self.console = Iourt41((self.server.rcon_ip, self.server.rcon_port), self.server.rcon_password)
+        self.console = Iourt41((self.server.rcon_ip, int(self.server.rcon_port)), self.server.rcon_password)
     
     def execute(self):
         self.form.cleaned_data

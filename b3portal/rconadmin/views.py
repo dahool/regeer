@@ -30,7 +30,7 @@ from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from common.decorators import superuser_required
 
 import time
-from common.middleware.exceptions import Http403
+from common.middleware.exceptions import Http403, Http503
 from django.contrib import messages
 from django.http import HttpResponse
 from django.views.decorators.cache import cache_page
@@ -51,8 +51,12 @@ def home(request):
     if not has_server_perm(request.user, perm.RCON, request.server):
         raise Http403
     server = get_object_or_404(Server, uuid=request.server)
-    if not server.support_rcon:
-        messages.info(request, _('Server %s does not have RCON support enabled.' % server.name))
+    print server.is_rcon_supported
+    if not server.is_rcon_supported:
+        raise Http503(_('Server %s does not have RCON support enabled.' % server.name))
+    print server.rcon_ip
+    print server.rcon_port
+    print server.rcon_password
     # TODO load handler based on server
     h = Iourt41RconHandler(server=server)
     return {'form': h.form} 
