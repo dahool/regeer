@@ -65,8 +65,11 @@ class Q3ARcon:
     def __init__(self, host, password):
         self.output = Rcon(host, password)
     
-    def write(self, data):
-        return self.output.write(data)
+    def write(self, *args):
+        '''write to console
+        args: anything
+        '''        
+        return self.output.write(args[0])
     
     def _get_status(self):
         if self._status and self._lastStatus + self._statusExpire > time.time():
@@ -77,8 +80,10 @@ class Q3ARcon:
             self._lastStatus = time.time()
         return data
           
-    def getClients(self):
-        """get client list"""
+    def getClients(self, *args):
+        """get client list
+        args: None
+        """
         data = self._get_status()
         if not data:
             return []
@@ -105,8 +110,10 @@ class Q3ARcon:
     
         return status
     
-    def getMap(self):
-        """get current map name"""
+    def getMap(self, *args):
+        """get current map name
+        args: None
+        """
         data = self._get_status()
         if not data:
             return None
@@ -116,40 +123,67 @@ class Q3ARcon:
             return str(m.group('map'))
         return None
 
-    def getHostname(self):
+    def getHostname(self, *args):
+        '''get hostname
+        args: None
+        '''
         return self.getCvar(self.getCommand('hostname'))
           
-    def setHostname(self, value):
-        self.setCvar(self.getCommand('hostname'), value)
+    def setHostname(self, *args):
+        '''set hostname
+        args: new name
+        '''        
+        self.setCvar(self.getCommand('hostname'), args[0])
         
-    def getNextMap(self):
+    def getNextMap(self, *args):
+        '''get nextmap
+        args: None
+        '''        
         return self.getCvar(self.getCommand('nextmap'))
 
-    def setNextMap(self, value):
-        self.setCvar(self.getCommand('nextmap'), value)
+    def setNextMap(self, *args):
+        '''set nextmap
+        args: map name
+        '''        
+        self.setCvar(self.getCommand('nextmap'), args[0])
     
-    def getPassword(self):
+    def getPassword(self, *args):
+        '''get password
+        args: None
+        '''        
         return self.getCvar(self.getCommand('password'))
     
-    def setPassword(self, value):
-        self.setCvar(self.getCommand('password'), value)
+    def setPassword(self, *args):
+        '''set password
+        args: new password
+        '''        
+        self.setCvar(self.getCommand('password'), args[0])
 
-    def getGametype(self):
+    def getGametype(self, *args):
+        '''get gametype
+        args: None
+        '''        
         return self.getCvar(self.getCommand('gametype'))
+
+    def setGametype(self, *args):
+        '''set gametype
+        args: gametype
+        '''        
+        self.setCvar(self.getCommand('gametype'), args[0])
     
-    def setGametype(self, value):
-        self.setCvar(self.getCommand('gametype'), value)
-    
-    def getCvar(self, name):
+    def getCvar(self, *args):
+        '''get cvar
+        args: cvar name
+        '''        
         m = None
-        if self._reCvarName.match(name):
-            val = self.write(name)
+        if self._reCvarName.match(args[0]):
+            val = self.write(args[0])
             for f in self._reCvar:
                 m = re.match(f, val)
                 if m:
                     break            
             if m:
-                if m.group('cvar').lower() == name.lower():
+                if m.group('cvar').lower() == args[0].lower():
                     try:
                         default_value = m.group('default')
                     except IndexError:
@@ -158,37 +192,54 @@ class Q3ARcon:
             else:
                 return None
             
-    def setCvar(self, name, value):
-        if self._reCvarName.match(name):
-            self.write(self.getCommand('set', name=name, value=value))
+    def setCvar(self, *args):
+        '''set cvar
+        args: name, value
+        '''        
+        if self._reCvarName.match(args[0]):
+            self.write(self.getCommand('set', name=args[0], value=args[1]))
 
-    def say(self, text):
-        """print message to console"""
-        return self.write(self.getCommand('say', message=text))
+    def say(self, *args):
+        """print message to console
+        args: message
+        """
+        return self.write(self.getCommand('say', message=args[0]))
 
-    def message(self, cid, text):
-        """send a message to a player"""
-        return self.write(self.getCommand('message', cid=cid, message=text))
+    def message(self, *args):
+        """send a message to a player
+        args: cid, text
+        """
+        return self.write(self.getCommand('message', cid=args[0], message=args[1]))
         
-    def ban(self, ip):
-        """add ip to server banlist"""
-        return self.write(self.getCommand('ban', cid=ip))
+    def ban(self, *args):
+        """add ip to server banlist
+        args: ip
+        """
+        return self.write(self.getCommand('ban', cid=args[0]))
 
-    def unban(self, ip):
-        """remove a ip from banlist"""
-        return self.write(self.getCommand('unban', ip=ip))
+    def unban(self, *args):
+        """remove a ip from banlist
+        args: ip
+        """
+        return self.write(self.getCommand('unban', ip=args[0]))
 
-    def kick(self, cid):
-        """kick given player"""
-        return self.write(self.getCommand('kick', cid=cid))
+    def kick(self, *args):
+        """kick given player
+        args: cid
+        """
+        return self.write(self.getCommand('kick', cid=args[0]))
 
-    def rotateMap(self):
-        """cycle to next map"""
+    def rotateMap(self, *args):
+        """cycle to next map
+        args: None
+        """
         return self.write(self.getCommand('cyclemap'))
 
-    def changeMap(self, mapname):
-        """change current map"""
-        return self.write(self.getCommand('map', map=mapname))
+    def changeMap(self, *args):
+        """change current map
+        args: map name
+        """
+        return self.write(self.getCommand('map', map=args[0]))
 
     def getCommand(self, cmd, **kwargs):
         """Return a reference to a loaded command"""

@@ -5,7 +5,7 @@ from b3connect.models import PENALTY_TYPE_NOTICE
 
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('regeer')
 
 import time
 

@@ -3,7 +3,7 @@ import traceback
 from django.conf import settings
 from exceptionlogger.models import ExceptionLog
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('regeer')
     
 class ExceptionLoggerMiddleware(object):
 

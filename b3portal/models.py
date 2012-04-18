@@ -68,6 +68,10 @@ class Server(models.Model):
     def is_owner(self, user):
         return user in self.owners.all()
 
+    @property
+    def support_rcon(self):
+        return self.rcon_ip and self.rcon_port and self.rcon_password
+            
     class Meta:
         ordering  = ('name',)
         unique_together = ('database','user','hostname')

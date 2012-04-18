@@ -28,7 +28,7 @@ import threading
 import Queue
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('regeer')
 
 #--------------------------------------------------------------------------------------------------
 class Rcon:

@@ -1,6 +1,7 @@
 from django import forms
 from b3portal.rconadmin.fields import InputField, SelectField
 from django.utils.translation import gettext as _
+from b3portal.rconadmin.handlers import RconHandler
 
 class Iourt41Form(forms.Form):
     
@@ -19,12 +20,32 @@ class Iourt41Form(forms.Form):
     ban = InputField(label=_('Add IP to server ban list'), max_length=15)
     unban = InputField(label=_('Remove IP from server ban list'), max_length=15)
     password = InputField(label=_('Set server password'), max_length=10)
-    write = InputField(label=_('Console'), max_length=30)
+    write = InputField(label=_('Console'), max_length=30,  buttonlabel=_('Write'))
+        
+class Iourt41RconHandler(RconHandler):
     
-class Iourt41RconHandler:
+    _commands = {'status': 'getClients',
+                 'say': 'say',
+                 'saybig': 'saybig',
+                 'map': 'changeMap',
+                 'nextmap': 'setNextMap',
+                 'ban': 'ban',
+                 'unban': 'unban',
+                 'password': 'setPassword',
+                 'write': 'write'}
     
-    def __init__(self, server, data=None):
+    def __init__(self, **kwargs):
+        self.server = kwargs['server']
+        data = kwargs.get('data',None)
         if data:
-            self.form = Iourt41Form(data, maps=server.maps.all())
+            self.form = Iourt41Form(data, maps=self.server.maps.all())
         else:
-            self.form = Iourt41Form(maps=server.maps.all())
+            self.form = Iourt41Form(maps=self.server.maps.all())
+        RconHandler.__init__(self, **kwargs)
+
+    def _init_console(self):
+        from rconconsole.q3a.games.iourt41 import Iourt41
+        self.console = Iourt41((self.server.rcon_ip, self.server.rcon_port), self.server.rcon_password)
+    
+    def execute(self):
+        self.form.cleaned_data

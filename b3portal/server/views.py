@@ -25,7 +25,7 @@ from common.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 import logging
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('regeer')
 
 @login_required
 @render("b3portal/server/index.html")

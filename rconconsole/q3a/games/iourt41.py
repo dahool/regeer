@@ -53,33 +53,54 @@ class Iourt41(Q3ARcon):
         self._commands['mute'] = 'mute %(cid)s'
         self._commands['set'] = '%(name)s "%(value)s"'
 
-    def getGametype(self):
+    def getGametype(self, *args):
+        '''get current gametype
+        args: None
+        '''
         value = super(Iourt41, self).getGametype()
         if value:
             return self._gametype.get(value, None)
         return None
     
-    def setGametype(self, value):
-        data = self._gametype_set.get(value, None)
+    def setGametype(self, *args):
+        '''set new gametype
+        args: 'ffa', 'tdm', 'ts', 'ftl', 'cah', 'ctf','bomb'
+        '''
+        data = self._gametype_set.get(args[0], None)
         if data:
             return super(Iourt41, self).setGametype(data)
         return None
     
-    def saybig(self, msg):
-        return self.output.write(self.getCommand('saybig', message=msg))
+    def saybig(self, *args):
+        '''send bigtext
+        args: message
+        '''
+        return self.output.write(self.getCommand('saybig', message=args[0]))
 
-    def slap(self, cid):
-        return self.output.write(self.getCommand('slap', cid=cid))
+    def slap(self, *args):
+        '''slap
+        args: client cid
+        '''        
+        return self.output.write(self.getCommand('slap', cid=args[0]))
 
-    def nuke(self, cid):
-        return self.output.write(self.getCommand('nuke', cid=cid))
+    def nuke(self, *args):
+        '''nuke
+        args: client cid
+        '''        
+        return self.output.write(self.getCommand('nuke', cid=args[0]))
 
-    def mute(self, cid):
-        return self.output.write(self.getCommand('mute', cid=cid))
+    def mute(self, *args):
+        '''mute
+        args: client cid
+        '''        
+        return self.output.write(self.getCommand('mute', cid=args[0]))
                                 
-    def unban(self, ip):
-        r = super(Iourt41, self).unban(ip);
-        t1 = threading.Timer(1, self._unbanmultiple, (ip,))
+    def unban(self, *args):
+        '''unban ip
+        args: ip
+        '''        
+        r = super(Iourt41, self).unban(args[0]);
+        t1 = threading.Timer(1, self._unbanmultiple, (args[0],))
         t1.start()
         return r
 

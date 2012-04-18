@@ -63,7 +63,7 @@ from django.template.loader import render_to_string
 
 from django.utils.html import escape as escapehtml
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('regeer')
 
 @server_permission_required_with_403(perm.VIEW_CLIENT)
 @render('b3portal/client/client.html')
