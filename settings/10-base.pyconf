@@ -50,7 +50,7 @@ SECRET_KEY = r"[[SECRETKEY]]"
 SITE_ID = 1
 
 ADMINS = (
-    ('Admin', 'admin@codwar.com.ar'),
+    ('Admin', 'admin@mail.com'),
 )
 
 MANAGERS = ADMINS
