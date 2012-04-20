@@ -57,7 +57,7 @@ class Iourt41(Q3ARcon):
         '''get current gametype
         args: None
         '''
-        value = super(Iourt41, self).getGametype()
+        value = Q3ARcon.getGametype(self)
         if value:
             return self._gametype.get(value, None)
         return None
@@ -68,7 +68,7 @@ class Iourt41(Q3ARcon):
         '''
         data = self._gametype_set.get(args[0], None)
         if data:
-            return super(Iourt41, self).setGametype(data)
+            return Q3ARcon.setGametype(self, data)
         return None
     
     def saybig(self, *args):
@@ -99,7 +99,7 @@ class Iourt41(Q3ARcon):
         '''unban ip
         args: ip
         '''        
-        r = super(Iourt41, self).unban(args[0]);
+        r =  Q3ARcon.unban(self, *args)
         t1 = threading.Timer(1, self._unbanmultiple, (args[0],))
         t1.start()
         return r

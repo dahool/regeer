@@ -45,18 +45,19 @@ from django.contrib.auth.decorators import login_required
 from b3portal.permission.utils import has_server_perm
 import b3portal.permissions as perm
 
+import logging
+from django.core.exceptions import ValidationError
+
+logger = logging.getLogger('regeer')
+
 @login_required
 @render('b3portal/admin/home.html')
 def home(request):
     if not has_server_perm(request.user, perm.RCON, request.server):
         raise Http403
     server = get_object_or_404(Server, uuid=request.server)
-    print server.is_rcon_supported
     if not server.is_rcon_supported:
         raise Http503(_('Server %s does not have RCON support enabled.' % server.name))
-    print server.rcon_ip
-    print server.rcon_port
-    print server.rcon_password
     # TODO load handler based on server
     h = Iourt41RconHandler(server=server)
     return {'form': h.form} 
@@ -70,5 +71,14 @@ def execute(request):
         raise Http403
     server = get_object_or_404(Server, uuid=request.server)
     handler = Iourt41RconHandler(server=server, data=request.POST)
-    resp = handler.execute()
-    return {'success': False, 'response': '<br/>'.join(resp)}
+    try:
+        resp = handler.execute()
+    except ValidationError, ve:
+        logger.error(ve.messages)
+        return {'success': False, 'response': ve.messages}
+    except Exception, e:
+        logger.exception(str(e))
+        return {'success': False, 'response': str(e)}
+    if len(resp) == 0:
+        resp.append("-")
+    return {'success': True, 'response': '<br/>'.join(resp)}

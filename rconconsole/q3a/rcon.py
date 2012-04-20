@@ -114,7 +114,7 @@ class Rcon:
             logger.debug('QSERVER: retry sending %r (%s/%s)...', data.strip(), retries, maxRetries)
 
         logger.debug('QSERVER: Did not send any data')
-        return ''
+        return 'QSERVER: Did not send any data'
 
     def sendRcon(self, data, maxRetries=None, socketTimeout=None):
         if socketTimeout is None:
@@ -167,7 +167,7 @@ class Rcon:
             logger.debug('RCON: retry sending %r (%s/%s)...', data.strip(), retries, maxRetries)
 
         logger.debug('RCON: Did not send any data')
-        return ''
+        return 'RCON: Did not send any data'
 
     def stop(self):
         """Stop the rcon writelines queue"""
