@@ -3,12 +3,12 @@ html {
     background-color: #F1F1F1;
 }
 html,body { 
-    height:100%;
     padding-bottom: 0;
     margin-bottom: 0;
 }
 body {
     font: small/1.5 "Tahoma","Bitstream Vera Sans",Verdana,Helvetica,sans-serif;
+    /*background: url("../images/bgwhite.png") repeat center top #F1F1F1;*/
 }
 a {
     color: #3366CC;
@@ -126,6 +126,7 @@ div#content {
 }
 .nav-active, .nav-button:hover {
     color: #333333 !important;
+    font-weight: bold;
 }
 .nav-text {
     font-size: 11px;
@@ -281,11 +282,20 @@ div#content {
 	font-weight: bold;
 }
 .avatar {
-    background: url("images/func.png") no-repeat 100% 50% transparent;
+    /*background: url("images/func.png") no-repeat 95% 50% #F7F7F7;*/
+    background: url("images/func.png") no-repeat 95% 50% transparent;
     width: 50px;
     height: 40px;
-    background-color: #F1F1F1;
     cursor: pointer;
+	-webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    padding-right: 5px;
+}
+.avatar img {
+	-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 #profile {
     margin: 0;
