@@ -6,10 +6,25 @@ from django.utils.encoding import force_unicode
 
 logger = logging.getLogger('regeer')
 
+def find_handler_for_game(game):
+    try:
+        handler = settings.RCON_HANDLERS[game]
+    except KeyError:
+        return None
+    try:
+        mod, classname = ".".join(handler.split('.')[:-1]), handler.split('.')[-1]
+        mod = __import__(mod, globals(), locals(), [classname])
+        func = getattr(mod, classname)
+    except:
+        logger.exception(game)
+        return None
+    return func
+    
 class RconForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
-        data = kwargs.pop('data', args[0])
+        data = kwargs.pop('data', None)
+        if args: data = args[0]
         if data:
             cmd = data['cmd']
             value = data['data']

@@ -40,7 +40,7 @@ from django.utils.encoding import smart_unicode
 
 from gameutils import load_banlist
 from b3portal.models import Server
-from b3portal.rconadmin.handlers.iourt41 import Iourt41RconHandler
+from b3portal.rconadmin.handlers import find_handler_for_game
 from django.contrib.auth.decorators import login_required
 from b3portal.permission.utils import has_server_perm
 import b3portal.permissions as perm
@@ -59,7 +59,10 @@ def home(request):
     if not server.is_rcon_supported:
         raise Http503(_('Server %s does not have RCON support enabled.' % server.name))
     # TODO load handler based on server
-    h = Iourt41RconHandler(server=server)
+    handler = find_handler_for_game(server.game)
+    if not handler:
+        raise Http503(_('No valid handler found for game %s.' % server.game))
+    h = handler(server=server)
     return {'form': h.form} 
 
 @login_required    
@@ -70,9 +73,14 @@ def execute(request):
     if request.method != 'POST':
         raise Http403
     server = get_object_or_404(Server, uuid=request.server)
-    handler = Iourt41RconHandler(server=server, data=request.POST)
+    if not server.is_rcon_supported:
+        raise Http503(_('Server %s does not have RCON support enabled.' % server.name))
+    handler = find_handler_for_game(server.game)
+    if not handler:
+        raise Http503(_('No valid handler found for game %s.' % server.game)) 
+    h = handler(server=server, data=request.POST)
     try:
-        resp = handler.execute()
+        resp = h.execute()
     except ValidationError, ve:
         logger.error(ve.messages)
         return {'success': False, 'response': ve.messages}
