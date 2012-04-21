@@ -40,7 +40,7 @@ ul.commands li {
 #game-status {
 	background-color: #000;
 	color: #80FF80;
-	padding: 0 5px 5px;
+	padding: 0 5px 15px;
 }
 #game-status p {
 	text-align: center;

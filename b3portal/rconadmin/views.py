@@ -108,6 +108,6 @@ def execute(request):
     except Exception, e:
         logger.exception(str(e))
         return {'success': False, 'response': str(e)}
-    if len(resp) == 0:
-        resp.append("-")
+    if not resp or len(resp) == 0:
+        resp = ['-']
     return {'success': True, 'response': '<br/>'.join(resp)}

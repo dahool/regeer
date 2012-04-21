@@ -65,6 +65,7 @@ class InputField(fields.CharField):
     def __init__(self, *args, **kwargs):
         self.widget = InputWidget()
         lbl = kwargs.pop('buttonlabel', None)
+        self.blank = kwargs.pop('blank', False)
         if lbl:
             self.widget.label = lbl
         else:
@@ -76,6 +77,7 @@ class SelectField(fields.ChoiceField):
     def __init__(self, *args, **kwargs):
         self.widget = SelectWidget()
         lbl = kwargs.pop('buttonlabel', None)
+        self.blank = kwargs.pop('blank', False)
         if lbl:
             self.widget.label = lbl
         else:

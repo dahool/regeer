@@ -11,7 +11,7 @@ function send_command(cmd, value) {
 		value = 'None';
 		st = cmd;
 	} else {
-		st = cmd + " " + value;
+		st = cmd + " '" + value + "'";
 	}
 	update_console('{% trans "Send" %} ' + st);
 	$.post('{% serverurl rcon:command %}', {cmd: cmd, data: value}, function(data) {
@@ -20,18 +20,22 @@ function send_command(cmd, value) {
 		} else {
 			update_console_error(data.response);
 		}
-		$("#console").prop({ scrollTop: $("#console").prop("scrollHeight") });
 	});
 }
 function getCurrentTime() {
 	var d = new Date();
 	return d.format("HH:MM:ss");
 }
+function move_bottom() {
+	$("#console").prop({ scrollTop: $("#console").prop("scrollHeight") });
+}
 function update_console_error(txt) {
 	$('#console').append("<span class='console_error'>" + getCurrentTime() + " - " + txt + "</span><br/>");
+	move_bottom();
 }
 function update_console(txt) {
 	$('#console').append(getCurrentTime() + " - " + txt + "<br/>");
+	move_bottom();
 }
 function get_status() {
 	$.post('{% serverurl rcon:status %}', function(data) {

@@ -20,7 +20,7 @@ class Iourt41Form(RconForm):
     nextmap = SelectField(label=_('Set next map'), choices=(), required=False)
     ban = InputField(label=_('Add IP to server ban list'), max_length=15, required=False, validators=[validators.validate_ipv4_address], error_messages={'invalid': _(u'Enter a valid IPv4 address.')})
     unban = InputField(label=_('Remove IP from server ban list'), max_length=15, required=False, validators=[validators.validate_ipv4_address], error_messages={'invalid': _(u'Enter a valid IPv4 address.')})
-    password = InputField(label=_('Set server password'), max_length=10, required=False)
+    password = InputField(label=_('Set server password'), max_length=10, required=False, blank=True)
     write = InputField(label=_('Console'), max_length=30,  buttonlabel=_('Write'), required=False)
         
 class Iourt41RconHandler(Q3ARconHandler):

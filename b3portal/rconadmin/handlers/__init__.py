@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 import logging
 from django.utils.encoding import force_unicode
+from django.utils.translation import gettext as _
 
 logger = logging.getLogger('regeer')
 
@@ -38,8 +39,8 @@ class RconForm(forms.Form):
         for name, value in data.items():
             if name not in self.fields.keys():
                 raise forms.ValidationError(_("Unknown command."))
-            if '' == value:
-                field = self.fields[name]
+            field = self.fields[name]
+            if '' == value and not field.blank:
                 raise forms.ValidationError(field.error_messages['invalid'])
         return data
     
@@ -69,9 +70,12 @@ class RconHandler:
         for k,v in self.form.cleaned_data.items():
             try:
                 logger.debug("Sending %s %s" % (k, v))
-                resp.append(self._runCommand(k, force_unicode(v)))
+                r = self._runCommand(k, force_unicode(v))
+                if not r or r == '': r = _('Success.')
+                resp.append(r)
             except Exception, e:
-                logger.exception(str(e))    
+                logger.exception(str(e))
+                resp.append(str(e))    
         return resp
     
     def get_status(self):
