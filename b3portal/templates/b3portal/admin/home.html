@@ -13,13 +13,14 @@ function send_command(cmd, value) {
 	} else {
 		st = cmd + " " + value;
 	}
-	update_console(st);
+	update_console('{% trans "Send" %} ' + st);
 	$.post('{% serverurl rcon:command %}', {cmd: cmd, data: value}, function(data) {
 		if (data.success) {
 			update_console(data.response);	
 		} else {
 			update_console_error(data.response);
 		}
+		$("#console").prop({ scrollTop: $("#console").prop("scrollHeight") });
 	});
 }
 function getCurrentTime() {
@@ -27,17 +28,24 @@ function getCurrentTime() {
 	return d.format("HH:MM:ss");
 }
 function update_console_error(txt) {
-	$('#console').prepend("<span class='console_error'>" + getCurrentTime() + " - " + txt + "</span><br/>");
+	$('#console').append("<span class='console_error'>" + getCurrentTime() + " - " + txt + "</span><br/>");
 }
 function update_console(txt) {
-	$('#console').prepend(getCurrentTime() + " - " + txt + "<br/>");
+	$('#console').append(getCurrentTime() + " - " + txt + "<br/>");
+}
+function get_status() {
+	$.post('{% serverurl rcon:status %}', function(data) {
+  		$('#game-status').html(data);
+	});
 }
 $(document).ready(function() {
 	$("input[name=command]").click(function() {
 		var ref = $(this).attr('alt');
 		var elrf = $("#"+ref);
 		send_command(elrf.attr('name'), elrf.val());
-	})
+	});
+	get_status();
+	update_console('{% trans "Ready." %}');
 });
 </script>
 {% endblock %}
@@ -48,5 +56,7 @@ $(document).ready(function() {
 <ul class="commands">
 {{form.as_ul}}
 </ul>
-<div id="console">{% now "H:m:s" %} - {% trans "Ready." %}</div>
+<span onclick="get_status()" class="nodecoration_icon icon_refresh" style="float: right; padding-bottom: 2px;" title="{% trans "Reload Status" %}">&nbsp;</span>
+<div id="game-status"><p>{% trans "Requesting game status. Please wait ..." %}</p></div>
+<div id="console"></div>
 {% endblock %}

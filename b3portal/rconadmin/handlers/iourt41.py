@@ -1,7 +1,7 @@
 from django import forms
 from b3portal.rconadmin.fields import InputField, SelectField
 from django.utils.translation import gettext as _
-from b3portal.rconadmin.handlers import RconHandler, RconForm
+from b3portal.rconadmin.handlers import Q3ARconHandler, RconForm
 from django.core import validators
 
 class Iourt41Form(RconForm):
@@ -23,9 +23,9 @@ class Iourt41Form(RconForm):
     password = InputField(label=_('Set server password'), max_length=10, required=False)
     write = InputField(label=_('Console'), max_length=30,  buttonlabel=_('Write'), required=False)
         
-class Iourt41RconHandler(RconHandler):
+class Iourt41RconHandler(Q3ARconHandler):
     
-    _commands = {'status': 'getClients',
+    _commands = {'status': 'getStatus',
                  'say': 'say',
                  'bigtext': 'saybig',
                  'map': 'changeMap',
@@ -41,7 +41,7 @@ class Iourt41RconHandler(RconHandler):
             self.form = Iourt41Form(data, maps=self.server.maps.all())
         else:
             self.form = Iourt41Form(maps=self.server.maps.all())
-        RconHandler.__init__(self, server, data)
+        Q3ARconHandler.__init__(self, server, data)
 
     def _init_console(self):
         from rconconsole.q3a.games.iourt41 import Iourt41

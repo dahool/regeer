@@ -66,6 +66,27 @@ def home(request):
     return {'form': h.form} 
 
 @login_required    
+@render('b3portal/admin/game_status.html')
+def game_status(request):
+    if not has_server_perm(request.user, perm.RCON, request.server):
+        raise Http403
+    if request.method != 'POST':
+        raise Http403
+    server = get_object_or_404(Server, uuid=request.server)
+    if not server.is_rcon_supported:
+        raise Http503(_('Server %s does not have RCON support enabled.' % server.name))
+    handler = find_handler_for_game(server.game)
+    if not handler:
+        raise Http503(_('No valid handler found for game %s.' % server.game)) 
+    h = handler(server=server)
+    try:
+        currentMap, clientList = h.get_status()
+    except Exception, e:
+        logger.exception(str(e))
+        return {'error': str(e)}
+    return {'map': currentMap, 'clients': clientList}
+
+@login_required    
 @render('json')
 def execute(request):
     if not has_server_perm(request.user, perm.RCON, request.server):

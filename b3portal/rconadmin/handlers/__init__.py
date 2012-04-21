@@ -75,4 +75,11 @@ class RconHandler:
         return resp
     
     def get_status(self):
-        return self._runCommand('status')
+        raise NotImplementedError
+    
+class Q3ARconHandler(RconHandler):
+
+    def get_status(self):
+        map = self.console.getMap()
+        clients = self.console.getClients()
+        return (map, clients)

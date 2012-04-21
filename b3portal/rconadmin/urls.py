@@ -23,6 +23,7 @@ from common.view.decorators import render
 urlpatterns = patterns('',
     url(r'^$', views.home, name='home'),
     url(r'^execute/$', views.execute, name='command'),
+    url(r'^ref/status/$', views.game_status, name='status'),
 #    url(r'^execute/$', views.execute, name='admin_command'),
 #    url(r'^ref/clients/$', views.refresh_clients, name='admin_refresh_clients'),
 #    url(r'^ref/status/$', views.refresh_status, name='admin_refresh_status'),

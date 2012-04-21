@@ -25,3 +25,24 @@ ul.commands li {
 .console_error {
     color: #FF1111;
 }
+.console-table-style {
+	background-color: #000;
+	color: #80FF80;
+	width: 100%;
+	border-bottom: dashed 1px #80FF80;
+}
+.console-table-style thead {
+	background-color: #000;
+	color: #80FF80;
+	width: 100%;
+	border-bottom: dotted 1px #80FF80;
+}
+#game-status {
+	background-color: #000;
+	color: #80FF80;
+	padding: 0 5px 5px;
+}
+#game-status p {
+	text-align: center;
+	font-weight: bold;
+}

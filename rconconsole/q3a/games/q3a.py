@@ -60,7 +60,7 @@ class Q3ARcon:
     
     _lastStatus = None
     _status = None
-    _statusExpire = 60
+    _statusExpire = 30
        
     def __init__(self, host, password):
         self.output = Rcon(host, password)
@@ -71,7 +71,7 @@ class Q3ARcon:
         '''        
         return self.output.write(args[0])
     
-    def _get_status(self):
+    def getStatus(self):
         if self._status and self._lastStatus + self._statusExpire > time.time():
             return self._status
         data = self.write('status')
@@ -84,7 +84,7 @@ class Q3ARcon:
         """get client list
         args: None
         """
-        data = self._get_status()
+        data = self.getStatus()
         if not data:
             return []
         
@@ -96,7 +96,7 @@ class Q3ARcon:
             
             if m:
                 p = Player()
-                p.slot = m.group('slot')
+                p.cid = m.group('slot')
                 p.score = m.group('score')
                 p.ip = m.group('ip')
                 try:
@@ -114,7 +114,7 @@ class Q3ARcon:
         """get current map name
         args: None
         """
-        data = self._get_status()
+        data = self.getStatus()
         if not data:
             return None
         line = data.split('\n')[0]
