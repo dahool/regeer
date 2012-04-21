@@ -31,3 +31,18 @@ div#main_content {
 	width: 100%;
 	 margin-bottom: 0.5em;
 } 
+#login input[type="text"], #login input[type="password"] {
+    width: 120px;
+}
+#login_box {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#login_box #login {
+    padding-top: 25px;
+}
+#login_box #login input[type="text"],
+#login_box #login input[type="password"] {
+    width: 200px;
+}

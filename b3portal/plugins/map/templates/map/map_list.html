@@ -19,7 +19,7 @@ $(document).ready(
 {% endblock %}
 {% block main_content %}
 {% if maps %}
-<div id="map_list" style="display: block;">
+<div id="map_list" class="clear">
 {% regroup maps by server.name as map_list %}
 <div id="tabs">
     <ul>

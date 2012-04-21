@@ -41,6 +41,9 @@ $(document).ready(function() {
 });
 </script>
 {% endblock %}
+{% block main_content_header %}
+<h3>{% blocktrans with server=request.server_obj.name %}RCON {{server}}{% endblocktrans %}</h3>
+{% endblock %}
 {% block main_content %}
 <ul class="commands">
 {{form.as_ul}}

@@ -60,10 +60,19 @@ class ServerDetectMiddleware(object):
             if not server and len(server_list) > 0:
                 server = server_list[0].uuid
         
-        if server and server not in [s.uuid for s in server_list]:
-            raise Http404
+        server_obj = None
+        for s in server_list:
+            if s.uuid == server:
+                server_obj = s
+                break
+                
+        if not server or not server_obj:                
+            raise Http404        
+#        if server and server not in [s.uuid for s in server_list]:
+#            raise Http404
         
         request.__class__.server = server
+        request.__class__.server_obj = server_obj
         
     def process_response(self, request, response):
         if response and hasattr(request, 'server'):

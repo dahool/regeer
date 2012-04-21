@@ -18,7 +18,7 @@ a {
 }
 div#main {
 	height:100%;
-	width: 1000px;
+	min-width: 1000px;f
     padding: .5em;
     margin-left: auto;
     margin-right: auto;
@@ -30,8 +30,9 @@ div#navigation {
     overflow:hidden;
 }
 div#main_content {
-    float: right;
-    width: 900px;
+    /*float: right;*/
+    /*width: 900px;*/
+    margin-left: 105px;
     /*height:100%;*/
     min-height: 500px;
 }
@@ -66,6 +67,9 @@ div#content_header span {
 }
 div#header {
     height: 3em;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;    
 }
 div#header span {
     display: inline-block;
@@ -100,6 +104,9 @@ div#content {
     display: block;
     font: small/1.5 "Tahoma","Bitstream Vera Sans",Verdana,Helvetica,sans-serif;
 }
+.menu-nav-button {
+    cursor: default !important;
+}
 .nav-button {
     color: #A7A7A7;
 }
@@ -111,7 +118,7 @@ div#content {
     width: 13px;
     z-index: 1;
     position: absolute;
-    left: 101px;
+    left: 100px;
     display: none;
 }
 #profile-box-indicator {
@@ -325,7 +332,7 @@ div#content {
     background-color: #ffffff;
     background-image: -moz-linear-gradient(center top , #ffffff, #FBFBFB);    
     width: 300px;
-    top: 60px;
+    top: 65px;
     -webkit-box-shadow: 1px 1px 1px 1px #E4E4E4;
     -moz-box-shadow: 1px 1px 1px 1px #E4E4E4;
     box-shadow: 1px 1px 1px 1px #E4E4E4;     
@@ -343,7 +350,7 @@ div#content {
     padding-right: 10px;
 }
 .header-right #profile {
-    margin-right: 25px;
+    margin-right: 10px;
 }
 .profile-detail span {
     margin-top: 10px;
@@ -409,4 +416,12 @@ div#content {
     -webkit-box-shadow: 1px 1px 1px 1px #E4E4E4;
     -moz-box-shadow: 1px 1px 1px 1px #E4E4E4;
     box-shadow: 1px 1px 1px 1px #E4E4E4; 
+}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
 }

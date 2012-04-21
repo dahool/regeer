@@ -9,6 +9,12 @@ small select, small input {
     padding:2px !important;;
     width:auto;
 }
+#map_list {
+    width: 770px;
+    position: absolute;
+    left: 50%;
+    margin-left: -385px;
+}
 .search {
 	padding-left: 18px !important;
     background: url("../../images/icons/magnifier.png") no-repeat 2px 50% !important;

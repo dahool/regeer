@@ -73,14 +73,11 @@ $(document).ready(function() {
         </div>
     </div>
     {% else %}
-    	<!--  TODO -->
-	  	<form id="login" method="post" accept-charset="utf-8" action="{% url user_signin %}">
-	  	<small>
-		{% csrf_token %}
+	  	<form id="login" class="default" method="post" accept-charset="utf-8" action="{% url user_signin %}">
+            {% csrf_token %}
          	<input type="text" id="id_username" name="username" maxlength="30" placeholder="{% trans "Username" %}" autocomplete="on" title="{% trans "Username" %}" value="">
          	<input type="password" name="password" id="id_password" title="{% trans "Password" %}" placeholder="{% trans "Password" %}" value="">
-		<input type="submit" value="{% trans "Sign in" %}"/>
-		</small>
+            <a alt="submit" class="plus-button">{% trans "Sign in" %}</a>
 		</form>
     {% endif %}
 </div>
@@ -156,11 +153,12 @@ $(document).ready(function() {
 
 	{% if obj_perms.portal.rcon %}
      <div class="nav-menu">
-		 {% serverurl rcon:home as url_nav_admin %}
-         <a tabindex="-1" class="nav-button {% current_nav url_nav_admin %}" href="{{ url_nav_admin }}">
+         {% include "b3portal/admin/rcon_menu.html" %}
+		 {% url rcon:home as url_nav_admin %}
+         <a tabindex="-1" class="nav-button menu-nav-button {% current_nav url_nav_admin %}">
              <div>
                  <div class="nav-icon nav-icon-rcon"></div>
-                 <div class="nav-text">{% trans "RCon" %}</div>
+                 <div class="nav-text">{% trans "RCON" %}</div>
              </div>
          </a>
      </div>

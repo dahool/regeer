@@ -1,0 +1,13 @@
+{% load i18n extendedtags urltag serverpermtag %}
+<div class="sub-nav">
+    <span class="sub-nav-indicator"></span>
+    <ul>
+        {% for server in request.server_list %}
+        {% ifperm user server 'portal.rcon' %}
+        {% if server.is_rcon_supported %}
+            <li><a href="{% serverurl rcon:home server=server.pk %}">{{server.name}}</a></li>
+        {% endif %}
+        {% endifperm %}
+        {% endfor %}
+    </ul>                
+</div>

@@ -37,7 +37,8 @@ class URLNode(Node):
         args = [arg.resolve(context) for arg in self.args]
         kwargs = dict([(smart_str(k,'ascii'), v.resolve(context))
                        for k, v in self.kwargs.items()])
-        kwargs['server'] = context['request'].server
+        if not kwargs.has_key('server'):
+            kwargs['server'] = context['request'].server
         
         url = ''
         try:

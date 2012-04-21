@@ -14,8 +14,11 @@ $(document).ready(function() {
         }
     });*/
     $("#profile .avatar").click(function(e) {
-        $("#profile-box").toggle();
         e.stopPropagation();
+        $("#profile-box").toggle();
+        /*if ($("#profile-box").is(':visible')) {
+            $("#profile-box").offset({left: $(this).offset().left});
+        }*/
     });
     $(document).click(function(e) {
     	var container = $("#profile-box");
