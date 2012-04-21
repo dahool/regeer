@@ -1,5 +1,5 @@
 from django.http import HttpResponseForbidden, HttpResponseNotFound,\
-    HttpResponse
+    HttpResponse, HttpResponseServerError
 from django.template import RequestContext, loader, Context
 from django.utils.encoding import smart_str
 from django.conf import settings
@@ -55,3 +55,15 @@ def unavailable(request, exception):
     })
     return HttpResponseUnavailable(t.render(c))
     
+def general_error(request, exception):
+    """500 special handler"""
+
+    template_name = getattr(settings, 'ERROR500', '500.html')
+
+    t = loader.get_template(template_name)
+    c = RequestContext(request, {
+        'request_path': request.path_info[1:],
+        'reason': smart_str(exception, errors='replace'),
+        'settings': settings,
+    })
+    return HttpResponseServerError(t.render(c))

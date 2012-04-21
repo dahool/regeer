@@ -1,5 +1,5 @@
 from django.http import HttpResponseForbidden, Http404
-from common.middleware.views import forbidden, not_found, unavailable
+from common.middleware.views import forbidden, not_found, unavailable, general_error
 from common.middleware.exceptions import Http403, Http503
 
 class HttpErrorMiddleware(object):
@@ -11,5 +11,7 @@ class HttpErrorMiddleware(object):
             return not_found(request, exception)
         elif isinstance(exception, Http503):
             return unavailable(request, exception)
+        elif 'OperationalError' == exception.__class__.__name__:
+            return unavailable(request, exception[1])
         else:
             return None
