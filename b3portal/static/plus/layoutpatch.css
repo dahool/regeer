@@ -46,3 +46,7 @@ div#main_content {
 #login_box #login input[type="password"] {
     width: 200px;
 }
+#tabs {
+	overflow: auto;
+	height: 550px;
+}

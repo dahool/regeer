@@ -34,7 +34,7 @@ div#main_content {
     /*width: 900px;*/
     margin-left: 105px;
     /*height:100%;*/
-    min-height: 500px;
+    min-height: 600px;
 }
 div#content_header, div#content {
     margin: .5em;
@@ -86,8 +86,8 @@ div#header .title {
     float: right;
 }
 div#content {
-    height:100%;
-    min-height: 500px;
+    /*height:100%;*/
+    min-height: 600px;
     margin-top: 0;
     padding: .5em;
     border-top: 0;

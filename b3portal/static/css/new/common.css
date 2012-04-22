@@ -10,10 +10,10 @@ small select, small input {
     width:auto;
 }
 #map_list {
-    width: 770px;
+    width: 800px;
     position: absolute;
     left: 50%;
-    margin-left: -385px;
+    margin-left: -400px;
 }
 .search {
 	padding-left: 18px !important;
