@@ -73,6 +73,6 @@ $(document).ready(
 		$('#admin_log_actions').on('click','div.pagination a', function(e) {
 			e.preventDefault();
 			do_get($(this).attr('href'),$('#admin_log_actions'));
-		});		
+		});
 	}
 );

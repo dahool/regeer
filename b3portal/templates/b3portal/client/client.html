@@ -16,8 +16,9 @@ div#content_header {
 </style>
 <script type="text/javascript" src="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.jeditable.mini.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/jpages.min.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/client.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}js/client2.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/clientdetail.js"></script>
 <script type="text/javascript">
 function update_portal_act() {
 	$("#portal_actions").load('{% serverurl client_more_logs client.id %}');
@@ -32,10 +33,25 @@ function load_notices() {
 }
 function note_update(data) {
 	$.get('{% serverurl client_more_notes client.id %}',function(data) {
-		$("#note_box > ul").html(data);
+		$("#note_box > ul").prepend(data);
+		$("#note_box_pages").jPages('destroy');	
+		create_note_pager();
+	});
+}
+function create_note_pager() {
+	$("#note_box_pages").jPages({
+        containerID  : "note_box-list",
+        perPage      : 1,
+        startPage    : 1,
+        startRange   : 1,
+        midRange     : 5,
+        endRange     : 1,
+        previous: '{% trans "previous" %}',
+        next: '{% trans "next" %}',
 	});
 }
 $(document).ready(function() {
+	create_note_pager();
     $("#main").on('click',"a[confirm]",function() {
         var url = $(this).attr('alt');
         var callback = $(this).attr('callback');
@@ -131,13 +147,14 @@ create_dialog("#add_note_link", note_update);
 <!-- ************************ COMMENTS ************************ -->
 {% if obj_perms.portal.viewnotes %}
 <div id="note_box" class="client_detail">
-<ul>
+<ul id="note_box-list">
 <!-- li class="first" title="{% trans "Back" %}">&nbsp;</li-->
-{% for note in client.penalties.comments|slice:":1" %}
+{% for note in client.penalties.comments %}
 {% include "b3portal/client/include/client_noteline.html" %}
 {% endfor %}
 <!-- li class="last" title="{% trans "More" %}">&nbsp;</li-->
 </ul>
+<div id="note_box_pages"></div>
 </div>
 <br/>
 {% comment %}

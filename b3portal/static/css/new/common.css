@@ -580,7 +580,7 @@ h3 {
 }
 #note_box li span {
 	float: right;
-	margin-top: 15px;
+	margin-top: -15px;
 	background-color: #DFDFDF;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -594,6 +594,43 @@ h3 {
 }
 #note_box li.last:hover, #note_box li.first:hover {
 	background-color: #C0C0C0;	
+}
+#note_box_pages {
+    text-align: center;
+}
+#note_box_pages a {
+    font-size:12px;
+    cursor:pointer;
+    margin:0 5px;
+    color:#333;
+}
+#note_box_pages a:hover {
+    background-color:#222;
+    color:#fff;
+}
+#note_box_pages a.jp-previous {
+    margin-right:15px;
+}
+#note_box_pages a.jp-next {
+    margin-left:15px;
+}
+#note_box_pages a.jp-current,
+#note_box_pages a.jp-current:hover {
+    color:#FF4242;
+    font-weight:bold;
+}
+#note_box_pages a.jp-disabled, #note_box_pages a.jp-disabled:hover {
+    color:#bbb;
+}
+#note_box_pages a.jp-current,
+#note_box_pages a.jp-current:hover,
+#note_box_pages a.jp-disabled,
+#note_box_pages a.jp-disabled:hover {
+    cursor:default;
+    background:none;
+}
+#note_box_pages span {
+    margin: 0 5px;
 }
 .note_nomore {
 	background-image: url(../../images/icons/bullet_red.png) !important;
