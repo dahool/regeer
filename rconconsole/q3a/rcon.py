@@ -152,7 +152,7 @@ class Rcon:
                 if re.match(r'^quit|map(_rotate)?.*', data):
                     # do not retry quits and map changes since they prevent the server from responding
                     logger.debug('RCON: no retry for %r', data)
-                    return 'RCON: Error.'
+                    return 'RCON: Unknown response.'
 
             else:
                 logger.debug('RCON: no writeable socket')
