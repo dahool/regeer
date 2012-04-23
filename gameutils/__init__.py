@@ -29,6 +29,16 @@ def load_banlist(filen):
     lista = set([v.split(':')[0].strip() for v in iplist])
     return lista
 
+def load_banlist_tupple(filen):
+    banlist = open_file(filen)
+    iplist = banlist.readlines()
+    banlist.close()
+    lista = []
+    for ip in iplist:
+        lista.append(create_ip_range_tupple(ip.split(':')[0].strip()))
+    lista.sort()
+    return lista
+    
 def load_banlist_all(filen):
     banlist = open_file(filen)
     iplist = banlist.readlines()
@@ -37,6 +47,16 @@ def load_banlist_all(filen):
     for ip in iplist:
         lista.update(create_ip_range(ip.split(':')[0].strip()))
     return lista
+
+def create_ip_range_tupple(ip):
+    parts = ip.split('.')
+    if parts[3] == '0':
+        start = ip_to_decimal("%s.%s.%s.1" % (parts[0],parts[1],parts[2]))
+        end = ip_to_decimal("%s.%s.%s.255" % (parts[0],parts[1],parts[2]))
+    else:
+        start = ip_to_decimal(ip)
+        end = start
+    return (start, end)
 
 def create_ip_range(ip):
     parts = ip.split('.')
@@ -70,3 +90,21 @@ def save_banlist(filen, lista):
     for e in lista:
         banlist.write("%s:-1\n" % e)
     banlist.close()
+    
+def ip_find_tupple(sublist, value):
+    if len(sublist) == 1:
+        start, end = sublist[0]
+        if value >= start and value <= end:
+            return (start, end)
+        else:
+            return None
+    mid = int(len(sublist)/2)
+    start, end = sublist[mid]
+    if value >= start and value <= end:
+        return (start, end)
+    if value < start:
+        return ip_find_tupple(sublist[:mid], value)
+    else:
+        return ip_find_tupple(sublist[mid:], value)
+
+        

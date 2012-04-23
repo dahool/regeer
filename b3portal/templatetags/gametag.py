@@ -45,7 +45,7 @@ class IfValidGuidNode(Node):
         self.object, self.nodelist_true, self.nodelist_false = object, nodelist_true, nodelist_false
 
     def __repr__(self):
-        return "<FfPluginInstalledNone>"
+        return "<IfValidGuidNode>"
 
     def render(self, context):
         guid = resolve_variable(self.object,context)
@@ -70,4 +70,40 @@ class IfValidGuidNode(Node):
             return self.nodelist_true.render(context)
         else:
             return self.nodelist_false.render(context) 
+        
+@register.tag(name='ifiplisted')
+def ifiplisted(parser, token):
+    '''
+    {% ifiplisted list 127.0.0.1 %}
+    {% endifiplisted %}
+    '''
+    try:
+        tagname, lista, value = token.split_contents()
+    except:
+        raise TemplateSyntaxError, "%r takes two arguments" % token.split_contents()[0]
+    end_tag = 'end' + tagname
+    nodelist_true = parser.parse(('else', end_tag))
+    token = parser.next_token()
+    if token.contents == 'else':
+        nodelist_false = parser.parse((end_tag,))
+        parser.delete_first_token()
+    else:
+        nodelist_false = NodeList()
+    return IfIpListedNode(parser.compile_filter(lista), parser.compile_filter(value), nodelist_true, nodelist_false)
+
+class IfIpListedNode(Node):
     
+    def __init__(self, lista, value, nodelist_true, nodelist_false):
+        self.lista, self.value, self.nodelist_true, self.nodelist_false = lista, value, nodelist_true, nodelist_false
+
+    def __repr__(self):
+        return "<IfIpListedNode>"
+
+    def render(self, context):
+        from gameutils import ip_to_decimal, ip_find_tupple
+        lista = self.lista.resolve(context)
+        value = self.value.resolve(context)
+        if value and lista and ip_find_tupple(lista, ip_to_decimal(value)):
+            return self.nodelist_true.render(context)
+        else:
+            return self.nodelist_false.render(context)    

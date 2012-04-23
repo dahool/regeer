@@ -62,6 +62,7 @@ import logging
 from django.template.loader import render_to_string
 
 from django.utils.html import escape as escapehtml
+from b3portal.banlist import IpBanList
 
 logger = logging.getLogger('regeer')
 
@@ -149,19 +150,8 @@ def client(request, id):
 def _get_banlist(request):
     if not has_server_perm(request.user, perm.VIEW_PENALTY, request.server):
         return []
-    cache_key = "%s_banlist" % request.server
-    lista = cache.get(cache_key)
-    if lista is None:
-        try:
-            sb = ServerBanList.objects.get(server=request.server)
-        except:
-            return []
-        if sb.get_file():
-            lista = load_banlist_all(sb.get_file())
-        else:
-            return []
-        cache.set(cache_key, lista, getattr(settings, 'BANLIST_CACHE_EXPIRE', 1440) * 60)
-    return lista
+    banlist = IpBanList(request.server)
+    return banlist.get_list()
         
 @login_required
 @cache_page(120*60)

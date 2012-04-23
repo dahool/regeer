@@ -1,4 +1,4 @@
-{% load listtocolumns i18n tagutils settingstag urltag extendedtags paginator %}
+{% load listtocolumns i18n tagutils settingstag urltag extendedtags paginator gametag %}
 <table class="table-style cd-table client_lists">
 <caption>{% trans "IP Addresses" %}</caption>
 <thead>
@@ -24,7 +24,7 @@
 <a href="{% serverurl client_list %}&type=ip&data={{maskip}}&search=Search">{{maskip}}</a>&nbsp;
 <a target="_blank" href="http://whois.domaintools.com/{{baseip}}" title="{% trans "Whois IP search" %}" class="nodecoration_icon icon_vcard"></a>
 <a target="_blank" href="{% setting 'GEOTOOL' %}{{baseip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
-{% if alias.ip in banlist %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endif %}
+{% ifiplisted banlist alias.ip %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endifiplisted %}
 </td>
 <td>{{alias.num_used}}</td>
 <td>{{alias.time_add|date:"DATETIME_FORMAT"}}</td>
