@@ -241,6 +241,11 @@ class SetAsNode(template.Node):
 
 @register.tag(name='captureas')
 def do_captureas(parser, token):
+    '''
+    {% captureas varname %}
+    content
+    {% endcaptureas %}
+    '''
     try:
         tag_name, args = token.contents.split(None, 1)
     except ValueError:
@@ -256,6 +261,7 @@ class CaptureasNode(template.Node):
 
     def render(self, context):
         output = self.nodelist.render(context)
+        if output is not None: output = output.strip()
         context[self.varname] = output
         return ''
 

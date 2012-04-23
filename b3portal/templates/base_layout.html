@@ -1,5 +1,5 @@
 {% extends "base_simple.html" %}
-{% load i18n settingstag navigation gravatar extendedtags plugintag urltag %}
+{% load i18n settingstag navigation gravatar extendedtags plugintag urltag serverpermtag %}
 {% block extra_header %}
 <script type="text/javascript" src="{{STATIC_URL}}plus/layout.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/baseapp.js"></script>
@@ -151,9 +151,24 @@ $(document).ready(function() {
      {% endif %}
      {% endifplugininstalled %}
 
-	{% if obj_perms.portal.rcon %}
+	{% captureas rcon_sub_menu %}
+        {% for server in request.server_list %}
+        {% ifperm user server 'portal.rcon' %}
+        {% if server.is_rcon_supported %}
+            <li><a href="{% serverurl rcon:home server=server.pk %}">{{server.name}}</a></li>
+        {% endif %}
+        {% endifperm %}
+        {% endfor %}
+	{% endcaptureas %}
+    
+	{% if rcon_sub_menu and obj_perms.portal.rcon %}
      <div class="nav-menu">
-         {% include "b3portal/admin/rcon_menu.html" %}
+		<div class="sub-nav">
+		    <span class="sub-nav-indicator"></span>
+		    <ul>
+		    	{{rcon_sub_menu|safe}}
+		    </ul>                
+		</div>
 		 {% url rcon:home as url_nav_admin %}
          <a tabindex="-1" class="nav-button menu-nav-button {% current_nav url_nav_admin %}">
              <div>
