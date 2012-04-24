@@ -3,8 +3,8 @@
     <span class="step-links">
         {% if data.has_previous %}
         <span class="prev">
-            <a class="prev-first" href="{% urlize params page=1 %}">{% trans "&laquo; first" %}</a>
-            <a class="prev-prev" href="{% urlize params page=data.previous_page_number %}">{% trans "previous" %}</a>
+            <a class="prev-first" href="{% makeurl params page=1 %}">{% trans "&laquo; first" %}</a>
+            <a class="prev-prev" href="{% makeurl params page=data.previous_page_number %}">{% trans "previous" %}</a>
         </span>
         {% endif %}
         <span class="current">
@@ -16,8 +16,8 @@
         </span>
         {% if data.has_next %}
         <span class="next">
-            <a class="next-next" href="{% urlize params page=data.next_page_number %}">{% trans "next" %}</a>
-            <a class="next-last" href="{% urlize params page=data.paginator.num_pages %}">{% trans "last &raquo;" %}</a>
+            <a class="next-next" href="{% makeurl params page=data.next_page_number %}">{% trans "next" %}</a>
+            <a class="next-last" href="{% makeurl params page=data.paginator.num_pages %}">{% trans "last &raquo;" %}</a>
         </span>
         {% endif %}
     </span>

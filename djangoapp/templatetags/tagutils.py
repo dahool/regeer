@@ -72,7 +72,7 @@ def baseip(text):
         return ".".join(m.groups()[0:3]+('0',))
     return "-"
 
-@register.tag(name='urlize')
+@register.tag(name='makeurl')
 def do_urllize(parser, token):
     '''
     Generate url from key=value pair
