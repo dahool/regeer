@@ -77,15 +77,20 @@ def banlist(request):
 @render('b3portal/penalties/world_map_banned.html')
 def banned_player_map(request):
     from common.utils.geoip import GeoLocation
-    countries = {}
-    geo = GeoLocation()
-    for penalty in Penalty.objects.db_manager(request.server).active():
-        country_name = geo.get_country(penalty.client.ip)
-        if countries.has_key(country_name):
-            count = countries.get(country_name) + 1
-        else:
-            count = 1
-        countries[country_name]=count
+    from common.cache.file import FileCache
+    local = FileCache("ban-%s" % request.server, getattr(settings, 'WORLDMAP_CACHE_EXPIRE', 1440))
+    countries = local.load()
+    if not countries:
+        countries = {}
+        geo = GeoLocation()
+        for penalty in Penalty.objects.db_manager(request.server).active():
+            country_name = geo.get_country(penalty.client.ip)
+            if countries.has_key(country_name):
+                count = countries.get(country_name) + 1
+            else:
+                count = 1
+            countries[country_name]=count
+        if len(countries) > 0: local.save(countries)
     return {'list': countries}
 
 @server_permission_required_with_403(perm.VIEW_PENALTY)
