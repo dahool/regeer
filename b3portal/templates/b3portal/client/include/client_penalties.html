@@ -27,7 +27,7 @@
 <td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
 <td>{% if penalty.inactive == 0 %}{% if penalty.duration != 0 %}{{penalty.display_duration}}{%endif%}{%endif%}</td>
 <td>{% if penalty.inactive == 1 %}<span style="font-weight: bold;">{% trans "De-activated" %}</span>{%else%}{% if penalty.duration != 0 %}{{penalty.time_expire|date:"DATETIME_FORMAT"}}{%else%}<span style="color:red;">{% trans "Permanent" %}</span>{%endif%}{%endif%}</td>
-<td {%if penalty.display_data %} class="simple_icon icon_info notice_tip" title="{{penalty.display_data|clean_colors}}" {%endif%}>{{penalty.reason|clean_colors}}</td>
+<td {%if penalty.display_data %} class="simple_icon icon_info notice_tip" title="{{penalty.display_data|clean_colors}}" {%endif%}>{{penalty.reason|clean_colors|urlize}}</td>
 <td>{% if penalty.admin and penalty.admin.id > 0 %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}{% if penalty.admin_username %}{{penalty.admin_username}}{%else%}-B3{%endif%}{%endif%}</td>
 </tr>
 {% empty %}

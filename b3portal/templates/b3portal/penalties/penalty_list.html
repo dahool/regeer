@@ -39,7 +39,8 @@
 <td><a href="{% serverurl client_detail penalty.client.id %}">{{penalty.client.name}}</a></td>
 <td>{{penalty.get_type_display}}</td>
 <td>{{penalty.time_add|date:"DATETIME_FORMAT"}}</td>
-<td><p class="wordwrap" style="width: 335px;">{{penalty.reason|clean_colors}}</p></td>
+<td><p class="wordwrap" style="width: 335px;">{{penalty.reason|clean_colors}}</p>
+</td>
 <td>{% if penalty.admin and penalty.admin_id > 0 %}<a href="{% serverurl client_detail penalty.admin.id %}">{{penalty.admin.name}}</a>{% else %}{% if penalty.admin_username %}{{penalty.admin_username}}{%else%}-B3{%endif%}{%endif%}</td>
 </tr>
 {% endfor %}

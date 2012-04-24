@@ -18,11 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from django import template
 from django.template.defaultfilters import stringfilter
-from django.template import Node, Template, Context, NodeList, VariableDoesNotExist, resolve_variable, TemplateSyntaxError
+from django.template import TemplateSyntaxError
 
 import logging
 import re
 import urllib
+from django.utils.safestring import mark_safe
 
 logger = logging.getLogger('regeer')
 
@@ -112,3 +113,17 @@ class MakeUrlNode(template.Node):
             url += '&'
         url += '%s' % p
         return url
+    
+@register.filter
+@stringfilter
+def urlizerepl(text, replace):
+    """
+    Converts URLs into clickable links, replace the original text with a specified one
+
+    Argument:
+    Replace: New text for url.
+    Style: a style to apply to the anchor created
+    """
+    from common.utils.urlutils import urlize
+    return mark_safe(urlize(text, replace, target=True, nofollow=True))
+urlizerepl.is_safe = True

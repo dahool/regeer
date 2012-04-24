@@ -1,6 +1,14 @@
 {% extends "base_layout.html" %}
-{% load listtocolumns i18n tagutils settingstag paginator navigation urltag %}
+{% load listtocolumns i18n tagutils settingstag paginator navigation urltag extendedtags %}
 {% block title %}{{ block.super }} | {% trans "Banned Players" %}{% endblock %}
+{% block extra_header %}
+{{block.super}}
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".wordwrap > a").tipTip({delay: 200, defaultPosition: 'top'});
+});
+</script>
+{% endblock %}
 {% block main_content_header %}
 <h3>{% trans "Banned Players" %}</h3>
 <span>
@@ -45,15 +53,20 @@
 <td>{% if ban.duration != 0 %}{{ban.time_expire|date:"DATETIME_FORMAT"}}{%else%}<span style="color:red;">{% trans "Permanent" %}</span>{%endif%}</td>
 <td {% if ban.display_data and obj_perms.portal.listpenalties %}class="simple_icon icon_info notice_tip" title="{{ban.display_data|clean_colors}}" {%endif%}>
 <p class="wordwrap" style="width: 390px;">
+{% captureas linktext %}
+{% trans "(link)" %}
+{% endcaptureas %}
+{% with reason=ban.reason|clean_colors|urlizerepl:linktext %} 
 {% if obj_perms.portal.listpenalties %}
-{{ban.reason|clean_colors}}
+{{reason}}
 {% else %}
 {% ifsetting "ANOM_HIDE_REASON" %}
 -
 {% else %}
-{{ban.reason|clean_colors}}
+{{reason}}
 {% endifsetting %}
 {% endif %}
+{% endwith %}
 </p>
 </td>
 </tr>
