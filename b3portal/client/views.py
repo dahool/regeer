@@ -166,11 +166,13 @@ def player_map(request):
         geo = GeoLocation()
         for client in Client.objects.using(request.server).filter(id__gt=1):
             country_name = geo.get_country(client.ip)
-            if countries.has_key(country_name):
-                count = countries.get(country_name) + 1
-            else:
-                count = 1
-            countries[country_name]=count
+            if country_name != '':
+                #country_code = geo.get_country_code(client.ip)
+                if countries.has_key(country_name):
+                    countries[country_name]['count'] += 1
+                    #countries[country_name]['clients'].append(client)
+                else:
+                    countries[country_name] = {'count': 1 } #, 'clients': [client]}
         if len(countries) > 0: local.save(countries)
     return {'list': countries}
 

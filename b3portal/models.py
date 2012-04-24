@@ -146,6 +146,20 @@ class UserProfile(models.Model):
         ) 
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
+class Country(models.Model):
+    ipstart = models.CharField(max_length=15)
+    ipend = models.CharField(max_length=15)
+    ipdecstart = models.IntegerField()
+    ipdecend = models.IntegerField()
+    code = models.CharField(max_length=2, db_index=True)
+    name = models.CharField(max_length=75)
+
+    def __repr__(self):
+        return "%s [%s]" % (self.name, self.code)
+    
+    def __unicode__(self):
+        return repr(self)
         
 from b3portal import init_database_config
 

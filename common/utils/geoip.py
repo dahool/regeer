@@ -46,3 +46,10 @@ class GeoLocation:
             return self._get_geodat().country_name_by_addr(ip)
         except:
             return None
+
+    def get_country_code(self, ip):
+        try:
+            return self._get_geodat().country_code_by_addr(ip)
+        except:
+            return None
+        

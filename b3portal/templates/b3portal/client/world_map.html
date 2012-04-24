@@ -16,7 +16,7 @@
 
         {% for key, value in list.items %}
         data.setValue({{forloop.counter0}},0,'{{key}}');
-        data.setValue({{forloop.counter0}},1,{{value}});
+        data.setValue({{forloop.counter0}},1,{{value.count}});
         {% endfor %}
 
         var options = {};
@@ -27,7 +27,13 @@
         var container = document.getElementById('map-box');
         var geomap = new google.visualization.GeoMap(container);
         geomap.draw(data, options);
+        
+        google.visualization.events.addListener(geomap, 'regionClick', mapClick);
     };
+    
+    function mapClick(e) {
+    	//console.log(e.region);
+    }
 
 </script>
 {% endblock %}
