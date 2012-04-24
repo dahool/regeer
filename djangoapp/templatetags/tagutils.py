@@ -73,11 +73,11 @@ def baseip(text):
     return "-"
 
 @register.tag(name='makeurl')
-def do_urllize(parser, token):
+def do_makeurl(parser, token):
     '''
     Generate url from key=value pair
     
-        {% urlize urlstring key1=param1 key2='string2' .... %}
+        {% makeurl urlstring key1=param1 key2='string2' .... %}
     '''
     args = token.split_contents()
     tag_name = args[0]
@@ -88,22 +88,22 @@ def do_urllize(parser, token):
     for p in params:
         k, v = p.split('=')
         pm[k] = parser.compile_filter(v)
-    return UrlizeNode(parser.compile_filter(url), pm)    
+    return MakeUrlNode(parser.compile_filter(url), pm)    
 
-class UrlizeNode(template.Node):
+class MakeUrlNode(template.Node):
     
     def __init__(self, url, params):
         self.url, self.params = url, params
 
     def __repr__(self):
-        return "<UrlizeNode>"
+        return "<MakeUrlNode>"
 
     def render(self, context):
         try:
             url = self.url.resolve(context)
             params = dict((k, v.resolve(context)) for k, v in self.params.items())  
         except Exception, e:
-            logger.exception("UrlizeNode <%s>" % str(e))
+            logger.exception("MakeUrlNode <%s>" % str(e))
             return ''
         p = urllib.urlencode(params)
         if url.find('?') == -1:
