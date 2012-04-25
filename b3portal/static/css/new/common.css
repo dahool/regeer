@@ -13,7 +13,7 @@ small select, small input {
     width: 800px;
     position: absolute;
     left: 50%;
-    margin-left: -400px;
+    margin-left: -350px;
 }
 .search {
 	padding-left: 18px !important;
