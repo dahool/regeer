@@ -60,7 +60,11 @@ def parse_params(data):
     return pdic
 
 def serialize_params(data):
-    return urllib.urlencode(data)
+    #return urllib.urlencode(data)
+    params = []
+    for k, v in data.items():
+        params.append("%s=%s" % (k, v))
+    return "&".join(params)
 
 # this doesn't exists in django prior to django 1.4
 def smart_urlquote(url):
