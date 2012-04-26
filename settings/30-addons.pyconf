@@ -26,6 +26,9 @@ ANOM_HIDE_REASON = True
 # Set to True for B3 1.7 support, with new table IpAliases
 SUPPORT_IP_ALIASES = True 
 
+# If True, exceptions will be logged to db
+LOG_EXCEPTION_DB = False
+
 # Maps
 MAP_IMAGE_URL = "http://image.www.gametracker.com/images/maps/160x120/urbanterror/%s.jpg"
 MAP_LOCATION = "http://commondatastorage.googleapis.com/q3ut4/%s.pk3"
