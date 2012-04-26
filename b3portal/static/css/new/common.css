@@ -697,8 +697,10 @@ h3 {
 	white-space:nowrap;
 	text-overflow:ellipsis;	
 }
-
-
+/*.wordwrap:hover {
+	text-overflow:inherit;
+	overflow: visible;
+}*/
 .icon-bullet {
     background: url(../../images/icons/csg-bullet.png) no-repeat top left;
 }
