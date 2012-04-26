@@ -1,0 +1,14 @@
+--- django/core/cache/backends/memcached.py	Mon Jul 11 10:15:20 2011
++++ django/core/cache/backends/memcached.py	Thu Apr 26 14:32:45 2012
+@@ -55,7 +55,10 @@
+ 
+     def get(self, key, default=None, version=None):
+         key = self.make_key(key, version=version)
+-        val = self._cache.get(key)
++        try:
++            val = self._cache.get(key)
++        except:
++            val = None
+         if val is None:
+             return default
+         return val
