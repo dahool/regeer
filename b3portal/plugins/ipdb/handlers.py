@@ -15,9 +15,12 @@ class PluginDisabledException(Exception):
 def get_client(server):
     try:
         p = IpdbPlugin.objects.get(server=server)
+        if p.server.rcon_ip is None or p.server.rcon_ip == '':
+            logger.warn('Server IP/Port are missing for %s' % server)
+            raise PluginDisabledException()    
     except IpdbPlugin.DoesNotExist:
         raise PluginDisabledException()
-    return IpdbClient(ipdbsettings.IPDB_URL, p.serverKey, ipdbsettings.IPDB_TIMEOUT)
+    return IpdbClient(ipdbsettings.IPDB_URL, p.serverKey, (p.server.rcon_ip, p.server.rcon_port), ipdbsettings.IPDB_TIMEOUT)
 
 def add_penalty_handler(user, client, penalty, server, update=False):
     

@@ -17,6 +17,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 from django.contrib import admin
+from django import forms
 from b3portal.plugins.ipdb.models import IpdbPlugin
+from django.utils.translation import ugettext as _
+from django.core.exceptions import ValidationError
 
-admin.site.register(IpdbPlugin)
+
+class IpdbPluginForm(forms.ModelForm):
+        
+    def clean(self):
+        data = self.cleaned_data
+        server = data['server']
+        if server.rcon_ip is None or server.rcon_ip == '':
+            raise ValidationError('In order to enable IPDB, you need to fill in Server Ip and port under Game Server tab in server configuration.')
+        return data
+        
+    class Meta:
+        model = IpdbPlugin
+        
+
+class IpdbPluginAdmin(admin.ModelAdmin):
+    form = IpdbPluginForm
+                    
+admin.site.register(IpdbPlugin, IpdbPluginAdmin)

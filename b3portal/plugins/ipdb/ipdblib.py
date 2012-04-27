@@ -17,16 +17,17 @@ class IpdbClient:
     _EVENT_UNBAN = "unbanned"
     _EVENT_REFRESH = "refresh"
         
-    def __init__(self, url, key, timeout):
+    def __init__(self, url, key, serverIpPort, timeout):
         self._key = key
         self._timeout = timeout
+        self._ipPort = serverIpPort
         self._proxy = xmlrpclib.ServerProxy(url)
 
     def _update(self, lista):
         logging.debug(lista)
         try:
             socket.setdefaulttimeout(self._timeout)
-            self._proxy.server.update(self._key, lista, int(time.time()))
+            self._proxy.server.update(self._key, lista, int(time.time()), self._ipPort)
         except xmlrpclib.ProtocolError, protocolError:
             raise
         except xmlrpclib.Fault, applicationError:
