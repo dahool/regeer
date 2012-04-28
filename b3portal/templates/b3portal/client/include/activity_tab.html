@@ -1,0 +1,30 @@
+<div id="activity_tab_flag" style="display: none;"></div>
+<!-- ************************ USER ACTIVITY ************************ -->
+{% if obj_perms.plugin.view_user_logs and client_adm_commands %}    
+<div id="player_actions" alt="parent">
+{% include "b3portal/client/include/client_user_cmd.html" %}
+</div>
+<br/>
+{% endif %}
+<!-- ************************ ADMIN ACTIVITY ************************ -->
+{% if obj_perms.plugin.view_adm_logs and client_adm_logs %}    
+<div id="admin_log_actions" alt="parent">
+{% include "b3portal/client/include/client_admin_logs.html" %}
+</div>
+<br/>
+{% endif %}
+<!-- ************************ ADMIN ACTIONS ************************ -->
+{% if obj_perms.portal.viewadminsinfo %}    
+<div id="admin_actions" alt="parent">
+{% include "b3portal/client/include/client_adminactions.html" %}
+</div>
+<br/>
+{% endif %}
+<!-- ************************ PORTAL ACTIONS ************************ -->
+{% comment %}{% if obj_perms.portal.viewauditlogs %}{% endcomment %}
+{% if client_auditlogs %}    
+<div id="portal_actions" alt="parent">
+{% include "b3portal/client/include/client_audit.html" %}
+</div>
+<br/>
+{% endif %}

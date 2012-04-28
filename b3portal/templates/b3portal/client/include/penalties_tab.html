@@ -1,0 +1,18 @@
+<div id="penalties_tab_flag" style="display: none;"></div>
+<!-- ************************ PENALTIES ************************ -->
+{% if obj_perms.portal.listpenalties %}
+<div id="client_penalties" alt="parent">
+{% include "b3portal/client/include/client_penalties.html" %}
+</div>
+<br/>
+<!-- ************************ NOTICES ************************ -->
+<div id="client_notice" alt="parent">
+{% include "b3portal/client/include/client_notices.html" %}
+</div>
+<br/>
+<!-- ************************ PAST PENALTIES ************************ -->
+<div id="past_penalties" alt="parent">
+{% include "b3portal/client/include/client_ipenalties.html" %}
+</div>
+<br/>
+{% endif %} <!-- PERM ENDIF -->

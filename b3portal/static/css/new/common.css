@@ -516,6 +516,9 @@ h3 {
     padding: 10px 10px 10px 30px;
     position: absolute;
     z-index: 20;
+    -webkit-box-shadow: 0 0 10px rgb(0, 0, 0);
+    -moz-box-shadow: 0 0 10px rgb(0, 0, 0);
+    box-shadow: 0 0 5px rgb(0, 0, 0);
 }
 #context-loader {
     width: 80px;
@@ -731,3 +734,17 @@ h3 {
 .bullet_white{ background-position: 0 -624px;  } 
 .bullet_wrench{ background-position: 0 -650px;  } 
 .bullet_yellow{ background-position: 0 -676px;  }
+
+.loader-element {
+	background: url("../../images/barloader.gif") no-repeat scroll 50% 50% transparent;
+	border: 0 none;
+	font-size: 12px;
+	font-weight: bold;
+	height: 19px;
+	margin: auto;
+	padding: 0;
+	text-align: center;
+	width: 220px;
+	z-index: 20;
+	color: #000;
+}

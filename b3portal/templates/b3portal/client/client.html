@@ -104,7 +104,7 @@ $(document).ready(function() {
         }        
     });		
     {% endif %}
-    $("li.first").on('click', function(){
+/*    $("li.first").on('click', function(){
     	var current = $("li.note:visible");
     	var back = $(current).prev();
     	if (!$(back).hasClass('first')) {
@@ -121,9 +121,9 @@ $(document).ready(function() {
         	$(next).slideDown('fast');
         	slide_control(next);
     	}
-    });
+    });*/
 });
-function slide_control(curr) {
+/*function slide_control(curr) {
 	if ($(curr).next().hasClass('last')) {
 		$("li.last").addClass('note_nomore');
 	} else {
@@ -134,7 +134,7 @@ function slide_control(curr) {
 	} else {
 		$("li.first").removeClass('note_nomore');
 	}	
-}
+}*/
 </script>
 {% endblock %}
 {% block main_content %}
@@ -171,8 +171,10 @@ slide_control("li.note:visible");
 {% endif %}
 <div class="clientPanelTabGroups">
 	<ul class="clientPanelTabGroup">
-		<li class="tab_selected" alt="tab_details">{% trans "Details" %}</li> 
-		<li alt="tab_penalties">{% trans "Penalties" %}</li> 
+		<li class="tab_selected" alt="tab_details">{% trans "Details" %}</li>
+		{% if obj_perms.portal.listpenalties %} 
+		<li alt="tab_penalties">{% trans "Penalties" %}</li>
+		{% endif %}
 		<li alt="tab_activity">{% trans "Activity" %}</li> 
 	</ul>
 </div>
@@ -180,20 +182,22 @@ slide_control("li.note:visible");
 	<div id="tab_details" class="clientContentTab">
 		<!-- ************************ ALIASES ************************ -->
 		{% if obj_perms.portal.viewalias %}
-		<div id="client_aliases">
+		<div id="client_aliases" alt="parent">
 		{% include "b3portal/client/include/client_aliases.html" %}
 		</div>
 		<br/>
 		<!-- ************************ IP ALIAS ************************ -->
 		{% ifsetting SUPPORT_IP_ALIASES %}
-		<div id="client_ipaliases">
+		<div id="client_ipaliases" alt="parent">
 		{% include "b3portal/client/include/client_ipaliases.html" %}
 		</div>
 		<br/>
 		{% endifsetting %}
 		{% endif %}		
 	</div>
-	<div id="tab_penalties" class="clientContentTab">
+	<div id="tab_penalties" class="clientContentTab" alt="{% serverurl client_detail_penalties client.id %}" >
+		<div class="loader-element" style="margin-top: 50px;">{% trans "Please wait, loading ..." %}</div>
+		{% comment %}
 		<!-- ************************ PENALTIES ************************ -->
 		{% if obj_perms.portal.listpenalties %}
 		<div id="client_penalties">
@@ -210,9 +214,12 @@ slide_control("li.note:visible");
 		{% include "b3portal/client/include/client_ipenalties.html" %}
 		</div>
 		<br/>
-		{% endif %} <!-- PERM ENDIF -->		
+		{% endif %} <!-- PERM ENDIF -->
+		{% endcomment %}
 	</div>
-	<div id="tab_activity" class="clientContentTab">
+	<div id="tab_activity" class="clientContentTab" alt="{% serverurl client_detail_activity client.id %}">
+		<div class="loader-element" style="margin-top: 50px;">{% trans "Please wait, loading ..." %}</div>
+		{% comment %}
 		<!-- ************************ USER ACTIVITY ************************ -->
 		{% if obj_perms.plugin.view_user_logs and client_adm_commands %}    
 		<div id="player_actions">
@@ -235,13 +242,13 @@ slide_control("li.note:visible");
 		<br/>
 		{% endif %}
 		<!-- ************************ PORTAL ACTIONS ************************ -->
-		{% comment %}{% if obj_perms.portal.viewauditlogs %}{% endcomment %}
 		{% if client_auditlogs %}    
 		<div id="portal_actions">
 		{% include "b3portal/client/include/client_audit.html" %}
 		</div>
 		<br/>
-		{% endif %}		
+		{% endif %}	
+		{% endcomment %}
 	</div> 
 </div>
 {% endblock %}

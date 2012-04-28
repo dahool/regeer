@@ -98,33 +98,32 @@ def client(request, id):
         try:
             from b3portal.plugins.ctime import functions as ctime
             from common.utils.timesince import minutes_to_string
-            ptime = ctime.get_total_playtime(client)
+            ptime = ctime.get_total_playtime(client, request.server)
             playedtime = {'start': ptime['since'], 'total': minutes_to_string(ptime['total'])}
             if (datetime.datetime.now() - ptime['since']).days > 30:
-                ptime = ctime.get_total_playtime(client, datetime.datetime.now() - datetime.timedelta(days=30))
+                ptime = ctime.get_total_playtime(client, request.server, 30)
                 playedlastmonth = {'start': ptime['since'], 'total': minutes_to_string(ptime['total'])}
         except Exception, e:
             logger.exception(str(e))
             
-    if has_server_perm(request.user, perm.VIEW_AUDITLOGS, request.server):
-        client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server)) 
-    else:
-        client_auditlogs = _paginate(request, Auditor.objects.get_by_client_n_user(client.id, request.server, request.user)) 
-        #client_auditlogs = None
+#    if has_server_perm(request.user, perm.VIEW_AUDITLOGS, request.server):
+#        client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server)) 
+#    else:
+#        client_auditlogs = _paginate(request, Auditor.objects.get_by_client_n_user(client.id, request.server, request.user)) 
         
     client_aliases = _paginate(request, client.aliases.all())
     client_ipaliases = _paginate(request, client.ip_aliases.all())
-    client_notices = _paginate(request, client.penalties.notices())
-    client_penalties = _paginate(request, client.penalties.active_bans())
-    client_ppenalties = _paginate(request, client.penalties.inactive())
-    client_admactions = _paginate(request, client.adminpenalties.all())
+#    client_notices = _paginate(request, client.penalties.notices())
+#    client_penalties = _paginate(request, client.penalties.active_bans())
+#    client_ppenalties = _paginate(request, client.penalties.inactive())
+#    client_admactions = _paginate(request, client.adminpenalties.all())
     
-    if is_plugin_enabled(server, "auditor"):
-        client_actions = _paginate(request, client.commands.all())
-        client_adm_actions = _paginate(request, client.admin_logs.all())
-    else:
-        client_actions = None
-        client_adm_actions = None
+#    if is_plugin_enabled(server, "auditor"):
+#        client_actions = _paginate(request, client.commands.all())
+#        client_adm_actions = _paginate(request, client.admin_logs.all())
+#    else:
+#        client_actions = None
+#        client_adm_actions = None
         
     banlist = _get_banlist(request)
     
@@ -135,18 +134,84 @@ def client(request, id):
             'banlist': banlist,
             'playedtime': playedtime,
             'playedlastmonth': playedlastmonth,
-            'client_auditlogs': client_auditlogs,
+#            'client_auditlogs': client_auditlogs,
             'client_aliases': client_aliases,
             'client_ipaliases': client_ipaliases,
-            'client_notices': client_notices,
-            'client_penalties': client_penalties,
-            'client_ppenalties': client_ppenalties,
-            'client_admactions': client_admactions,
-            'client_adm_commands': client_actions,
-            'client_adm_logs': client_adm_actions,            
+#            'client_notices': client_notices,
+#            'client_penalties': client_penalties,
+#            'client_ppenalties': client_ppenalties,
+#            'client_admactions': client_admactions,
+#            'client_adm_commands': client_actions,
+ #           'client_adm_logs': client_adm_actions,            
             'group_data': get_json_value(groups),
             'change_group': len(groups) > 0}
 
+@server_permission_required_with_403(perm.VIEW_CLIENT)
+@render('b3portal/client/include/penalties_tab.html')
+def client_penalty_detail(request, id):
+    client = get_object_or_404(Client, id=id, using=request.server)
+    
+    try:
+        if client.group.level >= settings.HIGH_LEVEL_CLIENT:
+            if not has_server_perm(request.user, perm.VIEW_HIGH_LEVEL_CLIENT, request.server):
+                messages.warning(request, _('You are not authorized to view details about this player.'))
+                raise Http403
+    except Group.DoesNotExist:
+        pass
+    except Exception, e:
+        logger.exception(str(e))
+        raise
+    
+    client_notices = _paginate(request, client.penalties.notices())
+    client_penalties = _paginate(request, client.penalties.active_bans())
+    client_ppenalties = _paginate(request, client.penalties.inactive())
+    
+    return {'client': client,
+            'client_notices': client_notices,
+            'client_penalties': client_penalties,
+            'client_ppenalties': client_ppenalties
+            }
+    
+@server_permission_required_with_403(perm.VIEW_CLIENT)
+@render('b3portal/client/include/activity_tab.html')
+def client_activity_detail(request, id):
+    client = get_object_or_404(Client, id=id, using=request.server)
+    
+    try:
+        if client.group.level >= settings.HIGH_LEVEL_CLIENT:
+            if not has_server_perm(request.user, perm.VIEW_HIGH_LEVEL_CLIENT, request.server):
+                messages.warning(request, _('You are not authorized to view details about this player.'))
+                raise Http403
+    except Group.DoesNotExist:
+        pass
+    except Exception, e:
+        logger.exception(str(e))
+        raise
+
+    server = Server.objects.get(uuid=request.server)
+                        
+    if has_server_perm(request.user, perm.VIEW_AUDITLOGS, request.server):
+        client_auditlogs = _paginate(request, Auditor.objects.get_by_client(client.id, request.server)) 
+    else:
+        client_auditlogs = _paginate(request, Auditor.objects.get_by_client_n_user(client.id, request.server, request.user)) 
+        #client_auditlogs = None
+        
+    client_admactions = _paginate(request, client.adminpenalties.all())
+    
+    if is_plugin_enabled(server, "auditor"):
+        client_actions = _paginate(request, client.commands.all())
+        client_adm_actions = _paginate(request, client.admin_logs.all())
+    else:
+        client_actions = None
+        client_adm_actions = None
+        
+    return {'client': client,
+            'client_auditlogs': client_auditlogs,
+            'client_admactions': client_admactions,
+            'client_adm_commands': client_actions,
+            'client_adm_logs': client_adm_actions
+            }
+    
 def _get_banlist(request):
     if not has_server_perm(request.user, perm.VIEW_PENALTY, request.server):
         return []

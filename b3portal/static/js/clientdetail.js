@@ -35,13 +35,27 @@ $(document).ready(
 		$(".clientPanelTabContent div:first").show();
 		$(".clientPanelTabGroup li").click(function() {
 			var tabId = $(this).attr('alt');
+			var elem = $('#'+tabId); 
 			$('.clientPanelTabContent .clientContentTab:not(#'+tabId+')').hide();
-			$('#'+tabId).show();
+			$(elem).show();
 			$('.clientPanelTabGroup li:not(alt['+tabId+'])').removeClass('tab_selected');
 			$(this).addClass('tab_selected');
+			if ($(elem).attr('alt') != undefined) {
+				var url = $(elem).attr('alt');
+				if ($(elem).find('.loader-element').length > 0) {
+					$(elem).load(url);
+				}
+			}
 		});
 		
-		// ajax boxes
+		// ajax pagination
+		console.log();
+		$(document).on('click','div.pagination a', function(e) {
+			e.preventDefault();
+			var parent = $(this).parents('div[alt=parent]')
+			do_get($(this).attr('href'),parent);
+		});
+		/*
 		$('#client_aliases').on('click','div.pagination a', function(e) {
 			e.preventDefault();
 			do_get($(this).attr('href'),$('#client_aliases'));
@@ -54,7 +68,7 @@ $(document).ready(
 			e.preventDefault();
 			do_get($(this).attr('href'),$('#client_notice'));
 		});		
-		$('#past_penalties').on('click','div.pagination a', function(e) {
+		$(document).on('click','#past_penalties div.pagination a', function(e) {
 			e.preventDefault();
 			do_get($(this).attr('href'),$('#past_penalties'));
 		});			
@@ -73,6 +87,6 @@ $(document).ready(
 		$('#admin_log_actions').on('click','div.pagination a', function(e) {
 			e.preventDefault();
 			do_get($(this).attr('href'),$('#admin_log_actions'));
-		});
+		});*/
 	}
 );

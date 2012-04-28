@@ -22,7 +22,6 @@ function update_user_messages(callback) {
 		if (callback) callback();
 	})	
 }
-
 function isEmpty(ob){
     for(var i in ob){ return false;}
 	return true;

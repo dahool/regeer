@@ -34,11 +34,14 @@ from b3portal.permission.utils import server_permission_required_with_403
 from b3portal import permissions as perm
 from b3portal.plugins import is_plugin_enabled
 from django.http import Http404
+from django.conf import settings
 
 from b3portal.plugins.ctime.functions import get_player_activity
 
+CACHE_TIMEOUT = getattr(settings, 'ACTIVITY_CACHE', 120) * 60
+
 @server_permission_required_with_403(perm.VIEW_ACTIVITY)    
-@cache_page(120*60)
+@cache_page(CACHE_TIMEOUT)
 @render('activity/client_activity.html')
 def client_detail(request, id):
     server = get_object_or_404(Server,uuid=request.server)

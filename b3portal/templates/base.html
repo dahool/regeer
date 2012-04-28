@@ -29,10 +29,6 @@ var MUP_URL='{% url userinformation %}';
 {% endblock %}
 </head>
 <body>
-<div style="display: none;">
-<!-- preload image -->
-<img src="{{STATIC_URL}}images/metabox_loader.gif"/>
-</div>
 <div id="context-loader" class="context-loader">{% trans "Loading..." %}</div>
 {% block main_page %}{% endblock %}
 <script type="text/javascript">

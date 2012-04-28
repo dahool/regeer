@@ -98,6 +98,8 @@ input[type=submit],input[type=submit]:visited,input[type=button],input[type=butt
 	position: relative;
 	cursor: pointer;
 	border: none;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 input[type=submit]:hover, input[type=button]:hover {

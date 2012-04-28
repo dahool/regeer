@@ -22,6 +22,7 @@ import datetime
 import time
 from django.utils.dateformat import format
 from django.db.models import Sum
+from django.core.cache import cache
 
 def format_date(ts, fmt=settings.SHORT_DATE_FORMAT):
     if not isinstance(ts, datetime.datetime):
@@ -73,18 +74,25 @@ def get_player_activity(client):
         if idx == limit: break;
     return data
 
-def get_total_playtime(client, since = None):
+def get_total_playtime(client, key, days = None, cached = True):
     """
     Returns the total played time in seconds.
     Result:
     Dict: 'since': first appearance
           'total': total time in seconds
     """
-    if since:
-        q = client.playtime.filter(came__gte=time.mktime(since.timetuple()))
-    else:
-        q = client.playtime.all()
-    first = datetime.datetime.fromtimestamp(q.order_by('id')[0].start)
-    sums = q.aggregate(Sum('came'), Sum('gone'))
-    total = (sums['gone__sum'] - sums['came__sum']) * 60
-    return {'since': first, 'total': total}   
+    ckey = "act-%s-%s+%s" % (str(client.pk), str(key), str(days) if days is not None else '0')
+    response = None
+    if cached: response = cache.get(ckey)
+    if not response:
+        if days:
+            since = datetime.datetime.now() - datetime.timedelta(days=days)
+            q = client.playtime.filter(came__gte=time.mktime(since.timetuple()))
+        else:
+            q = client.playtime.all()
+        first = datetime.datetime.fromtimestamp(q.order_by('id')[0].start)
+        sums = q.aggregate(Sum('came'), Sum('gone'))
+        total = (sums['gone__sum'] - sums['came__sum']) * 60
+        response = {'since': first, 'total': total}
+        cache.set(ckey, response, getattr(settings, 'ACTIVITY_CACHE', 120)*60) 
+    return response
