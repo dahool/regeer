@@ -33,8 +33,11 @@ class ServerDetectMiddleware(object):
             
         if not server_list or len(server_list) == 0:
             server_list = Server.objects.all()
+            count = Server.objects.count()
+            if count == 0:
+                return None
             if hasattr(request, 'session'):
-                if Server.objects.count() > 0:
+                if count > 0:
                     request.session['server_list'] = server_list
         
         request.__class__.server_list = server_list
@@ -68,8 +71,6 @@ class ServerDetectMiddleware(object):
                 
         if not server or not server_obj:                
             raise Http404        
-#        if server and server not in [s.uuid for s in server_list]:
-#            raise Http404
         
         request.__class__.server = server
         request.__class__.server_obj = server_obj
