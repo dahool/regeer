@@ -51,11 +51,21 @@ function create_note_pager() {
 	        endRange     : 1,
 	        previous: '{% trans "previous" %}',
 	        next: '{% trans "next" %}',
+            callback: function(page, items) {
+                var $obj = $('li.note:visible').find('.notecontent');
+                $obj.prop('scrollTop', 0);
+                if ($obj.prop('scrollHeight') > 40) {
+                    $("#notescroll").show();
+                } else {
+                    $("#notescroll").hide();
+                }
+            }
 		});	
 	}
 }
 $(document).ready(function() {
 	create_note_pager();
+       
     $("#main").on('click',"a[confirm]",function() {
         var url = $(this).attr('alt');
         var callback = $(this).attr('callback');
@@ -104,37 +114,15 @@ $(document).ready(function() {
         }        
     });		
     {% endif %}
-/*    $("li.first").on('click', function(){
-    	var current = $("li.note:visible");
-    	var back = $(current).prev();
-    	if (!$(back).hasClass('first')) {
-        	$(current).slideUp('fast');
-        	$(back).slideDown('fast');
-        	slide_control(back);
-    	}
+    
+    $("#notescroll").find('.scrollup').click(function(){
+        $('li.note:visible').find('.notecontent').animate({ 'scrollTop' : "-=20px" });
+    });
+    $("#notescroll").find('.scrolldown').click(function(){
+        $('li.note:visible').find('.notecontent').animate({ 'scrollTop' : "+=20px" });
     });    
-    $("li.last").on('click', function(){
-    	var current = $("li.note:visible");
-    	var next = $(current).next();
-    	if (!$(next).hasClass('last')) {
-    		$(current).slideUp('fast');
-        	$(next).slideDown('fast');
-        	slide_control(next);
-    	}
-    });*/
+    
 });
-/*function slide_control(curr) {
-	if ($(curr).next().hasClass('last')) {
-		$("li.last").addClass('note_nomore');
-	} else {
-		$("li.last").removeClass('note_nomore');
-	}
-	if ($(curr).prev().hasClass('first')) {
-		$("li.first").addClass('note_nomore');
-	} else {
-		$("li.first").removeClass('note_nomore');
-	}	
-}*/
 </script>
 {% endblock %}
 {% block main_content %}
@@ -156,16 +144,10 @@ create_dialog("#add_note_link", note_update);
 {% include "b3portal/client/include/client_noteline.html" %}
 {% endfor %}
 </ul>
+<div id="notescroll" style="display: none;"><span class="scrollbutton scrollup">&nbsp;</span><span class="scrollbutton scrolldown">&nbsp;</span></div>
 <div id="note_box_pages"></div>
 </div>
 <br/>
-{% comment %}
-<script type="text/javascript">
-<!--
-slide_control("li.note:visible");
-//-->
-</script>
-{% endcomment %}
 {% endif %}
 <div class="clientPanelTabGroups">
 	<ul class="clientPanelTabGroup">

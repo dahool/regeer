@@ -64,8 +64,11 @@ from django.template.loader import render_to_string
 from django.utils.html import escape as escapehtml
 from b3portal.banlist import IpBanList
 
+from django.views.decorators.cache import never_cache
+
 logger = logging.getLogger('regeer')
 
+@never_cache
 @server_permission_required_with_403(perm.VIEW_CLIENT)
 @render('b3portal/client/client.html')
 def client(request, id):
@@ -126,7 +129,6 @@ def client(request, id):
 #        client_adm_actions = None
         
     banlist = _get_banlist(request)
-    
     groups = get_group_list(request, client)
     
     return {'client': client,
@@ -644,6 +646,7 @@ def change_clientgroup(request, id):
     messages.info(request, _('Client updated.'))
     return HttpResponse(str(group), mimetype='plain/text')
 
+@never_cache
 @server_permission_required_with_403(perm.VIEW_NOTES)
 @render('b3portal/client/include/client_noteline.html')
 def more_notes(request, id):

@@ -566,14 +566,16 @@ h3 {
 	border-radius: 10px;	
 	background: none repeat scroll 0 0 #FFFFD7;
 	height: 40px;
-	padding: 5px;
+	padding: 5px 5px 8px;
 	margin: 0;
 	margin-bottom: 4px;
 	font-family: "Courier New", Courier, monospace;
 }
-/*#note_box li.note:hover {
-	background: #FFFFFF url(../../images/new/table-hover.png) repeat;
-}*/
+#note_box li.note .notecontent {
+    overflow: hidden;
+    width: 640px;
+    height: 38px;
+}
 #note_box li.last, #note_box li.first {
 	border: 0;
 	padding: 0;
@@ -604,18 +606,22 @@ h3 {
 #note_box_pages a {
     font-size:12px;
     cursor:pointer;
-    margin:0 5px;
+    margin:0 2px;
     color:#333;
+    background-color: #CCD8E0;
+    border: 1px solid #CCCCCC;
+    font-weight: normal;
+    padding: 2px 4px;    
 }
 #note_box_pages a:hover {
     background-color:#222;
     color:#fff;
 }
 #note_box_pages a.jp-previous {
-    margin-right:15px;
+    margin-right:5px;
 }
 #note_box_pages a.jp-next {
-    margin-left:15px;
+    margin-left:5px;
 }
 #note_box_pages a.jp-current,
 #note_box_pages a.jp-current:hover {
@@ -747,4 +753,36 @@ h3 {
 	width: 220px;
 	z-index: 20;
 	color: #000;
+}
+.scrollbutton {
+    display: block;
+    border: none !important;
+    text-decoration:none !important;
+    cursor: pointer;
+    padding-top: 1px;
+    padding-right: 0;
+    padding-bottom: 1px;
+    line-height: 11px;
+    background: url("../../images/scroll.png") no-repeat scroll transparent;
+    width: 10px;
+    height: 10px;
+    padding-left: 10px !important;
+}    
+.scrollbutton.scrollup {
+    background-position: 0px 0px;
+}
+.scrollbutton.scrolldown {
+    margin-top: 10px;
+    background-position: 0px -21px;
+}
+.scrollbutton.scrollup:hover {
+    background-position: 0px -42px;
+}
+.scrollbutton.scrolldown:hover {
+    background-position: 0px -63px;
+}
+#note_box #notescroll {
+    float: right;
+    margin-top: -45px;
+    margin-right: -25px;
 }
