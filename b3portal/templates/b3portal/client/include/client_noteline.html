@@ -1,4 +1,5 @@
 {% load i18n %}
-<li class="note">{{note.reason|urlize}}
+<li class="note">
 <span>{{note.admin_username}} - {{note.time_add|date:"DATETIME_FORMAT"}}</span>
+{{note.reason|urlize}}
 </li>

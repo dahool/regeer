@@ -152,11 +152,9 @@ create_dialog("#add_note_link", note_update);
 {% if obj_perms.portal.viewnotes %}
 <div id="note_box" class="client_detail">
 <ul id="note_box-list">
-<!-- li class="first" title="{% trans "Back" %}">&nbsp;</li-->
 {% for note in client.penalties.comments %}
 {% include "b3portal/client/include/client_noteline.html" %}
 {% endfor %}
-<!-- li class="last" title="{% trans "More" %}">&nbsp;</li-->
 </ul>
 <div id="note_box_pages"></div>
 </div>
