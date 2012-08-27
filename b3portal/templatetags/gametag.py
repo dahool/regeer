@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from django import template
 from django.template import Node, NodeList, resolve_variable, TemplateSyntaxError
+from b3portal.utils.engine import check_guid
 import re
 
 register = template.Library()
@@ -56,17 +57,8 @@ class IfValidGuidNode(Node):
             if request.server == s.uuid:
                 server = s
                 break
-            
-        if server and server.game in ('q3a', 'oa081','iourt41','smg','smg11','etpro','q3a'):
-            r = re.match('^[A-F0-9]{32}$', guid) 
-        elif server and server.game in ('moh','bfbc2'):
-            r = re.match('^EA_[a-f0-9]{32}$', guid, re.IGNORECASE)
-        elif server and server.game in ('alt',):
-            r = re.match('^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$', guid, re.IGNORECASE)
-        else:
-            r = False
-    
-        if r:
+        
+        if server and check_guid(server.game, guid):
             return self.nodelist_true.render(context)
         else:
             return self.nodelist_false.render(context) 
