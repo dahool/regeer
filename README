@@ -2,7 +2,7 @@ See /docs folder for more information.
 
 NOTE: this project is done. All planned features were added.
 I consider the project stable enought. I have no plans to continue working on it.
-Although I will try to fix any reported issue, no new funcionallity will be added.
+Although I'll try to fix any reported issue, no new functionallity will be added.
 Installation it's quite easy following the instructions in the doc folder, but a minimum knowledge of deploying web apps is necessary.
 
 Must of the stuff should work with any game server running B3 bot, RCON is available for Urban Terror 4.1 only (it probably will work with 4.2, not tested).
