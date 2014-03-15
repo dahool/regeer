@@ -7,6 +7,10 @@ VERSION = None
 
 PROJECT_PATH = os.path.normpath(os.path.abspath(os.path.dirname(__file__)))
 
+LOCALE_PATHS = (
+    os.path.join(PROJECT_PATH, 'locale'),
+)
+
 conffiles = glob.glob(os.path.join(os.path.dirname(__file__), 'settings','*.pyconf'))
 conffiles.sort()
 

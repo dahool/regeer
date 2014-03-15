@@ -74,7 +74,7 @@ class uiSplitDateTimeWidget(forms.widgets.MultiWidget):
     A Widget that splits datetime input into two <input type="text"> boxes.
     The original SplitDateTimeWidget doesn't let me change the inner widgets
     """
-    date_format = uiDateInput.format
+    #date_format = uiDateInput.format
 
     def __init__(self, attrs=None, date_format=None, show_seconds = None):
         if date_format:

@@ -16,12 +16,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-from django.contrib import admin
-from models import AutoSlap
-from b3connect.admin import CustomModelAdmin
-
-class AutoSlapAdmin(CustomModelAdmin):
-    search_fields=['=client__id','client__name']
-    raw_id_fields=('client','admin')
-    
-admin.site.register(AutoSlap, AutoSlapAdmin)
+#deprecated as of 0.4.1
+# from django.contrib import admin
+# from models import AutoSlap
+# from b3connect.admin import CustomModelAdmin
+# 
+# class AutoSlapAdmin(CustomModelAdmin):
+#     search_fields=['=client__id','client__name']
+#     raw_id_fields=('client','admin')
+#     
+# admin.site.register(AutoSlap, AutoSlapAdmin)
