@@ -22,7 +22,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
 from djangoui.extras.widgets import SelectTimeWidget
 
-UI_VERSION = getattr(settings, 'UI_VERSION', '1.8.14')
+UI_VERSION = getattr(settings, 'UI_VERSION', '1.10.4')
 UI_THEME = getattr(settings, 'UI_THEME', 'dot-luv')
 MEDIA_PATH =  getattr(settings, 'UI_MEDIA_PATH', 'http://ajax.googleapis.com/ajax/libs/jqueryui/') 
 JQUERY_UI_JS = 'jquery-ui.min.js'

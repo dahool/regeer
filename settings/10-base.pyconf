@@ -65,6 +65,6 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 LOCAL_CONFIG = os.path.join(PROJECT_PATH, 'local.conf')
 
-UI_VERSION='1.8.18'
+UI_VERSION='1.10.4'
 UI_MEDIA_PATH='http://ajax.googleapis.com/ajax/libs/jqueryui/'
-UI_THEME='ui-lightness'
+UI_THEME='smoothness'
