@@ -99,3 +99,38 @@ class IfIpListedNode(Node):
             return self.nodelist_true.render(context)
         else:
             return self.nodelist_false.render(context)    
+
+@register.tag(name='loadserver')
+def loadserver(parser, token):
+    content = token.split_contents()
+    if len(content) == 2:
+        tag_name, varname = content
+    else:
+        raise TemplateSyntaxError, "%r takes one argument" % token.split_contents()[0]
+    return LoadServerNode(varname)    
+
+class LoadServerNode(template.Node):
+    
+    def __init__(self, varname):
+        self.varname = varname
+
+    def __repr__(self):
+        return "<LoadServerNode>"
+
+    def render(self, context):
+        try:
+            server = context['request'].server
+            serverList =  context['request'].server_list
+            currentServer = None
+            if serverList and server:
+                for s in serverList:
+                    if s.uuid == server:
+                        currentServer = s
+                        break
+            if currentServer:
+                context[self.varname] = currentServer
+            else:
+                context[self.varname] = None
+        except:
+            pass
+        return ''

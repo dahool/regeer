@@ -1,11 +1,10 @@
 {% load i18n tagutils settingstag extendedtags geoip urltag plugintag gametag %}
 <table class="table-style cd-table client_detail">
-<caption><h3>{{client.name}}<small>  
-{% with request.server as current_server %}
-{% for server in request.server_list %}
-{% if current_server == server.uuid %}{{server.name}}{%endif%}
-{% endfor %}
-{% endwith %}
+<caption><h3>{{client.name}}<small>
+{% if not currentserver %}
+{% loadserver currentserver %}
+{% endif %}
+{{currentserver.name}}
 </small>
 {% if client.ip %}
 <small>
@@ -13,6 +12,11 @@
 </small>
 {% endif %}
 {% if obj_perms.portal.viewguid %}<small>{% ifvalidguid client.guid %}<span class="nodecoration_icon icon_valid" title="{% trans "Guid is valid" %}">{% trans "Guid is valid" %}</span>{% else %}<span class="nodecoration_icon icon_invalid" style="color: red;" title="{% trans "Invalid guid" %}">{% with client.guid as guid %}{%blocktrans%}Guid [{{guid}}] is invalid{%endblocktrans%}{% endwith %}</span>{% endifvalidguid %}</small>{% endif %}
+{% if status != None %}
+<small>
+{%if status %}<span class="online">{% trans "Playing" %}</span>{%else%}<span class="offline">{% trans "Offline" %}</span>{%endif%}
+</small>
+{%endif%}
 </h3>
 {% ifpluginenabled "follow" %}
 {% if obj_perms.plugin.viewfollow %}
@@ -93,7 +97,18 @@ title="{% trans "Double click to edit..." %}" class="nodecoration_icon icon_edit
 <a target="_blank" href="{% setting 'GEOTOOL' %}{{baseip}}" title="{% trans "Show location of IP origin on map" %}" class="nodecoration_icon icon_world"></a>
 {% ifiplisted banlist client.ip %}<span class="nodecoration_icon icon_exclamation" title="{% trans "This IP is in the banlist" %}">&nbsp;</span>{% endifiplisted %}
 {% else %}{% trans "(No IP address available)" %}{% endif %}</td>
-<td colspan="2">{% if status != None %}{%if status %}<span class="online">{% trans "Playing" %}</span>{%else%}<span class="offline">{% trans "Offline" %}</span>{%endif%}{%endif%}</td>
+{% if obj_perms.portal.viewguid %}
+<th>
+{% if currentserver.game == 'iourt41' %}
+{% trans "Auth ID" %}
+{% else %}
+{% trans "Punkbuster ID" %}
+{% endif %}
+</th>
+<td>{{client.pbid}}</td>
+{% else %}
+<td colspan="2">&nbsp;</td>
+{% endif %}
 </tr>
 {% if obj_perms.plugin.activity %}
 {% if playedtime %}

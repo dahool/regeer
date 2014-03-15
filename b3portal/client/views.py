@@ -334,6 +334,8 @@ def _getclientlist(request, server, search = True):
         filter = field
         if field == 'name':
             clients = clients.filter(Q(name__icontains=data) | Q(aliases__alias__icontains=data)).distinct()
+        elif field == 'pbid':
+            clients = clients.filter(pbid__icontains=data).distinct()
         elif field == 'id':
             try:
                 clients = clients.filter(id=int(data))
@@ -345,7 +347,7 @@ def _getclientlist(request, server, search = True):
             else:
                 clients = clients.filter(ip__startswith=data).distinct()
     
-    if request.GET.has_key('sort'):
+    if request.GET.has_key('sort') and isvalidsort(request.GET.get('sort')):
         sort = request.GET.get('sort')
         order = request.GET.get('order') or 'asc'
         if order == 'desc':
@@ -363,6 +365,9 @@ def _getclientlist(request, server, search = True):
             clients = clients.filter(group__isnull=True)            
     
     return clients
+
+def isvalidsort(value):
+    return value in ('id','name','pbid','group','time_add','time_edit')
 
 @server_permission_required_with_403(perm.VIEW_CLIENT)
 @cache_page(30*60)

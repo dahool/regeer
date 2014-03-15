@@ -1,4 +1,5 @@
-{% load i18n serverpermtag %}
+{% load i18n serverpermtag gametag %}
+{% loadserver currentserver %}
 <small>
 <form id="go_search" method="get" action="{% url client_list %}">
 <input type="hidden" name="server" value="{{request.server}}" id="server_search_quick">
@@ -7,6 +8,11 @@
 <select id="id_searchtype" name="type">
 <option value="name" {% if filter == 'name' %}selected="selected"{%endif%}>{% trans "Name" %}</option>
 <option value="ip" {% if filter == 'ip' %}selected="selected"{%endif%}>{% trans "IP" %}</option>
+{% if currentserver.game == 'iourt41' %}
+<option value="pbid" {% if filter == 'pbid' %}selected="selected"{%endif%}>{% trans "Auth ID" %}</option>
+{% else %}
+<option value="pbid" {% if filter == 'pbid' %}selected="selected"{%endif%}>{% trans "Punkbuster ID" %}</option>
+{% endif %}
 </select>
 <input type="text" name="data" value="{{data}}" style="width: 120px;">
 <span title="{% trans "Search" %}" onclick="$('#go_search').submit()" class="nodecoration_icon icon_search">&nbsp;</span>

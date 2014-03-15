@@ -1,5 +1,5 @@
 {% extends "base_layout.html" %}
-{% load urltag listtocolumns i18n tagutils settingstag paginator navigation sorting %}
+{% load urltag listtocolumns i18n tagutils settingstag paginator navigation sorting gametag %}
 {% block title %}{{ block.super }} | {% trans "Client List" %}{% endblock %}
 {% block extra_header %}
 {{ block.super }}
@@ -26,6 +26,9 @@
 
 {% endblock %}
 {% block main_content %}
+{% if not currentserver %}
+{% loadserver currentserver %}
+{% endif %}
 <form method="get" action="{% url client_list %}">
 <small>
 <input type="hidden" name="server" value="{{request.server}}">
@@ -33,6 +36,11 @@
 <option value="name" {% if filter == 'name' %}selected="selected"{%endif%}>{% trans "Name" %}</option>
 <option value="id" {% if filter == 'id' %}selected="selected"{%endif%}>{% trans "@id" %}</option>
 <option value="ip" {% if filter == 'ip' %}selected="selected"{%endif%}>{% trans "IP" %}</option>
+{% if currentserver.game == 'iourt41' %}
+<option value="pbid" {% if filter == 'pbid' %}selected="selected"{%endif%}>{% trans "Auth ID" %}</option>
+{% else %}
+<option value="pbid" {% if filter == 'pbid' %}selected="selected"{%endif%}>{% trans "Punkbuster ID" %}</option>
+{% endif %}
 </select>
 <input type="text" id="data" name="data" value="{{data}}" class="search submit">
 <input type="submit" name="search" id="search" value="{% trans "Search" %}">
@@ -55,6 +63,13 @@
 <tr>
 <th>{% trans "@id" %}{% sortheader order_by 'id' search %}</th>
 <th>{% trans "Name" %}{% sortheader order_by 'name' search %}</th>
+<th>
+{% if currentserver.game == 'iourt41' %}
+{% trans "Auth ID" %}{% sortheader order_by 'pbid' search %}
+{% else %}
+{% trans "Punkbuster ID" %}{% sortheader order_by 'pbid' search %}
+{% endif %}
+</th>
 <th>{% trans "Group" %}{% sortheader order_by 'group' search %}</th>
 <th>{% trans "IP Address" %}</th>
 <th>{% trans "First Seen" %}{% sortheader order_by 'time_add' search %}</th>
@@ -72,6 +87,7 @@
 <span class="nodecoration_icon icon_info">&nbsp;</span>
 {% endif %}
 </td>
+<td>{% if client.pbid %}<a style="font-weight: normal" href="?type=pbid&data={{client.pbid|urlencode}}&server={{request.server}}&search=Search">{{client.pbid}}</a>{%endif%}</td>
 <td>{% if obj_perms.portal.viewclientgroup %}<a class="level_row_{{client.group.level}}" style="font-weight: normal" href="?level={{client.group.level}}&server={{request.server}}" title="{% trans "Filter users sharing the same group" %}">{{client.group.name}}</a>{%else%}-{%endif%}</td>
 <td title="{% trans "Search for players with same IP address" %}" class="align-right">
 {% if obj_perms.portal.viewfullip %}
