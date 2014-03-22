@@ -3,8 +3,7 @@
 {% block title %}{{ block.super }}{% endblock %}
 {% block extra_header %}
 {{block.super}}
-<link rel="stylesheet" type="text/css" href="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/themes/base/jquery-ui.css"/>
-<link rel="stylesheet" type="text/css" href="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/themes/dark-hive/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/themes/{% setting "UI_THEME" %}/jquery-ui.min.css"/>
 <script type="text/javascript" src="{% setting "UI_MEDIA_PATH" %}{% setting "UI_VERSION" %}/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $(function() {

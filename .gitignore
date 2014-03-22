@@ -1,8 +1,8 @@
-b3
+.settings/
+b3/
 *.pyc
 local.conf
 settings/60-local.pyconf
 *.sqlite
-.settings/*
 build.ver
 GeoLiteCity.dat

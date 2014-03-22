@@ -105,7 +105,7 @@ title="{% trans "Double click to edit..." %}" class="nodecoration_icon icon_edit
 {% trans "Punkbuster ID" %}
 {% endif %}
 </th>
-<td>{{client.pbid}}</td>
+<td>{% if client.pbid %}client.pbid{%endif%}</td>
 {% else %}
 <td colspan="2">&nbsp;</td>
 {% endif %}

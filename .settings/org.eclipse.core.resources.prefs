@@ -1,8 +1,7 @@
-#Tue Apr 24 15:02:17 ART 2012
 eclipse.preferences.version=1
-encoding//b3connect/admin.py=utf-8
+encoding//b3connect/admin.py.deprecated=utf-8
 encoding//b3connect/fields.py=utf-8
-encoding//b3connect/filters.py=utf-8
+encoding//b3connect/filters.py.deprecated=utf-8
 encoding//b3connect/models.py=utf-8
 encoding//b3portal/admin.py=utf-8
 encoding//b3portal/client/forms.py=utf-8
